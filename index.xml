@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>瘫痪人员</title>
+    <title>Hugo Themes</title>
     <link>https://ioyy900205.github.io/</link>
-    <description>Recent content on 瘫痪人员</description>
+    <description>Recent content on Hugo Themes</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-CN</language>
+    <copyright>Copyright (c) 2008 - 2014, Steve Francia; all rights reserved.</copyright>
     <lastBuildDate>Mon, 26 Apr 2021 17:05:30 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>First</title>
