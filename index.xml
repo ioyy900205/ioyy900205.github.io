@@ -55,7 +55,11 @@ A central theme of computer vision research is the search for more powerful repr
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://ioyy900205.github.io/post/%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%80%BB%E7%BB%93/</guid>
-      <description></description>
+      <description>需解决的问题 存储问题
+数百层网络有着大量的权值参数，保存大量权值参数对设备的内存要求很高； 速度问题
+在实际应用中，往往是毫秒级别，为了达到实际应用标准，要么提高处理器性能，要么就减少计算量。 而提高处理器性能在短时间内是无法完成的，因此减少计算量成为了主要的技术手段。 方法 模型结构设计
+主要思想在于设计更高效的「网络计算方式」（主要针对卷积方式），从而使网络参数减少的同时，不损失网络性能。 模型压缩
+即在已经训练好的模型上进行压缩，使得网络携带更少的网络参数，从而解决内存问题，同时可以解决速度问题。 </description>
     </item>
     
   </channel>
