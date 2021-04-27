@@ -17,6 +17,15 @@
     </item>
     
     <item>
+      <title>REF01——打印的RESNET18</title>
+      <link>https://ioyy900205.github.io/post/%E6%89%93%E5%8D%B0%E7%9A%84resnet%E7%BB%93%E6%9E%84/</link>
+      <pubDate>Tue, 27 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/%E6%89%93%E5%8D%B0%E7%9A%84resnet%E7%BB%93%E6%9E%84/</guid>
+      <description>ResNet( (conv1): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False) (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True) (layer1): Sequential( (0): BasicBlock( (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False) (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True) (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False) (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True) (shortcut): Sequential() ) (1): BasicBlock( (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False) (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.</description>
+    </item>
+    
+    <item>
       <title>01——ResNeXt学习</title>
       <link>https://ioyy900205.github.io/post/resnext/</link>
       <pubDate>Mon, 26 Apr 2021 17:05:30 +0800</pubDate>
