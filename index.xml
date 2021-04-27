@@ -5,9 +5,19 @@
     <link>https://ioyy900205.github.io/</link>
     <description>Recent content on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 26 Apr 2021 17:05:30 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 27 Apr 2021 09:43:30 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>01——ResNet学习</title>
+      <title>03——nn.module学习</title>
+      <link>https://ioyy900205.github.io/post/nn.module/</link>
+      <pubDate>Tue, 27 Apr 2021 09:43:30 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/nn.module/</guid>
+      <description>1. nn.moduel初步  1.1. Linear类 1.2. Conv2d类 1.3. 自定义层的步骤   2. 自定义层  2.1. 定义一个自定义层MyLayer 2.2. 自定义模型并且训练    1. nn.moduel初步 keras更加注重的是层Layer、pytorch更加注重的是模型Module。
+1.1. Linear类 import math import torch from torch.nn.parameter import Parameter from .. import functional as F from .. import init from .module import Module from ..._jit_internal import weak_module, weak_script_method class Linear(Module): __constants__ = [&amp;#39;bias&amp;#39;] def __init__(self, in_features, out_features, bias=True): super(Linear, self).__init__() self.in_features = in_features self.out_features = out_features self.</description>
+    </item>
+    
+    <item>
+      <title>01——ResNeXt学习</title>
       <link>https://ioyy900205.github.io/post/resnext/</link>
       <pubDate>Mon, 26 Apr 2021 17:05:30 +0800</pubDate>
       
