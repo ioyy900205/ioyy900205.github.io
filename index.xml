@@ -17,12 +17,18 @@
     </item>
     
     <item>
-      <title>REF01——打印的RESNET18</title>
+      <title>REF01——避坑指南——打印的RESNET18</title>
       <link>https://ioyy900205.github.io/post/%E6%89%93%E5%8D%B0%E7%9A%84resnet%E7%BB%93%E6%9E%84/</link>
       <pubDate>Tue, 27 Apr 2021 00:00:00 +0000</pubDate>
       
       <guid>https://ioyy900205.github.io/post/%E6%89%93%E5%8D%B0%E7%9A%84resnet%E7%BB%93%E6%9E%84/</guid>
-      <description>ResNet( (conv1): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False) (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True) (layer1): Sequential( (0): BasicBlock( (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False) (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True) (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False) (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True) (shortcut): Sequential() ) (1): BasicBlock( (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False) (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.</description>
+      <description>1. BasicBlock 2. BottleNeck 3. ResNet18  1. BasicBlock 其中有个坑是下采样。如下图所示：
+具体来说，如代码所展示的：
+if stride != 1 or in_planes != self.expansion*planes: self.shortcut = nn.Sequential( nn.Conv2d(in_planes, self.expansion*planes, kernel_size=1, stride=stride, bias=False), nn.BatchNorm2d(self.expansion*planes) ) 当 stride不等于1 or 输入通道数和输出通道数不相同 时： 进行下采样操作。
+下采样：Conv2D+BN
+目的是让跳层能够保持维数
+2. BottleNeck 同样的BottleNeck也存在这样的问题。
+3. ResNet18 ResNet( (conv1): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False) (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True) (layer1): Sequential( (0): BasicBlock( (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False) (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.</description>
     </item>
     
     <item>
