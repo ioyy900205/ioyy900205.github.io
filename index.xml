@@ -49,5 +49,14 @@ A central theme of computer vision research is the search for more powerful repr
 1.2. 贡献 1.2.1. 提供了子结构 Sequeeze-and-Excitation(SE) block并不是一个完整的网络结构，而是一个子结构，可以嵌到其他分类或检测模型中。</description>
     </item>
     
+    <item>
+      <title>04——轻量级神经网络总结</title>
+      <link>https://ioyy900205.github.io/post/%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%80%BB%E7%BB%93/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>
