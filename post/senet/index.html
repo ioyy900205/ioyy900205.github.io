@@ -79,7 +79,7 @@ A central theme of computer vision research is the search for more powerful repr
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          2 min read
+          3 min read
         </div>
       </div>
     </header>
@@ -126,7 +126,40 @@ PyTorch代码地址：https://github.com/miraclewkf/SENet-PyTorch</p>
 <h2 id="14-squeeze">1.4. Squeeze</h2>
 <p>The function of this descriptor is to produce an embedding of the global distribution of channel-wise feature responses, allowing information from the global receptive field of the network to be used by all its layers.</p>
 <p>这个描述符的功能是产生一个通道式特征响应的全局分布的嵌入，使网络的全局接收场的信息能够被其所有层使用。</p>
-<h2 id="15-excitation">1.5. Excitation</h2>
+<p>在代码中(1.5也看这个地方)：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PreActBlock</span>(nn<span style="color:#f92672">.</span>Module):
+    <span style="color:#66d9ef">def</span> __init__(self, in_planes, planes, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>):
+        super(PreActBlock, self)<span style="color:#f92672">.</span>__init__()
+        self<span style="color:#f92672">.</span>bn1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>BatchNorm2d(in_planes)
+        self<span style="color:#f92672">.</span>conv1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(in_planes, planes, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, stride<span style="color:#f92672">=</span>stride, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, bias<span style="color:#f92672">=</span>False)
+        self<span style="color:#f92672">.</span>bn2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>BatchNorm2d(planes)
+        self<span style="color:#f92672">.</span>conv2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(planes, planes, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, bias<span style="color:#f92672">=</span>False)
+
+        <span style="color:#66d9ef">if</span> stride <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">or</span> in_planes <span style="color:#f92672">!=</span> planes:
+            self<span style="color:#f92672">.</span>shortcut <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+                nn<span style="color:#f92672">.</span>Conv2d(in_planes, planes, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, stride<span style="color:#f92672">=</span>stride, bias<span style="color:#f92672">=</span>False)
+            )
+
+        <span style="color:#75715e"># SE layers</span>
+        self<span style="color:#f92672">.</span>fc1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(planes, planes<span style="color:#f92672">//</span><span style="color:#ae81ff">16</span>, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+        self<span style="color:#f92672">.</span>fc2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(planes<span style="color:#f92672">//</span><span style="color:#ae81ff">16</span>, planes, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
+        out <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>bn1(x))
+        shortcut <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>shortcut(out) <span style="color:#66d9ef">if</span> hasattr(self, <span style="color:#e6db74">&#39;shortcut&#39;</span>) <span style="color:#66d9ef">else</span> x
+        out <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>conv1(out)
+        out <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>conv2(F<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>bn2(out)))
+
+        <span style="color:#75715e"># Squeeze</span>
+        w <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>avg_pool2d(out, out<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">2</span>))
+        w <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>fc1(w))
+        w <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>sigmoid(self<span style="color:#f92672">.</span>fc2(w))
+        <span style="color:#75715e"># Excitation</span>
+        out <span style="color:#f92672">=</span> out <span style="color:#f92672">*</span> w
+
+        out <span style="color:#f92672">+=</span> shortcut
+        <span style="color:#66d9ef">return</span> out
+</code></pre></div><h2 id="15-excitation">1.5. Excitation</h2>
 <p>Takes the form of a simple self-gating mechanism that takes the embedding as input and produces a collection of per-channel modulation weights.These weights are applied to the feature maps U to generate the output of the SE block which can be fed directly into subsequent layers of the network.</p>
 <p>它采取了简单的自门控机制的形式，将嵌入作为输入，并产生一个每个通道调制权重的集合。这些权重被应用于特征图U，生成SE块的输出，可以直接输入网络的后续层。</p>
 <h1 id="2-思考">2. 思考</h1>
