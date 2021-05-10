@@ -5,39 +5,87 @@
     <link>https://ioyy900205.github.io/</link>
     <description>Recent content on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 27 Apr 2021 09:43:30 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 10 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>03——nn.module学习——PyTorch</title>
-      <link>https://ioyy900205.github.io/post/nn.module/</link>
-      <pubDate>Tue, 27 Apr 2021 09:43:30 +0800</pubDate>
+      <title>06——torch.cat维度操作——PyTorch</title>
+      <link>https://ioyy900205.github.io/post/torch.cat%E7%9A%84%E7%BB%B4%E5%BA%A6%E6%93%8D%E4%BD%9C/</link>
+      <pubDate>Mon, 10 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://ioyy900205.github.io/post/nn.module/</guid>
-      <description>1. nn.moduel初步  1.1. Linear类 1.2. Conv2d类 1.3. 自定义层的步骤   2. 自定义层  2.1. 定义一个自定义层MyLayer 2.2. 自定义模型并且训练    1. nn.moduel初步 keras更加注重的是层Layer、pytorch更加注重的是模型Module。
-1.1. Linear类 import math import torch from torch.nn.parameter import Parameter from .. import functional as F from .. import init from .module import Module from ..._jit_internal import weak_module, weak_script_method class Linear(Module): __constants__ = [&amp;#39;bias&amp;#39;] def __init__(self, in_features, out_features, bias=True): super(Linear, self).__init__() self.in_features = in_features self.out_features = out_features self.</description>
+      <guid>https://ioyy900205.github.io/post/torch.cat%E7%9A%84%E7%BB%B4%E5%BA%A6%E6%93%8D%E4%BD%9C/</guid>
+      <description>请不要假装很努力， 因为结果不会陪你演戏！
+  1. torch.cat  1.1. 二维数组  1.1.1. dim=0 1.1.2. dim=1   1.2. 三维数组  1.2.1. dim=0 1.2.2. dim=1 1.2.3. dim=2     2. 小结  1. torch.cat 1.1. 二维数组 1.1.1. dim=0 运行
+import torch A = torch.ones(2,3) #2x3的张量（矩阵）  print(&amp;#34;A:&amp;#34;,A) B=2*torch.ones(4,3) #4x3的张量（矩阵）  print(&amp;#34;B:&amp;#34;,B) C=torch.cat((A,B),0)#按维数0（行）拼接 print(&amp;#34;C:&amp;#34;,C) print(C.size()) 结果
+A: tensor([[1., 1., 1.], [1., 1., 1.]]) B: tensor([[2., 2., 2.], [2., 2., 2.], [2.</description>
     </item>
     
     <item>
-      <title>REF01——避坑指南——打印的RESNET18</title>
-      <link>https://ioyy900205.github.io/post/ref01%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97%E6%89%93%E5%8D%B0%E7%9A%84resnet18/</link>
+      <title>07——torch.stack维度操作——PyTorch</title>
+      <link>https://ioyy900205.github.io/post/torch.stack%E7%9A%84%E7%BB%B4%E5%BA%A6%E6%93%8D%E4%BD%9C/</link>
+      <pubDate>Mon, 10 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/torch.stack%E7%9A%84%E7%BB%B4%E5%BA%A6%E6%93%8D%E4%BD%9C/</guid>
+      <description>请不要假装很努力， 因为结果不会陪你演戏！
+  1. 初始化 2. torch.stak  2.1. dim = 0 2.2. dim = 1 2.3. dim = 2    1. 初始化 input
+import torch import numpy as np # 创建3*3的矩阵，a、b a=np.array([[1,2,3],[4,5,6],[7,8,9]]) b=np.array([[10,20,30],[40,50,60],[70,80,90]]) # 将矩阵转化为Tensor a = torch.from_numpy(a) b = torch.from_numpy(b) # 打印a、b、c print(a,a.size()) print(b,b.size()) output
+tensor([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) torch.Size([3, 3]) tensor([[10, 20, 30], [40, 50, 60], [70, 80, 90]]) torch.</description>
+    </item>
+    
+    <item>
+      <title>审稿学习系列01——图像质量评估</title>
+      <link>https://ioyy900205.github.io/post/%E5%AE%A1%E7%A8%BF%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%9701/</link>
+      <pubDate>Mon, 10 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/%E5%AE%A1%E7%A8%BF%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%9701/</guid>
+      <description>审稿学习系列01——图像质量评估 LIU Liang
+  1. 背景 2. 图像质量评估（Image Quality Assessment, IQA）——方法分类  2.1. 主观方法 2.2. 客观方法   3. 图像质量评估（Image Quality Assessment, IQA）——图像提供信息分类  3.1. 全参考(Full Reference-IQA, FR-IQA) 3.2. 半参考(Reduced Reference-IQA, RR-IQA) 3.3. 无参考(No Reference-IQA, NR-IQA)   4. 数据集 5. 评估方法  5.1. 评估指标   6. 结果  1. 背景 质量评估(Quality Assessment，QA)在许多领域有其广泛的实用性。（比如图像压缩、视频编解码、视频监控等。）
+并且对高效、可靠质量评估的需求日益增加，所以QA成为一个感兴趣的研究领域。
+每年都涌现出大量的新的QA算法，有些是扩展已有的算法，也有一些是QA算法的应用。
+质量评估可分为：
+  图像质量评估（Image Quality Assessment, IQA）
+  视频质量评估（Video Quality Assessment, VQA）</description>
+    </item>
+    
+    <item>
+      <title>05——ShuffleNet学习</title>
+      <link>https://ioyy900205.github.io/post/shufflenet/</link>
+      <pubDate>Fri, 07 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/shufflenet/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>03——nn.module学习——PyTorch</title>
+      <link>https://ioyy900205.github.io/post/nn.module/</link>
       <pubDate>Tue, 27 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://ioyy900205.github.io/post/ref01%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97%E6%89%93%E5%8D%B0%E7%9A%84resnet18/</guid>
-      <description>1. BasicBlock 2. BottleNeck 3. ResNet18  1. BasicBlock 其中有个坑是下采样。如下图所示：
-具体来说，如代码所展示的：
-if stride != 1 or in_planes != self.expansion*planes: self.shortcut = nn.Sequential( nn.Conv2d(in_planes, self.expansion*planes, kernel_size=1, stride=stride, bias=False), nn.BatchNorm2d(self.expansion*planes) ) 当 stride不等于1 or 输入通道数和输出通道数不相同 时： 进行下采样操作。
-下采样：Conv2D+BN
-目的是让跳层能够保持维数
-2. BottleNeck 同样的BottleNeck也存在这样的问题。
-3. ResNet18 ResNet( (conv1): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False) (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True) (layer1): Sequential( (0): BasicBlock( (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False) (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.</description>
+      <guid>https://ioyy900205.github.io/post/nn.module/</guid>
+      <description>请不要假装很努力， 因为结果不会陪你演戏！
+  1. nn.moduel初步  1.1. Linear类 1.2. Conv2d类 1.3. 自定义层的步骤   2. 自定义层  2.1. 定义一个自定义层MyLayer 2.2. 自定义模型并且训练    1. nn.moduel初步 keras更加注重的是层Layer、pytorch更加注重的是模型Module。
+1.1. Linear类 import math import torch from torch.nn.parameter import Parameter from .. import functional as F from .. import init from .module import Module from ..._jit_internal import weak_module, weak_script_method class Linear(Module): __constants__ = [&amp;#39;bias&amp;#39;] def __init__(self, in_features, out_features, bias=True): super(Linear, self).__init__() self.</description>
+    </item>
+    
+    <item>
+      <title>04——轻量级神经网络总结</title>
+      <link>https://ioyy900205.github.io/post/%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Tue, 27 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%80%BB%E7%BB%93/</guid>
+      <description>请不要假装很努力， 因为结果不会陪你演戏！
+  1. 需解决的问题 2. 衡量指标  2.1. FLOPs 2.2. Params  2.2.1. 卷积层的参数量 2.2.2. 全连接层的参数量   2.3. MAC 2.4. MACC(也叫MADD)   3. 方法  3.1. 模型结构设计  3.1.1. 分组卷积 3.1.2. 分解卷积   3.2. 模型压缩  3.2.1. 权值量化 3.2.2. 网络剪枝 3.2.3. 低秩近似 3.2.4. 知识蒸馏      1. 需解决的问题 存储问题
+数百层网络有着大量的权值参数，保存大量权值参数对设备的内存要求很高； 速度问题
+在实际应用中，往往是毫秒级别，为了达到实际应用标准，要么提高处理器性能，要么就减少计算量。 而提高处理器性能在短时间内是无法完成的，因此减少计算量成为了主要的技术手段。 2. 衡量指标 目前，网络架构设计主要由计算复杂度的间接度量（如FLOPs）测量。然而，直接度量（例如，速度）还取决于诸如存储器访问成本和平台特性的其他因素。
+2.1. FLOPs FLOPS(floating point operations per second)</description>
     </item>
     
     <item>
       <title>01——ResNeXt学习</title>
       <link>https://ioyy900205.github.io/post/resnext/</link>
-      <pubDate>Mon, 26 Apr 2021 17:05:30 +0800</pubDate>
+      <pubDate>Mon, 26 Apr 2021 00:00:00 +0000</pubDate>
       
       <guid>https://ioyy900205.github.io/post/resnext/</guid>
-      <description>1. ResNeXt  1.1. 概述 1.2. 思路 1.3. Block 1.4. 组卷积 1.5. 模型复杂度 1.6. Shortcut 1.7. 结果    1. ResNeXt 1.1. 概述 论文：Aggregated Residual Transformations for Deep Neural Networks
+      <description>请不要假装很努力， 因为结果不会陪你演戏！
+  1. ResNeXt  1.1. 概述 1.2. 思路 1.3. Block 1.4. 组卷积 1.5. 模型复杂度 1.6. Shortcut 1.7. 结果    1. ResNeXt 1.1. 概述 论文：Aggregated Residual Transformations for Deep Neural Networks
 论文链接：https://arxiv.org/abs/1611.05431
 PyTorch代码：https://github.com/miraclewkf/ResNeXt-PyTorch 2016年,ISCLVCR 2016 no.2
 1.2. 思路 Split-Transform-Merge （来源于inception）
@@ -47,79 +95,46 @@ PyTorch代码：https://github.com/miraclewkf/ResNeXt-PyTorch 2016年,ISCLVCR 20
 32x4d 中 32为组卷积数目，4d为每组卷积4个卷积核。
 组卷积可以有不同的配置，但是不同的配置需要通过实验判断效果。
 可以发现通过组卷积能够有效降低parameter的大小。
-1.5. 模型复杂度 如果想增加模型复杂度，几个选择：
-1）宽度；
-2）深度；
-3）cardinality。</description>
+1.5. 模型复杂度 如果想增加模型复杂度，几个选择：</description>
     </item>
     
     <item>
       <title>02——SeNet学习</title>
       <link>https://ioyy900205.github.io/post/senet/</link>
-      <pubDate>Mon, 26 Apr 2021 17:05:30 +0800</pubDate>
+      <pubDate>Mon, 26 Apr 2021 00:00:00 +0000</pubDate>
       
       <guid>https://ioyy900205.github.io/post/senet/</guid>
-      <description>1. SENET  1.1. 链接 1.2. 贡献  1.2.1. 提供了子结构 1.2.2. SOTA   1.3. 核心思想 1.4. Squeeze 1.5. Excitation   2. 思考  2.1. 浅层作用较大    1. SENET 1.1. 链接 论文：Squeeze-and-Excitation Networks论文链接：https://arxiv.org/abs/1709.01507代码地址：https://github.com/hujie-frank/SENetPyTorch代码地址：https://github.com/miraclewkf/SENet-PyTorch
-A central theme of computer vision research is the search for more powerful representations that capture only those properties of an image that are most salient for a given task
-1.2. 贡献 1.2.1. 提供了子结构 Sequeeze-and-Excitation(SE) block并不是一个完整的网络结构，而是一个子结构，可以嵌到其他分类或检测模型中。</description>
+      <description>请不要假装很努力， 因为结果不会陪你演戏！
+  1. SENET  1.1. 链接 1.2. 贡献  1.2.1. 提供了子结构 1.2.2. SOTA   1.3. 核心思想 1.4. Squeeze 1.5. Excitation   2. 思考  2.1. 浅层作用较大    1. SENET 1.1. 链接 论文：Squeeze-and-Excitation Networks论文链接：https://arxiv.org/abs/1709.01507代码地址：https://github.com/hujie-frank/SENetPyTorch代码地址：https://github.com/miraclewkf/SENet-PyTorch
+A central theme of computer vision research is the search for more powerful representations that capture only those properties of an image that are most salient for a given task</description>
     </item>
     
     <item>
-      <title>04——轻量级神经网络总结</title>
-      <link>https://ioyy900205.github.io/post/%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <title>REF01——避坑指南——打印的RESNET18</title>
+      <link>https://ioyy900205.github.io/post/ref01%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97%E6%89%93%E5%8D%B0%E7%9A%84resnet18/</link>
+      <pubDate>Sun, 25 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://ioyy900205.github.io/post/%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%80%BB%E7%BB%93/</guid>
-      <description>1. 需解决的问题 2. 衡量指标  2.1. FLOPs 2.2. Params  2.2.1. 卷积层的参数量 2.2.2. 全连接层的参数量   2.3. MAC 2.4. MACC(也叫MADD)   3. 方法  3.1. 模型结构设计  3.1.1. 分组卷积 3.1.2. 分解卷积   3.2. 模型压缩  3.2.1. 权值量化 3.2.2. 网络剪枝 3.2.3. 低秩近似 3.2.4. 知识蒸馏      1. 需解决的问题 存储问题
-数百层网络有着大量的权值参数，保存大量权值参数对设备的内存要求很高； 速度问题
-在实际应用中，往往是毫秒级别，为了达到实际应用标准，要么提高处理器性能，要么就减少计算量。 而提高处理器性能在短时间内是无法完成的，因此减少计算量成为了主要的技术手段。 2. 衡量指标 目前，网络架构设计主要由计算复杂度的间接度量（如FLOPs）测量。然而，直接度量（例如，速度）还取决于诸如存储器访问成本和平台特性的其他因素。
-2.1. FLOPs FLOPS(floating point operations per second)</description>
+      <guid>https://ioyy900205.github.io/post/ref01%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97%E6%89%93%E5%8D%B0%E7%9A%84resnet18/</guid>
+      <description>请不要假装很努力， 因为结果不会陪你演戏！
+  1. BasicBlock 2. BottleNeck 3. ResNet18  1. BasicBlock 其中有个坑是下采样。如下图所示：
+具体来说，如代码所展示的：
+if stride != 1 or in_planes != self.expansion*planes: self.shortcut = nn.Sequential( nn.Conv2d(in_planes, self.expansion*planes, kernel_size=1, stride=stride, bias=False), nn.BatchNorm2d(self.expansion*planes) ) 当 stride不等于1 or 输入通道数和输出通道数不相同 时： 进行下采样操作。
+下采样：Conv2D+BN
+目的是让跳层能够保持维数
+2. BottleNeck 同样的BottleNeck也存在这样的问题。
+3. ResNet18 ResNet( (conv1): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False) (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True) (layer1): Sequential( (0): BasicBlock( (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False) (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.</description>
     </item>
     
     <item>
-      <title>05——ShuffleNet学习</title>
-      <link>https://ioyy900205.github.io/post/shufflenet/</link>
+      <title>About Me</title>
+      <link>https://ioyy900205.github.io/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://ioyy900205.github.io/post/shufflenet/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>06——torch.cat维度操作——PyTorch</title>
-      <link>https://ioyy900205.github.io/post/torch.cat%E7%9A%84%E7%BB%B4%E5%BA%A6%E6%93%8D%E4%BD%9C/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://ioyy900205.github.io/post/torch.cat%E7%9A%84%E7%BB%B4%E5%BA%A6%E6%93%8D%E4%BD%9C/</guid>
-      <description>1. torch.cat  1.1. 二维数组  1.1.1. dim=0 1.1.2. dim=1   1.2. 三维数组  1.2.1. dim=0 1.2.2. dim=1 1.2.3. dim=2     2. 小结  1. torch.cat 1.1. 二维数组 1.1.1. dim=0 运行
-import torch A = torch.ones(2,3) #2x3的张量（矩阵）  print(&amp;#34;A:&amp;#34;,A) B=2*torch.ones(4,3) #4x3的张量（矩阵）  print(&amp;#34;B:&amp;#34;,B) C=torch.cat((A,B),0)#按维数0（行）拼接 print(&amp;#34;C:&amp;#34;,C) print(C.size()) 结果
-A: tensor([[1., 1., 1.], [1., 1., 1.]]) B: tensor([[2., 2., 2.], [2., 2., 2.], [2., 2., 2.], [2., 2.</description>
-    </item>
-    
-    <item>
-      <title>07——torch.stack维度操作——PyTorch</title>
-      <link>https://ioyy900205.github.io/post/torch.stack%E7%9A%84%E7%BB%B4%E5%BA%A6%E6%93%8D%E4%BD%9C/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://ioyy900205.github.io/post/torch.stack%E7%9A%84%E7%BB%B4%E5%BA%A6%E6%93%8D%E4%BD%9C/</guid>
-      <description>1. 初始化 2. torch.stak  2.1. dim = 0 2.2. dim = 1 2.3. dim = 2    1. 初始化 input
-import torch import numpy as np # 创建3*3的矩阵，a、b a=np.array([[1,2,3],[4,5,6],[7,8,9]]) b=np.array([[10,20,30],[40,50,60],[70,80,90]]) # 将矩阵转化为Tensor a = torch.from_numpy(a) b = torch.from_numpy(b) # 打印a、b、c print(a,a.size()) print(b,b.size()) output
-tensor([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) torch.Size([3, 3]) tensor([[10, 20, 30], [40, 50, 60], [70, 80, 90]]) torch.Size([3, 3]) 2. torch.</description>
-    </item>
-    
-    <item>
-      <title>审稿学习系列01——图像质量评估</title>
-      <link>https://ioyy900205.github.io/post/%E5%AE%A1%E7%A8%BF%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%9701/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://ioyy900205.github.io/post/%E5%AE%A1%E7%A8%BF%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%9701/</guid>
-      <description>1. 背景 2. 图像质量评估（Image Quality Assessment, IQA）——方法分类  2.1. 主观方法 2.2. 客观方法   3. 图像质量评估（Image Quality Assessment, IQA）——图像提供信息分类  3.1. 全参考(Full Reference-IQA, FR-IQA) 3.2. 半参考(Reduced Reference-IQA, RR-IQA) 3.3. 无参考(No Reference-IQA, NR-IQA)   4. 数据集 5. 评估方法  5.1. 评估指标   6. 结果  1. 背景 质量评估(Quality Assessment，QA)在许多领域有其广泛的实用性。（比如图像压缩、视频编解码、视频监控等。）
-并且对高效、可靠质量评估的需求日益增加，所以QA成为一个感兴趣的研究领域。
-每年都涌现出大量的新的QA算法，有些是扩展已有的算法，也有一些是QA算法的应用。
-质量评估可分为：
-  图像质量评估（Image Quality Assessment, IQA）
-  视频质量评估（Video Quality Assessment, VQA）
-  2. 图像质量评估（Image Quality Assessment, IQA）——方法分类 2.</description>
+      <guid>https://ioyy900205.github.io/about/</guid>
+      <description>I was born in 1990 in Wuhan, Hubei Province.
+I received dual B.S., Wuhan University and Wuhan University of Technology in 2012, Ph.D., North China University of Electric Power in 2017.
+Interests: Deep learning, computer vision
+Award: National Scholarship, Distinguished Graduate Scholarship, ICONE-22 Best Paper</description>
     </item>
     
   </channel>

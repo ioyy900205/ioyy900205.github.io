@@ -13,20 +13,22 @@
     
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="04——轻量级神经网络总结"/>
-<meta name="twitter:description" content="1. 需解决的问题 2. 衡量指标  2.1. FLOPs 2.2. Params  2.2.1. 卷积层的参数量 2.2.2. 全连接层的参数量   2.3. MAC 2.4. MACC(也叫MADD)   3. 方法  3.1. 模型结构设计  3.1.1. 分组卷积 3.1.2. 分解卷积   3.2. 模型压缩  3.2.1. 权值量化 3.2.2. 网络剪枝 3.2.3. 低秩近似 3.2.4. 知识蒸馏      1. 需解决的问题 存储问题
+<meta name="twitter:description" content="请不要假装很努力， 因为结果不会陪你演戏！
+  1. 需解决的问题 2. 衡量指标  2.1. FLOPs 2.2. Params  2.2.1. 卷积层的参数量 2.2.2. 全连接层的参数量   2.3. MAC 2.4. MACC(也叫MADD)   3. 方法  3.1. 模型结构设计  3.1.1. 分组卷积 3.1.2. 分解卷积   3.2. 模型压缩  3.2.1. 权值量化 3.2.2. 网络剪枝 3.2.3. 低秩近似 3.2.4. 知识蒸馏      1. 需解决的问题 存储问题
 数百层网络有着大量的权值参数，保存大量权值参数对设备的内存要求很高； 速度问题
 在实际应用中，往往是毫秒级别，为了达到实际应用标准，要么提高处理器性能，要么就减少计算量。 而提高处理器性能在短时间内是无法完成的，因此减少计算量成为了主要的技术手段。 2. 衡量指标 目前，网络架构设计主要由计算复杂度的间接度量（如FLOPs）测量。然而，直接度量（例如，速度）还取决于诸如存储器访问成本和平台特性的其他因素。
 2.1. FLOPs FLOPS(floating point operations per second)"/>
 
     <meta property="og:title" content="04——轻量级神经网络总结" />
-<meta property="og:description" content="1. 需解决的问题 2. 衡量指标  2.1. FLOPs 2.2. Params  2.2.1. 卷积层的参数量 2.2.2. 全连接层的参数量   2.3. MAC 2.4. MACC(也叫MADD)   3. 方法  3.1. 模型结构设计  3.1.1. 分组卷积 3.1.2. 分解卷积   3.2. 模型压缩  3.2.1. 权值量化 3.2.2. 网络剪枝 3.2.3. 低秩近似 3.2.4. 知识蒸馏      1. 需解决的问题 存储问题
+<meta property="og:description" content="请不要假装很努力， 因为结果不会陪你演戏！
+  1. 需解决的问题 2. 衡量指标  2.1. FLOPs 2.2. Params  2.2.1. 卷积层的参数量 2.2.2. 全连接层的参数量   2.3. MAC 2.4. MACC(也叫MADD)   3. 方法  3.1. 模型结构设计  3.1.1. 分组卷积 3.1.2. 分解卷积   3.2. 模型压缩  3.2.1. 权值量化 3.2.2. 网络剪枝 3.2.3. 低秩近似 3.2.4. 知识蒸馏      1. 需解决的问题 存储问题
 数百层网络有着大量的权值参数，保存大量权值参数对设备的内存要求很高； 速度问题
 在实际应用中，往往是毫秒级别，为了达到实际应用标准，要么提高处理器性能，要么就减少计算量。 而提高处理器性能在短时间内是无法完成的，因此减少计算量成为了主要的技术手段。 2. 衡量指标 目前，网络架构设计主要由计算复杂度的间接度量（如FLOPs）测量。然而，直接度量（例如，速度）还取决于诸如存储器访问成本和平台特性的其他因素。
 2.1. FLOPs FLOPS(floating point operations per second)" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ioyy900205.github.io/post/%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%80%BB%E7%BB%93/" /><meta property="article:section" content="post" />
-
-
+<meta property="article:published_time" content="2021-04-27T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-04-27T00:00:00&#43;00:00" />
 
 
 
@@ -74,7 +76,7 @@
   <title>calendar</title>
   <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
 </svg>
-          Jan 1, 0001
+          Apr 27, 2021
         </div>
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
@@ -83,10 +85,20 @@
 </svg>
           1 min read
         </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://ioyy900205.github.io/tags/overview/">Overview</a>
+        </div>
       </div>
     </header>
     <div class="post-content">
-      <ul>
+      <hr>
+<p>请不要假装很努力， 因为结果不会陪你演戏！</p>
+<hr>
+<ul>
 <li><a href="#1-%E9%9C%80%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98">1. 需解决的问题</a></li>
 <li><a href="#2-%E8%A1%A1%E9%87%8F%E6%8C%87%E6%A0%87">2. 衡量指标</a>
 <ul>

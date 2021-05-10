@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Overview on 亮的笔记</title>
+    <link>https://ioyy900205.github.io/tags/overview/</link>
+    <description>Recent content in Overview on 亮的笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 27 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/overview/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>04——轻量级神经网络总结</title>
+      <link>https://ioyy900205.github.io/post/%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Tue, 27 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%80%BB%E7%BB%93/</guid>
+      <description>请不要假装很努力， 因为结果不会陪你演戏！
+  1. 需解决的问题 2. 衡量指标  2.1. FLOPs 2.2. Params  2.2.1. 卷积层的参数量 2.2.2. 全连接层的参数量   2.3. MAC 2.4. MACC(也叫MADD)   3. 方法  3.1. 模型结构设计  3.1.1. 分组卷积 3.1.2. 分解卷积   3.2. 模型压缩  3.2.1. 权值量化 3.2.2. 网络剪枝 3.2.3. 低秩近似 3.2.4. 知识蒸馏      1. 需解决的问题 存储问题
+数百层网络有着大量的权值参数，保存大量权值参数对设备的内存要求很高； 速度问题
+在实际应用中，往往是毫秒级别，为了达到实际应用标准，要么提高处理器性能，要么就减少计算量。 而提高处理器性能在短时间内是无法完成的，因此减少计算量成为了主要的技术手段。 2. 衡量指标 目前，网络架构设计主要由计算复杂度的间接度量（如FLOPs）测量。然而，直接度量（例如，速度）还取决于诸如存储器访问成本和平台特性的其他因素。
+2.1. FLOPs FLOPS(floating point operations per second)</description>
+    </item>
+    
+    <item>
+      <title>02——SeNet学习</title>
+      <link>https://ioyy900205.github.io/post/senet/</link>
+      <pubDate>Mon, 26 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/senet/</guid>
+      <description>请不要假装很努力， 因为结果不会陪你演戏！
+  1. SENET  1.1. 链接 1.2. 贡献  1.2.1. 提供了子结构 1.2.2. SOTA   1.3. 核心思想 1.4. Squeeze 1.5. Excitation   2. 思考  2.1. 浅层作用较大    1. SENET 1.1. 链接 论文：Squeeze-and-Excitation Networks论文链接：https://arxiv.org/abs/1709.01507代码地址：https://github.com/hujie-frank/SENetPyTorch代码地址：https://github.com/miraclewkf/SENet-PyTorch
+A central theme of computer vision research is the search for more powerful representations that capture only those properties of an image that are most salient for a given task</description>
+    </item>
+    
+  </channel>
+</rss>

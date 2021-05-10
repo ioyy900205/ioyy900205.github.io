@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Reference on 亮的笔记</title>
+    <link>https://ioyy900205.github.io/tags/reference/</link>
+    <description>Recent content in Reference on 亮的笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sun, 25 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/reference/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>REF01——避坑指南——打印的RESNET18</title>
+      <link>https://ioyy900205.github.io/post/ref01%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97%E6%89%93%E5%8D%B0%E7%9A%84resnet18/</link>
+      <pubDate>Sun, 25 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/ref01%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97%E6%89%93%E5%8D%B0%E7%9A%84resnet18/</guid>
+      <description>请不要假装很努力， 因为结果不会陪你演戏！
+  1. BasicBlock 2. BottleNeck 3. ResNet18  1. BasicBlock 其中有个坑是下采样。如下图所示：
+具体来说，如代码所展示的：
+if stride != 1 or in_planes != self.expansion*planes: self.shortcut = nn.Sequential( nn.Conv2d(in_planes, self.expansion*planes, kernel_size=1, stride=stride, bias=False), nn.BatchNorm2d(self.expansion*planes) ) 当 stride不等于1 or 输入通道数和输出通道数不相同 时： 进行下采样操作。
+下采样：Conv2D+BN
+目的是让跳层能够保持维数
+2. BottleNeck 同样的BottleNeck也存在这样的问题。
+3. ResNet18 ResNet( (conv1): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False) (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True) (layer1): Sequential( (0): BasicBlock( (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False) (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.</description>
+    </item>
+    
+  </channel>
+</rss>

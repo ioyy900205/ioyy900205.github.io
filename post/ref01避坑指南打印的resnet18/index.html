@@ -13,7 +13,8 @@
     
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="REF01——避坑指南——打印的RESNET18"/>
-<meta name="twitter:description" content="1. BasicBlock 2. BottleNeck 3. ResNet18  1. BasicBlock 其中有个坑是下采样。如下图所示：
+<meta name="twitter:description" content="请不要假装很努力， 因为结果不会陪你演戏！
+  1. BasicBlock 2. BottleNeck 3. ResNet18  1. BasicBlock 其中有个坑是下采样。如下图所示：
 具体来说，如代码所展示的：
 if stride != 1 or in_planes != self.expansion*planes: self.shortcut = nn.Sequential( nn.Conv2d(in_planes, self.expansion*planes, kernel_size=1, stride=stride, bias=False), nn.BatchNorm2d(self.expansion*planes) ) 当 stride不等于1 or 输入通道数和输出通道数不相同 时： 进行下采样操作。
 下采样：Conv2D&#43;BN
@@ -22,7 +23,8 @@ if stride != 1 or in_planes != self.expansion*planes: self.shortcut = nn.Sequent
 3. ResNet18 ResNet( (conv1): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False) (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True) (layer1): Sequential( (0): BasicBlock( (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False) (bn1): BatchNorm2d(64, eps=1e-05, momentum=0."/>
 
     <meta property="og:title" content="REF01——避坑指南——打印的RESNET18" />
-<meta property="og:description" content="1. BasicBlock 2. BottleNeck 3. ResNet18  1. BasicBlock 其中有个坑是下采样。如下图所示：
+<meta property="og:description" content="请不要假装很努力， 因为结果不会陪你演戏！
+  1. BasicBlock 2. BottleNeck 3. ResNet18  1. BasicBlock 其中有个坑是下采样。如下图所示：
 具体来说，如代码所展示的：
 if stride != 1 or in_planes != self.expansion*planes: self.shortcut = nn.Sequential( nn.Conv2d(in_planes, self.expansion*planes, kernel_size=1, stride=stride, bias=False), nn.BatchNorm2d(self.expansion*planes) ) 当 stride不等于1 or 输入通道数和输出通道数不相同 时： 进行下采样操作。
 下采样：Conv2D&#43;BN
@@ -31,8 +33,8 @@ if stride != 1 or in_planes != self.expansion*planes: self.shortcut = nn.Sequent
 3. ResNet18 ResNet( (conv1): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False) (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True) (layer1): Sequential( (0): BasicBlock( (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False) (bn1): BatchNorm2d(64, eps=1e-05, momentum=0." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ioyy900205.github.io/post/ref01%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97%E6%89%93%E5%8D%B0%E7%9A%84resnet18/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2021-04-27T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2021-04-27T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2021-04-25T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-04-25T00:00:00&#43;00:00" />
 
 
 
@@ -80,7 +82,7 @@ if stride != 1 or in_planes != self.expansion*planes: self.shortcut = nn.Sequent
   <title>calendar</title>
   <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
 </svg>
-          Apr 27, 2021
+          Apr 25, 2021
         </div>
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
@@ -89,10 +91,20 @@ if stride != 1 or in_planes != self.expansion*planes: self.shortcut = nn.Sequent
 </svg>
           2 min read
         </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://ioyy900205.github.io/tags/reference/">Reference</a>
+        </div>
       </div>
     </header>
     <div class="post-content">
-      <ul>
+      <hr>
+<p>请不要假装很努力， 因为结果不会陪你演戏！</p>
+<hr>
+<ul>
 <li><a href="#1-basicblock">1. BasicBlock</a></li>
 <li><a href="#2-bottleneck">2. BottleNeck</a></li>
 <li><a href="#3-resnet18">3. ResNet18</a></li>
