@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en-us">
   <head>
-    <title>03——nn.module学习 // 亮的笔记</title>
+    <title>03——nn.module学习——PyTorch // 亮的笔记</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
     <meta name="generator" content="Hugo 0.82.1" />
@@ -12,11 +12,11 @@
 
     
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="03——nn.module学习"/>
+<meta name="twitter:title" content="03——nn.module学习——PyTorch"/>
 <meta name="twitter:description" content="1. nn.moduel初步  1.1. Linear类 1.2. Conv2d类 1.3. 自定义层的步骤   2. 自定义层  2.1. 定义一个自定义层MyLayer 2.2. 自定义模型并且训练    1. nn.moduel初步 keras更加注重的是层Layer、pytorch更加注重的是模型Module。
 1.1. Linear类 import math import torch from torch.nn.parameter import Parameter from .. import functional as F from .. import init from .module import Module from ..._jit_internal import weak_module, weak_script_method class Linear(Module): __constants__ = [&#39;bias&#39;] def __init__(self, in_features, out_features, bias=True): super(Linear, self).__init__() self.in_features = in_features self.out_features = out_features self."/>
 
-    <meta property="og:title" content="03——nn.module学习" />
+    <meta property="og:title" content="03——nn.module学习——PyTorch" />
 <meta property="og:description" content="1. nn.moduel初步  1.1. Linear类 1.2. Conv2d类 1.3. 自定义层的步骤   2. 自定义层  2.1. 定义一个自定义层MyLayer 2.2. 自定义模型并且训练    1. nn.moduel初步 keras更加注重的是层Layer、pytorch更加注重的是模型Module。
 1.1. Linear类 import math import torch from torch.nn.parameter import Parameter from .. import functional as F from .. import init from .module import Module from ..._jit_internal import weak_module, weak_script_method class Linear(Module): __constants__ = [&#39;bias&#39;] def __init__(self, in_features, out_features, bias=True): super(Linear, self).__init__() self.in_features = in_features self.out_features = out_features self." />
 <meta property="og:type" content="article" />
@@ -63,7 +63,7 @@
       
   <article class="post">
     <header class="post-header">
-      <h1 class ="post-title">03——nn.module学习</h1>
+      <h1 class ="post-title">03——nn.module学习——PyTorch</h1>
       <div class="post-meta">
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">

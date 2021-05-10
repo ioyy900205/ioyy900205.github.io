@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Tue, 27 Apr 2021 09:43:30 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>03——nn.module学习</title>
+      <title>03——nn.module学习——PyTorch</title>
       <link>https://ioyy900205.github.io/post/nn.module/</link>
       <pubDate>Tue, 27 Apr 2021 09:43:30 +0800</pubDate>
       
@@ -65,6 +65,15 @@ A central theme of computer vision research is the search for more powerful repr
     </item>
     
     <item>
+      <title>03——torch.tensor维度操作——PyTorch</title>
+      <link>https://ioyy900205.github.io/post/torch.tensor%E7%9A%84%E7%BB%B4%E5%BA%A6%E6%93%8D%E4%BD%9C/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/torch.tensor%E7%9A%84%E7%BB%B4%E5%BA%A6%E6%93%8D%E4%BD%9C/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>04——轻量级神经网络总结</title>
       <link>https://ioyy900205.github.io/post/%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%80%BB%E7%BB%93/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -74,6 +83,15 @@ A central theme of computer vision research is the search for more powerful repr
 数百层网络有着大量的权值参数，保存大量权值参数对设备的内存要求很高； 速度问题
 在实际应用中，往往是毫秒级别，为了达到实际应用标准，要么提高处理器性能，要么就减少计算量。 而提高处理器性能在短时间内是无法完成的，因此减少计算量成为了主要的技术手段。 2. 衡量指标 目前，网络架构设计主要由计算复杂度的间接度量（如FLOPs）测量。然而，直接度量（例如，速度）还取决于诸如存储器访问成本和平台特性的其他因素。
 2.1. FLOPs FLOPS(floating point operations per second)</description>
+    </item>
+    
+    <item>
+      <title>05——ShuffleNet学习</title>
+      <link>https://ioyy900205.github.io/post/shufflenet/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/shufflenet/</guid>
+      <description></description>
     </item>
     
     <item>
