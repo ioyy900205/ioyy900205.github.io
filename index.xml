@@ -5,7 +5,21 @@
     <link>https://ioyy900205.github.io/</link>
     <description>Recent content on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 11 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 12 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>09——Faster R-CNN</title>
+      <link>https://ioyy900205.github.io/post/faster-r-cnn/</link>
+      <pubDate>Wed, 12 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/faster-r-cnn/</guid>
+      <description>请不要假装很努力， 因为结果不会陪你演戏！
+  1. 背景  1.1. 时间线 1.2. 结构  1.2.1. CNN 1.2.2. RPN 1.2.3. ROI Pooling     2. 一些问题 3. 损失函数 4. 后处理  4.1. NMS 4.2. Proposal selection 4.3. Standalone application   5. 训练 6. 推理 7. 后记  1. 背景 Faster R-CNN最初发表于NIPS 2015。发表后，它经历了几次修改。
+Faster R-CNN是R-CNN论文的第三次迭代&amp;ndash;Ross Girshick是作者和合作者。
+1.1. 时间线   R-CNN
+Published in 2014
+“Rich feature hierarchies for accurate object detection and semantic segmentation”,</description>
+    </item>
+    
     <item>
       <title>08——数据集操作和图像处理——PyTorch</title>
       <link>https://ioyy900205.github.io/post/voc2012%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E5%9B%BE%E7%89%87%E5%92%8Cbbox%E4%BF%A1%E6%81%AF%E6%98%BE%E7%A4%BA/</link>
@@ -136,12 +150,12 @@ if stride != 1 or in_planes != self.expansion*planes: self.shortcut = nn.Sequent
     </item>
     
     <item>
-      <title></title>
+      <title>About Me</title>
       <link>https://ioyy900205.github.io/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://ioyy900205.github.io/about/</guid>
-      <description>+++ title = &amp;ldquo;About Me&amp;rdquo; +++ I was born in 1990 in Wuhan, Hubei Province.
+      <description>I was born in 1990 in Wuhan, Hubei Province.
 I received dual B.S., Wuhan University and Wuhan University of Technology in 2012, Ph.D., North China University of Electric Power in 2017.
 Interests: Deep learning, computer vision
 Award: National Scholarship, Distinguished Graduate Scholarship, ICONE-22 Best Paper</description>

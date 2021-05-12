@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Object_Detection on 亮的笔记</title>
+    <link>https://ioyy900205.github.io/tags/object_detection/</link>
+    <description>Recent content in Object_Detection on 亮的笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 12 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/object_detection/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>09——Faster R-CNN</title>
+      <link>https://ioyy900205.github.io/post/faster-r-cnn/</link>
+      <pubDate>Wed, 12 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/faster-r-cnn/</guid>
+      <description>请不要假装很努力， 因为结果不会陪你演戏！
+  1. 背景  1.1. 时间线 1.2. 结构  1.2.1. CNN 1.2.2. RPN 1.2.3. ROI Pooling     2. 一些问题 3. 损失函数 4. 后处理  4.1. NMS 4.2. Proposal selection 4.3. Standalone application   5. 训练 6. 推理 7. 后记  1. 背景 Faster R-CNN最初发表于NIPS 2015。发表后，它经历了几次修改。
+Faster R-CNN是R-CNN论文的第三次迭代&amp;ndash;Ross Girshick是作者和合作者。
+1.1. 时间线   R-CNN
+Published in 2014
+“Rich feature hierarchies for accurate object detection and semantic segmentation”,</description>
+    </item>
+    
+  </channel>
+</rss>
