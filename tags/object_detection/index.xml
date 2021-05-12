@@ -8,16 +8,31 @@
     <lastBuildDate>Wed, 12 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/object_detection/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>09——Faster R-CNN</title>
-      <link>https://ioyy900205.github.io/post/faster-r-cnn/</link>
+      <link>https://ioyy900205.github.io/post/09-faster-r-cnn/</link>
       <pubDate>Wed, 12 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://ioyy900205.github.io/post/faster-r-cnn/</guid>
+      <guid>https://ioyy900205.github.io/post/09-faster-r-cnn/</guid>
       <description>请不要假装很努力， 因为结果不会陪你演戏！
   1. 背景  1.1. 时间线 1.2. 结构  1.2.1. CNN 1.2.2. RPN 1.2.3. ROI Pooling     2. 一些问题 3. 损失函数 4. 后处理  4.1. NMS 4.2. Proposal selection 4.3. Standalone application   5. 训练 6. 推理 7. 后记  1. 背景 Faster R-CNN最初发表于NIPS 2015。发表后，它经历了几次修改。
 Faster R-CNN是R-CNN论文的第三次迭代&amp;ndash;Ross Girshick是作者和合作者。
 1.1. 时间线   R-CNN
 Published in 2014
 “Rich feature hierarchies for accurate object detection and semantic segmentation”,</description>
+    </item>
+    
+    <item>
+      <title>10——目标检测参数</title>
+      <link>https://ioyy900205.github.io/post/10%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%8F%82%E6%95%B0/</link>
+      <pubDate>Wed, 12 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/10%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%8F%82%E6%95%B0/</guid>
+      <description>请不要假装很努力， 因为结果不会陪你演戏！
+  1. background Pascal VOC 和 COCO 2. precision 和 recall  2.1. 基本定义 2.2. precision-recall curve   3. COCO Evaluation Result 4. 参考  1. background Pascal VOC 和 COCO 最近看目标检测，少不了了解其中参数的意义。一顿搜所哎。
+最精简的回答：
+目标检测中衡量识别精度的指标是mAP（mean average precision）。多个类别物体检测中，每一个类别都可以根据recall和precision绘制一条曲线，AP就是该曲线下的面积，mAP是多个类别AP的平均值
+番外篇 在coco数据集出来之前，基本都用pascal voc 现在都用coco了。
+2. precision 和 recall 2.1. 基本定义  precision查准率 preicision是在你认为的正样本中， 有多大比例真的是正样本 recall查全率 recall则是在真正的正样本中， 有多少被你找到了  2.2. precision-recall curve 如果threshold太高， prediction非常严格， 所以我们认为是鸭子的基本都是鸭子，precision就高了；但也因为筛选太严格， 我们也放过了一些score比较低的鸭子， 所以recall就低了
+如果threshold太低， 什么都会被当成鸭子， precision就会很低， recall就会很高。</description>
     </item>
     
   </channel>
