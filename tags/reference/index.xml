@@ -8,10 +8,10 @@
     <lastBuildDate>Sun, 25 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/reference/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>REF01——避坑指南——打印的RESNET18</title>
-      <link>https://ioyy900205.github.io/post/ref01%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97%E6%89%93%E5%8D%B0%E7%9A%84resnet18/</link>
+      <link>https://ioyy900205.github.io/post/2021-04-25-ref01%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97%E6%89%93%E5%8D%B0%E7%9A%84resnet18/</link>
       <pubDate>Sun, 25 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://ioyy900205.github.io/post/ref01%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97%E6%89%93%E5%8D%B0%E7%9A%84resnet18/</guid>
+      <guid>https://ioyy900205.github.io/post/2021-04-25-ref01%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97%E6%89%93%E5%8D%B0%E7%9A%84resnet18/</guid>
       <description>请不要假装很努力， 因为结果不会陪你演戏！
   1. BasicBlock 2. BottleNeck 3. ResNet18  1. BasicBlock 其中有个坑是下采样。如下图所示：
 具体来说，如代码所展示的：

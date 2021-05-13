@@ -8,10 +8,10 @@
     <lastBuildDate>Mon, 26 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/backbone/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>01——ResNeXt学习</title>
-      <link>https://ioyy900205.github.io/post/resnext/</link>
+      <link>https://ioyy900205.github.io/post/2021-04-26-resnext/</link>
       <pubDate>Mon, 26 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://ioyy900205.github.io/post/resnext/</guid>
+      <guid>https://ioyy900205.github.io/post/2021-04-26-resnext/</guid>
       <description>请不要假装很努力， 因为结果不会陪你演戏！
   1. ResNeXt  1.1. 概述 1.2. 思路 1.3. Block 1.4. 组卷积 1.5. 模型复杂度 1.6. Shortcut 1.7. 结果    1. ResNeXt 1.1. 概述 论文：Aggregated Residual Transformations for Deep Neural Networks
 论文链接：https://arxiv.org/abs/1611.05431

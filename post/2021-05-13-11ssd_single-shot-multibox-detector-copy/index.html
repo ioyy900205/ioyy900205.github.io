@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>11——SSD:Single Shot MultiBox Detector // 亮的笔记</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.82.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Liu Liang" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="11——SSD:Single Shot MultiBox Detector"/>
+<meta name="twitter:description" content="请不要假装很努力， 因为结果不会陪你演戏！
+  1. background 2. 目标损失函数 3. 多尺度多比例默认框 4. 负样本均衡 5. 数据增强 6. 性能比较  6.1. 在VOC2007测试集上的检测性能   7. 在VOC2012测试集上的检测性能 8. 在COCO测试集上的检测性能 9. 总结  1. background ECCV2016 author:wei liu 实现真正的实时
+2016年，Wei Liu等人提出了SSD算法，它是继YOLOv1算法提出后的又一单阶段目标检测算法。在当时，单阶段算法相比于以R-CNN系列为主的双阶段算法更快，所以被学术界和工业界所青睐。为了提高检测的精度，SSD创造性地提出了多尺度预测的目标检测算法，使得网络更容易适应对不同大小物体的检测。
+放上对比结构如下： 我的理解是 网络抽取不同的特征层进行预测，较低的特征层可以预测教细节物体，较高特征层可以预测教大物体.
+整体结构上，SSD采用了VGG-16作为骨干网络提取特征。在骨干网络末尾添加了若干个特征层，特征层与特征层之间使用1x1和3x3的卷积核计算特征和降采样，并从中选择了6个不同大小的特征层来预测目标。
+需要注意的是，用来预测目标的每一个特征层上预设的Anchors数量不一定是相同的。比如对于38x38的特征层，每个格子预设4个不同比例的Anchors；对于19x19的特征层，每个格子预设了6个不同比例的Anchors。
+2. 目标损失函数 每一个目标检测网络都具有其独特的目标损失函数，它决定着网络训练迭代的方向。
+根据目标检测网络的一般定义，我们知道总损失函数一般由两部分组成：定位损失和置信度损失。
+其中，定位损失计算公式为：
+定位损失函数借鉴了Faster R-CNN中的Smooth L1函数，用来计算预测边界框 l 和真实边界框 g 之间的损失误差。其中，m 是代表边界框位置信息的集合{cx，cy，w，h}。
+容易看出，SSD没有直接将目标的中心位置、长宽作为真实标签。而是采取真实框与预选框Anchors的偏移作为真实标签。那么在学习的过程中，也会去主动预测偏移值，这样更有利于网络的训练，避免在训练初期产生较大的振荡。
+置信度损失函数是在多个类别置信度c上的softmax损失：
+3. 多尺度多比例默认框 前面已经提到，SSD算法中采用了类似于Faster R-CNN中的Anchors机制用于目标框的回归。值得一提的是，SSD采用的Anchors方法更为灵活，不仅在每一个特征层设置了不同大小和比例的预选框，而且针对于不同的特征层，也设计了相应的大小的预选框。
+经过计算可知，对于越深的特征层（尺寸越小），设置的预选框尺寸越大。这是因为，尺寸越小的特征层，感受野越大。SSD的目的就是：要让感受野小的特征层检测小目标，使用感受野大的特征层检测更大的目标。
+4. 负样本均衡 在训练过程中，大部分的预选框Anchors并不能和真实框匹配上，因此负样本很多，而正样本却很少，正负样本数量严重失衡，不利于训练。
+考虑到这个问题，SSD在训练过程中，没有选取所有的负样本。而是先将负样本的置信度损失进行排序，仅选取置信度高的一些负样本，使得负样本数与正样本数之间的比率最大不超过3：1。作者认为，这样使得训练更稳定更快。
+5. 数据增强 数据增强又叫数据增广，是扩大数据集的一种方式，经常用于深度学习中来防止过拟合。在SSD算法中，也使用了一些数据增强的技巧。采用数据增强后，目标检测性能也得到了明显的提升，具体实验结果如下:
+6. 性能比较 6."/>
+
+    <meta property="og:title" content="11——SSD:Single Shot MultiBox Detector" />
+<meta property="og:description" content="请不要假装很努力， 因为结果不会陪你演戏！
+  1. background 2. 目标损失函数 3. 多尺度多比例默认框 4. 负样本均衡 5. 数据增强 6. 性能比较  6.1. 在VOC2007测试集上的检测性能   7. 在VOC2012测试集上的检测性能 8. 在COCO测试集上的检测性能 9. 总结  1. background ECCV2016 author:wei liu 实现真正的实时
+2016年，Wei Liu等人提出了SSD算法，它是继YOLOv1算法提出后的又一单阶段目标检测算法。在当时，单阶段算法相比于以R-CNN系列为主的双阶段算法更快，所以被学术界和工业界所青睐。为了提高检测的精度，SSD创造性地提出了多尺度预测的目标检测算法，使得网络更容易适应对不同大小物体的检测。
+放上对比结构如下： 我的理解是 网络抽取不同的特征层进行预测，较低的特征层可以预测教细节物体，较高特征层可以预测教大物体.
+整体结构上，SSD采用了VGG-16作为骨干网络提取特征。在骨干网络末尾添加了若干个特征层，特征层与特征层之间使用1x1和3x3的卷积核计算特征和降采样，并从中选择了6个不同大小的特征层来预测目标。
+需要注意的是，用来预测目标的每一个特征层上预设的Anchors数量不一定是相同的。比如对于38x38的特征层，每个格子预设4个不同比例的Anchors；对于19x19的特征层，每个格子预设了6个不同比例的Anchors。
+2. 目标损失函数 每一个目标检测网络都具有其独特的目标损失函数，它决定着网络训练迭代的方向。
+根据目标检测网络的一般定义，我们知道总损失函数一般由两部分组成：定位损失和置信度损失。
+其中，定位损失计算公式为：
+定位损失函数借鉴了Faster R-CNN中的Smooth L1函数，用来计算预测边界框 l 和真实边界框 g 之间的损失误差。其中，m 是代表边界框位置信息的集合{cx，cy，w，h}。
+容易看出，SSD没有直接将目标的中心位置、长宽作为真实标签。而是采取真实框与预选框Anchors的偏移作为真实标签。那么在学习的过程中，也会去主动预测偏移值，这样更有利于网络的训练，避免在训练初期产生较大的振荡。
+置信度损失函数是在多个类别置信度c上的softmax损失：
+3. 多尺度多比例默认框 前面已经提到，SSD算法中采用了类似于Faster R-CNN中的Anchors机制用于目标框的回归。值得一提的是，SSD采用的Anchors方法更为灵活，不仅在每一个特征层设置了不同大小和比例的预选框，而且针对于不同的特征层，也设计了相应的大小的预选框。
+经过计算可知，对于越深的特征层（尺寸越小），设置的预选框尺寸越大。这是因为，尺寸越小的特征层，感受野越大。SSD的目的就是：要让感受野小的特征层检测小目标，使用感受野大的特征层检测更大的目标。
+4. 负样本均衡 在训练过程中，大部分的预选框Anchors并不能和真实框匹配上，因此负样本很多，而正样本却很少，正负样本数量严重失衡，不利于训练。
+考虑到这个问题，SSD在训练过程中，没有选取所有的负样本。而是先将负样本的置信度损失进行排序，仅选取置信度高的一些负样本，使得负样本数与正样本数之间的比率最大不超过3：1。作者认为，这样使得训练更稳定更快。
+5. 数据增强 数据增强又叫数据增广，是扩大数据集的一种方式，经常用于深度学习中来防止过拟合。在SSD算法中，也使用了一些数据增强的技巧。采用数据增强后，目标检测性能也得到了明显的提升，具体实验结果如下:
+6. 性能比较 6." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ioyy900205.github.io/post/2021-05-13-11ssd_single-shot-multibox-detector-copy/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-05-13T10:40:00&#43;08:00" />
+<meta property="article:modified_time" content="2021-05-13T10:40:00&#43;08:00" />
+
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3520060145,2875461924&amp;fm=26&amp;gp=0.jpg" alt="Liu Liang" /></a>
+      <h1>亮的笔记</h1>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>深度学习笔记本</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/ioyy900205" target="_blank" rel="noreferrer noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/ioyy900205" target="_blank" rel="noreferrer noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">11——SSD:Single Shot MultiBox Detector</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          May 13, 2021
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://ioyy900205.github.io/tags/object_detection/">Object_Detection</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>请不要假装很努力， 因为结果不会陪你演戏！</p>
+<hr>
+<ul>
+<li><a href="#1-background">1. background</a></li>
+<li><a href="#2-%E7%9B%AE%E6%A0%87%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0">2. 目标损失函数</a></li>
+<li><a href="#3-%E5%A4%9A%E5%B0%BA%E5%BA%A6%E5%A4%9A%E6%AF%94%E4%BE%8B%E9%BB%98%E8%AE%A4%E6%A1%86">3. 多尺度多比例默认框</a></li>
+<li><a href="#4-%E8%B4%9F%E6%A0%B7%E6%9C%AC%E5%9D%87%E8%A1%A1">4. 负样本均衡</a></li>
+<li><a href="#5-%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%BC%BA">5. 数据增强</a></li>
+<li><a href="#6-%E6%80%A7%E8%83%BD%E6%AF%94%E8%BE%83">6. 性能比较</a>
+<ul>
+<li><a href="#61-%E5%9C%A8voc2007%E6%B5%8B%E8%AF%95%E9%9B%86%E4%B8%8A%E7%9A%84%E6%A3%80%E6%B5%8B%E6%80%A7%E8%83%BD">6.1. 在VOC2007测试集上的检测性能</a></li>
+</ul>
+</li>
+<li><a href="#7-%E5%9C%A8voc2012%E6%B5%8B%E8%AF%95%E9%9B%86%E4%B8%8A%E7%9A%84%E6%A3%80%E6%B5%8B%E6%80%A7%E8%83%BD">7. 在VOC2012测试集上的检测性能</a></li>
+<li><a href="#8-%E5%9C%A8coco%E6%B5%8B%E8%AF%95%E9%9B%86%E4%B8%8A%E7%9A%84%E6%A3%80%E6%B5%8B%E6%80%A7%E8%83%BD">8. 在COCO测试集上的检测性能</a></li>
+<li><a href="#9-%E6%80%BB%E7%BB%93">9. 总结</a></li>
+</ul>
+<h1 id="1-background">1. background</h1>
+<p>ECCV2016 author:wei liu
+实现真正的实时</p>
+<p>2016年，Wei Liu等人提出了SSD算法，它是继YOLOv1算法提出后的又一单阶段目标检测算法。在当时，单阶段算法相比于以R-CNN系列为主的双阶段算法更快，所以被学术界和工业界所青睐。为了提高检测的精度，SSD创造性地提出了多尺度预测的目标检测算法，使得网络更容易适应对不同大小物体的检测。</p>
+<p>放上对比结构如下：
+<img src="https://img-blog.csdnimg.cn/20201117104751913.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dqaW5qaWU=,size_16,color_FFFFFF,t_70#pic_center" alt="1"></p>
+<p>我的理解是 网络抽取不同的特征层进行预测，较低的特征层可以预测教细节物体，较高特征层可以预测教大物体.</p>
+<p>整体结构上，SSD采用了VGG-16作为骨干网络提取特征。在骨干网络末尾添加了若干个特征层，特征层与特征层之间使用1x1和3x3的卷积核计算特征和降采样，并从中选择了6个不同大小的特征层来预测目标。</p>
+<p>需要注意的是，用来预测目标的每一个特征层上预设的Anchors数量不一定是相同的。比如对于38x38的特征层，每个格子预设4个不同比例的Anchors；对于19x19的特征层，每个格子预设了6个不同比例的Anchors。</p>
+<h1 id="2-目标损失函数">2. 目标损失函数</h1>
+<p>每一个目标检测网络都具有其独特的目标损失函数，它决定着网络训练迭代的方向。</p>
+<p>根据目标检测网络的一般定义，我们知道总损失函数一般由两部分组成：定位损失和置信度损失。</p>
+<p><img src="https://img-blog.csdnimg.cn/2020112414450261.png#pic_center" alt="2"></p>
+<p>其中，定位损失计算公式为：</p>
+<p><img src="https://img-blog.csdnimg.cn/2020112414561897.png#pic_center" alt="3"></p>
+<p>定位损失函数借鉴了Faster R-CNN中的Smooth L1函数，用来计算预测边界框 l 和真实边界框 g 之间的损失误差。其中，m 是代表边界框位置信息的集合{cx，cy，w，h}。</p>
+<p>容易看出，SSD没有直接将目标的中心位置、长宽作为真实标签。而是采取真实框与预选框Anchors的偏移作为真实标签。那么在学习的过程中，也会去主动预测偏移值，这样更有利于网络的训练，避免在训练初期产生较大的振荡。</p>
+<p>置信度损失函数是在多个类别置信度c上的softmax损失：</p>
+<p><img src="https://img-blog.csdnimg.cn/20201124153151224.png#pic_center" alt="4"></p>
+<h1 id="3-多尺度多比例默认框">3. 多尺度多比例默认框</h1>
+<p>前面已经提到，SSD算法中采用了类似于Faster R-CNN中的Anchors机制用于目标框的回归。值得一提的是，SSD采用的Anchors方法更为灵活，不仅在每一个特征层设置了不同大小和比例的预选框，而且针对于不同的特征层，也设计了相应的大小的预选框。</p>
+<p>经过计算可知，对于越深的特征层（尺寸越小），设置的预选框尺寸越大。这是因为，尺寸越小的特征层，感受野越大。SSD的目的就是：要让感受野小的特征层检测小目标，使用感受野大的特征层检测更大的目标。</p>
+<h1 id="4-负样本均衡">4. 负样本均衡</h1>
+<p>在训练过程中，大部分的预选框Anchors并不能和真实框匹配上，因此负样本很多，而正样本却很少，正负样本数量严重失衡，不利于训练。</p>
+<p>考虑到这个问题，SSD在训练过程中，没有选取所有的负样本。而是先将负样本的置信度损失进行排序，仅选取置信度高的一些负样本，使得负样本数与正样本数之间的比率最大不超过3：1。作者认为，这样使得训练更稳定更快。</p>
+<h1 id="5-数据增强">5. 数据增强</h1>
+<p>数据增强又叫数据增广，是扩大数据集的一种方式，经常用于深度学习中来防止过拟合。在SSD算法中，也使用了一些数据增强的技巧。采用数据增强后，目标检测性能也得到了明显的提升，具体实验结果如下:</p>
+<p><img src="https://img-blog.csdnimg.cn/20201124165547765.png#pic_center" alt=""></p>
+<h1 id="6-性能比较">6. 性能比较</h1>
+<h2 id="61-在voc2007测试集上的检测性能">6.1. 在VOC2007测试集上的检测性能</h2>
+<p><img src="https://img-blog.csdnimg.cn/20201124214837925.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dqaW5qaWU=,size_16,color_FFFFFF,t_70#pic_center" alt=""></p>
+<p>分析上表，容易得出结论：</p>
+<pre><code>对比检测精度可知，SSD算法的性能整体上优于Fast R-CN 和 Faster R-CNN算法。
+对比SSD300和SSD512可知，图像输入尺寸为512x512的SSD算法比输入尺寸为300x300的SSD算法检测性能更好。
+对比07、 07+12、07+12+COCO可知，训练集的扩充有助于检测性能的提升。
+</code></pre>
+<p>注：表格名词解释（下同）：</p>
+<pre><code>07：表示网络模型仅在VOC2007数据集上进行训练
+07+12：表示网络模型同时在VOC2007和VOC2012数据集上进行训练
+07+12+COCO：表示网络模型先在COCO数据集上进行训练，再在VOC2007和VOC2012数据集上进行微调。
+</code></pre>
+<h1 id="7-在voc2012测试集上的检测性能">7. 在VOC2012测试集上的检测性能</h1>
+<p><img src="https://img-blog.csdnimg.cn/20201124220359707.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dqaW5qaWU=,size_16,color_FFFFFF,t_70#pic_center" alt=""></p>
+<p>分析上表，容易得出以下结论：</p>
+<pre><code>在VOC2012测试数据集上，整体的检测精度表现：SSD512&gt;SSD300&gt;Faster R-CNN&gt;Fast R-CNN&gt;YOLOv1
+对比SSD300和SSD512可知，较大尺寸的图像输入，对SSD的检测精度更有利。
+对比07+12、07+12+COCO可知，训练集的扩充有助于检测性能的提升。
+</code></pre>
+<h1 id="8-在coco测试集上的检测性能">8. 在COCO测试集上的检测性能</h1>
+<p>为了进一步验证SSD框架，作者在在COCO数据集上训练了SSD300和SSD512。并且在COCO测试数据集上，对不同的目标检测算法性能进行了对比。</p>
+<p><img src="https://img-blog.csdnimg.cn/20201124221010574.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dqaW5qaWU=,size_16,color_FFFFFF,t_70#pic_center" alt=""></p>
+<p>分析上表，容易得出以下结论：</p>
+<pre><code>比较不同的网络，发现SSD512的平均精确度和平均召回率最高，检测性能最佳，且对小目标的检测效果较好。
+SSD300的平均精确度与Faster R-CNN相当，但是平均召回率明显低于Faster R-CNN。
+</code></pre>
+<h1 id="9-总结">9. 总结</h1>
+<p>SSD是一种适用于多种类别的单阶段目标检测器，检测速度比Faster R-CNN更快，检测精度比YOLOv1更高。经典的SSD算法分为SSD300和SSD512两种，分别代表网络输入的图像大小为：300x300和512x512。SSD512的检测精度要优于SSD300，同时对小目标的检测性能更好；SSD300的检测速度比SSD512更快，同时它的检测精度也比同期的其他检测器要好。</p>
+<p>SSD的整体网络结构，其实很容易理解。可以简单的看做是YOLOv1和特征金字塔的融合，即主干网络采用了与YOLOv1类似的VGG16，与YOLOv1不同的是，SSD采用多个不同的特征层用来预测，这些不同的特征层其实就可以看做是特征金字塔。因此，SSD在不失速度的情况下，检测精度仍然更够保持很好。</p>
+<hr>
+<p><strong>参考资料</strong></p>
+<p><a href="https://blog.csdn.net/wjinjie/article/details/109735796">https://blog.csdn.net/wjinjie/article/details/109735796</a></p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

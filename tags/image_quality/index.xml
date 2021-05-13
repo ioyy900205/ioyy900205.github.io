@@ -8,10 +8,10 @@
     <lastBuildDate>Mon, 10 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/image_quality/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>审稿学习系列01——图像质量评估</title>
-      <link>https://ioyy900205.github.io/post/%E5%AE%A1%E7%A8%BF%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%9701/</link>
+      <link>https://ioyy900205.github.io/post/2021-05-10-%E5%AE%A1%E7%A8%BF%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%9701/</link>
       <pubDate>Mon, 10 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://ioyy900205.github.io/post/%E5%AE%A1%E7%A8%BF%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%9701/</guid>
+      <guid>https://ioyy900205.github.io/post/2021-05-10-%E5%AE%A1%E7%A8%BF%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%9701/</guid>
       <description>审稿学习系列01——图像质量评估 LIU Liang
   1. 背景 2. 图像质量评估（Image Quality Assessment, IQA）——方法分类  2.1. 主观方法 2.2. 客观方法   3. 图像质量评估（Image Quality Assessment, IQA）——图像提供信息分类  3.1. 全参考(Full Reference-IQA, FR-IQA) 3.2. 半参考(Reduced Reference-IQA, RR-IQA) 3.3. 无参考(No Reference-IQA, NR-IQA)   4. 数据集 5. 评估方法  5.1. 评估指标   6. 结果  1. 背景 质量评估(Quality Assessment，QA)在许多领域有其广泛的实用性。（比如图像压缩、视频编解码、视频监控等。）
 并且对高效、可靠质量评估的需求日益增加，所以QA成为一个感兴趣的研究领域。

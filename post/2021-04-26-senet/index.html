@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>02——SeNet学习 // 亮的笔记</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.82.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Liu Liang" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="02——SeNet学习"/>
+<meta name="twitter:description" content="请不要假装很努力， 因为结果不会陪你演戏！
+  1. SENET  1.1. 链接 1.2. 贡献  1.2.1. 提供了子结构 1.2.2. SOTA   1.3. 核心思想 1.4. Squeeze 1.5. Excitation   2. 思考  2.1. 浅层作用较大    1. SENET 1.1. 链接 论文：Squeeze-and-Excitation Networks论文链接：https://arxiv.org/abs/1709.01507代码地址：https://github.com/hujie-frank/SENetPyTorch代码地址：https://github.com/miraclewkf/SENet-PyTorch
+A central theme of computer vision research is the search for more powerful representations that capture only those properties of an image that are most salient for a given task"/>
+
+    <meta property="og:title" content="02——SeNet学习" />
+<meta property="og:description" content="请不要假装很努力， 因为结果不会陪你演戏！
+  1. SENET  1.1. 链接 1.2. 贡献  1.2.1. 提供了子结构 1.2.2. SOTA   1.3. 核心思想 1.4. Squeeze 1.5. Excitation   2. 思考  2.1. 浅层作用较大    1. SENET 1.1. 链接 论文：Squeeze-and-Excitation Networks论文链接：https://arxiv.org/abs/1709.01507代码地址：https://github.com/hujie-frank/SENetPyTorch代码地址：https://github.com/miraclewkf/SENet-PyTorch
+A central theme of computer vision research is the search for more powerful representations that capture only those properties of an image that are most salient for a given task" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ioyy900205.github.io/post/2021-04-26-senet/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-04-26T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-04-26T00:00:00&#43;00:00" />
+
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3520060145,2875461924&amp;fm=26&amp;gp=0.jpg" alt="Liu Liang" /></a>
+      <h1>亮的笔记</h1>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>深度学习笔记本</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/ioyy900205" target="_blank" rel="noreferrer noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/ioyy900205" target="_blank" rel="noreferrer noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">02——SeNet学习</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Apr 26, 2021
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          3 min read
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://ioyy900205.github.io/tags/overview/">Overview</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <hr>
+<p>请不要假装很努力， 因为结果不会陪你演戏！</p>
+<hr>
+<ul>
+<li><a href="#1-senet">1. SENET</a>
+<ul>
+<li><a href="#11-%E9%93%BE%E6%8E%A5">1.1. 链接</a></li>
+<li><a href="#12-%E8%B4%A1%E7%8C%AE">1.2. 贡献</a>
+<ul>
+<li><a href="#121-%E6%8F%90%E4%BE%9B%E4%BA%86%E5%AD%90%E7%BB%93%E6%9E%84">1.2.1. 提供了子结构</a></li>
+<li><a href="#122-sota">1.2.2. SOTA</a></li>
+</ul>
+</li>
+<li><a href="#13-%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3">1.3. 核心思想</a></li>
+<li><a href="#14-squeeze">1.4. Squeeze</a></li>
+<li><a href="#15-excitation">1.5. Excitation</a></li>
+</ul>
+</li>
+<li><a href="#2-%E6%80%9D%E8%80%83">2. 思考</a>
+<ul>
+<li><a href="#21-%E6%B5%85%E5%B1%82%E4%BD%9C%E7%94%A8%E8%BE%83%E5%A4%A7">2.1. 浅层作用较大</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="1-senet">1. SENET</h1>
+<h2 id="11-链接">1.1. 链接</h2>
+<p>论文：Squeeze-and-Excitation Networks<!-- raw HTML omitted -->
+论文链接：https://arxiv.org/abs/1709.01507<!-- raw HTML omitted -->
+代码地址：https://github.com/hujie-frank/SENet<!-- raw HTML omitted -->
+PyTorch代码地址：https://github.com/miraclewkf/SENet-PyTorch</p>
+<p>A central theme of computer vision research is the search for more powerful representations that capture only those properties of an image that are most salient for a given task</p>
+<h2 id="12-贡献">1.2. 贡献</h2>
+<h3 id="121-提供了子结构">1.2.1. 提供了子结构</h3>
+<p>Sequeeze-and-Excitation(SE) block并不是一个完整的网络结构，而是一个子结构，可以嵌到其他分类或检测模型中。</p>
+<h3 id="122-sota">1.2.2. SOTA</h3>
+<p>作者采用SENet block和ResNeXt结合在ILSVRC 2017的分类项目中拿到第一**，在ImageNet数据集上将top-5 error降低到2.251%，原先的最好成绩是2.991%。</p>
+<h2 id="13-核心思想">1.3. 核心思想</h2>
+<p><strong>SENet</strong>的核心思想在于通过网络根据loss去学习特征权重。使得有效的feature map权重大，无效或效果小的feature map权重小的方式训练模型达到更好的结果。</p>
+<p>We introduce a new architectural unit, which we term the Squeeze-and-Excitation (SE) block, with the goal of improving the quality of representations produced by a network by explicitly modelling the interdependencies between the channels of its convolutional features. 我们引入了一个新的架构单元，我们称之为挤压和激发（SE）块，目的是通过明确地模拟其卷积特征通道之间的相互依赖关系来提高网络产生的表征质量。</p>
+<p>To this end, we propose a mechanism that allows the network to perform feature recalibration, through which it can learn to use global information to selectively emphasise informative features and suppress less useful ones. 为此，我们提出了一种机制，允许网络进行特征再校准，通过这种机制，它可以学会使用全局信息来有选择地强调信息量大的特征，并抑制不太有用的特征。</p>
+<p>当然，SE block嵌在原有的一些分类网络中不可避免地增加了一些参数和计算量，但是在效果面前还是可以接受的。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-eb33a772a6029e5c8011a5ab77ea2f74_720w.jpg" alt="alt tu1"></p>
+<h2 id="14-squeeze">1.4. Squeeze</h2>
+<p>The function of this descriptor is to produce an embedding of the global distribution of channel-wise feature responses, allowing information from the global receptive field of the network to be used by all its layers.</p>
+<p>这个描述符的功能是产生一个通道式特征响应的全局分布的嵌入，使网络的全局接收场的信息能够被其所有层使用。</p>
+<p>在代码中(1.5也看这个地方)：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PreActBlock</span>(nn<span style="color:#f92672">.</span>Module):
+    <span style="color:#66d9ef">def</span> __init__(self, in_planes, planes, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>):
+        super(PreActBlock, self)<span style="color:#f92672">.</span>__init__()
+        self<span style="color:#f92672">.</span>bn1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>BatchNorm2d(in_planes)
+        self<span style="color:#f92672">.</span>conv1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(in_planes, planes, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, stride<span style="color:#f92672">=</span>stride, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, bias<span style="color:#f92672">=</span>False)
+        self<span style="color:#f92672">.</span>bn2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>BatchNorm2d(planes)
+        self<span style="color:#f92672">.</span>conv2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(planes, planes, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, bias<span style="color:#f92672">=</span>False)
+
+        <span style="color:#66d9ef">if</span> stride <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">or</span> in_planes <span style="color:#f92672">!=</span> planes:
+            self<span style="color:#f92672">.</span>shortcut <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+                nn<span style="color:#f92672">.</span>Conv2d(in_planes, planes, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, stride<span style="color:#f92672">=</span>stride, bias<span style="color:#f92672">=</span>False)
+            )
+
+        <span style="color:#75715e"># SE layers</span>
+        self<span style="color:#f92672">.</span>fc1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(planes, planes<span style="color:#f92672">//</span><span style="color:#ae81ff">16</span>, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+        self<span style="color:#f92672">.</span>fc2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(planes<span style="color:#f92672">//</span><span style="color:#ae81ff">16</span>, planes, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
+        out <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>bn1(x))
+        shortcut <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>shortcut(out) <span style="color:#66d9ef">if</span> hasattr(self, <span style="color:#e6db74">&#39;shortcut&#39;</span>) <span style="color:#66d9ef">else</span> x
+        out <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>conv1(out)
+        out <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>conv2(F<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>bn2(out)))
+
+        <span style="color:#75715e"># Squeeze</span>
+        w <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>avg_pool2d(out, out<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">2</span>))
+        w <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>fc1(w))
+        w <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>sigmoid(self<span style="color:#f92672">.</span>fc2(w))
+        <span style="color:#75715e"># Excitation</span>
+        out <span style="color:#f92672">=</span> out <span style="color:#f92672">*</span> w
+
+        out <span style="color:#f92672">+=</span> shortcut
+        <span style="color:#66d9ef">return</span> out
+</code></pre></div><h2 id="15-excitation">1.5. Excitation</h2>
+<p>Takes the form of a simple self-gating mechanism that takes the embedding as input and produces a collection of per-channel modulation weights.These weights are applied to the feature maps U to generate the output of the SE block which can be fed directly into subsequent layers of the network.</p>
+<p>它采取了简单的自门控机制的形式，将嵌入作为输入，并产生一个每个通道调制权重的集合。这些权重被应用于特征图U，生成SE块的输出，可以直接输入网络的后续层。</p>
+<h1 id="2-思考">2. 思考</h1>
+<h2 id="21-浅层作用较大">2.1. 浅层作用较大</h2>
+<p>While the template for the building block is generic, the role it performs at different depths differs throughout the network.
+虽然构件的模板是通用的，但在整个网络中，它在不同深度所发挥的作用是不同的。</p>
+<p>In earlier layers, it excites informative features in a class-agnostic manner, strengthening the shared low-level representations. In later layers, the SE blocks become increasingly specialised, and respond to different inputs in a highly class-specific manner (Section 7.2).</p>
+<p>在早期层中，它以一种不分等级的方式激发信息特征，加强共享的低层次表征。在后面的层中，SE块变得越来越专业化，并以高度特定的方式对不同的输入作出反应（第7.2节）。</p>
+<p>As a consequence, the benefits of the feature recalibration performed by SE blocks can be accumulated through the network.
+因此，由SE块进行的特征重新校准的好处可以通过网络累积。</p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

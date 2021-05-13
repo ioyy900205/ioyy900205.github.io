@@ -5,13 +5,39 @@
     <link>https://ioyy900205.github.io/tags/object_detection/</link>
     <description>Recent content in Object_Detection on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 12 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/object_detection/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 13 May 2021 10:40:00 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/object_detection/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>11——SSD:Single Shot MultiBox Detector</title>
+      <link>https://ioyy900205.github.io/post/2021-05-13-11ssd_single-shot-multibox-detector-copy/</link>
+      <pubDate>Thu, 13 May 2021 10:40:00 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-05-13-11ssd_single-shot-multibox-detector-copy/</guid>
+      <description>请不要假装很努力， 因为结果不会陪你演戏！
+  1. background 2. 目标损失函数 3. 多尺度多比例默认框 4. 负样本均衡 5. 数据增强 6. 性能比较  6.1. 在VOC2007测试集上的检测性能   7. 在VOC2012测试集上的检测性能 8. 在COCO测试集上的检测性能 9. 总结  1. background ECCV2016 author:wei liu 实现真正的实时
+2016年，Wei Liu等人提出了SSD算法，它是继YOLOv1算法提出后的又一单阶段目标检测算法。在当时，单阶段算法相比于以R-CNN系列为主的双阶段算法更快，所以被学术界和工业界所青睐。为了提高检测的精度，SSD创造性地提出了多尺度预测的目标检测算法，使得网络更容易适应对不同大小物体的检测。
+放上对比结构如下： 我的理解是 网络抽取不同的特征层进行预测，较低的特征层可以预测教细节物体，较高特征层可以预测教大物体.
+整体结构上，SSD采用了VGG-16作为骨干网络提取特征。在骨干网络末尾添加了若干个特征层，特征层与特征层之间使用1x1和3x3的卷积核计算特征和降采样，并从中选择了6个不同大小的特征层来预测目标。
+需要注意的是，用来预测目标的每一个特征层上预设的Anchors数量不一定是相同的。比如对于38x38的特征层，每个格子预设4个不同比例的Anchors；对于19x19的特征层，每个格子预设了6个不同比例的Anchors。
+2. 目标损失函数 每一个目标检测网络都具有其独特的目标损失函数，它决定着网络训练迭代的方向。
+根据目标检测网络的一般定义，我们知道总损失函数一般由两部分组成：定位损失和置信度损失。
+其中，定位损失计算公式为：
+定位损失函数借鉴了Faster R-CNN中的Smooth L1函数，用来计算预测边界框 l 和真实边界框 g 之间的损失误差。其中，m 是代表边界框位置信息的集合{cx，cy，w，h}。
+容易看出，SSD没有直接将目标的中心位置、长宽作为真实标签。而是采取真实框与预选框Anchors的偏移作为真实标签。那么在学习的过程中，也会去主动预测偏移值，这样更有利于网络的训练，避免在训练初期产生较大的振荡。
+置信度损失函数是在多个类别置信度c上的softmax损失：
+3. 多尺度多比例默认框 前面已经提到，SSD算法中采用了类似于Faster R-CNN中的Anchors机制用于目标框的回归。值得一提的是，SSD采用的Anchors方法更为灵活，不仅在每一个特征层设置了不同大小和比例的预选框，而且针对于不同的特征层，也设计了相应的大小的预选框。
+经过计算可知，对于越深的特征层（尺寸越小），设置的预选框尺寸越大。这是因为，尺寸越小的特征层，感受野越大。SSD的目的就是：要让感受野小的特征层检测小目标，使用感受野大的特征层检测更大的目标。
+4. 负样本均衡 在训练过程中，大部分的预选框Anchors并不能和真实框匹配上，因此负样本很多，而正样本却很少，正负样本数量严重失衡，不利于训练。
+考虑到这个问题，SSD在训练过程中，没有选取所有的负样本。而是先将负样本的置信度损失进行排序，仅选取置信度高的一些负样本，使得负样本数与正样本数之间的比率最大不超过3：1。作者认为，这样使得训练更稳定更快。
+5. 数据增强 数据增强又叫数据增广，是扩大数据集的一种方式，经常用于深度学习中来防止过拟合。在SSD算法中，也使用了一些数据增强的技巧。采用数据增强后，目标检测性能也得到了明显的提升，具体实验结果如下:
+6. 性能比较 6.</description>
+    </item>
+    
     <item>
       <title>09——Faster R-CNN</title>
-      <link>https://ioyy900205.github.io/post/09-faster-r-cnn/</link>
+      <link>https://ioyy900205.github.io/post/2021-05-12-09-faster-r-cnn/</link>
       <pubDate>Wed, 12 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://ioyy900205.github.io/post/09-faster-r-cnn/</guid>
+      <guid>https://ioyy900205.github.io/post/2021-05-12-09-faster-r-cnn/</guid>
       <description>请不要假装很努力， 因为结果不会陪你演戏！
   1. 背景  1.1. 时间线 1.2. 结构  1.2.1. CNN 1.2.2. RPN 1.2.3. ROI Pooling     2. 一些问题 3. 损失函数 4. 后处理  4.1. NMS 4.2. Proposal selection 4.3. Standalone application   5. 训练 6. 推理 7. 后记  1. 背景 Faster R-CNN最初发表于NIPS 2015。发表后，它经历了几次修改。
 Faster R-CNN是R-CNN论文的第三次迭代&amp;ndash;Ross Girshick是作者和合作者。
@@ -22,10 +48,10 @@ Published in 2014
     
     <item>
       <title>10——目标检测参数</title>
-      <link>https://ioyy900205.github.io/post/10%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%8F%82%E6%95%B0/</link>
+      <link>https://ioyy900205.github.io/post/2021-05-12-10%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%8F%82%E6%95%B0/</link>
       <pubDate>Wed, 12 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://ioyy900205.github.io/post/10%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%8F%82%E6%95%B0/</guid>
+      <guid>https://ioyy900205.github.io/post/2021-05-12-10%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%8F%82%E6%95%B0/</guid>
       <description>请不要假装很努力， 因为结果不会陪你演戏！
   1. background Pascal VOC 和 COCO 2. precision 和 recall  2.1. 基本定义 2.2. precision-recall curve   3. COCO Evaluation Result 4. 参考  1. background Pascal VOC 和 COCO 最近看目标检测，少不了了解其中参数的意义。一顿搜所哎。
 最精简的回答：

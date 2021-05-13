@@ -8,10 +8,10 @@
     <lastBuildDate>Tue, 11 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/dataset/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>08——数据集操作和图像处理——PyTorch</title>
-      <link>https://ioyy900205.github.io/post/voc2012%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E5%9B%BE%E7%89%87%E5%92%8Cbbox%E4%BF%A1%E6%81%AF%E6%98%BE%E7%A4%BA/</link>
+      <link>https://ioyy900205.github.io/post/2021-05-11-voc2012%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E5%9B%BE%E7%89%87%E5%92%8Cbbox%E4%BF%A1%E6%81%AF%E6%98%BE%E7%A4%BA/</link>
       <pubDate>Tue, 11 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://ioyy900205.github.io/post/voc2012%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E5%9B%BE%E7%89%87%E5%92%8Cbbox%E4%BF%A1%E6%81%AF%E6%98%BE%E7%A4%BA/</guid>
+      <guid>https://ioyy900205.github.io/post/2021-05-11-voc2012%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E5%9B%BE%E7%89%87%E5%92%8Cbbox%E4%BF%A1%E6%81%AF%E6%98%BE%E7%A4%BA/</guid>
       <description>请不要假装很努力， 因为结果不会陪你演戏！
   1. 数据集读取 2. 转换函数 3. bbox画图  1. 数据集读取 from torch.utils.data import Dataset import os import torch import json from PIL import Image from lxml import etree class VOC2012DataSet(Dataset): &amp;#34;&amp;#34;&amp;#34;读取解析PASCAL VOC2012数据集&amp;#34;&amp;#34;&amp;#34; def __init__(self, voc_root, transforms, txt_name: str = &amp;#34;train.txt&amp;#34;): self.root = os.path.join(voc_root, &amp;#34;VOCdevkit&amp;#34;, &amp;#34;VOC2012&amp;#34;) self.img_root = os.path.join(self.root, &amp;#34;JPEGImages&amp;#34;) self.annotations_root = os.path.join(self.root, &amp;#34;Annotations&amp;#34;) # read train.txt or val.txt file txt_path = os.path.join(self.root, &amp;#34;ImageSets&amp;#34;, &amp;#34;Main&amp;#34;, txt_name) assert os.</description>
     </item>

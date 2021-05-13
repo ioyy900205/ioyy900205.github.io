@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>07——torch.stack维度操作——PyTorch // 亮的笔记</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.82.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Liu Liang" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="07——torch.stack维度操作——PyTorch"/>
+<meta name="twitter:description" content="请不要假装很努力， 因为结果不会陪你演戏！
+  1. 初始化 2. torch.stak  2.1. dim = 0 2.2. dim = 1 2.3. dim = 2    1. 初始化 input
+import torch import numpy as np # 创建3*3的矩阵，a、b a=np.array([[1,2,3],[4,5,6],[7,8,9]]) b=np.array([[10,20,30],[40,50,60],[70,80,90]]) # 将矩阵转化为Tensor a = torch.from_numpy(a) b = torch.from_numpy(b) # 打印a、b、c print(a,a.size()) print(b,b.size()) output
+tensor([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) torch.Size([3, 3]) tensor([[10, 20, 30], [40, 50, 60], [70, 80, 90]]) torch."/>
+
+    <meta property="og:title" content="07——torch.stack维度操作——PyTorch" />
+<meta property="og:description" content="请不要假装很努力， 因为结果不会陪你演戏！
+  1. 初始化 2. torch.stak  2.1. dim = 0 2.2. dim = 1 2.3. dim = 2    1. 初始化 input
+import torch import numpy as np # 创建3*3的矩阵，a、b a=np.array([[1,2,3],[4,5,6],[7,8,9]]) b=np.array([[10,20,30],[40,50,60],[70,80,90]]) # 将矩阵转化为Tensor a = torch.from_numpy(a) b = torch.from_numpy(b) # 打印a、b、c print(a,a.size()) print(b,b.size()) output
+tensor([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) torch.Size([3, 3]) tensor([[10, 20, 30], [40, 50, 60], [70, 80, 90]]) torch." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ioyy900205.github.io/post/2021-05-10-torch.stack%E7%9A%84%E7%BB%B4%E5%BA%A6%E6%93%8D%E4%BD%9C/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-05-10T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-05-10T00:00:00&#43;00:00" />
+
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3520060145,2875461924&amp;fm=26&amp;gp=0.jpg" alt="Liu Liang" /></a>
+      <h1>亮的笔记</h1>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>深度学习笔记本</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/ioyy900205" target="_blank" rel="noreferrer noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/ioyy900205" target="_blank" rel="noreferrer noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">07——torch.stack维度操作——PyTorch</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          May 10, 2021
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://ioyy900205.github.io/tags/pytorch/">PyTorch</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <hr>
+<p>请不要假装很努力， 因为结果不会陪你演戏！</p>
+<hr>
+<ul>
+<li><a href="#1-%E5%88%9D%E5%A7%8B%E5%8C%96">1. 初始化</a></li>
+<li><a href="#2-torchstak">2. torch.stak</a>
+<ul>
+<li><a href="#21-dim--0">2.1. dim = 0</a></li>
+<li><a href="#22-dim--1">2.2. dim = 1</a></li>
+<li><a href="#23-dim--2">2.3. dim = 2</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="1-初始化">1. 初始化</h1>
+<p>input</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+
+<span style="color:#75715e"># 创建3*3的矩阵，a、b</span>
+a<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>array([[<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>],[<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">6</span>],[<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">8</span>,<span style="color:#ae81ff">9</span>]])
+b<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>array([[<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">20</span>,<span style="color:#ae81ff">30</span>],[<span style="color:#ae81ff">40</span>,<span style="color:#ae81ff">50</span>,<span style="color:#ae81ff">60</span>],[<span style="color:#ae81ff">70</span>,<span style="color:#ae81ff">80</span>,<span style="color:#ae81ff">90</span>]])
+<span style="color:#75715e"># 将矩阵转化为Tensor</span>
+a <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>from_numpy(a)
+b <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>from_numpy(b)
+<span style="color:#75715e"># 打印a、b、c</span>
+<span style="color:#66d9ef">print</span>(a,a<span style="color:#f92672">.</span>size())
+<span style="color:#66d9ef">print</span>(b,b<span style="color:#f92672">.</span>size())
+</code></pre></div><p>output</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tensor([[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>],
+        [<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>],
+        [<span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>]]) torch<span style="color:#f92672">.</span>Size([<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>])
+tensor([[<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">30</span>],
+        [<span style="color:#ae81ff">40</span>, <span style="color:#ae81ff">50</span>, <span style="color:#ae81ff">60</span>],
+        [<span style="color:#ae81ff">70</span>, <span style="color:#ae81ff">80</span>, <span style="color:#ae81ff">90</span>]]) torch<span style="color:#f92672">.</span>Size([<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>])
+</code></pre></div><h1 id="2-torchstak">2. torch.stak</h1>
+<h2 id="21-dim--0">2.1. dim = 0</h2>
+<p>input</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">d <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>stack((a, b), dim<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+<span style="color:#66d9ef">print</span>(d)
+<span style="color:#66d9ef">print</span>(d<span style="color:#f92672">.</span>size())
+</code></pre></div><p>output</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tensor([[[ <span style="color:#ae81ff">1</span>,  <span style="color:#ae81ff">2</span>,  <span style="color:#ae81ff">3</span>],
+         [ <span style="color:#ae81ff">4</span>,  <span style="color:#ae81ff">5</span>,  <span style="color:#ae81ff">6</span>],
+         [ <span style="color:#ae81ff">7</span>,  <span style="color:#ae81ff">8</span>,  <span style="color:#ae81ff">9</span>]],
+
+        [[<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">30</span>],
+         [<span style="color:#ae81ff">40</span>, <span style="color:#ae81ff">50</span>, <span style="color:#ae81ff">60</span>],
+         [<span style="color:#ae81ff">70</span>, <span style="color:#ae81ff">80</span>, <span style="color:#ae81ff">90</span>]]])
+torch<span style="color:#f92672">.</span>Size([<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>])
+</code></pre></div><h2 id="22-dim--1">2.2. dim = 1</h2>
+<p>input</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">d <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>stack((a, b), dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+<span style="color:#66d9ef">print</span>(d)
+<span style="color:#66d9ef">print</span>(d<span style="color:#f92672">.</span>size())
+</code></pre></div><p>output</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">d <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>stack((a, b), dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">...</span>
+tensor([[[ <span style="color:#ae81ff">1</span>,  <span style="color:#ae81ff">2</span>,  <span style="color:#ae81ff">3</span>],
+         [<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">30</span>]],
+
+        [[ <span style="color:#ae81ff">4</span>,  <span style="color:#ae81ff">5</span>,  <span style="color:#ae81ff">6</span>],
+         [<span style="color:#ae81ff">40</span>, <span style="color:#ae81ff">50</span>, <span style="color:#ae81ff">60</span>]],
+
+        [[ <span style="color:#ae81ff">7</span>,  <span style="color:#ae81ff">8</span>,  <span style="color:#ae81ff">9</span>],
+         [<span style="color:#ae81ff">70</span>, <span style="color:#ae81ff">80</span>, <span style="color:#ae81ff">90</span>]]])
+torch<span style="color:#f92672">.</span>Size([<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>])
+</code></pre></div><h2 id="23-dim--2">2.3. dim = 2</h2>
+<p>input</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">d <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>stack((a, b), dim<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)
+<span style="color:#66d9ef">print</span>(d)
+<span style="color:#66d9ef">print</span>(d<span style="color:#f92672">.</span>size())
+</code></pre></div><p>output</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">d <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>stack((a, b), dim<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)<span style="color:#f92672">...</span>
+tensor([[[ <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">10</span>],
+         [ <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">20</span>],
+         [ <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">30</span>]],
+
+        [[ <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">40</span>],
+         [ <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">50</span>],
+         [ <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">60</span>]],
+
+        [[ <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">70</span>],
+         [ <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">80</span>],
+         [ <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">90</span>]]])
+torch<span style="color:#f92672">.</span>Size([<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">2</span>])
+</code></pre></div><p>给一个比较好的画图解释，自行感受
+<img src="https://img-blog.csdnimg.cn/20200112104559493.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzQ5NjQ1NQ==,size_16,color_FFFFFF,t_70#pic_center" alt="https://img-blog.csdnimg.cn/20200112104559493.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzQ5NjQ1NQ==,size_16,color_FFFFFF,t_70#pic_center"></p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

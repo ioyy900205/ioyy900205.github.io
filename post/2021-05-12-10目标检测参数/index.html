@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>10——目标检测参数 // 亮的笔记</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.82.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Liu Liang" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="10——目标检测参数"/>
+<meta name="twitter:description" content="请不要假装很努力， 因为结果不会陪你演戏！
+  1. background Pascal VOC 和 COCO 2. precision 和 recall  2.1. 基本定义 2.2. precision-recall curve   3. COCO Evaluation Result 4. 参考  1. background Pascal VOC 和 COCO 最近看目标检测，少不了了解其中参数的意义。一顿搜所哎。
+最精简的回答：
+目标检测中衡量识别精度的指标是mAP（mean average precision）。多个类别物体检测中，每一个类别都可以根据recall和precision绘制一条曲线，AP就是该曲线下的面积，mAP是多个类别AP的平均值
+番外篇 在coco数据集出来之前，基本都用pascal voc 现在都用coco了。
+2. precision 和 recall 2.1. 基本定义  precision查准率 preicision是在你认为的正样本中， 有多大比例真的是正样本 recall查全率 recall则是在真正的正样本中， 有多少被你找到了  2.2. precision-recall curve 如果threshold太高， prediction非常严格， 所以我们认为是鸭子的基本都是鸭子，precision就高了；但也因为筛选太严格， 我们也放过了一些score比较低的鸭子， 所以recall就低了
+如果threshold太低， 什么都会被当成鸭子， precision就会很低， recall就会很高。"/>
+
+    <meta property="og:title" content="10——目标检测参数" />
+<meta property="og:description" content="请不要假装很努力， 因为结果不会陪你演戏！
+  1. background Pascal VOC 和 COCO 2. precision 和 recall  2.1. 基本定义 2.2. precision-recall curve   3. COCO Evaluation Result 4. 参考  1. background Pascal VOC 和 COCO 最近看目标检测，少不了了解其中参数的意义。一顿搜所哎。
+最精简的回答：
+目标检测中衡量识别精度的指标是mAP（mean average precision）。多个类别物体检测中，每一个类别都可以根据recall和precision绘制一条曲线，AP就是该曲线下的面积，mAP是多个类别AP的平均值
+番外篇 在coco数据集出来之前，基本都用pascal voc 现在都用coco了。
+2. precision 和 recall 2.1. 基本定义  precision查准率 preicision是在你认为的正样本中， 有多大比例真的是正样本 recall查全率 recall则是在真正的正样本中， 有多少被你找到了  2.2. precision-recall curve 如果threshold太高， prediction非常严格， 所以我们认为是鸭子的基本都是鸭子，precision就高了；但也因为筛选太严格， 我们也放过了一些score比较低的鸭子， 所以recall就低了
+如果threshold太低， 什么都会被当成鸭子， precision就会很低， recall就会很高。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ioyy900205.github.io/post/2021-05-12-10%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%8F%82%E6%95%B0/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-05-12T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-05-12T00:00:00&#43;00:00" />
+
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3520060145,2875461924&amp;fm=26&amp;gp=0.jpg" alt="Liu Liang" /></a>
+      <h1>亮的笔记</h1>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>深度学习笔记本</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/ioyy900205" target="_blank" rel="noreferrer noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/ioyy900205" target="_blank" rel="noreferrer noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">10——目标检测参数</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          May 12, 2021
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          2 min read
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://ioyy900205.github.io/tags/object_detection/">Object_Detection</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <hr>
+<p>请不要假装很努力， 因为结果不会陪你演戏！</p>
+<hr>
+<ul>
+<li><a href="#1-background-pascal-voc-%E5%92%8C-coco">1. background Pascal VOC 和 COCO</a></li>
+<li><a href="#2-precision-%E5%92%8C-recall">2. precision 和 recall</a>
+<ul>
+<li><a href="#21-%E5%9F%BA%E6%9C%AC%E5%AE%9A%E4%B9%89">2.1. 基本定义</a></li>
+<li><a href="#22-precision-recall-curve">2.2. precision-recall curve</a></li>
+</ul>
+</li>
+<li><a href="#3-coco-evaluation-result">3. COCO Evaluation Result</a></li>
+<li><a href="#4-%E5%8F%82%E8%80%83">4. 参考</a></li>
+</ul>
+<h1 id="1-background-pascal-voc-和-coco">1. background Pascal VOC 和 COCO</h1>
+<p>最近看目标检测，少不了了解其中参数的意义。一顿搜所哎。</p>
+<p><strong>最精简的回答：</strong></p>
+<p>目标检测中衡量识别精度的指标是mAP（mean average precision）。多个类别物体检测中，每一个类别都可以根据recall和precision绘制一条曲线，AP就是该曲线下的面积，mAP是多个类别AP的平均值</p>
+<p><strong>番外篇</strong>
+在coco数据集出来之前，基本都用pascal voc 现在都用coco了。</p>
+<h1 id="2-precision-和-recall">2. precision 和 recall</h1>
+<h2 id="21-基本定义">2.1. 基本定义</h2>
+<p><img src="https://www.zhihu.com/equation?tex=%5Ctext+%7B+Precision+%7D%3D%5Cfrac%7BT+P%7D%7BT+P%2BF+P%7D%3D%5Cfrac%7BT+P%7D%7B%5Ctext+%7B+all+detections+%7D%7D+%5C%5C" alt="1"></p>
+<p><img src="https://www.zhihu.com/equation?tex=%5Ctext+%7BRecall%7D%3D%5Cfrac%7BT+P%7D%7BT+P%2BF+N%7D%3D%5Cfrac%7BT+P%7D%7B%5Ctext+%7B+all+ground+truths+%7D%7D+%5C%5C" alt="2"></p>
+<ol>
+<li>precision查准率
+preicision是在你认为的正样本中， 有多大比例真的是正样本</li>
+<li>recall查全率
+recall则是在真正的正样本中， 有多少被你找到了</li>
+</ol>
+<h2 id="22-precision-recall-curve">2.2. precision-recall curve</h2>
+<p>如果threshold太高， prediction非常严格， 所以我们认为是鸭子的基本都是鸭子，precision就高了；但也因为筛选太严格， 我们也放过了一些score比较低的鸭子， 所以recall就低了</p>
+<p>如果threshold太低， 什么都会被当成鸭子， precision就会很低， recall就会很高。</p>
+<p>因为我们根据不同的threshold， 可以取到不同（也可能相同）的precision recall值。 这样想的话对于每个threshold，我们都有（precision， recall）的pair， 也就有了precision和recall之间的curve关系。</p>
+<p>有了这么一条precision-recall curve， 他衡量着两个有价值的判断标准， precision和recall的关系， 那么不如两个一起动态考虑， 就有了鸭子这个class的Average Precision， 即curve下的面积， 他可以充分的表示在这个model中， precision和recall的总体优劣。</p>
+<h1 id="3-coco-evaluation-result">3. COCO Evaluation Result</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">IoU metric: bbox
+<span style="color:#75715e">#1 Average Precision</span>
+<span style="color:#75715e">#1.1 用于COCO标准的检测</span>
+ Average Precision  (AP) <span style="color:#960050;background-color:#1e0010">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>:<span style="color:#ae81ff">0.95</span> <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span>   all <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.529</span>
+<span style="color:#75715e">#1.2用于Pascal VOC标准的检测</span>
+ Average Precision  (AP) <span style="color:#960050;background-color:#1e0010">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>      <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span>   all <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.803</span>
+<span style="color:#75715e">#1.3更严格的（IoU=0.75）的检测</span>
+ Average Precision  (AP) <span style="color:#960050;background-color:#1e0010">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.75</span>      <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span>   all <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.593</span>
+
+<span style="color:#75715e">#2 AP Across Scales</span>
+<span style="color:#75715e">#2.1 小于32^2的area</span>
+ Average Precision  (AP) <span style="color:#960050;background-color:#1e0010">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>:<span style="color:#ae81ff">0.95</span> <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span> small <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.206</span>
+<span style="color:#75715e">#2.2 32^2到96^2之间的area</span>
+ Average Precision  (AP) <span style="color:#960050;background-color:#1e0010">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>:<span style="color:#ae81ff">0.95</span> <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span>medium <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.411</span>
+<span style="color:#75715e">#2.3 大于96^2的area</span>
+ Average Precision  (AP) <span style="color:#960050;background-color:#1e0010">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>:<span style="color:#ae81ff">0.95</span> <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span> large <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.582</span>
+
+<span style="color:#75715e">#3 Average Recall</span>
+<span style="color:#75715e">#3.1 每个图最多检测1个目标</span>
+ Average Recall     (AR) <span style="color:#960050;background-color:#1e0010">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>:<span style="color:#ae81ff">0.95</span> <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span>   all <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span>  <span style="color:#ae81ff">1</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.453</span>
+<span style="color:#75715e">#3.2 每个图最多检测10个目标</span>
+ Average Recall     (AR) <span style="color:#960050;background-color:#1e0010">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>:<span style="color:#ae81ff">0.95</span> <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span>   all <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.639</span>
+<span style="color:#75715e">#3.3 每个图最多检测100个目标</span>
+ Average Recall     (AR) <span style="color:#960050;background-color:#1e0010">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>:<span style="color:#ae81ff">0.95</span> <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span>   all <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.646</span>
+
+<span style="color:#75715e">#4 AR Across Scales</span>
+<span style="color:#75715e">#4.1 小于32^2的area</span>
+ Average Recall     (AR) <span style="color:#960050;background-color:#1e0010">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>:<span style="color:#ae81ff">0.95</span> <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span> small <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.357</span>
+<span style="color:#75715e">#4.2 32^2到96^2之间的area</span>
+ Average Recall     (AR) <span style="color:#960050;background-color:#1e0010">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>:<span style="color:#ae81ff">0.95</span> <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span>medium <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.543</span>
+<span style="color:#75715e">#4.3 大于96^2的area</span>
+ Average Recall     (AR) <span style="color:#960050;background-color:#1e0010">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>:<span style="color:#ae81ff">0.95</span> <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span> large <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.691</span>
+
+</code></pre></div><h1 id="4-参考">4. 参考</h1>
+<p><a href="https://www.zhihu.com/question/53405779">https://www.zhihu.com/question/53405779</a></p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

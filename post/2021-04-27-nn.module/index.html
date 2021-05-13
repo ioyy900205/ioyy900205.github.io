@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>03——nn.module学习——PyTorch // 亮的笔记</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.82.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Liu Liang" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="03——nn.module学习——PyTorch"/>
+<meta name="twitter:description" content="请不要假装很努力， 因为结果不会陪你演戏！
+  1. nn.moduel初步  1.1. Linear类 1.2. Conv2d类 1.3. 自定义层的步骤   2. 自定义层  2.1. 定义一个自定义层MyLayer 2.2. 自定义模型并且训练    1. nn.moduel初步 keras更加注重的是层Layer、pytorch更加注重的是模型Module。
+1.1. Linear类 import math import torch from torch.nn.parameter import Parameter from .. import functional as F from .. import init from .module import Module from ..._jit_internal import weak_module, weak_script_method class Linear(Module): __constants__ = [&#39;bias&#39;] def __init__(self, in_features, out_features, bias=True): super(Linear, self).__init__() self."/>
+
+    <meta property="og:title" content="03——nn.module学习——PyTorch" />
+<meta property="og:description" content="请不要假装很努力， 因为结果不会陪你演戏！
+  1. nn.moduel初步  1.1. Linear类 1.2. Conv2d类 1.3. 自定义层的步骤   2. 自定义层  2.1. 定义一个自定义层MyLayer 2.2. 自定义模型并且训练    1. nn.moduel初步 keras更加注重的是层Layer、pytorch更加注重的是模型Module。
+1.1. Linear类 import math import torch from torch.nn.parameter import Parameter from .. import functional as F from .. import init from .module import Module from ..._jit_internal import weak_module, weak_script_method class Linear(Module): __constants__ = [&#39;bias&#39;] def __init__(self, in_features, out_features, bias=True): super(Linear, self).__init__() self." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ioyy900205.github.io/post/2021-04-27-nn.module/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-04-27T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-04-27T00:00:00&#43;00:00" />
+
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3520060145,2875461924&amp;fm=26&amp;gp=0.jpg" alt="Liu Liang" /></a>
+      <h1>亮的笔记</h1>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>深度学习笔记本</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/ioyy900205" target="_blank" rel="noreferrer noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/ioyy900205" target="_blank" rel="noreferrer noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">03——nn.module学习——PyTorch</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Apr 27, 2021
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          3 min read
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://ioyy900205.github.io/tags/pytorch/">PyTorch</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <hr>
+<p>请不要假装很努力， 因为结果不会陪你演戏！</p>
+<hr>
+<ul>
+<li><a href="#1-nnmoduel%E5%88%9D%E6%AD%A5">1. nn.moduel初步</a>
+<ul>
+<li><a href="#11-linear%E7%B1%BB">1.1. Linear类</a></li>
+<li><a href="#12-conv2d%E7%B1%BB">1.2. Conv2d类</a></li>
+<li><a href="#13-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%82%E7%9A%84%E6%AD%A5%E9%AA%A4">1.3. 自定义层的步骤</a></li>
+</ul>
+</li>
+<li><a href="#2-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%82">2. 自定义层</a>
+<ul>
+<li><a href="#21-%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%82mylayer">2.1. 定义一个自定义层MyLayer</a></li>
+<li><a href="#22-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A8%A1%E5%9E%8B%E5%B9%B6%E4%B8%94%E8%AE%AD%E7%BB%83">2.2. 自定义模型并且训练</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="1-nnmoduel初步">1. nn.moduel初步</h1>
+<p>keras更加注重的是层Layer、pytorch更加注重的是模型Module。</p>
+<h2 id="11-linear类">1.1. Linear类</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> math
+<span style="color:#f92672">import</span> torch
+<span style="color:#f92672">from</span> torch.nn.parameter <span style="color:#f92672">import</span> Parameter
+<span style="color:#f92672">from</span> .. <span style="color:#f92672">import</span> functional <span style="color:#66d9ef">as</span> F
+<span style="color:#f92672">from</span> .. <span style="color:#f92672">import</span> init
+<span style="color:#f92672">from</span> .module <span style="color:#f92672">import</span> Module
+<span style="color:#f92672">from</span> ..._jit_internal <span style="color:#f92672">import</span> weak_module, weak_script_method
+ 
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Linear</span>(Module):
+    __constants__ <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;bias&#39;</span>]
+ 
+    <span style="color:#66d9ef">def</span> __init__(self, in_features, out_features, bias<span style="color:#f92672">=</span>True):
+        super(Linear, self)<span style="color:#f92672">.</span>__init__()
+        self<span style="color:#f92672">.</span>in_features <span style="color:#f92672">=</span> in_features
+        self<span style="color:#f92672">.</span>out_features <span style="color:#f92672">=</span> out_features
+        self<span style="color:#f92672">.</span>weight <span style="color:#f92672">=</span> Parameter(torch<span style="color:#f92672">.</span>Tensor(out_features, in_features))
+        <span style="color:#66d9ef">if</span> bias:
+            self<span style="color:#f92672">.</span>bias <span style="color:#f92672">=</span> Parameter(torch<span style="color:#f92672">.</span>Tensor(out_features))
+        <span style="color:#66d9ef">else</span>:
+            self<span style="color:#f92672">.</span>register_parameter(<span style="color:#e6db74">&#39;bias&#39;</span>, None)
+        self<span style="color:#f92672">.</span>reset_parameters()
+ 
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">reset_parameters</span>(self):
+        init<span style="color:#f92672">.</span>kaiming_uniform_(self<span style="color:#f92672">.</span>weight, a<span style="color:#f92672">=</span>math<span style="color:#f92672">.</span>sqrt(<span style="color:#ae81ff">5</span>))
+        <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>bias <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> None:
+            fan_in, _ <span style="color:#f92672">=</span> init<span style="color:#f92672">.</span>_calculate_fan_in_and_fan_out(self<span style="color:#f92672">.</span>weight)
+            bound <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">/</span> math<span style="color:#f92672">.</span>sqrt(fan_in)
+            init<span style="color:#f92672">.</span>uniform_(self<span style="color:#f92672">.</span>bias, <span style="color:#f92672">-</span>bound, bound)
+ 
+    <span style="color:#a6e22e">@weak_script_method</span>
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, input):
+        <span style="color:#66d9ef">return</span> F<span style="color:#f92672">.</span>linear(input, self<span style="color:#f92672">.</span>weight, self<span style="color:#f92672">.</span>bias)
+ 
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">extra_repr</span>(self):
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39;in_features={}, out_features={}, bias={}&#39;</span><span style="color:#f92672">.</span>format(
+            self<span style="color:#f92672">.</span>in_features, self<span style="color:#f92672">.</span>out_features, self<span style="color:#f92672">.</span>bias <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> None
+        )
+
+</code></pre></div><h2 id="12-conv2d类">1.2. Conv2d类</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Conv2d</span>(_ConvNd):
+    <span style="color:#66d9ef">def</span> __init__(self, in_channels, out_channels, kernel_size, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>,
+                 padding<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, dilation<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, groups<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>,
+                 bias<span style="color:#f92672">=</span>True, padding_mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;zeros&#39;</span>):
+        kernel_size <span style="color:#f92672">=</span> _pair(kernel_size)
+        stride <span style="color:#f92672">=</span> _pair(stride)
+        padding <span style="color:#f92672">=</span> _pair(padding)
+        dilation <span style="color:#f92672">=</span> _pair(dilation)
+        super(Conv2d, self)<span style="color:#f92672">.</span>__init__(
+            in_channels, out_channels, kernel_size, stride, padding, dilation,
+            False, _pair(<span style="color:#ae81ff">0</span>), groups, bias, padding_mode)
+ 
+    <span style="color:#a6e22e">@weak_script_method</span>
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, input):
+        <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>padding_mode <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;circular&#39;</span>:
+            expanded_padding <span style="color:#f92672">=</span> ((self<span style="color:#f92672">.</span>padding[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>, self<span style="color:#f92672">.</span>padding[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>,
+                                (self<span style="color:#f92672">.</span>padding[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>, self<span style="color:#f92672">.</span>padding[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>)
+            <span style="color:#66d9ef">return</span> F<span style="color:#f92672">.</span>conv2d(F<span style="color:#f92672">.</span>pad(input, expanded_padding, mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;circular&#39;</span>),
+                            self<span style="color:#f92672">.</span>weight, self<span style="color:#f92672">.</span>bias, self<span style="color:#f92672">.</span>stride,
+                            _pair(<span style="color:#ae81ff">0</span>), self<span style="color:#f92672">.</span>dilation, self<span style="color:#f92672">.</span>groups)
+        <span style="color:#66d9ef">return</span> F<span style="color:#f92672">.</span>conv2d(input, self<span style="color:#f92672">.</span>weight, self<span style="color:#f92672">.</span>bias, self<span style="color:#f92672">.</span>stride,
+
+</code></pre></div><h2 id="13-自定义层的步骤">1.3. 自定义层的步骤</h2>
+<p>要实现一个自定义层大致分以下几个主要的步骤：</p>
+<p>（1）自定义一个类，继承自Module类，并且一定要实现两个基本的函数:</p>
+<pre><code>第一是构造函数__init__;
+
+第二个是层的逻辑运算函数，即所谓的前向计算函数forward函数。
+</code></pre>
+<p>（2）在构造函数_init__中实现层的参数定义。</p>
+<pre><code>比如Linear层的权重和偏置，Conv2d层的in_channels, out_channels, kernel_size, stride=1,padding=0, dilation=1, groups=1,bias=True, padding_mode='zeros'这一系列参数；
+</code></pre>
+<p>（3）在前向传播forward函数里面实现前向运算。</p>
+<pre><code>这一般都是通过torch.nn.functional.***函数来实现，当然很多时候我们也需要自定义自己的运算方式。如果该层含有权重，那么权重必须是nn.Parameter类型，关于Tensor和Variable（0.3版本之前）与Parameter的区别请参阅相关的文档。简单说就是Parameter默认需要求导，其他两个类型则不会。另外一般情况下，可能的话，为自己定义的新层提供默认的参数初始化，以防使用过程中忘记初始化操作。
+</code></pre>
+<p>（4）补充：一般情况下，我们定义的参数是可以求导的，但是自定义操作如不可导，需要实现backward函数。</p>
+<h1 id="2-自定义层">2. 自定义层</h1>
+<p>这个层的功能是$y=w*sqrt(x^2+bias)$</p>
+<h2 id="21-定义一个自定义层mylayer">2.1. 定义一个自定义层MyLayer</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 定义一个 my_layer.py</span>
+<span style="color:#f92672">import</span> torch
+ 
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyLayer</span>(torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Module):
+    <span style="color:#e6db74">&#39;&#39;&#39;
+</span><span style="color:#e6db74">    因为这个层实现的功能是：y=weights*sqrt(x^2+bias),所以有两个参数：
+</span><span style="color:#e6db74">    权值矩阵weights
+</span><span style="color:#e6db74">    偏置矩阵bias
+</span><span style="color:#e6db74">    输入 x 的维度是（in_features,)
+</span><span style="color:#e6db74">    输出 y 的维度是（out_features,) 故而
+</span><span style="color:#e6db74">    bias 的维度是（in_fearures,)，注意这里为什么是in_features,而不是out_features，注意体会这里和Linear层的区别所在
+</span><span style="color:#e6db74">    weights 的维度是（in_features, out_features）注意这里为什么是（in_features, out_features）,而不是（out_features, in_features），注意体会这里和Linear层的区别所在
+</span><span style="color:#e6db74">    &#39;&#39;&#39;</span>
+    <span style="color:#66d9ef">def</span> __init__(self, in_features, out_features, bias<span style="color:#f92672">=</span>True):
+        super(MyLayer, self)<span style="color:#f92672">.</span>__init__()  <span style="color:#75715e"># 和自定义模型一样，第一句话就是调用父类的构造函数</span>
+        self<span style="color:#f92672">.</span>in_features <span style="color:#f92672">=</span> in_features
+        self<span style="color:#f92672">.</span>out_features <span style="color:#f92672">=</span> out_features
+        self<span style="color:#f92672">.</span>weight <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Parameter(torch<span style="color:#f92672">.</span>Tensor(in_features, out_features)) <span style="color:#75715e"># 由于weights是可以训练的，所以使用Parameter来定义</span>
+        <span style="color:#66d9ef">if</span> bias:
+            self<span style="color:#f92672">.</span>bias <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Parameter(torch<span style="color:#f92672">.</span>Tensor(in_features))             <span style="color:#75715e"># 由于bias是可以训练的，所以使用Parameter来定义</span>
+        <span style="color:#66d9ef">else</span>:
+            self<span style="color:#f92672">.</span>register_parameter(<span style="color:#e6db74">&#39;bias&#39;</span>, None)
+ 
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, input):
+        input_<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>pow(input,<span style="color:#ae81ff">2</span>)<span style="color:#f92672">+</span>self<span style="color:#f92672">.</span>bias
+        y<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>matmul(input_,self<span style="color:#f92672">.</span>weight)
+        <span style="color:#66d9ef">return</span> y
+</code></pre></div><h2 id="22-自定义模型并且训练">2.2. 自定义模型并且训练</h2>
+<p>定义模型</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
+<span style="color:#f92672">from</span> my_layer <span style="color:#f92672">import</span> MyLayer <span style="color:#75715e"># 自定义层</span>
+ 
+ 
+N, D_in, D_out <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>  <span style="color:#75715e"># 一共10组样本，输入特征为5，输出特征为3 </span>
+ 
+<span style="color:#75715e"># 先定义一个模型</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyNet</span>(torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Module):
+    <span style="color:#66d9ef">def</span> __init__(self):
+        super(MyNet, self)<span style="color:#f92672">.</span>__init__()  <span style="color:#75715e"># 第一句话，调用父类的构造函数</span>
+        self<span style="color:#f92672">.</span>mylayer1 <span style="color:#f92672">=</span> MyLayer(D_in,D_out)
+ 
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
+        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>mylayer1(x) 
+        <span style="color:#66d9ef">return</span> x
+ 
+model <span style="color:#f92672">=</span> MyNet()
+<span style="color:#66d9ef">print</span>(model)
+<span style="color:#e6db74">&#39;&#39;&#39;运行结果为：
+</span><span style="color:#e6db74">MyNet(
+</span><span style="color:#e6db74">  (mylayer1): MyLayer()   # 这就是自己定义的一个层
+</span><span style="color:#e6db74">)
+</span><span style="color:#e6db74">&#39;&#39;&#39;</span>
+</code></pre></div><p>下面开始训练</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 创建输入、输出数据</span>
+x <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>randn(N, D_in)  <span style="color:#75715e">#（10，5）</span>
+y <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>randn(N, D_out) <span style="color:#75715e">#（10，3）</span>
+ 
+ 
+<span style="color:#75715e">#定义损失函数</span>
+loss_fn <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>MSELoss(reduction<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;sum&#39;</span>)
+ 
+learning_rate <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-4</span>
+<span style="color:#75715e">#构造一个optimizer对象</span>
+optimizer <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>optim<span style="color:#f92672">.</span>Adam(model<span style="color:#f92672">.</span>parameters(), lr<span style="color:#f92672">=</span>learning_rate)
+ 
+<span style="color:#66d9ef">for</span> t <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>): <span style="color:#75715e"># </span>
+    
+    <span style="color:#75715e"># 第一步：数据的前向传播，计算预测值p_pred</span>
+    y_pred <span style="color:#f92672">=</span> model(x)
+ 
+    <span style="color:#75715e"># 第二步：计算计算预测值p_pred与真实值的误差</span>
+    loss <span style="color:#f92672">=</span> loss_fn(y_pred, y)
+    <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;第 {t} 个epoch, 损失是 {loss.item()}&#34;</span>)
+ 
+    <span style="color:#75715e"># 在反向传播之前，将模型的梯度归零，这</span>
+    optimizer<span style="color:#f92672">.</span>zero_grad()
+ 
+    <span style="color:#75715e"># 第三步：反向传播误差</span>
+    loss<span style="color:#f92672">.</span>backward()
+ 
+    <span style="color:#75715e"># 直接通过梯度一步到位，更新完整个网络的训练参数</span>
+    optimizer<span style="color:#f92672">.</span>step()
+
+</code></pre></div><p>结果如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#960050;background-color:#1e0010">第</span> <span style="color:#ae81ff">0</span> <span style="color:#960050;background-color:#1e0010">个</span>epoch, <span style="color:#960050;background-color:#1e0010">损失是</span> <span style="color:#ae81ff">42.33689498901367</span>
+<span style="color:#960050;background-color:#1e0010">第</span> <span style="color:#ae81ff">1</span> <span style="color:#960050;background-color:#1e0010">个</span>epoch, <span style="color:#960050;background-color:#1e0010">损失是</span> <span style="color:#ae81ff">42.3133430480957</span>
+<span style="color:#960050;background-color:#1e0010">第</span> <span style="color:#ae81ff">2</span> <span style="color:#960050;background-color:#1e0010">个</span>epoch, <span style="color:#960050;background-color:#1e0010">损失是</span> <span style="color:#ae81ff">42.289825439453125</span>
+<span style="color:#960050;background-color:#1e0010">第</span> <span style="color:#ae81ff">3</span> <span style="color:#960050;background-color:#1e0010">个</span>epoch, <span style="color:#960050;background-color:#1e0010">损失是</span> <span style="color:#ae81ff">42.26634979248047</span>
+<span style="color:#960050;background-color:#1e0010">第</span> <span style="color:#ae81ff">4</span> <span style="color:#960050;background-color:#1e0010">个</span>epoch, <span style="color:#960050;background-color:#1e0010">损失是</span> <span style="color:#ae81ff">42.2429084777832</span>
+<span style="color:#960050;background-color:#1e0010">第</span> <span style="color:#ae81ff">5</span> <span style="color:#960050;background-color:#1e0010">个</span>epoch, <span style="color:#960050;background-color:#1e0010">损失是</span> <span style="color:#ae81ff">42.21950912475586</span>
+<span style="color:#960050;background-color:#1e0010">第</span> <span style="color:#ae81ff">6</span> <span style="color:#960050;background-color:#1e0010">个</span>epoch, <span style="color:#960050;background-color:#1e0010">损失是</span> <span style="color:#ae81ff">42.19615173339844</span>
+<span style="color:#960050;background-color:#1e0010">第</span> <span style="color:#ae81ff">7</span> <span style="color:#960050;background-color:#1e0010">个</span>epoch, <span style="color:#960050;background-color:#1e0010">损失是</span> <span style="color:#ae81ff">42.17283248901367</span>
+<span style="color:#960050;background-color:#1e0010">第</span> <span style="color:#ae81ff">8</span> <span style="color:#960050;background-color:#1e0010">个</span>epoch, <span style="color:#960050;background-color:#1e0010">损失是</span> <span style="color:#ae81ff">42.14955520629883</span>
+<span style="color:#960050;background-color:#1e0010">第</span> <span style="color:#ae81ff">9</span> <span style="color:#960050;background-color:#1e0010">个</span>epoch, <span style="color:#960050;background-color:#1e0010">损失是</span> <span style="color:#ae81ff">42.12631607055664</span>
+</code></pre></div><!-- raw HTML omitted -->
+<p>参考的原文链接：<a href="https://blog.csdn.net/qq_27825451/article/details/90705328">https://blog.csdn.net/qq_27825451/article/details/90705328</a></p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

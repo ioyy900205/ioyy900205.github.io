@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>审稿学习系列01——图像质量评估 // 亮的笔记</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.82.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Liu Liang" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="审稿学习系列01——图像质量评估"/>
+<meta name="twitter:description" content="审稿学习系列01——图像质量评估 LIU Liang
+  1. 背景 2. 图像质量评估（Image Quality Assessment, IQA）——方法分类  2.1. 主观方法 2.2. 客观方法   3. 图像质量评估（Image Quality Assessment, IQA）——图像提供信息分类  3.1. 全参考(Full Reference-IQA, FR-IQA) 3.2. 半参考(Reduced Reference-IQA, RR-IQA) 3.3. 无参考(No Reference-IQA, NR-IQA)   4. 数据集 5. 评估方法  5.1. 评估指标   6. 结果  1. 背景 质量评估(Quality Assessment，QA)在许多领域有其广泛的实用性。（比如图像压缩、视频编解码、视频监控等。）
+并且对高效、可靠质量评估的需求日益增加，所以QA成为一个感兴趣的研究领域。
+每年都涌现出大量的新的QA算法，有些是扩展已有的算法，也有一些是QA算法的应用。
+质量评估可分为：
+  图像质量评估（Image Quality Assessment, IQA）
+  视频质量评估（Video Quality Assessment, VQA）"/>
+
+    <meta property="og:title" content="审稿学习系列01——图像质量评估" />
+<meta property="og:description" content="审稿学习系列01——图像质量评估 LIU Liang
+  1. 背景 2. 图像质量评估（Image Quality Assessment, IQA）——方法分类  2.1. 主观方法 2.2. 客观方法   3. 图像质量评估（Image Quality Assessment, IQA）——图像提供信息分类  3.1. 全参考(Full Reference-IQA, FR-IQA) 3.2. 半参考(Reduced Reference-IQA, RR-IQA) 3.3. 无参考(No Reference-IQA, NR-IQA)   4. 数据集 5. 评估方法  5.1. 评估指标   6. 结果  1. 背景 质量评估(Quality Assessment，QA)在许多领域有其广泛的实用性。（比如图像压缩、视频编解码、视频监控等。）
+并且对高效、可靠质量评估的需求日益增加，所以QA成为一个感兴趣的研究领域。
+每年都涌现出大量的新的QA算法，有些是扩展已有的算法，也有一些是QA算法的应用。
+质量评估可分为：
+  图像质量评估（Image Quality Assessment, IQA）
+  视频质量评估（Video Quality Assessment, VQA）" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ioyy900205.github.io/post/2021-05-10-%E5%AE%A1%E7%A8%BF%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%9701/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-05-10T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-05-10T00:00:00&#43;00:00" />
+
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3520060145,2875461924&amp;fm=26&amp;gp=0.jpg" alt="Liu Liang" /></a>
+      <h1>亮的笔记</h1>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>深度学习笔记本</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/ioyy900205" target="_blank" rel="noreferrer noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/ioyy900205" target="_blank" rel="noreferrer noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">审稿学习系列01——图像质量评估</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          May 10, 2021
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://ioyy900205.github.io/tags/paper_review/">Paper_Review</a>
+              <a class="tag" href="https://ioyy900205.github.io/tags/image_quality/">Image_quality</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <hr>
+<h2 id="审稿学习系列01图像质量评估">审稿学习系列01——图像质量评估</h2>
+<p>LIU Liang</p>
+<hr>
+<ul>
+<li><a href="#1-%E8%83%8C%E6%99%AF">1. 背景</a></li>
+<li><a href="#2-%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BC%B0image-quality-assessment-iqa%E6%96%B9%E6%B3%95%E5%88%86%E7%B1%BB">2. 图像质量评估（Image Quality Assessment, IQA）——方法分类</a>
+<ul>
+<li><a href="#21-%E4%B8%BB%E8%A7%82%E6%96%B9%E6%B3%95">2.1. 主观方法</a></li>
+<li><a href="#22-%E5%AE%A2%E8%A7%82%E6%96%B9%E6%B3%95">2.2. 客观方法</a></li>
+</ul>
+</li>
+<li><a href="#3-%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BC%B0image-quality-assessment-iqa%E5%9B%BE%E5%83%8F%E6%8F%90%E4%BE%9B%E4%BF%A1%E6%81%AF%E5%88%86%E7%B1%BB">3. 图像质量评估（Image Quality Assessment, IQA）——图像提供信息分类</a>
+<ul>
+<li><a href="#31-%E5%85%A8%E5%8F%82%E8%80%83full-reference-iqa-fr-iqa">3.1. 全参考(Full Reference-IQA, FR-IQA)</a></li>
+<li><a href="#32-%E5%8D%8A%E5%8F%82%E8%80%83reduced-reference-iqa-rr-iqa">3.2. 半参考(Reduced Reference-IQA, RR-IQA)</a></li>
+<li><a href="#33-%E6%97%A0%E5%8F%82%E8%80%83no-reference-iqa-nr-iqa">3.3. 无参考(No Reference-IQA, NR-IQA)</a></li>
+</ul>
+</li>
+<li><a href="#4-%E6%95%B0%E6%8D%AE%E9%9B%86">4. 数据集</a></li>
+<li><a href="#5-%E8%AF%84%E4%BC%B0%E6%96%B9%E6%B3%95">5. 评估方法</a>
+<ul>
+<li><a href="#51-%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87">5.1. 评估指标</a></li>
+</ul>
+</li>
+<li><a href="#6-%E7%BB%93%E6%9E%9C">6. 结果</a></li>
+</ul>
+<h1 id="1-背景">1. 背景</h1>
+<p>质量评估(Quality Assessment，QA)在许多领域有其广泛的实用性。（比如图像压缩、视频编解码、视频监控等。）</p>
+<p>并且对高效、可靠质量评估的<strong>需求</strong>日益增加，所以QA成为一个感兴趣的研究领域。</p>
+<p>每年都涌现出大量的新的QA算法，有些是扩展已有的算法，也有一些是QA算法的应用。</p>
+<p>质量评估可分为：</p>
+<ol>
+<li>
+<p>图像质量评估（Image Quality Assessment, IQA）</p>
+</li>
+<li>
+<p>视频质量评估（Video Quality Assessment, VQA）</p>
+</li>
+</ol>
+<h1 id="2-图像质量评估image-quality-assessment-iqa方法分类">2. 图像质量评估（Image Quality Assessment, IQA）——方法分类</h1>
+<h2 id="21-主观方法">2.1. 主观方法</h2>
+<p>主观评估就是从人的主观感知来评价图像的质量，首先给出原始参考图像和失真图像，让标注者给失真图像评分，一般采用平均主观得分（Mean Opinion Score, MOS）或平均主观得分差异（Differential Mean Opinion Score, DMOS）表示。</p>
+<p>主观评估费时费力，在实际应用中不可行，并且主观实验受观看距离、显示设备、照明条件、观测者的视觉能力、情绪等诸多因素影响。</p>
+<h2 id="22-客观方法">2.2. 客观方法</h2>
+<p>客观评估使用数学模型给出量化值，可以使用图像处理技术生成一批失真图像，操作简单，已经成为IQA研究的重点。图像质量评估算法的目标是自动评估与人的主观质量判断相一致的客观图像质量。</p>
+<h1 id="3-图像质量评估image-quality-assessment-iqa图像提供信息分类">3. 图像质量评估（Image Quality Assessment, IQA）——图像提供信息分类</h1>
+<h2 id="31-全参考full-reference-iqa-fr-iqa">3.1. 全参考(Full Reference-IQA, FR-IQA)</h2>
+<p>FR-IQA同时有原始(无失真、参考)图像和失真图像,难度较低，核心是对比两幅图像的信息量或特征相似度，是研究比较成熟的方向。</p>
+<h2 id="32-半参考reduced-reference-iqa-rr-iqa">3.2. 半参考(Reduced Reference-IQA, RR-IQA)</h2>
+<p>RR-IQA只有原始图像的部分信息或从参考图像中提取的部分特征，此类方法介于FR-IQA和NR-IQA之间，且任何FR-IQA和NR-IQA方法经过适当加工都可以转换成RR-IQA方法。</p>
+<h2 id="33-无参考no-reference-iqa-nr-iqa">3.3. 无参考(No Reference-IQA, NR-IQA)</h2>
+<p>无参考也叫盲参考(Blind IQA, BIQA)。NR-IQA只有失真图像，难度较高，是近些年的研究热点，也是IQA中最有挑战的问题。
+进一步，NR-IQA类算法还可以细分成两类：</p>
+<ul>
+<li>一类研究特定类型的图像质量，比如估计模糊、块效应、噪声的严重程度。</li>
+<li>一类估计非特定类型的图像质量，也就是一个通用的失真评估。</li>
+</ul>
+<p>一般在实际应用中无法提供参考图像，所以NR-IQA最有实用价值，也有着广泛的应用，使用起来也非常方便，同时，由于图像内容的千变万化并且无参考，也使得NR-IQA成为较难的研究对象</p>
+<h1 id="4-数据集">4. 数据集</h1>
+<p>LIVE，TID2008，TID2013，CSIQ，IVC和Toyama。
+<img src="https://pic3.zhimg.com/v2-52704ccf942da983ad2344322779a626_r.jpg" alt="https://pic3.zhimg.com/v2-52704ccf942da983ad2344322779a626_r.jpg"></p>
+<h1 id="5-评估方法">5. 评估方法</h1>
+<h2 id="51-评估指标">5.1. 评估指标</h2>
+<p>线性相关系数（Linear Correlation Coefficient, LCC）</p>
+<pre><code>LCC也叫Pearson相关系数（PLCC），描述了主、客观评估之间的线性相关性
+</code></pre>
+<p>Spearman秩相关系数（Spearman&rsquo;s Rank Order Correlation Coefficient, SROCC）</p>
+<pre><code>SROCC衡量算法预测的单调性
+</code></pre>
+<p>除此之外，还有Kendall秩相关系数（Kendall Rank Order Correlation Coefficient，KROCC）、均方根误差（Root Mean Square Error， RMSE）等评估指标。KROCC的性质和SROCC一样，也衡量了算法预测的单调性。RMSE计算MOS与算法预测值之间的绝对误差，衡量算法预测的准确性。</p>
+<h1 id="6-结果">6. 结果</h1>
+<p>统计了一些FR-IQA算法和NR-IQA算法在LIVE数据集上的表现，到目前为止结果最好是RankIQA，RankIQA在NR-IQA上的评估指标甚至超过了FR-IQA</p>
+<p><img src="https://pic2.zhimg.com/v2-d30ba14d90ef9d018a6ec03d7c921b1d_r.jpg" alt="https://pic2.zhimg.com/v2-d30ba14d90ef9d018a6ec03d7c921b1d_r.jpg"></p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

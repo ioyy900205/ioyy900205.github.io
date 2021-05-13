@@ -5,13 +5,39 @@
     <link>https://ioyy900205.github.io/</link>
     <description>Recent content on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 12 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 13 May 2021 10:40:00 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>11——SSD:Single Shot MultiBox Detector</title>
+      <link>https://ioyy900205.github.io/post/2021-05-13-11ssd_single-shot-multibox-detector-copy/</link>
+      <pubDate>Thu, 13 May 2021 10:40:00 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-05-13-11ssd_single-shot-multibox-detector-copy/</guid>
+      <description>请不要假装很努力， 因为结果不会陪你演戏！
+  1. background 2. 目标损失函数 3. 多尺度多比例默认框 4. 负样本均衡 5. 数据增强 6. 性能比较  6.1. 在VOC2007测试集上的检测性能   7. 在VOC2012测试集上的检测性能 8. 在COCO测试集上的检测性能 9. 总结  1. background ECCV2016 author:wei liu 实现真正的实时
+2016年，Wei Liu等人提出了SSD算法，它是继YOLOv1算法提出后的又一单阶段目标检测算法。在当时，单阶段算法相比于以R-CNN系列为主的双阶段算法更快，所以被学术界和工业界所青睐。为了提高检测的精度，SSD创造性地提出了多尺度预测的目标检测算法，使得网络更容易适应对不同大小物体的检测。
+放上对比结构如下： 我的理解是 网络抽取不同的特征层进行预测，较低的特征层可以预测教细节物体，较高特征层可以预测教大物体.
+整体结构上，SSD采用了VGG-16作为骨干网络提取特征。在骨干网络末尾添加了若干个特征层，特征层与特征层之间使用1x1和3x3的卷积核计算特征和降采样，并从中选择了6个不同大小的特征层来预测目标。
+需要注意的是，用来预测目标的每一个特征层上预设的Anchors数量不一定是相同的。比如对于38x38的特征层，每个格子预设4个不同比例的Anchors；对于19x19的特征层，每个格子预设了6个不同比例的Anchors。
+2. 目标损失函数 每一个目标检测网络都具有其独特的目标损失函数，它决定着网络训练迭代的方向。
+根据目标检测网络的一般定义，我们知道总损失函数一般由两部分组成：定位损失和置信度损失。
+其中，定位损失计算公式为：
+定位损失函数借鉴了Faster R-CNN中的Smooth L1函数，用来计算预测边界框 l 和真实边界框 g 之间的损失误差。其中，m 是代表边界框位置信息的集合{cx，cy，w，h}。
+容易看出，SSD没有直接将目标的中心位置、长宽作为真实标签。而是采取真实框与预选框Anchors的偏移作为真实标签。那么在学习的过程中，也会去主动预测偏移值，这样更有利于网络的训练，避免在训练初期产生较大的振荡。
+置信度损失函数是在多个类别置信度c上的softmax损失：
+3. 多尺度多比例默认框 前面已经提到，SSD算法中采用了类似于Faster R-CNN中的Anchors机制用于目标框的回归。值得一提的是，SSD采用的Anchors方法更为灵活，不仅在每一个特征层设置了不同大小和比例的预选框，而且针对于不同的特征层，也设计了相应的大小的预选框。
+经过计算可知，对于越深的特征层（尺寸越小），设置的预选框尺寸越大。这是因为，尺寸越小的特征层，感受野越大。SSD的目的就是：要让感受野小的特征层检测小目标，使用感受野大的特征层检测更大的目标。
+4. 负样本均衡 在训练过程中，大部分的预选框Anchors并不能和真实框匹配上，因此负样本很多，而正样本却很少，正负样本数量严重失衡，不利于训练。
+考虑到这个问题，SSD在训练过程中，没有选取所有的负样本。而是先将负样本的置信度损失进行排序，仅选取置信度高的一些负样本，使得负样本数与正样本数之间的比率最大不超过3：1。作者认为，这样使得训练更稳定更快。
+5. 数据增强 数据增强又叫数据增广，是扩大数据集的一种方式，经常用于深度学习中来防止过拟合。在SSD算法中，也使用了一些数据增强的技巧。采用数据增强后，目标检测性能也得到了明显的提升，具体实验结果如下:
+6. 性能比较 6.</description>
+    </item>
+    
     <item>
       <title>09——Faster R-CNN</title>
-      <link>https://ioyy900205.github.io/post/09-faster-r-cnn/</link>
+      <link>https://ioyy900205.github.io/post/2021-05-12-09-faster-r-cnn/</link>
       <pubDate>Wed, 12 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://ioyy900205.github.io/post/09-faster-r-cnn/</guid>
+      <guid>https://ioyy900205.github.io/post/2021-05-12-09-faster-r-cnn/</guid>
       <description>请不要假装很努力， 因为结果不会陪你演戏！
   1. 背景  1.1. 时间线 1.2. 结构  1.2.1. CNN 1.2.2. RPN 1.2.3. ROI Pooling     2. 一些问题 3. 损失函数 4. 后处理  4.1. NMS 4.2. Proposal selection 4.3. Standalone application   5. 训练 6. 推理 7. 后记  1. 背景 Faster R-CNN最初发表于NIPS 2015。发表后，它经历了几次修改。
 Faster R-CNN是R-CNN论文的第三次迭代&amp;ndash;Ross Girshick是作者和合作者。
@@ -22,10 +48,10 @@ Published in 2014
     
     <item>
       <title>10——目标检测参数</title>
-      <link>https://ioyy900205.github.io/post/10%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%8F%82%E6%95%B0/</link>
+      <link>https://ioyy900205.github.io/post/2021-05-12-10%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%8F%82%E6%95%B0/</link>
       <pubDate>Wed, 12 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://ioyy900205.github.io/post/10%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%8F%82%E6%95%B0/</guid>
+      <guid>https://ioyy900205.github.io/post/2021-05-12-10%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%8F%82%E6%95%B0/</guid>
       <description>请不要假装很努力， 因为结果不会陪你演戏！
   1. background Pascal VOC 和 COCO 2. precision 和 recall  2.1. 基本定义 2.2. precision-recall curve   3. COCO Evaluation Result 4. 参考  1. background Pascal VOC 和 COCO 最近看目标检测，少不了了解其中参数的意义。一顿搜所哎。
 最精简的回答：
@@ -37,20 +63,20 @@ Published in 2014
     
     <item>
       <title>08——数据集操作和图像处理——PyTorch</title>
-      <link>https://ioyy900205.github.io/post/voc2012%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E5%9B%BE%E7%89%87%E5%92%8Cbbox%E4%BF%A1%E6%81%AF%E6%98%BE%E7%A4%BA/</link>
+      <link>https://ioyy900205.github.io/post/2021-05-11-voc2012%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E5%9B%BE%E7%89%87%E5%92%8Cbbox%E4%BF%A1%E6%81%AF%E6%98%BE%E7%A4%BA/</link>
       <pubDate>Tue, 11 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://ioyy900205.github.io/post/voc2012%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E5%9B%BE%E7%89%87%E5%92%8Cbbox%E4%BF%A1%E6%81%AF%E6%98%BE%E7%A4%BA/</guid>
+      <guid>https://ioyy900205.github.io/post/2021-05-11-voc2012%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E5%9B%BE%E7%89%87%E5%92%8Cbbox%E4%BF%A1%E6%81%AF%E6%98%BE%E7%A4%BA/</guid>
       <description>请不要假装很努力， 因为结果不会陪你演戏！
   1. 数据集读取 2. 转换函数 3. bbox画图  1. 数据集读取 from torch.utils.data import Dataset import os import torch import json from PIL import Image from lxml import etree class VOC2012DataSet(Dataset): &amp;#34;&amp;#34;&amp;#34;读取解析PASCAL VOC2012数据集&amp;#34;&amp;#34;&amp;#34; def __init__(self, voc_root, transforms, txt_name: str = &amp;#34;train.txt&amp;#34;): self.root = os.path.join(voc_root, &amp;#34;VOCdevkit&amp;#34;, &amp;#34;VOC2012&amp;#34;) self.img_root = os.path.join(self.root, &amp;#34;JPEGImages&amp;#34;) self.annotations_root = os.path.join(self.root, &amp;#34;Annotations&amp;#34;) # read train.txt or val.txt file txt_path = os.path.join(self.root, &amp;#34;ImageSets&amp;#34;, &amp;#34;Main&amp;#34;, txt_name) assert os.</description>
     </item>
     
     <item>
       <title>06——torch.cat维度操作——PyTorch</title>
-      <link>https://ioyy900205.github.io/post/torch.cat%E7%9A%84%E7%BB%B4%E5%BA%A6%E6%93%8D%E4%BD%9C/</link>
+      <link>https://ioyy900205.github.io/post/2021-05-10-torch.cat%E7%9A%84%E7%BB%B4%E5%BA%A6%E6%93%8D%E4%BD%9C/</link>
       <pubDate>Mon, 10 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://ioyy900205.github.io/post/torch.cat%E7%9A%84%E7%BB%B4%E5%BA%A6%E6%93%8D%E4%BD%9C/</guid>
+      <guid>https://ioyy900205.github.io/post/2021-05-10-torch.cat%E7%9A%84%E7%BB%B4%E5%BA%A6%E6%93%8D%E4%BD%9C/</guid>
       <description>请不要假装很努力， 因为结果不会陪你演戏！
   1. torch.cat  1.1. 二维数组  1.1.1. dim=0 1.1.2. dim=1   1.2. 三维数组  1.2.1. dim=0 1.2.2. dim=1 1.2.3. dim=2     2. 小结  1. torch.cat 1.1. 二维数组 1.1.1. dim=0 运行
 import torch A = torch.ones(2,3) #2x3的张量（矩阵）  print(&amp;#34;A:&amp;#34;,A) B=2*torch.ones(4,3) #4x3的张量（矩阵）  print(&amp;#34;B:&amp;#34;,B) C=torch.cat((A,B),0)#按维数0（行）拼接 print(&amp;#34;C:&amp;#34;,C) print(C.size()) 结果
@@ -59,10 +85,10 @@ A: tensor([[1., 1., 1.], [1., 1., 1.]]) B: tensor([[2., 2., 2.], [2., 2., 2.], [
     
     <item>
       <title>07——torch.stack维度操作——PyTorch</title>
-      <link>https://ioyy900205.github.io/post/torch.stack%E7%9A%84%E7%BB%B4%E5%BA%A6%E6%93%8D%E4%BD%9C/</link>
+      <link>https://ioyy900205.github.io/post/2021-05-10-torch.stack%E7%9A%84%E7%BB%B4%E5%BA%A6%E6%93%8D%E4%BD%9C/</link>
       <pubDate>Mon, 10 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://ioyy900205.github.io/post/torch.stack%E7%9A%84%E7%BB%B4%E5%BA%A6%E6%93%8D%E4%BD%9C/</guid>
+      <guid>https://ioyy900205.github.io/post/2021-05-10-torch.stack%E7%9A%84%E7%BB%B4%E5%BA%A6%E6%93%8D%E4%BD%9C/</guid>
       <description>请不要假装很努力， 因为结果不会陪你演戏！
   1. 初始化 2. torch.stak  2.1. dim = 0 2.2. dim = 1 2.3. dim = 2    1. 初始化 input
 import torch import numpy as np # 创建3*3的矩阵，a、b a=np.array([[1,2,3],[4,5,6],[7,8,9]]) b=np.array([[10,20,30],[40,50,60],[70,80,90]]) # 将矩阵转化为Tensor a = torch.from_numpy(a) b = torch.from_numpy(b) # 打印a、b、c print(a,a.size()) print(b,b.size()) output
@@ -71,10 +97,10 @@ tensor([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) torch.Size([3, 3]) tensor([[10, 20, 30
     
     <item>
       <title>审稿学习系列01——图像质量评估</title>
-      <link>https://ioyy900205.github.io/post/%E5%AE%A1%E7%A8%BF%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%9701/</link>
+      <link>https://ioyy900205.github.io/post/2021-05-10-%E5%AE%A1%E7%A8%BF%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%9701/</link>
       <pubDate>Mon, 10 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://ioyy900205.github.io/post/%E5%AE%A1%E7%A8%BF%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%9701/</guid>
+      <guid>https://ioyy900205.github.io/post/2021-05-10-%E5%AE%A1%E7%A8%BF%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%9701/</guid>
       <description>审稿学习系列01——图像质量评估 LIU Liang
   1. 背景 2. 图像质量评估（Image Quality Assessment, IQA）——方法分类  2.1. 主观方法 2.2. 客观方法   3. 图像质量评估（Image Quality Assessment, IQA）——图像提供信息分类  3.1. 全参考(Full Reference-IQA, FR-IQA) 3.2. 半参考(Reduced Reference-IQA, RR-IQA) 3.3. 无参考(No Reference-IQA, NR-IQA)   4. 数据集 5. 评估方法  5.1. 评估指标   6. 结果  1. 背景 质量评估(Quality Assessment，QA)在许多领域有其广泛的实用性。（比如图像压缩、视频编解码、视频监控等。）
 并且对高效、可靠质量评估的需求日益增加，所以QA成为一个感兴趣的研究领域。
@@ -86,19 +112,19 @@ tensor([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) torch.Size([3, 3]) tensor([[10, 20, 30
     
     <item>
       <title>05——ShuffleNet学习</title>
-      <link>https://ioyy900205.github.io/post/shufflenet/</link>
+      <link>https://ioyy900205.github.io/post/2021-05-07-shufflenet/</link>
       <pubDate>Fri, 07 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://ioyy900205.github.io/post/shufflenet/</guid>
+      <guid>https://ioyy900205.github.io/post/2021-05-07-shufflenet/</guid>
       <description></description>
     </item>
     
     <item>
       <title>03——nn.module学习——PyTorch</title>
-      <link>https://ioyy900205.github.io/post/nn.module/</link>
+      <link>https://ioyy900205.github.io/post/2021-04-27-nn.module/</link>
       <pubDate>Tue, 27 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://ioyy900205.github.io/post/nn.module/</guid>
+      <guid>https://ioyy900205.github.io/post/2021-04-27-nn.module/</guid>
       <description>请不要假装很努力， 因为结果不会陪你演戏！
   1. nn.moduel初步  1.1. Linear类 1.2. Conv2d类 1.3. 自定义层的步骤   2. 自定义层  2.1. 定义一个自定义层MyLayer 2.2. 自定义模型并且训练    1. nn.moduel初步 keras更加注重的是层Layer、pytorch更加注重的是模型Module。
 1.1. Linear类 import math import torch from torch.nn.parameter import Parameter from .. import functional as F from .. import init from .module import Module from ..._jit_internal import weak_module, weak_script_method class Linear(Module): __constants__ = [&amp;#39;bias&amp;#39;] def __init__(self, in_features, out_features, bias=True): super(Linear, self).__init__() self.</description>
@@ -106,10 +132,10 @@ tensor([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) torch.Size([3, 3]) tensor([[10, 20, 30
     
     <item>
       <title>04——轻量级神经网络总结</title>
-      <link>https://ioyy900205.github.io/post/%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%80%BB%E7%BB%93/</link>
+      <link>https://ioyy900205.github.io/post/2021-04-27-%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%80%BB%E7%BB%93/</link>
       <pubDate>Tue, 27 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://ioyy900205.github.io/post/%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%80%BB%E7%BB%93/</guid>
+      <guid>https://ioyy900205.github.io/post/2021-04-27-%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%80%BB%E7%BB%93/</guid>
       <description>请不要假装很努力， 因为结果不会陪你演戏！
   1. 需解决的问题 2. 衡量指标  2.1. FLOPs 2.2. Params  2.2.1. 卷积层的参数量 2.2.2. 全连接层的参数量   2.3. MAC 2.4. MACC(也叫MADD)   3. 方法  3.1. 模型结构设计  3.1.1. 分组卷积 3.1.2. 分解卷积   3.2. 模型压缩  3.2.1. 权值量化 3.2.2. 网络剪枝 3.2.3. 低秩近似 3.2.4. 知识蒸馏      1. 需解决的问题 存储问题
 数百层网络有着大量的权值参数，保存大量权值参数对设备的内存要求很高； 速度问题
@@ -119,10 +145,10 @@ tensor([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) torch.Size([3, 3]) tensor([[10, 20, 30
     
     <item>
       <title>01——ResNeXt学习</title>
-      <link>https://ioyy900205.github.io/post/resnext/</link>
+      <link>https://ioyy900205.github.io/post/2021-04-26-resnext/</link>
       <pubDate>Mon, 26 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://ioyy900205.github.io/post/resnext/</guid>
+      <guid>https://ioyy900205.github.io/post/2021-04-26-resnext/</guid>
       <description>请不要假装很努力， 因为结果不会陪你演戏！
   1. ResNeXt  1.1. 概述 1.2. 思路 1.3. Block 1.4. 组卷积 1.5. 模型复杂度 1.6. Shortcut 1.7. 结果    1. ResNeXt 1.1. 概述 论文：Aggregated Residual Transformations for Deep Neural Networks
 论文链接：https://arxiv.org/abs/1611.05431
@@ -139,10 +165,10 @@ PyTorch代码：https://github.com/miraclewkf/ResNeXt-PyTorch 2016年,ISCLVCR 20
     
     <item>
       <title>02——SeNet学习</title>
-      <link>https://ioyy900205.github.io/post/senet/</link>
+      <link>https://ioyy900205.github.io/post/2021-04-26-senet/</link>
       <pubDate>Mon, 26 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://ioyy900205.github.io/post/senet/</guid>
+      <guid>https://ioyy900205.github.io/post/2021-04-26-senet/</guid>
       <description>请不要假装很努力， 因为结果不会陪你演戏！
   1. SENET  1.1. 链接 1.2. 贡献  1.2.1. 提供了子结构 1.2.2. SOTA   1.3. 核心思想 1.4. Squeeze 1.5. Excitation   2. 思考  2.1. 浅层作用较大    1. SENET 1.1. 链接 论文：Squeeze-and-Excitation Networks论文链接：https://arxiv.org/abs/1709.01507代码地址：https://github.com/hujie-frank/SENetPyTorch代码地址：https://github.com/miraclewkf/SENet-PyTorch
 A central theme of computer vision research is the search for more powerful representations that capture only those properties of an image that are most salient for a given task</description>
@@ -150,10 +176,10 @@ A central theme of computer vision research is the search for more powerful repr
     
     <item>
       <title>REF01——避坑指南——打印的RESNET18</title>
-      <link>https://ioyy900205.github.io/post/ref01%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97%E6%89%93%E5%8D%B0%E7%9A%84resnet18/</link>
+      <link>https://ioyy900205.github.io/post/2021-04-25-ref01%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97%E6%89%93%E5%8D%B0%E7%9A%84resnet18/</link>
       <pubDate>Sun, 25 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://ioyy900205.github.io/post/ref01%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97%E6%89%93%E5%8D%B0%E7%9A%84resnet18/</guid>
+      <guid>https://ioyy900205.github.io/post/2021-04-25-ref01%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97%E6%89%93%E5%8D%B0%E7%9A%84resnet18/</guid>
       <description>请不要假装很努力， 因为结果不会陪你演戏！
   1. BasicBlock 2. BottleNeck 3. ResNet18  1. BasicBlock 其中有个坑是下采样。如下图所示：
 具体来说，如代码所展示的：

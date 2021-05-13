@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>09——Faster R-CNN // 亮的笔记</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.82.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Liu Liang" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="09——Faster R-CNN"/>
+<meta name="twitter:description" content="请不要假装很努力， 因为结果不会陪你演戏！
+  1. 背景  1.1. 时间线 1.2. 结构  1.2.1. CNN 1.2.2. RPN 1.2.3. ROI Pooling     2. 一些问题 3. 损失函数 4. 后处理  4.1. NMS 4.2. Proposal selection 4.3. Standalone application   5. 训练 6. 推理 7. 后记  1. 背景 Faster R-CNN最初发表于NIPS 2015。发表后，它经历了几次修改。
+Faster R-CNN是R-CNN论文的第三次迭代&ndash;Ross Girshick是作者和合作者。
+1.1. 时间线   R-CNN
+Published in 2014
+“Rich feature hierarchies for accurate object detection and semantic segmentation”,"/>
+
+    <meta property="og:title" content="09——Faster R-CNN" />
+<meta property="og:description" content="请不要假装很努力， 因为结果不会陪你演戏！
+  1. 背景  1.1. 时间线 1.2. 结构  1.2.1. CNN 1.2.2. RPN 1.2.3. ROI Pooling     2. 一些问题 3. 损失函数 4. 后处理  4.1. NMS 4.2. Proposal selection 4.3. Standalone application   5. 训练 6. 推理 7. 后记  1. 背景 Faster R-CNN最初发表于NIPS 2015。发表后，它经历了几次修改。
+Faster R-CNN是R-CNN论文的第三次迭代&ndash;Ross Girshick是作者和合作者。
+1.1. 时间线   R-CNN
+Published in 2014
+“Rich feature hierarchies for accurate object detection and semantic segmentation”," />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ioyy900205.github.io/post/2021-05-12-09-faster-r-cnn/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-05-12T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-05-12T00:00:00&#43;00:00" />
+
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3520060145,2875461924&amp;fm=26&amp;gp=0.jpg" alt="Liu Liang" /></a>
+      <h1>亮的笔记</h1>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>深度学习笔记本</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/ioyy900205" target="_blank" rel="noreferrer noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/ioyy900205" target="_blank" rel="noreferrer noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">09——Faster R-CNN</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          May 12, 2021
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          7 min read
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://ioyy900205.github.io/tags/object_detection/">Object_Detection</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <hr>
+<p>请不要假装很努力， 因为结果不会陪你演戏！</p>
+<hr>
+<ul>
+<li><a href="#1-%E8%83%8C%E6%99%AF">1. 背景</a>
+<ul>
+<li><a href="#11-%E6%97%B6%E9%97%B4%E7%BA%BF">1.1. 时间线</a></li>
+<li><a href="#12-%E7%BB%93%E6%9E%84">1.2. 结构</a>
+<ul>
+<li><a href="#121-cnn">1.2.1. CNN</a></li>
+<li><a href="#122-rpn">1.2.2. RPN</a></li>
+<li><a href="#123-roi-pooling">1.2.3. ROI Pooling</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#2-%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98">2. 一些问题</a></li>
+<li><a href="#3-%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0">3. 损失函数</a></li>
+<li><a href="#4-%E5%90%8E%E5%A4%84%E7%90%86">4. 后处理</a>
+<ul>
+<li><a href="#41-nms">4.1. NMS</a></li>
+<li><a href="#42-proposal-selection">4.2. Proposal selection</a></li>
+<li><a href="#43-standalone-application">4.3. Standalone application</a></li>
+</ul>
+</li>
+<li><a href="#5-%E8%AE%AD%E7%BB%83">5. 训练</a></li>
+<li><a href="#6-%E6%8E%A8%E7%90%86">6. 推理</a></li>
+<li><a href="#7-%E5%90%8E%E8%AE%B0">7. 后记</a></li>
+</ul>
+<h1 id="1-背景">1. 背景</h1>
+<p>Faster R-CNN最初发表于NIPS 2015。发表后，它经历了几次修改。</p>
+<p>Faster R-CNN是R-CNN论文的第三次迭代&ndash;Ross Girshick是作者和合作者。</p>
+<h2 id="11-时间线">1.1. 时间线</h2>
+<ul>
+<li>
+<p>R-CNN</p>
+<p>Published in 2014</p>
+<p>“Rich feature hierarchies for accurate object detection and semantic segmentation”,</p>
+<p>which used an algorithm called Selective Search to propose possible regions of interest and a standard Convolutional Neural Network (CNN) to classify and adjust them.</p>
+</li>
+<li>
+<p>Fast R-CNN</p>
+<p>Published in early 2015</p>
+<p>where a technique called <strong>Region of Interest Pooling</strong> allowed for sharing expensive computations and made the model much faster</p>
+</li>
+</ul>
+<h2 id="12-结构">1.2. 结构</h2>
+<h3 id="121-cnn">1.2.1. CNN</h3>
+<p>加载预训练权重，去掉全连接层，用来提取特征。</p>
+<p>这种方式在迁移学习中也非常常见。在训练一个小数据集分类器中，使用一个在大数据集上已训练好的网络权重进行微调。</p>
+<h3 id="122-rpn">1.2.2. RPN</h3>
+<p>Region Proposal Network</p>
+<p>它被用来区域候选框（bounding boxes），这些区域可能包含物体</p>
+<h3 id="123-roi-pooling">1.2.3. ROI Pooling</h3>
+<p>Region of Interest Pooling</p>
+<p>After the RPN step, we have a bunch of object proposals with no class assigned to them. Our next problem to solve is how to take these bounding boxes and classify them into our desired categories.</p>
+<p>The simplest approach would be to take each proposal, crop it, and then pass it through the pre-trained base network. Then, we can use the extracted features as input for a vanilla image classifier. The main problem is that running the computations for all the 2000 proposals is really inefficient and slow.</p>
+<p>Faster R-CNN tries to solve, or at least mitigate, this problem by reusing the existing convolutional feature map. This is done by extracting fixed-sized feature maps for each proposal using region of interest pooling. Fixed size feature maps are needed for the R-CNN in order to classify them into a fixed number of classes.</p>
+<p>1.分类。对边界框中的内容进行分类（或将其丢弃，用 &ldquo;背景 &ldquo;作为标签）</p>
+<p>2.回归。调整边界框的坐标（使其更适合对象）</p>
+<h1 id="2-一些问题">2. 一些问题</h1>
+<p>官方并没有说明到底使用哪一个卷积层。Each convolutional layer creates abstractions based on the previous information. The first layers usually learn edges, the second finds patterns in edges in order to activate for more complex shapes and so forth. Eventually we end up with a convolutional feature map which has spatial dimensions much smaller than the original image, but greater depth. The width and height of the feature map decrease because of the pooling applied between convolutional layers and the depth increases based on the number of filters the convolutional layer learns.</p>
+<p>看网上中文的解释不如直接看英文的解释，更清晰。</p>
+<p>Anchors are fixed bounding boxes that are placed throughout the image with different sizes and ratios that are going to be used for reference when first predicting object locations。初次理解时候，容易混淆anchors和bboxes的区别。</p>
+<p>Since we only have convolutional and pooling layers, the dimensions of the feature map will be proportional to those of the original image。卷积、池化 维持正比。</p>
+<h1 id="3-损失函数">3. 损失函数</h1>
+<ol>
+<li>
+<p>The RPN uses all the anchors selected for the mini batch to calculate the classification loss using binary cross entropy.</p>
+</li>
+<li>
+<p>Then, it uses only those minibatch anchors marked as foreground to calculate the regression loss. For calculating the targets for the regression, we use the foreground anchor and the closest ground truth object and calculate the correct Δ needed to transform the anchor into the object.</p>
+</li>
+<li>
+<p>Instead of using a simple L1 or L2 loss for the regression error, the paper suggests using Smooth L1 loss. Smooth L1 is basically L1, but when the L1 error is small enough, defined by a certain σ, the error is considered almost correct and the loss diminishes at a faster rate.</p>
+</li>
+</ol>
+<h1 id="4-后处理">4. 后处理</h1>
+<h2 id="41-nms">4.1. NMS</h2>
+<p>Non-maximum suppression Since anchors usually overlap, proposals end up also overlapping over the same object. To solve the issue of duplicate proposals we use a simple algorithmic approach called Non-Maximum Suppression (NMS). NMS takes the list of proposals sorted by score and iterateqs over the sorted list, discarding those proposals that have an IoU larger than some predefined threshold with a proposal that has a higher score.</p>
+<p>While this looks simple, it is very important to be cautious with the IoU threshold. Too low and you may end up missing proposals for objects; too high and you could end up with too many proposals for the same object. A value commonly used is 0.6.</p>
+<h2 id="42-proposal-selection">4.2. Proposal selection</h2>
+<p>After applying NMS, we keep the top N proposals sorted by score. In the paper N=2000 is used, but it is possible to lower that number to as little as 50 and still get quite good results.</p>
+<h2 id="43-standalone-application">4.3. Standalone application</h2>
+<p>The RPN can be used by itself without needing the second stage model. In problems where there is only a single class of objects, the objectness probability can be used as the final class probability. This is because for this case, “foreground” = “single class” and “background” = “not single class”.</p>
+<p>Some examples of machine learning problems that can benefit from a standalone usage of the RPN are the popular (but still challenging) face detection and text detection.</p>
+<p>One of the advantages of using only the RPN is the gain in speed both in training and prediction. Since the RPN is a very simple network which only uses convolutional layers, the prediction time can be faster than using the classification base network</p>
+<h1 id="5-训练">5. 训练</h1>
+<p>In the original paper, Faster R-CNN was trained using a multi-step approach, training parts independently and merging the trained weights before a final full training approach. Since then, it has been found that doing end-to-end, joint training leads to better results.</p>
+<p>在最初的论文中，Faster R-CNN的训练采用了多步骤的方法，在最后的全面训练方法之前，独立训练部分并合并训练的权重。此后，人们发现，做端到端的联合训练会带来更好的结果。</p>
+<p>After putting the complete model together we end up with 4 different losses, two for the RPN and two for R-CNN. We have the trainable layers in RPN and R-CNN, and we also have the base network which we can train (fine-tune) or not.</p>
+<p>把完整的模型放在一起后，我们最终有4个不同的损失，两个用于RPN，两个用于R-CNN。我们有RPN和R-CNN的可训练层，我们也有基础网络，我们可以训练（微调）或不训练。</p>
+<p>The decision to train the base network depends on the nature of the objects we want to learn and the computing power available. If we want to detect objects that are similar to those that were on the original dataset on which the base network was trained on, then there is no real need except for trying to squeeze all the possible performance we can get. On the other hand, training the base network can be expensive both in time and on the necessary hardware, to be able to fit the complete gradients.</p>
+<p>训练基础网络的决定取决于我们想要学习的对象的性质和可用的计算能力。如果我们想检测的对象与训练基础网络的原始数据集上的对象相似，那么除了试图榨取所有可能得到的性能外，没有真正的必要。另一方面，为了能够适应完整的梯度，训练基础网络在时间上和必要的硬件上都会很昂贵。</p>
+<p>The four different losses are combined using a weighted sum. This is because we may want to give classification losses more weight relative to regression ones, or maybe give R-CNN losses more power over the RPNs’.</p>
+<p>四种不同的损失使用加权和进行组合。这是因为我们可能想给分类损失相对于回归损失更多的权重，或者给R-CNN损失比RPNs更多的权力。</p>
+<p>Apart from the regular losses, we also have the regularization losses which we skipped for the sake of brevity but can be defined both in RPN and in R-CNN. We use L2 regularization for some of the layers and depending on which base network being used and if it’s trained, it may also have regularization.</p>
+<p>除了常规损失外，我们还有正则化损失，为了简洁起见，我们跳过了这个损失，但在RPN和R-CNN中都可以定义。我们对一些层使用L2正则化，并且根据所使用的基础网络和它的训练情况，它可能也有正则化。</p>
+<p>We train using Stochastic Gradient Descent with momentum, setting the momentum value to 0.9. You can easily train Faster R-CNN with any other optimizer without bumping into any big problem.</p>
+<p>我们使用带有动量的随机梯度下降法进行训练，动量值设置为0.9。你可以很容易地用任何其他优化器来训练Faster R-CNN，而不会碰到任何大问题。</p>
+<p>The learning rate starts at 0.001 and then decreases to 0.0001 after 50K steps. This is one of the hyperparameters that usually matters the most.</p>
+<p>学习率从0.001开始，50K步后下降到0.0001。这是通常最重要的超参数之一。</p>
+<h1 id="6-推理">6. 推理</h1>
+<p>The evaluation is done using the standard Mean Average Precision (mAP) at some specific IoU threshold (e.g. <a href="mailto:mAP@0.5">mAP@0.5</a>). mAP is a metric that comes from information retrieval, and is commonly used for calculating the error in ranking problems and for evaluating object detection problems.</p>
+<p>评估是使用标准的平均精度（mAP）在一些特定的IoU阈值（例如mAP@0.5）。mAP是一个来自信息检索的指标，通常用于计算排名问题的误差和评估对象检测问题。</p>
+<h1 id="7-后记">7. 后记</h1>
+<p>Faster R-CNN is one of the models that proved that it is possible to solve complex computer vision problems with the same principles that showed such amazing results at the start of this new deep learning revolution.</p>
+<p>New models are currently being built, not only for object detection, but for semantic segmentation, 3D-object detection, and more, that are based on this original model. Some borrow the RPN, some borrow the R-CNN, others just build on top of both. This is why it is important to fully understand what is under the hood so we are better prepared to tackle future problems.</p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
