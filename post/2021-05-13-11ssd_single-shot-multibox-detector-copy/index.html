@@ -14,7 +14,7 @@
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="11——SSD:Single Shot MultiBox Detector"/>
 <meta name="twitter:description" content="请不要假装很努力， 因为结果不会陪你演戏！
-  1. background 2. 目标损失函数 3. 多尺度多比例默认框 4. 负样本均衡 5. 数据增强 6. 性能比较  6.1. 在VOC2007测试集上的检测性能   7. 在VOC2012测试集上的检测性能 8. 在COCO测试集上的检测性能 9. 总结  1. background ECCV2016 author:wei liu 实现真正的实时
+  1. background 2. 目标损失函数 3. 多尺度多比例默认框 4. 负样本均衡 5. 数据增强 6. 性能比较  6.1. 在VOC2007测试集上的检测性能 6.2. 在VOC2012测试集上的检测性能 6.3. 在COCO测试集上的检测性能   7. 总结  1. background ECCV2016 author:wei liu 实现真正的实时
 2016年，Wei Liu等人提出了SSD算法，它是继YOLOv1算法提出后的又一单阶段目标检测算法。在当时，单阶段算法相比于以R-CNN系列为主的双阶段算法更快，所以被学术界和工业界所青睐。为了提高检测的精度，SSD创造性地提出了多尺度预测的目标检测算法，使得网络更容易适应对不同大小物体的检测。
 放上对比结构如下： 我的理解是 网络抽取不同的特征层进行预测，较低的特征层可以预测教细节物体，较高特征层可以预测教大物体.
 整体结构上，SSD采用了VGG-16作为骨干网络提取特征。在骨干网络末尾添加了若干个特征层，特征层与特征层之间使用1x1和3x3的卷积核计算特征和降采样，并从中选择了6个不同大小的特征层来预测目标。
@@ -34,7 +34,7 @@
 
     <meta property="og:title" content="11——SSD:Single Shot MultiBox Detector" />
 <meta property="og:description" content="请不要假装很努力， 因为结果不会陪你演戏！
-  1. background 2. 目标损失函数 3. 多尺度多比例默认框 4. 负样本均衡 5. 数据增强 6. 性能比较  6.1. 在VOC2007测试集上的检测性能   7. 在VOC2012测试集上的检测性能 8. 在COCO测试集上的检测性能 9. 总结  1. background ECCV2016 author:wei liu 实现真正的实时
+  1. background 2. 目标损失函数 3. 多尺度多比例默认框 4. 负样本均衡 5. 数据增强 6. 性能比较  6.1. 在VOC2007测试集上的检测性能 6.2. 在VOC2012测试集上的检测性能 6.3. 在COCO测试集上的检测性能   7. 总结  1. background ECCV2016 author:wei liu 实现真正的实时
 2016年，Wei Liu等人提出了SSD算法，它是继YOLOv1算法提出后的又一单阶段目标检测算法。在当时，单阶段算法相比于以R-CNN系列为主的双阶段算法更快，所以被学术界和工业界所青睐。为了提高检测的精度，SSD创造性地提出了多尺度预测的目标检测算法，使得网络更容易适应对不同大小物体的检测。
 放上对比结构如下： 我的理解是 网络抽取不同的特征层进行预测，较低的特征层可以预测教细节物体，较高特征层可以预测教大物体.
 整体结构上，SSD采用了VGG-16作为骨干网络提取特征。在骨干网络末尾添加了若干个特征层，特征层与特征层之间使用1x1和3x3的卷积核计算特征和降采样，并从中选择了6个不同大小的特征层来预测目标。
@@ -132,11 +132,11 @@
 <li><a href="#6-%E6%80%A7%E8%83%BD%E6%AF%94%E8%BE%83">6. 性能比较</a>
 <ul>
 <li><a href="#61-%E5%9C%A8voc2007%E6%B5%8B%E8%AF%95%E9%9B%86%E4%B8%8A%E7%9A%84%E6%A3%80%E6%B5%8B%E6%80%A7%E8%83%BD">6.1. 在VOC2007测试集上的检测性能</a></li>
+<li><a href="#62-%E5%9C%A8voc2012%E6%B5%8B%E8%AF%95%E9%9B%86%E4%B8%8A%E7%9A%84%E6%A3%80%E6%B5%8B%E6%80%A7%E8%83%BD">6.2. 在VOC2012测试集上的检测性能</a></li>
+<li><a href="#63-%E5%9C%A8coco%E6%B5%8B%E8%AF%95%E9%9B%86%E4%B8%8A%E7%9A%84%E6%A3%80%E6%B5%8B%E6%80%A7%E8%83%BD">6.3. 在COCO测试集上的检测性能</a></li>
 </ul>
 </li>
-<li><a href="#7-%E5%9C%A8voc2012%E6%B5%8B%E8%AF%95%E9%9B%86%E4%B8%8A%E7%9A%84%E6%A3%80%E6%B5%8B%E6%80%A7%E8%83%BD">7. 在VOC2012测试集上的检测性能</a></li>
-<li><a href="#8-%E5%9C%A8coco%E6%B5%8B%E8%AF%95%E9%9B%86%E4%B8%8A%E7%9A%84%E6%A3%80%E6%B5%8B%E6%80%A7%E8%83%BD">8. 在COCO测试集上的检测性能</a></li>
-<li><a href="#9-%E6%80%BB%E7%BB%93">9. 总结</a></li>
+<li><a href="#7-%E6%80%BB%E7%BB%93">7. 总结</a></li>
 </ul>
 <h1 id="1-background">1. background</h1>
 <p>ECCV2016 author:wei liu
@@ -179,21 +179,21 @@
 07+12：表示网络模型同时在VOC2007和VOC2012数据集上进行训练
 07+12+COCO：表示网络模型先在COCO数据集上进行训练，再在VOC2007和VOC2012数据集上进行微调。
 </code></pre>
-<h1 id="7-在voc2012测试集上的检测性能">7. 在VOC2012测试集上的检测性能</h1>
+<h2 id="62-在voc2012测试集上的检测性能">6.2. 在VOC2012测试集上的检测性能</h2>
 <p><img src="https://img-blog.csdnimg.cn/20201124220359707.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dqaW5qaWU=,size_16,color_FFFFFF,t_70#pic_center" alt=""></p>
 <p>分析上表，容易得出以下结论：</p>
 <pre><code>在VOC2012测试数据集上，整体的检测精度表现：SSD512&gt;SSD300&gt;Faster R-CNN&gt;Fast R-CNN&gt;YOLOv1
 对比SSD300和SSD512可知，较大尺寸的图像输入，对SSD的检测精度更有利。
 对比07+12、07+12+COCO可知，训练集的扩充有助于检测性能的提升。
 </code></pre>
-<h1 id="8-在coco测试集上的检测性能">8. 在COCO测试集上的检测性能</h1>
+<h2 id="63-在coco测试集上的检测性能">6.3. 在COCO测试集上的检测性能</h2>
 <p>为了进一步验证SSD框架，作者在在COCO数据集上训练了SSD300和SSD512。并且在COCO测试数据集上，对不同的目标检测算法性能进行了对比。</p>
 <p><img src="https://img-blog.csdnimg.cn/20201124221010574.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dqaW5qaWU=,size_16,color_FFFFFF,t_70#pic_center" alt=""></p>
 <p>分析上表，容易得出以下结论：</p>
 <pre><code>比较不同的网络，发现SSD512的平均精确度和平均召回率最高，检测性能最佳，且对小目标的检测效果较好。
 SSD300的平均精确度与Faster R-CNN相当，但是平均召回率明显低于Faster R-CNN。
 </code></pre>
-<h1 id="9-总结">9. 总结</h1>
+<h1 id="7-总结">7. 总结</h1>
 <p>SSD是一种适用于多种类别的单阶段目标检测器，检测速度比Faster R-CNN更快，检测精度比YOLOv1更高。经典的SSD算法分为SSD300和SSD512两种，分别代表网络输入的图像大小为：300x300和512x512。SSD512的检测精度要优于SSD300，同时对小目标的检测性能更好；SSD300的检测速度比SSD512更快，同时它的检测精度也比同期的其他检测器要好。</p>
 <p>SSD的整体网络结构，其实很容易理解。可以简单的看做是YOLOv1和特征金字塔的融合，即主干网络采用了与YOLOv1类似的VGG16，与YOLOv1不同的是，SSD采用多个不同的特征层用来预测，这些不同的特征层其实就可以看做是特征金字塔。因此，SSD在不失速度的情况下，检测精度仍然更够保持很好。</p>
 <hr>
