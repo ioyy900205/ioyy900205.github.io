@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>12————阅读论文记录 // 亮的笔记</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.82.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Liu Liang" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="12————阅读论文记录"/>
+<meta name="twitter:description" content="阅读论文记录
+  1. 图像分类(Classification) 2. 目标检测(Object Detection) 3. 目标分割(Segmentation) 4. Others   参考资料
+ 1. 图像分类(Classification)  AlexNet http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf ZFNet(Visualizing and Understanding Convolutional Networks) https://arxiv.org/abs/1311.2901 VGG https://arxiv.org/abs/1409.1556 GoogLeNet, Inceptionv1(Going deeper with convolutions) https://arxiv.org/abs/1409.4842 Batch Normalization https://arxiv.org/abs/1502.03167 Inceptionv3(Rethinking the Inception Architecture for Computer Vision) https://arxiv.org/abs/1512.00567 Inceptionv4, Inception-ResNet https://arxiv.org/abs/1602.07261 Xception(Deep Learning with Depthwise Separable Convolutions) https://arxiv.org/abs/1610.02357 ResNet https://arxiv.org/abs/1512.03385 ResNeXt https://arxiv.org/abs/1611.05431 DenseNet https://arxiv.org/abs/1608.06993 NASNet-A(Learning Transferable Architectures for Scalable Image Recognition) https://arxiv.org/abs/1707.07012 SENet(Squeeze-and-Excitation Networks) https://arxiv."/>
+
+    <meta property="og:title" content="12————阅读论文记录" />
+<meta property="og:description" content="阅读论文记录
+  1. 图像分类(Classification) 2. 目标检测(Object Detection) 3. 目标分割(Segmentation) 4. Others   参考资料
+ 1. 图像分类(Classification)  AlexNet http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf ZFNet(Visualizing and Understanding Convolutional Networks) https://arxiv.org/abs/1311.2901 VGG https://arxiv.org/abs/1409.1556 GoogLeNet, Inceptionv1(Going deeper with convolutions) https://arxiv.org/abs/1409.4842 Batch Normalization https://arxiv.org/abs/1502.03167 Inceptionv3(Rethinking the Inception Architecture for Computer Vision) https://arxiv.org/abs/1512.00567 Inceptionv4, Inception-ResNet https://arxiv.org/abs/1602.07261 Xception(Deep Learning with Depthwise Separable Convolutions) https://arxiv.org/abs/1610.02357 ResNet https://arxiv.org/abs/1512.03385 ResNeXt https://arxiv.org/abs/1611.05431 DenseNet https://arxiv.org/abs/1608.06993 NASNet-A(Learning Transferable Architectures for Scalable Image Recognition) https://arxiv.org/abs/1707.07012 SENet(Squeeze-and-Excitation Networks) https://arxiv." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ioyy900205.github.io/post/2021-05-14-12%E9%98%85%E8%AF%BB%E8%AE%BA%E6%96%87%E9%93%BE%E6%8E%A5/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-05-14T15:20:41&#43;08:00" />
+<meta property="article:modified_time" content="2021-05-14T15:20:41&#43;08:00" />
+
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3520060145,2875461924&amp;fm=26&amp;gp=0.jpg" alt="Liu Liang" /></a>
+      <h1>亮的笔记</h1>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>深度学习笔记本</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/ioyy900205" target="_blank" rel="noreferrer noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/ioyy900205" target="_blank" rel="noreferrer noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">12————阅读论文记录</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          May 14, 2021
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          2 min read
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://ioyy900205.github.io/tags/paper_review/">Paper_Review</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>阅读论文记录</p>
+<hr>
+<ul>
+<li><a href="#1-%E5%9B%BE%E5%83%8F%E5%88%86%E7%B1%BBclassification">1. 图像分类(Classification)</a></li>
+<li><a href="#2-%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8Bobject-detection">2. 目标检测(Object Detection)</a></li>
+<li><a href="#3-%E7%9B%AE%E6%A0%87%E5%88%86%E5%89%B2segmentation">3. 目标分割(Segmentation)</a></li>
+<li><a href="#4-others">4. Others</a></li>
+</ul>
+<hr>
+<p><strong>参考资料</strong></p>
+<hr>
+<h2 id="1-图像分类classification">1. 图像分类(Classification)</h2>
+<ul>
+<li>AlexNet <a href="http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf">http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf</a></li>
+<li>ZFNet(Visualizing and Understanding Convolutional Networks) <a href="https://arxiv.org/abs/1311.2901">https://arxiv.org/abs/1311.2901</a></li>
+<li>VGG <a href="https://arxiv.org/abs/1409.1556">https://arxiv.org/abs/1409.1556</a></li>
+<li>GoogLeNet, Inceptionv1(Going deeper with convolutions) <a href="https://arxiv.org/abs/1409.4842">https://arxiv.org/abs/1409.4842</a></li>
+<li>Batch Normalization <a href="https://arxiv.org/abs/1502.03167">https://arxiv.org/abs/1502.03167</a></li>
+<li>Inceptionv3(Rethinking the Inception Architecture for Computer Vision) <a href="https://arxiv.org/abs/1512.00567">https://arxiv.org/abs/1512.00567</a></li>
+<li>Inceptionv4, Inception-ResNet <a href="https://arxiv.org/abs/1602.07261">https://arxiv.org/abs/1602.07261</a></li>
+<li>Xception(Deep Learning with Depthwise Separable Convolutions) <a href="https://arxiv.org/abs/1610.02357">https://arxiv.org/abs/1610.02357</a></li>
+<li>ResNet <a href="https://arxiv.org/abs/1512.03385">https://arxiv.org/abs/1512.03385</a></li>
+<li>ResNeXt <a href="https://arxiv.org/abs/1611.05431">https://arxiv.org/abs/1611.05431</a></li>
+<li>DenseNet <a href="https://arxiv.org/abs/1608.06993">https://arxiv.org/abs/1608.06993</a></li>
+<li>NASNet-A(Learning Transferable Architectures for Scalable Image Recognition) <a href="https://arxiv.org/abs/1707.07012">https://arxiv.org/abs/1707.07012</a></li>
+<li>SENet(Squeeze-and-Excitation Networks) <a href="https://arxiv.org/abs/1709.01507">https://arxiv.org/abs/1709.01507</a></li>
+<li>MobileNet(v1) <a href="https://arxiv.org/abs/1704.04861">https://arxiv.org/abs/1704.04861</a></li>
+<li>MobileNet(v2) <a href="https://arxiv.org/abs/1801.04381">https://arxiv.org/abs/1801.04381</a></li>
+<li>MobileNet(v3) <a href="https://arxiv.org/abs/1905.02244">https://arxiv.org/abs/1905.02244</a></li>
+<li>ShuffleNet(v1) <a href="https://arxiv.org/abs/1707.01083">https://arxiv.org/abs/1707.01083</a></li>
+<li>ShuffleNet(v2) <a href="https://arxiv.org/abs/1807.11164">https://arxiv.org/abs/1807.11164</a></li>
+<li>Bag of Tricks for Image Classification with Convolutional Neural Networks <a href="https://arxiv.org/abs/1812.01187">https://arxiv.org/abs/1812.01187</a></li>
+<li>EfficientNet(v1) <a href="https://arxiv.org/abs/1905.11946">https://arxiv.org/abs/1905.11946</a></li>
+<li>EfficientNet(v2) <a href="https://arxiv.org/abs/2104.00298">https://arxiv.org/abs/2104.00298</a></li>
+<li>CSPNet <a href="https://arxiv.org/abs/1911.11929">https://arxiv.org/abs/1911.11929</a></li>
+<li>RegNet <a href="https://arxiv.org/abs/2003.13678">https://arxiv.org/abs/2003.13678</a></li>
+<li>NFNets(High-Performance Large-Scale Image Recognition Without Normalization) <a href="https://arxiv.org/abs/2102.06171">https://arxiv.org/abs/2102.06171</a></li>
+<li></li>
+</ul>
+<hr>
+<h2 id="2-目标检测object-detection">2. 目标检测(Object Detection)</h2>
+<ul>
+<li>R-CNN <a href="https://arxiv.org/abs/1311.2524">https://arxiv.org/abs/1311.2524</a></li>
+<li>Fast R-CNN <a href="https://arxiv.org/abs/1504.08083">https://arxiv.org/abs/1504.08083</a></li>
+<li>Faster R-CNN <a href="https://arxiv.org/abs/1506.01497">https://arxiv.org/abs/1506.01497</a></li>
+<li>Mask R-CNN <a href="https://arxiv.org/abs/1703.06870">https://arxiv.org/abs/1703.06870</a></li>
+<li>SSD <a href="https://arxiv.org/abs/1512.02325">https://arxiv.org/abs/1512.02325</a></li>
+<li>FPN(Feature Pyramid Networks for Object Detection) <a href="https://arxiv.org/abs/1612.03144">https://arxiv.org/abs/1612.03144</a></li>
+<li>RetinaNet(Focal Loss for Dense Object Detection) <a href="https://arxiv.org/abs/1708.02002">https://arxiv.org/abs/1708.02002</a></li>
+<li>Bag of Freebies for Training Object Detection Neural Networks <a href="https://arxiv.org/abs/1902.04103">https://arxiv.org/abs/1902.04103</a></li>
+<li>YOLOv1 <a href="https://arxiv.org/abs/1506.02640">https://arxiv.org/abs/1506.02640</a></li>
+<li>YOLOv2 <a href="https://arxiv.org/abs/1506.02640">https://arxiv.org/abs/1612.08242</a></li>
+<li>YOLOv3 <a href="https://arxiv.org/abs/1804.02767">https://arxiv.org/abs/1804.02767</a></li>
+<li>YOLOv4 <a href="https://arxiv.org/abs/2004.10934">https://arxiv.org/abs/2004.10934</a></li>
+</ul>
+<h2 id="3-目标分割segmentation">3. 目标分割(Segmentation)</h2>
+<ul>
+<li>FCN(Fully Convolutional Networks for Semantic Segmentation) <a href="https://arxiv.org/abs/1411.4038">https://arxiv.org/abs/1411.4038</a></li>
+<li>UNet(U-Net: Convolutional Networks for Biomedical Image Segmentation) <a href="https://arxiv.org/abs/1505.04597">https://arxiv.org/abs/1505.04597</a></li>
+<li>DeepLabv1(Semantic Image Segmentation with Deep Convolutional Nets and Fully Connected CRFs) <a href="https://arxiv.org/abs/1412.7062">https://arxiv.org/abs/1412.7062</a></li>
+<li>DeepLabv2(Semantic Image Segmentation with Deep Convolutional Nets, Atrous Convolution, and Fully Connected CRFs) <a href="https://arxiv.org/abs/1606.00915">https://arxiv.org/abs/1606.00915</a></li>
+<li>DeepLabv3(Rethinking Atrous Convolution for Semantic Image Segmentation) <a href="https://arxiv.org/abs/1706.05587">https://arxiv.org/abs/1706.05587</a></li>
+<li>DeepLabv3+(Encoder-Decoder with Atrous Separable Convolution for Semantic Image Segmentation) <a href="https://arxiv.org/abs/1802.02611">https://arxiv.org/abs/1802.02611</a></li>
+</ul>
+<h2 id="4-others">4. Others</h2>
+<ul>
+<li>Microsoft COCO: Common Objects in Context <a href="https://arxiv.org/abs/1405.0312">https://arxiv.org/abs/1405.0312</a></li>
+<li>The PASCALVisual Object Classes Challenge: A Retrospective <a href="http://host.robots.ox.ac.uk/pascal/VOC/pubs/everingham15.pdf">http://host.robots.ox.ac.uk/pascal/VOC/pubs/everingham15.pdf</a></li>
+</ul>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

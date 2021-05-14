@@ -5,7 +5,18 @@
     <link>https://ioyy900205.github.io/post/</link>
     <description>Recent content in Posts on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 13 May 2021 10:40:00 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 14 May 2021 15:20:41 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>12————阅读论文记录</title>
+      <link>https://ioyy900205.github.io/post/2021-05-14-12%E9%98%85%E8%AF%BB%E8%AE%BA%E6%96%87%E9%93%BE%E6%8E%A5/</link>
+      <pubDate>Fri, 14 May 2021 15:20:41 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-05-14-12%E9%98%85%E8%AF%BB%E8%AE%BA%E6%96%87%E9%93%BE%E6%8E%A5/</guid>
+      <description>阅读论文记录
+  1. 图像分类(Classification) 2. 目标检测(Object Detection) 3. 目标分割(Segmentation) 4. Others   参考资料
+ 1. 图像分类(Classification)  AlexNet http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf ZFNet(Visualizing and Understanding Convolutional Networks) https://arxiv.org/abs/1311.2901 VGG https://arxiv.org/abs/1409.1556 GoogLeNet, Inceptionv1(Going deeper with convolutions) https://arxiv.org/abs/1409.4842 Batch Normalization https://arxiv.org/abs/1502.03167 Inceptionv3(Rethinking the Inception Architecture for Computer Vision) https://arxiv.org/abs/1512.00567 Inceptionv4, Inception-ResNet https://arxiv.org/abs/1602.07261 Xception(Deep Learning with Depthwise Separable Convolutions) https://arxiv.org/abs/1610.02357 ResNet https://arxiv.org/abs/1512.03385 ResNeXt https://arxiv.org/abs/1611.05431 DenseNet https://arxiv.org/abs/1608.06993 NASNet-A(Learning Transferable Architectures for Scalable Image Recognition) https://arxiv.org/abs/1707.07012 SENet(Squeeze-and-Excitation Networks) https://arxiv.</description>
+    </item>
+    
     <item>
       <title>11——SSD:Single Shot MultiBox Detector</title>
       <link>https://ioyy900205.github.io/post/2021-05-13-11ssd_single-shot-multibox-detector-copy/</link>
