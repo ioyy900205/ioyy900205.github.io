@@ -2,19 +2,25 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://ioyy900205.github.io/post/2021-05-17-13tensor%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E8%AE%A1%E7%AE%97%E5%AE%9E%E4%BE%8B/</loc>
+    <lastmod>2021-05-17T19:01:17+08:00</lastmod>
+  </url><url>
+    <loc>https://ioyy900205.github.io/post/</loc>
+    <lastmod>2021-05-17T19:01:17+08:00</lastmod>
+  </url><url>
+    <loc>https://ioyy900205.github.io/tags/pytorch/</loc>
+    <lastmod>2021-05-17T19:01:17+08:00</lastmod>
+  </url><url>
+    <loc>https://ioyy900205.github.io/tags/</loc>
+    <lastmod>2021-05-17T19:01:17+08:00</lastmod>
+  </url><url>
+    <loc>https://ioyy900205.github.io/</loc>
+    <lastmod>2021-05-17T19:01:17+08:00</lastmod>
+  </url><url>
     <loc>https://ioyy900205.github.io/post/2021-05-14-12%E9%98%85%E8%AF%BB%E8%AE%BA%E6%96%87%E9%93%BE%E6%8E%A5/</loc>
     <lastmod>2021-05-14T15:20:41+08:00</lastmod>
   </url><url>
     <loc>https://ioyy900205.github.io/tags/paper_review/</loc>
-    <lastmod>2021-05-14T15:20:41+08:00</lastmod>
-  </url><url>
-    <loc>https://ioyy900205.github.io/post/</loc>
-    <lastmod>2021-05-14T15:20:41+08:00</lastmod>
-  </url><url>
-    <loc>https://ioyy900205.github.io/tags/</loc>
-    <lastmod>2021-05-14T15:20:41+08:00</lastmod>
-  </url><url>
-    <loc>https://ioyy900205.github.io/</loc>
     <lastmod>2021-05-14T15:20:41+08:00</lastmod>
   </url><url>
     <loc>https://ioyy900205.github.io/post/2021-05-13-11ssd_single-shot-multibox-detector-copy/</loc>
@@ -33,9 +39,6 @@
     <lastmod>2021-05-11T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://ioyy900205.github.io/tags/dataset/</loc>
-    <lastmod>2021-05-11T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://ioyy900205.github.io/tags/pytorch/</loc>
     <lastmod>2021-05-11T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://ioyy900205.github.io/post/2021-05-10-torch.cat%E7%9A%84%E7%BB%B4%E5%BA%A6%E6%93%8D%E4%BD%9C/</loc>
