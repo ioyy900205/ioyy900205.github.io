@@ -5,7 +5,22 @@
     <link>https://ioyy900205.github.io/tags/backbone/</link>
     <description>Recent content in Backbone on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 26 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/backbone/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 18 May 2021 15:33:30 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/backbone/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2021-05-18 14——NFNnet笔记</title>
+      <link>https://ioyy900205.github.io/post/2021-05-18-14nfnnet%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Tue, 18 May 2021 15:33:30 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-05-18-14nfnnet%E7%AC%94%E8%AE%B0/</guid>
+      <description>Title：High-Performance Large-Scale Image Recognition Without Normalization
+Time: [v1] Thu, 11 Feb 2021 18:23:20 UTC (241 KB)
+link：https://arxiv.org/abs/2102.06171
+github: https://github.com/deepmind/deepmind-research/tree/master/nfnets
+ NFNet（Normalizer-Free ResNets）是DeepMind提出了一种不需要Batch Normalization的基于ResNet的网络结构，其核心为一种AGC（adaptive gradient clipping technique，自适应梯度裁剪）技术。如下图所示，最小的NFNet版本达到了EfficientNet-B7的准确率，并且训练速度快了8.7倍，最大版本的模型实现了新的SOTA效果。
+ 标题  参考资料
+https://finance.sina.com.cn/tech/2021-02-13/doc-ikftpnny6608822.shtml https://blog.csdn.net/zhouchen1998/article/details/113824617</description>
+    </item>
+    
     <item>
       <title>01——ResNeXt学习</title>
       <link>https://ioyy900205.github.io/post/2021-04-26-resnext/</link>

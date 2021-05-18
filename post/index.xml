@@ -5,7 +5,22 @@
     <link>https://ioyy900205.github.io/post/</link>
     <description>Recent content in Posts on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 17 May 2021 19:01:17 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 18 May 2021 15:33:30 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2021-05-18 14——NFNnet笔记</title>
+      <link>https://ioyy900205.github.io/post/2021-05-18-14nfnnet%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Tue, 18 May 2021 15:33:30 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-05-18-14nfnnet%E7%AC%94%E8%AE%B0/</guid>
+      <description>Title：High-Performance Large-Scale Image Recognition Without Normalization
+Time: [v1] Thu, 11 Feb 2021 18:23:20 UTC (241 KB)
+link：https://arxiv.org/abs/2102.06171
+github: https://github.com/deepmind/deepmind-research/tree/master/nfnets
+ NFNet（Normalizer-Free ResNets）是DeepMind提出了一种不需要Batch Normalization的基于ResNet的网络结构，其核心为一种AGC（adaptive gradient clipping technique，自适应梯度裁剪）技术。如下图所示，最小的NFNet版本达到了EfficientNet-B7的准确率，并且训练速度快了8.7倍，最大版本的模型实现了新的SOTA效果。
+ 标题  参考资料
+https://finance.sina.com.cn/tech/2021-02-13/doc-ikftpnny6608822.shtml https://blog.csdn.net/zhouchen1998/article/details/113824617</description>
+    </item>
+    
     <item>
       <title>13————tensor内存占用计算实例</title>
       <link>https://ioyy900205.github.io/post/2021-05-17-13tensor%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E8%AE%A1%E7%AE%97%E5%AE%9E%E4%BE%8B/</link>
@@ -24,8 +39,8 @@ import numpy as np import sys # 32位整型 ai32 = np.array([], dtype=np.int32) 
       
       <guid>https://ioyy900205.github.io/post/2021-05-14-12%E9%98%85%E8%AF%BB%E8%AE%BA%E6%96%87%E9%93%BE%E6%8E%A5/</guid>
       <description>阅读论文记录
-  1. 图像分类(Classification) 2. 目标检测(Object Detection) 3. 目标分割(Segmentation) 4. Others   参考资料
- 1. 图像分类(Classification)  AlexNet http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf ZFNet(Visualizing and Understanding Convolutional Networks) https://arxiv.org/abs/1311.2901 VGG https://arxiv.org/abs/1409.1556 GoogLeNet, Inceptionv1(Going deeper with convolutions) https://arxiv.org/abs/1409.4842 Batch Normalization https://arxiv.org/abs/1502.03167 Inceptionv3(Rethinking the Inception Architecture for Computer Vision) https://arxiv.org/abs/1512.00567 Inceptionv4, Inception-ResNet https://arxiv.org/abs/1602.07261 Xception(Deep Learning with Depthwise Separable Convolutions) https://arxiv.org/abs/1610.02357 ResNet https://arxiv.org/abs/1512.03385 ResNeXt https://arxiv.org/abs/1611.05431 DenseNet https://arxiv.org/abs/1608.06993 NASNet-A(Learning Transferable Architectures for Scalable Image Recognition) https://arxiv.org/abs/1707.07012 SENet(Squeeze-and-Excitation Networks) https://arxiv.</description>
+  1. 图像分类(Classification) 2. 目标检测(Object Detection) 3. 目标分割(Segmentation) 4. Others 5. 动态神经网络   参考资料
+ 1. 图像分类(Classification)  AlexNet http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf ZFNet(Visualizing and Understanding Convolutional Networks) https://arxiv.org/abs/1311.2901 VGG https://arxiv.org/abs/1409.1556 GoogLeNet, Inceptionv1(Going deeper with convolutions) https://arxiv.org/abs/1409.4842 Batch Normalization https://arxiv.org/abs/1502.03167 Inceptionv3(Rethinking the Inception Architecture for Computer Vision) https://arxiv.org/abs/1512.00567 Inceptionv4, Inception-ResNet https://arxiv.org/abs/1602.07261 Xception(Deep Learning with Depthwise Separable Convolutions) https://arxiv.org/abs/1610.02357 ResNet https://arxiv.org/abs/1512.03385 ResNeXt https://arxiv.org/abs/1611.05431 DenseNet https://arxiv.org/abs/1608.06993 NASNet-A(Learning Transferable Architectures for Scalable Image Recognition) https://arxiv.</description>
     </item>
     
     <item>
