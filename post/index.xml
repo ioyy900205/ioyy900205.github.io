@@ -7,11 +7,31 @@
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Tue, 18 May 2021 15:33:30 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>2021-05-18 14——NFNnet笔记</title>
-      <link>https://ioyy900205.github.io/post/2021-05-18-14nfnnet%E7%AC%94%E8%AE%B0/</link>
+      <title>14——NFNnet翻译</title>
+      <link>https://ioyy900205.github.io/post/2021-05-18-14nfnnet%E7%BF%BB%E8%AF%91/</link>
       <pubDate>Tue, 18 May 2021 15:33:30 +0800</pubDate>
       
-      <guid>https://ioyy900205.github.io/post/2021-05-18-14nfnnet%E7%AC%94%E8%AE%B0/</guid>
+      <guid>https://ioyy900205.github.io/post/2021-05-18-14nfnnet%E7%BF%BB%E8%AF%91/</guid>
+      <description>Title：High-Performance Large-Scale Image Recognition Without Normalization
+Time: [v1] Thu, 11 Feb 2021 18:23:20 UTC (241 KB)
+link：https://arxiv.org/abs/2102.06171
+github: https://github.com/deepmind/deepmind-research/tree/master/nfnets
+ NFNet（Normalizer-Free ResNets）是DeepMind提出了一种不需要Batch Normalization的基于ResNet的网络结构，其核心为一种AGC（adaptive gradient clipping technique，自适应梯度裁剪）技术。如下图所示，最小的NFNet版本达到了EfficientNet-B7的准确率，并且训练速度快了8.7倍，最大版本的模型实现了新的SOTA效果。
+ 1. 摘要 批量归一化是大多数图像分类模型的一个关键组成部分，但它有许多不理想的特性，源于它对批量大小和例子之间的相互作用的依赖。尽管最近的工作已经成功地训练了没有归一化层的深度ResNets，但这些模型并不符合最好的批量归一化网络的测试精度，而且对于大的学习率或强大的数据增量来说往往是不稳定的。在这项工作中，我们开发了一种自适应梯度剪裁技术，克服了这些不稳定性，并设计了一类明显改进的无归一化网络。我们较小的模型与EfficientNet-B7在ImageNet上的测试精度相匹配，同时训练速度快了8.7倍，而我们最大的模型达到了86.5%的最新顶级精度。此外，在对3亿张标记图像的数据集进行大规模预训练后，在ImageNet上进行微调时，无规范化模型的性能明显优于它们的批量规范化模型，我们最好的模型获得了89.2%的准确性。
+2. 引言 最近计算机视觉领域的绝大多数模型都是深度残差网络的变种（He等人，2016b;a），通过批量规范化训练（Ioffe &amp;amp; Szegedy，2015）。这两个架构创新的结合使从业者能够训练出更深的网络，在训练集和测试集上都能达到更高的精度。批量归一化还可以平滑损失景观（Santurkar等人，2018），这使得在更大的学习率和更大的批次规模下进行稳定的训练（Bjorck等人，2018；De &amp;amp; Smith，2020），而且它可以产生正则化效应（Hoffer等人，2017；Luo等人，2018）。
+然而，批量规范化有三个重要的实际缺点。首先，它是一个令人惊讶的昂贵的计算基元，会产生内存开销（Rota Bulo`等人，2018），并大大增加了在一些网络中评估梯度所需的时间（Gitman &amp;amp; Ginsburg, 2017）。第二，它引入了模型在训练期间和推理时间的行为之间的差异（Summers &amp;amp; Dinneen，2019；Singh &amp;amp; Shrivastava，2019），引入了必须调整的隐藏超参数。第三，也是最重要的一点，批量规范化打破了minibatch中训练实例之间的独立性。
+这第三个属性有一系列的负面后果。例如，从业者发现，采用BN的网络往往难以在不同的硬件上精确复制，BN往往是导致微妙的实施错误的原因，特别是在分布式训练期间（Pham等人，2019）。此外，批处理归一化不能用于某些任务，因为批处理中的训练实例之间的互动使网络能够 &amp;ldquo;欺骗 &amp;ldquo;某些损失函数。例如，批量归一化需要特别注意防止一些对比学习算法中的信息泄露（Chen等人，2020；He等人，2020）。这也是序列建模任务的一个主要问题，这促使语言模型采用替代的规范化器（Ba等人，2016；Vaswani等人，2017）。如果在训练过程中，批量归一化的网络有很大的方差，那么批量归一化网络的性能也会下降（Shen等人，2020）。最后，批量归一化的性能对批量大小很敏感，当批量大小太小时，批量归一化网络的性能很差（Hoffer等人，2017；Ioffe，2017；Wu &amp;amp; He，2018），这限制了我们在有限硬件上可以训练的最大模型大小。我们在附录B中阐述了与批量归一化相关的挑战。
+因此，尽管BN使深度学习社区近年来取得了实质性的进展，但我们预计从长远来看，它可能会阻碍进展。我们认为社区应该寻求确定一个简单的替代方案，以实现有竞争力的测试精度，并可用于广泛的任务。虽然已经提出了一些替代的规范化器（Ba等人，2016；Wu &amp;amp; He，2018；Huang等人，2020），但这些替代物往往实现了较差的测试精度，并引入了自己的缺点，如推理时的额外计算成本。幸运的是，近年来出现了两个有前途的研究主题。第一个是研究训练期间BN的好处的来源（Balduzzi等人，2017；Santurkar等人，2018；Bjorck等人，2018；Luo等人，2018；Yang等人，2019；Jacot等人。2019年；De &amp;amp; Smith，2020年），而第二种方法是在没有归一化层的情况下将深度ResNets训练到有竞争力的精度（Hanin &amp;amp; Rolnick，2018；Zhang等人，2019a；De &amp;amp; Smith，2020；Shao等人，2020；Brock等人，2021）。
+图1
+许多这些工作的一个关键主题是，通过抑制剩余分支上的隐性激活的规模，可以在没有规范化的情况下训练非常深的ResNets。实现这一目标的最简单方法是在每个残差分支的末端引入一个可学习的标量，初始化为零（Goyal等人，2017；Zhang等人，2019a；De &amp;amp; Smith，2020；Bachlechner等人，2020）。然而仅靠这一招还不足以在具有挑战性的基准上获得有竞争力的测试精度。另一项工作表明，ReLU激活引入了一个 &amp;ldquo;平均转移&amp;rdquo;，这导致不同训练实例的隐藏激活随着网络深度的增加而变得越来越相关（Huang等人，2017；Jacot等人，2019）。在最近的一项工作中，Brock等人（2021）引入了 &amp;ldquo;无正则化 &amp;ldquo;的ResNets，它在初始化时抑制了残余分支，并应用Scaled Weight Standardization（Qiao等人，2019）来消除平均移动。通过额外的正则化，这些未正则化的网络在ImageNet（Russakovsky等人，2015）上与批量正则化的ResNets（He等人，2016a）的性能相匹配，但它们在大批量时并不稳定，也不符合EfficientNets（Tan &amp;amp; Le，2019）的性能，即目前的技术状态（Gong等人，2020）。本文在这一工作思路的基础上，试图解决这些核心限制。我们的主要贡献如下:</description>
+    </item>
+    
+    <item>
+      <title>15——NFNnet笔记</title>
+      <link>https://ioyy900205.github.io/post/2021-05-18-14nfnnet%E7%AC%94%E8%AE%B0-/</link>
+      <pubDate>Tue, 18 May 2021 15:33:30 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-05-18-14nfnnet%E7%AC%94%E8%AE%B0-/</guid>
       <description>Title：High-Performance Large-Scale Image Recognition Without Normalization
 Time: [v1] Thu, 11 Feb 2021 18:23:20 UTC (241 KB)
 link：https://arxiv.org/abs/2102.06171
