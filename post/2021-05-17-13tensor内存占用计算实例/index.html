@@ -14,13 +14,13 @@
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="13————tensor内存占用计算实例"/>
 <meta name="twitter:description" content="网上查看了CSDN的代码，写的有误。所以这里写一个正确版本的
-  ## 1. 各类型所占用的字节数 2. tensor内存计算  1. 各类型所占用的字节数  测试代码
-import numpy as np import sys # 32位整型 ai32 = np.array([], dtype=np.int32) bi32 = np.arange(1, dtype=np.int32) ci32 = np.arange(5, dtype=np.int32) # 64位整型 ai64 = np.array([], dtype=np.int64) bi64 = np.arange(1, dtype=np.int64) ci64 = np.arange(5, dtype=np.int64) # 32位浮点数 af32 = np.array([], dtype=np.float32) bf32 = np.arange(1, dtype=np.float32) cf32 = np.arange(5, dtype=np.float32) # 64位浮点数 af64 = np.array([], dtype=np.float64) bf64 = np.arange(1, dtype=np."/>
+  ## 1. 各类型所占用的字节数 2. tensor内存计算 3. 清空内存  1. 各类型所占用的字节数  测试代码
+import numpy as np import sys # 32位整型 ai32 = np.array([], dtype=np.int32) bi32 = np.arange(1, dtype=np.int32) ci32 = np.arange(5, dtype=np.int32) # 64位整型 ai64 = np.array([], dtype=np.int64) bi64 = np.arange(1, dtype=np.int64) ci64 = np.arange(5, dtype=np.int64) # 32位浮点数 af32 = np.array([], dtype=np.float32) bf32 = np.arange(1, dtype=np.float32) cf32 = np.arange(5, dtype=np.float32) # 64位浮点数 af64 = np.array([], dtype=np.float64) bf64 = np."/>
 
     <meta property="og:title" content="13————tensor内存占用计算实例" />
 <meta property="og:description" content="网上查看了CSDN的代码，写的有误。所以这里写一个正确版本的
-  ## 1. 各类型所占用的字节数 2. tensor内存计算  1. 各类型所占用的字节数  测试代码
-import numpy as np import sys # 32位整型 ai32 = np.array([], dtype=np.int32) bi32 = np.arange(1, dtype=np.int32) ci32 = np.arange(5, dtype=np.int32) # 64位整型 ai64 = np.array([], dtype=np.int64) bi64 = np.arange(1, dtype=np.int64) ci64 = np.arange(5, dtype=np.int64) # 32位浮点数 af32 = np.array([], dtype=np.float32) bf32 = np.arange(1, dtype=np.float32) cf32 = np.arange(5, dtype=np.float32) # 64位浮点数 af64 = np.array([], dtype=np.float64) bf64 = np.arange(1, dtype=np." />
+  ## 1. 各类型所占用的字节数 2. tensor内存计算 3. 清空内存  1. 各类型所占用的字节数  测试代码
+import numpy as np import sys # 32位整型 ai32 = np.array([], dtype=np.int32) bi32 = np.arange(1, dtype=np.int32) ci32 = np.arange(5, dtype=np.int32) # 64位整型 ai64 = np.array([], dtype=np.int64) bi64 = np.arange(1, dtype=np.int64) ci64 = np.arange(5, dtype=np.int64) # 32位浮点数 af32 = np.array([], dtype=np.float32) bf32 = np.arange(1, dtype=np.float32) cf32 = np.arange(5, dtype=np.float32) # 64位浮点数 af64 = np.array([], dtype=np.float64) bf64 = np." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ioyy900205.github.io/post/2021-05-17-13tensor%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E8%AE%A1%E7%AE%97%E5%AE%9E%E4%BE%8B/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2021-05-17T19:01:17&#43;08:00" />
@@ -79,7 +79,7 @@ import numpy as np import sys # 32位整型 ai32 = np.array([], dtype=np.int32) 
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          2 min read
+          3 min read
         </div>
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
@@ -96,6 +96,7 @@ import numpy as np import sys # 32位整型 ai32 = np.array([], dtype=np.int32) 
 <ul>
 <li><a href="#-1-%E5%90%84%E7%B1%BB%E5%9E%8B%E6%89%80%E5%8D%A0%E7%94%A8%E7%9A%84%E5%AD%97%E8%8A%82%E6%95%B0">## 1. 各类型所占用的字节数</a></li>
 <li><a href="#2-tensor%E5%86%85%E5%AD%98%E8%AE%A1%E7%AE%97">2. tensor内存计算</a></li>
+<li><a href="#3-%E6%B8%85%E7%A9%BA%E5%86%85%E5%AD%98">3. 清空内存</a></li>
 </ul>
 <h2 id="1-各类型所占用的字节数">1. 各类型所占用的字节数</h2>
 <hr>
@@ -196,6 +197,41 @@ dummy_tensor_6 <span style="color:#f92672">=</span> torch<span style="color:#f92
 <p>所以每个dummy_tensor为600M。</p>
 <p>给出计算公式：</p>
 <p>100<em>3</em>512<em>512</em>8/1024/1024=600M</p>
+<h2 id="3-清空内存">3. 清空内存</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
+<span style="color:#f92672">import</span> sys
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+device <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>device(<span style="color:#e6db74">&#39;cuda:0&#39;</span>)
+
+
+<span style="color:#75715e"># 定义tensor</span>
+
+
+a1 <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>zeros([<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>], dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float64)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;size of 4 int32 number: </span><span style="color:#e6db74">%f</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> sys<span style="color:#f92672">.</span>getsizeof(a1))
+
+dummy_tensor_4 <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>randn(<span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">512</span>, <span style="color:#ae81ff">512</span>)<span style="color:#f92672">.</span>float()<span style="color:#f92672">.</span>to(device) <span style="color:#75715e">#847    300+547M  #1147</span>
+dummy_tensor_5 <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>randn(<span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">512</span>, <span style="color:#ae81ff">512</span>)<span style="color:#f92672">.</span>float()<span style="color:#f92672">.</span>to(device) <span style="color:#75715e">#1147   300M      #1747</span>
+dummy_tensor_6 <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>randn(<span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">512</span>, <span style="color:#ae81ff">512</span>)<span style="color:#f92672">.</span>float()<span style="color:#f92672">.</span>to(device) <span style="color:#75715e">#1447   300M      #2347</span>
+
+
+dummy_tensor_4 <span style="color:#f92672">=</span> dummy_tensor_4<span style="color:#f92672">.</span>cpu()
+dummy_tensor_5 <span style="color:#f92672">=</span> dummy_tensor_5<span style="color:#f92672">.</span>cpu()
+<span style="color:#75715e"># 这里虽然将上面的显存释放了，但是我们通过Nvidia-smi命令看到显存依然在占用</span>
+torch<span style="color:#f92672">.</span>cuda<span style="color:#f92672">.</span>empty_cache()
+
+
+input()
+<span style="color:#75715e"># 只有执行完上面这句，显存才会在Nvidia-smi中释放</span>
+</code></pre></div><p>这里进行单步调试</p>
+<p>dummy_tensor_4 之后 显存占用847M</p>
+<p>dummy_tensor_5 之后 显存占用1147M</p>
+<p>dummy_tensor_6 之后 显存占用1447M</p>
+<p>dummy_tensor_4 = dummy_tensor_4.cpu()</p>
+<p>dummy_tensor_5 = dummy_tensor_5.cpu()</p>
+<p>以上两步之后，显存没释放</p>
+<p>执行torch.cuda.empty_cache()之后，显存剩下847M</p>
 <hr>
 <p><strong>参考资料</strong>
 <a href="https://www.cnblogs.com/jiangkejie/p/11430673.html">https://www.cnblogs.com/jiangkejie/p/11430673.html</a></p>
