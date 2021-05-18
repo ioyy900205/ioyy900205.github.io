@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Tue, 18 May 2021 15:33:30 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>14——NFNnet翻译</title>
+      <title>14——NFNnet论文解读</title>
       <link>https://ioyy900205.github.io/post/2021-05-18-14nfnnet%E7%BF%BB%E8%AF%91/</link>
       <pubDate>Tue, 18 May 2021 15:33:30 +0800</pubDate>
       
@@ -24,21 +24,6 @@ github: https://github.com/deepmind/deepmind-research/tree/master/nfnets
 因此，尽管BN使深度学习社区近年来取得了实质性的进展，但我们预计从长远来看，它可能会阻碍进展。我们认为社区应该寻求确定一个简单的替代方案，以实现有竞争力的测试精度，并可用于广泛的任务。虽然已经提出了一些替代的规范化器（Ba等人，2016；Wu &amp;amp; He，2018；Huang等人，2020），但这些替代物往往实现了较差的测试精度，并引入了自己的缺点，如推理时的额外计算成本。幸运的是，近年来出现了两个有前途的研究主题。第一个是研究训练期间BN的好处的来源（Balduzzi等人，2017；Santurkar等人，2018；Bjorck等人，2018；Luo等人，2018；Yang等人，2019；Jacot等人。2019年；De &amp;amp; Smith，2020年），而第二种方法是在没有归一化层的情况下将深度ResNets训练到有竞争力的精度（Hanin &amp;amp; Rolnick，2018；Zhang等人，2019a；De &amp;amp; Smith，2020；Shao等人，2020；Brock等人，2021）。
 图1
 许多这些工作的一个关键主题是，通过抑制剩余分支上的隐性激活的规模，可以在没有规范化的情况下训练非常深的ResNets。实现这一目标的最简单方法是在每个残差分支的末端引入一个可学习的标量，初始化为零（Goyal等人，2017；Zhang等人，2019a；De &amp;amp; Smith，2020；Bachlechner等人，2020）。然而仅靠这一招还不足以在具有挑战性的基准上获得有竞争力的测试精度。另一项工作表明，ReLU激活引入了一个 &amp;ldquo;平均转移&amp;rdquo;，这导致不同训练实例的隐藏激活随着网络深度的增加而变得越来越相关（Huang等人，2017；Jacot等人，2019）。在最近的一项工作中，Brock等人（2021）引入了 &amp;ldquo;无正则化 &amp;ldquo;的ResNets，它在初始化时抑制了残余分支，并应用Scaled Weight Standardization（Qiao等人，2019）来消除平均移动。通过额外的正则化，这些未正则化的网络在ImageNet（Russakovsky等人，2015）上与批量正则化的ResNets（He等人，2016a）的性能相匹配，但它们在大批量时并不稳定，也不符合EfficientNets（Tan &amp;amp; Le，2019）的性能，即目前的技术状态（Gong等人，2020）。本文在这一工作思路的基础上，试图解决这些核心限制。我们的主要贡献如下:</description>
-    </item>
-    
-    <item>
-      <title>15——NFNnet笔记</title>
-      <link>https://ioyy900205.github.io/post/2021-05-18-14nfnnet%E7%AC%94%E8%AE%B0-/</link>
-      <pubDate>Tue, 18 May 2021 15:33:30 +0800</pubDate>
-      
-      <guid>https://ioyy900205.github.io/post/2021-05-18-14nfnnet%E7%AC%94%E8%AE%B0-/</guid>
-      <description>Title：High-Performance Large-Scale Image Recognition Without Normalization
-Time: [v1] Thu, 11 Feb 2021 18:23:20 UTC (241 KB)
-link：https://arxiv.org/abs/2102.06171
-github: https://github.com/deepmind/deepmind-research/tree/master/nfnets
- NFNet（Normalizer-Free ResNets）是DeepMind提出了一种不需要Batch Normalization的基于ResNet的网络结构，其核心为一种AGC（adaptive gradient clipping technique，自适应梯度裁剪）技术。如下图所示，最小的NFNet版本达到了EfficientNet-B7的准确率，并且训练速度快了8.7倍，最大版本的模型实现了新的SOTA效果。
- 标题  参考资料
-https://finance.sina.com.cn/tech/2021-02-13/doc-ikftpnny6608822.shtml https://blog.csdn.net/zhouchen1998/article/details/113824617</description>
     </item>
     
     <item>

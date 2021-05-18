@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en-us">
   <head>
-    <title>14——NFNnet翻译 // 亮的笔记</title>
+    <title>14——NFNnet论文解读 // 亮的笔记</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
     <meta name="generator" content="Hugo 0.82.1" />
@@ -12,7 +12,7 @@
 
     
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="14——NFNnet翻译"/>
+<meta name="twitter:title" content="14——NFNnet论文解读"/>
 <meta name="twitter:description" content="Title：High-Performance Large-Scale Image Recognition Without Normalization
 Time: [v1] Thu, 11 Feb 2021 18:23:20 UTC (241 KB)
 link：https://arxiv.org/abs/2102.06171
@@ -26,7 +26,7 @@ github: https://github.com/deepmind/deepmind-research/tree/master/nfnets
 图1
 许多这些工作的一个关键主题是，通过抑制剩余分支上的隐性激活的规模，可以在没有规范化的情况下训练非常深的ResNets。实现这一目标的最简单方法是在每个残差分支的末端引入一个可学习的标量，初始化为零（Goyal等人，2017；Zhang等人，2019a；De &amp; Smith，2020；Bachlechner等人，2020）。然而仅靠这一招还不足以在具有挑战性的基准上获得有竞争力的测试精度。另一项工作表明，ReLU激活引入了一个 &ldquo;平均转移&rdquo;，这导致不同训练实例的隐藏激活随着网络深度的增加而变得越来越相关（Huang等人，2017；Jacot等人，2019）。在最近的一项工作中，Brock等人（2021）引入了 &ldquo;无正则化 &ldquo;的ResNets，它在初始化时抑制了残余分支，并应用Scaled Weight Standardization（Qiao等人，2019）来消除平均移动。通过额外的正则化，这些未正则化的网络在ImageNet（Russakovsky等人，2015）上与批量正则化的ResNets（He等人，2016a）的性能相匹配，但它们在大批量时并不稳定，也不符合EfficientNets（Tan &amp; Le，2019）的性能，即目前的技术状态（Gong等人，2020）。本文在这一工作思路的基础上，试图解决这些核心限制。我们的主要贡献如下:"/>
 
-    <meta property="og:title" content="14——NFNnet翻译" />
+    <meta property="og:title" content="14——NFNnet论文解读" />
 <meta property="og:description" content="Title：High-Performance Large-Scale Image Recognition Without Normalization
 Time: [v1] Thu, 11 Feb 2021 18:23:20 UTC (241 KB)
 link：https://arxiv.org/abs/2102.06171
@@ -83,7 +83,7 @@ github: https://github.com/deepmind/deepmind-research/tree/master/nfnets
       
   <article class="post">
     <header class="post-header">
-      <h1 class ="post-title">14——NFNnet翻译</h1>
+      <h1 class ="post-title">14——NFNnet论文解读</h1>
       <div class="post-meta">
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
@@ -140,6 +140,17 @@ github: https://github.com/deepmind/deepmind-research/tree/master/nfnets
 确保每个通道的平均激活度在当前批次中为零，消除平均偏移（Brock等人，2021）。</p>
 <p>（3）批量归一化具有正则化效应：人们普遍认为，批量归一化也可以作为一个正则化器，提高测试集的准确性，因为批量统计中的噪声是在训练数据的一个子集上计算的（Luo等人，2018）。与这一观点一致，批量归一化网络的测试精度通常可以通过调整批量大小，或在分布式训练中使用鬼魂批量归一化来提高（Hoffer等人，2017）。</p>
 <p>（4）批量归一化允许高效的大批量训练。批量归一化可以平滑损失景象（Santurkar等人，2018），这增加了最大的稳定学习率（Bjorck等人，2018）。虽然当批次规模较小时，这一特性并没有实际的好处（De &amp; Smith，2020），但如果希望以大批次规模进行有效的训练，以较大的学习率进行训练的能力是至关重要的。虽然大批量训练不能在固定的历时预算内实现更高的测试精度（Smith等人，2020年），但它确实能在更少的参数更新中实现给定的测试精度，在多个设备上并行训练时显著提高训练速度（Goyal等人，2017年）。</p>
+<h2 id="4-towards-removing-batch-normalization">4. Towards Removing Batch Normalization</h2>
+<p>许多作者试图通过恢复上述批量归一化的一个或多个好处，在没有归一化的情况下将深度ResNets训练到具有竞争力的精度。这些工作中的大多数在初始化时抑制了剩余分支上的激活规模，方法是引入小常数或可学习的标量（Hanin &amp; Rolnick, 2018; Zhang等人，2019a; De &amp; Smith, 2020; Shao等人，2020）。此外，Zhang等人（2019a）和De &amp; Smith（2020）观察到，非正则化ResNets的性能可以通过额外的正则化来提高。然而，仅恢复批量正则化的这两个好处并不足以在具有挑战性的基准上获得有竞争力的测试准确率（De &amp; Smith，2020）。</p>
+<p>在这项工作中，我们采用并建立在 &ldquo;无正则化的ResNets&rdquo;（NF-ResNets）（Brock等人，2021），这是一类预激活的ResNets（He等人，2016a），可以在没有规范化层的情况下训练出有竞争力的训练和测试精度。NF-ResNets采用了形式为$$h_{i+1}=h_i+αf_i(h_i/β_i)$$的残差块，其中$h_i$表示第i个残差块的输入，$$f_i$$表示由第i个残差分支计算的函数。函数$f_i$在初始化时被参数化为保方差，这样Var(fi(z))=Var(z)，对所有i而言。标量α规定了每个残余块后激活方差增加的速度（初始化时），通常被设置为一个小值，如α=0.2。标量βi是通过预测第i个残余块的输入的标准差来确定的，βi=pVar(hi)，其中Var(hi+1)=Var(hi)+α2，除了过渡块（发生空间降采样），对于过渡块，跳过路径操作降尺度的输入（hi/βi），并且预期方差在过渡块后被重置为hi+1=1+α2。Squeezeexcite层（Hu等人，2018）的输出被乘以2的系数。根据经验，Brock等人（2021）发现，在每个残差分支的末端包括一个初始化为零的可学习标量（&lsquo;SkipInit&rsquo;（De &amp; Smith，2020））也是有益的。</p>
+<h2 id="5-agc自适应梯度裁剪模块">5. AGC（自适应梯度裁剪模块）</h2>
+<p>为了将NF-ResNets扩展到更大的批次规模，我们探索了一系列梯度剪裁策略（Pascanu等人，2013）。梯度剪裁经常被用于语言建模，最近的研究表明，与梯度下降相比，它允许以更大的学习率进行训练从而加速收敛。这对于条件差的损失景观或大批量训练时尤其重要，因为在这些情况下，最佳学习率受到最大稳定学习率的限制（Smith等人，2020）。因此，我们假设梯度剪裁应该有助于将NF-ResNets有效地扩展到大批量的设置。</p>
+<p>这里我查询了一下梯度裁剪的概念，其实挺简单，就是限制梯度的范围。</p>
+<p>那么自适应梯度裁剪是啥呢，</p>
+<h2 id="6-实验">6. 实验</h2>
+<h3 id="61-evaluating-nfnets-on-imagenet">6.1. Evaluating NFNets on ImageNet</h3>
+<h2 id="7-结论">7. 结论</h2>
+<p>我们首次表明，在没有归一化层的情况下训练的图像识别模型，不仅可以与大规模数据集上最好的批量归一化模型的分类精度相媲美，而且还大大超过它们，同时训练速度仍然较快。为了实现这一目标，我们引入了自适应梯度剪裁，这是一种简单的剪裁算法，可以稳定大批量训练，并使我们能够通过强大的数据增量来优化未归一化的网络。利用这一技术和简单的架构设计原则，我们开发了一系列模型，这些模型在ImageNet上达到了最先进的性能，不需要额外的数据，同时比其他竞争者的训练速度快很多。我们还表明，与批量规范化的模型相比，无规范化的模型更适合在非常大规模的数据集上进行预训练后进行微调。</p>
 <hr>
 <p><strong>参考资料</strong></p>
 <p><a href="https://finance.sina.com.cn/tech/2021-02-13/doc-ikftpnny6608822.shtml">https://finance.sina.com.cn/tech/2021-02-13/doc-ikftpnny6608822.shtml</a>
