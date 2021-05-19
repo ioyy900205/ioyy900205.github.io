@@ -5,7 +5,24 @@
     <link>https://ioyy900205.github.io/</link>
     <description>Recent content on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 18 May 2021 15:33:30 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 19 May 2021 09:53:52 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>15——torch.tensor叶子节点</title>
+      <link>https://ioyy900205.github.io/post/2021-05-19-15torch.tensor-%E5%8F%B6%E5%AD%90%E8%8A%82%E7%82%B9/</link>
+      <pubDate>Wed, 19 May 2021 09:53:52 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-05-19-15torch.tensor-%E5%8F%B6%E5%AD%90%E8%8A%82%E7%82%B9/</guid>
+      <description>讨论叶子节点
+  1. 理顺逻辑  1.1. 元素 1.2. 计算    1. 理顺逻辑 1.1. 元素 在pytorch的计算图中，只有两种元素：
+数据（tensor）
+  叶子节点(leaf node)
+  叶子节点可以理解成不依赖其他tensor的tensor。
+  在pytorch中，神经网络层中的权值w的tensor均为叶子节点。
+  自己定义的tensor例如a=torch.tensor([1.0])定义的节点是叶子节点。
+  All Tensors that have requires_grad which is False will be leaf Tensors by convention.
+  For Tensors that have requires_grad which is True, they will be leaf Tensors if they were created by the user. This means that they are not the result of an operation and so grad_fn is None.</description>
+    </item>
+    
     <item>
       <title>14——NFNnet论文解读</title>
       <link>https://ioyy900205.github.io/post/2021-05-18-14nfnnet%E7%BF%BB%E8%AF%91/</link>
