@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>番外篇 on 亮的笔记</title>
+    <link>https://ioyy900205.github.io/tags/%E7%95%AA%E5%A4%96%E7%AF%87/</link>
+    <description>Recent content in 番外篇 on 亮的笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 19 May 2021 16:22:00 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/%E7%95%AA%E5%A4%96%E7%AF%87/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>16——计算机视觉大类分类</title>
+      <link>https://ioyy900205.github.io/post/2021-05-19-16%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%A4%A7%E7%B1%BB%E5%88%86%E7%B1%BB/</link>
+      <pubDate>Wed, 19 May 2021 16:22:00 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-05-19-16%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%A4%A7%E7%B1%BB%E5%88%86%E7%B1%BB/</guid>
+      <description>待完善
+框架重新梳理一下
+在语义感知层面下
+  1. 任务分类  1. 任务分类 分类、检测、识别、分割、检索、描述、生成
+ 参考资料</description>
+    </item>
+    
+  </channel>
+</rss>

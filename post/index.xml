@@ -5,7 +5,33 @@
     <link>https://ioyy900205.github.io/post/</link>
     <description>Recent content in Posts on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 19 May 2021 09:53:52 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 20 May 2021 16:50:49 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>17——tqdm载入数据集测试</title>
+      <link>https://ioyy900205.github.io/post/2021-05-20-17tqdm%E8%BD%BD%E5%85%A5%E6%95%B0%E6%8D%AE%E9%9B%86%E6%B5%8B%E8%AF%95/</link>
+      <pubDate>Thu, 20 May 2021 16:50:49 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-05-20-17tqdm%E8%BD%BD%E5%85%A5%E6%95%B0%E6%8D%AE%E9%9B%86%E6%B5%8B%E8%AF%95/</guid>
+      <description>代码已放在mess_around文件夹下
+  1. 基本使用方式  1.1. list方式 1.2. 放一个迭代器在里面   2. 实例  2.1. 使用tqdm带来的效率损失  2.1.1. MNIST 2.1.2. ImageNet   2.2. num_workers的使用    1. 基本使用方式 1.1. list方式 （1）
+for i in tqdm(range(10000)): #do something sleep(0.01) pass （2）
+for char in tqdm([&amp;#34;a&amp;#34;, &amp;#34;b&amp;#34;, &amp;#34;c&amp;#34;, &amp;#34;d&amp;#34;]): #do something pass （3）
+pbar = tqdm([&amp;#34;a&amp;#34;, &amp;#34;b&amp;#34;, &amp;#34;c&amp;#34;, &amp;#34;d&amp;#34;]) for char in pbar: sleep(1) pbar.set_description(&amp;#34;Processing %s&amp;#34; % char) 1.2. 放一个迭代器在里面 count = 0 for batch_idx, item in tqdm(enumerate(train_loader)): count+=batch_idx print(count) 这种方式是我使用的方式。简单来说就是把迭代器train_loader放在tqdm里面，这里增加了一个enumerate去增加一个序列。</description>
+    </item>
+    
+    <item>
+      <title>16——计算机视觉大类分类</title>
+      <link>https://ioyy900205.github.io/post/2021-05-19-16%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%A4%A7%E7%B1%BB%E5%88%86%E7%B1%BB/</link>
+      <pubDate>Wed, 19 May 2021 16:22:00 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-05-19-16%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%A4%A7%E7%B1%BB%E5%88%86%E7%B1%BB/</guid>
+      <description>待完善
+框架重新梳理一下
+在语义感知层面下
+  1. 任务分类  1. 任务分类 分类、检测、识别、分割、检索、描述、生成
+ 参考资料</description>
+    </item>
+    
     <item>
       <title>15——torch.tensor叶子节点</title>
       <link>https://ioyy900205.github.io/post/2021-05-19-15torch.tensor-%E5%8F%B6%E5%AD%90%E8%8A%82%E7%82%B9/</link>
