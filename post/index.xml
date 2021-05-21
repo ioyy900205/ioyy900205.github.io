@@ -5,7 +5,19 @@
     <link>https://ioyy900205.github.io/post/</link>
     <description>Recent content in Posts on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 20 May 2021 16:50:49 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 21 May 2021 11:37:47 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>18——bottleneck结构解析和make_layers解析</title>
+      <link>https://ioyy900205.github.io/post/2021-05-21-18bottleneck%E7%BB%93%E6%9E%84%E8%A7%A3%E6%9E%90%E5%92%8Cmake_layers%E8%A7%A3%E6%9E%90/</link>
+      <pubDate>Fri, 21 May 2021 11:37:47 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-05-21-18bottleneck%E7%BB%93%E6%9E%84%E8%A7%A3%E6%9E%90%E5%92%8Cmake_layers%E8%A7%A3%E6%9E%90/</guid>
+      <description>bottleneck
+make_layers
+  1. bottleneck 2. make_layers 3. DenseNet模型  1. bottleneck class Bottleneck(nn.Module): def __init__(self, in_planes, growth_rate): super(Bottleneck, self).__init__() self.bn1 = nn.BatchNorm2d(in_planes) self.conv1 = nn.Conv2d(in_planes, 4*growth_rate, kernel_size=1, bias=False) self.bn2 = nn.BatchNorm2d(4*growth_rate) self.conv2 = nn.Conv2d(4*growth_rate, growth_rate, kernel_size=3, padding=1, bias=False) def forward(self, x): out = self.conv1(F.relu(self.bn1(x))) out = self.conv2(F.relu(self.bn2(out))) out = torch.cat([out,x], 1) return out 这个结构叫做瓶颈结构,如果in_planes=12，growth_rate=12，输出如下：
+(0): Bottleneck( (bn1): BatchNorm2d(12, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True) (conv1): Conv2d(12, 48, kernel_size=(1, 1), stride=(1, 1), bias=False) (bn2): BatchNorm2d(48, eps=1e-05, momentum=0.</description>
+    </item>
+    
     <item>
       <title>17——tqdm载入数据集测试</title>
       <link>https://ioyy900205.github.io/post/2021-05-20-17tqdm%E8%BD%BD%E5%85%A5%E6%95%B0%E6%8D%AE%E9%9B%86%E6%B5%8B%E8%AF%95/</link>
