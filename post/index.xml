@@ -5,7 +5,43 @@
     <link>https://ioyy900205.github.io/post/</link>
     <description>Recent content in Posts on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 21 May 2021 18:13:22 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 31 May 2021 10:41:41 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>【现场分享】智源大会类脑视觉</title>
+      <link>https://ioyy900205.github.io/post/2021-05-31-%E7%8E%B0%E5%9C%BA%E5%88%86%E4%BA%AB%E6%99%BA%E6%BA%90%E5%A4%A7%E4%BC%9A%E7%B1%BB%E8%84%91%E8%A7%86%E8%A7%89/</link>
+      <pubDate>Mon, 31 May 2021 10:41:41 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-05-31-%E7%8E%B0%E5%9C%BA%E5%88%86%E4%BA%AB%E6%99%BA%E6%BA%90%E5%A4%A7%E4%BC%9A%E7%B1%BB%E8%84%91%E8%A7%86%E8%A7%89/</guid>
+      <description>【现场分享】智源大会类脑视觉
+ @TOC
+标题 黄铁军
+唐华锦
+张兆翔
+王威
+类脑 拓展马尔视觉计算原理
+研究内容 计算 成像 应用
+ 参考资料</description>
+    </item>
+    
+    <item>
+      <title>21——MSDNet论文的推理模块</title>
+      <link>https://ioyy900205.github.io/post/2021-05-22-21msdnet%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Sat, 22 May 2021 10:21:24 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-05-22-21msdnet%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/</guid>
+      <description>本文的核心主旨在于：在计算资源限制下对不同的图像进行不同的处理，可以理解成对于简单样本采用简单的方式处理，对于复杂样本则尽可能给其分配资源，以避免不必要的资源浪费节省计算量，并且在这种推理的思想上要实现网络对数据的自动适应。所以本文设计了一个新颖的二维多尺度网络结构，根据不同的资源需求训练了多个分类器，为了最大程度地重用分类器之间的计算，我们将它们作为早期出口并入单个深度卷积神经网络，并通过密集连接将它们互连，该构架在整个网络中同时保持粗略和精细的scale，获得了良好的效果。
+  1. model 2. 推理部分  2.1. 实时推理方法 2.2. 出口分配   3. 讨论  1. model 这里有两个基本模块，一个是第一层的横向传播模块，一个是下采样加横向传播模块。
+2. 推理部分 2.1. 实时推理方法 其实就是将每个出口的结果打印出来。
+只不过在推理过程中，考虑了载入数据的时间（大约0.45s），整个batch的推理时间大约是0.6-0.7s&amp;rsquo;s之间。
+程序在最后的地方对每个出口进行了输出
+ prec@1 56.632 prec@5 79.942 prec@1 65.136 prec@5 86.252 prec@1 68.420 prec@5 88.632 prec@1 69.770 prec@5 89.418 prec@1 71.336 prec@5 90.364   之前有统计过计算量的地方，所以这里结合计算量就可以得到论文的结果。
+2.2. 出口分配 这种方式对5个出口进行了样本数量设定（这里设置了40组）。进而可以学习到每个出口的threshold，从而实现了不同出口的退出机制。
+3. 讨论 每个出口样本数量设定 是一个超参数。MSDNet所得到的结果目前来看不一定是最好的。
+以下有收获：
+ 多尺度架构的编程方法。 网络模型参数和计算量的计算。 退出机制的学习方法。   参考资料
+手动debug</description>
+    </item>
+    
     <item>
       <title>20——torch_view操作指南</title>
       <link>https://ioyy900205.github.io/post/2021-05-21-20torch_view%E6%93%8D%E4%BD%9C%E6%8C%87%E5%8D%97/</link>
