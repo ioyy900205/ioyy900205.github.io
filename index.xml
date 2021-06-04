@@ -5,7 +5,41 @@
     <link>https://ioyy900205.github.io/</link>
     <description>Recent content on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 03 Jun 2021 14:24:36 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 04 Jun 2021 14:47:02 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>25——Noisy Student训练</title>
+      <link>https://ioyy900205.github.io/post/2021-06-04-24noisy-student%E6%8F%90%E9%AB%98%E7%B2%BE%E5%BA%A6%E7%9A%84%E7%A5%9E%E5%99%A8/</link>
+      <pubDate>Fri, 04 Jun 2021 14:47:02 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-06-04-24noisy-student%E6%8F%90%E9%AB%98%E7%B2%BE%E5%BA%A6%E7%9A%84%E7%A5%9E%E5%99%A8/</guid>
+      <description>想要提高模型的精度和鲁棒性，尝试考虑使用无标注数据！
+实际在普通的 ImageNet 数据集上，近年来的模型不断在刷新 Top-1 识别率，幅度不高，趋近于饱和，但是该模型在一些鲁棒性测试数据集上的提高确实惊人的。
+论文地址：https://arxiv.org/pdf/1911.04252.pdf
+  1. 数据集简介 2. 2.Self-training 方法 3. Noisy Student  1. 数据集简介 mage-A/C/P 是三种不同的鲁棒性测试数据集。
+Image-A: A 是 Adversarial，对抗的意思。从真实世界搜集了 7500 张未经修改、完全自然生成的图片作为对抗样本测试常规 ImageNet 下训练的模型鲁棒性，以 DenseNet-121 为例，其测试准确率仅为 2%，准确率下降了约 90%，由此可知该数据集的难度。
+其中红色的是标签是 ResNet-50 模型给出的，黑色的标签是实际真实标签，而且以很高的信任度识别错误，要注意虽然这些样本是对抗样本，但都是来自真实世界未加对抗调整的自然图片。
+Image-C/P：C 是 Corruption 腐蚀、污染的意思，即在图片中引入 75 种不同的噪音形式，测试模型的抗击能力。
+这里给出 15 种不同类型的算法干扰，如引入噪声，模糊处理，模仿天气因素干扰以及基于色彩空间数字化干扰等；P 是 Perturbations 扰动的意思，它与 C 差不多，但是会在一个连续的时间步内连续对一个干净的原始图像做处理，且每一次处理都是微小的扰动，比如平移像素点，旋转，缩放以及 C 中使用的干扰模糊等扰动。
+2. 2.Self-training 方法 Self-training是最简单的半监督方法之一，其主要思想是找到一种方法，用未标记的数据集来扩充已标记的数据集。算法流程如下：
+（1）首先，利用已标记的数据来训练一个好的模型，然后使用这个模型对未标记的数据进行标记。
+（2）然后，进行伪标签的生成，因为我们知道，已训练好的模型对未标记数据的所有预测都不可能都是好的，因此对于经典的Self-training，通常是使用分数阈值过滤部分预测，以选择出未标记数据的预测标签的一个子集。
+（3）其次，将生成的伪标签与原始的标记数据相结合，并在合并后数据上进行联合训练。
+（4）整个过程可以重复n次，直到达到收敛。
+3. Noisy Student Self-training是利用未标记数据的好方法。但这篇来自Google的文章却强调了Noisy Student。怎么回事？它与经典方法有什么不同吗？
+Noisy Student的作者发现，要使这种方法发挥作用，student model在训练过程中应加噪声，如dropout, stochastic depth andaugmentation等。而teacher model在产生伪标签时不应加噪声。因为Noisy 是整个算法的一个重要部分，所以他们称之为“Noisy Student”。</description>
+    </item>
+    
+    <item>
+      <title>23-【pytorch Lightning】</title>
+      <link>https://ioyy900205.github.io/post/2021-06-03-23pytorch-lightning/</link>
+      <pubDate>Thu, 03 Jun 2021 15:13:20 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-06-03-23pytorch-lightning/</guid>
+      <description>大部分的DL/ML代码都可以分为以下这三部分：
+ 研究代码 Research code (LightningModule ) 工程代码 Engineering code ( Trainer ) 非必要代码 Non-essential code ( Callbacks )   @TOC
+研究代码  参考资料</description>
+    </item>
+    
     <item>
       <title>22——VSCode中plt.show()无法显示图片问题</title>
       <link>https://ioyy900205.github.io/post/2021-06-03-22vscode%E4%B8%ADplt.show%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98/</link>

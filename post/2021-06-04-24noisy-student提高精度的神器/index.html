@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>25——Noisy Student训练 // 亮的笔记</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.82.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Liu Liang" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="25——Noisy Student训练"/>
+<meta name="twitter:description" content="想要提高模型的精度和鲁棒性，尝试考虑使用无标注数据！
+实际在普通的 ImageNet 数据集上，近年来的模型不断在刷新 Top-1 识别率，幅度不高，趋近于饱和，但是该模型在一些鲁棒性测试数据集上的提高确实惊人的。
+论文地址：https://arxiv.org/pdf/1911.04252.pdf
+  1. 数据集简介 2. 2.Self-training 方法 3. Noisy Student  1. 数据集简介 mage-A/C/P 是三种不同的鲁棒性测试数据集。
+Image-A: A 是 Adversarial，对抗的意思。从真实世界搜集了 7500 张未经修改、完全自然生成的图片作为对抗样本测试常规 ImageNet 下训练的模型鲁棒性，以 DenseNet-121 为例，其测试准确率仅为 2%，准确率下降了约 90%，由此可知该数据集的难度。
+其中红色的是标签是 ResNet-50 模型给出的，黑色的标签是实际真实标签，而且以很高的信任度识别错误，要注意虽然这些样本是对抗样本，但都是来自真实世界未加对抗调整的自然图片。
+Image-C/P：C 是 Corruption 腐蚀、污染的意思，即在图片中引入 75 种不同的噪音形式，测试模型的抗击能力。
+这里给出 15 种不同类型的算法干扰，如引入噪声，模糊处理，模仿天气因素干扰以及基于色彩空间数字化干扰等；P 是 Perturbations 扰动的意思，它与 C 差不多，但是会在一个连续的时间步内连续对一个干净的原始图像做处理，且每一次处理都是微小的扰动，比如平移像素点，旋转，缩放以及 C 中使用的干扰模糊等扰动。
+2. 2.Self-training 方法 Self-training是最简单的半监督方法之一，其主要思想是找到一种方法，用未标记的数据集来扩充已标记的数据集。算法流程如下：
+（1）首先，利用已标记的数据来训练一个好的模型，然后使用这个模型对未标记的数据进行标记。
+（2）然后，进行伪标签的生成，因为我们知道，已训练好的模型对未标记数据的所有预测都不可能都是好的，因此对于经典的Self-training，通常是使用分数阈值过滤部分预测，以选择出未标记数据的预测标签的一个子集。
+（3）其次，将生成的伪标签与原始的标记数据相结合，并在合并后数据上进行联合训练。
+（4）整个过程可以重复n次，直到达到收敛。
+3. Noisy Student Self-training是利用未标记数据的好方法。但这篇来自Google的文章却强调了Noisy Student。怎么回事？它与经典方法有什么不同吗？
+Noisy Student的作者发现，要使这种方法发挥作用，student model在训练过程中应加噪声，如dropout, stochastic depth andaugmentation等。而teacher model在产生伪标签时不应加噪声。因为Noisy 是整个算法的一个重要部分，所以他们称之为“Noisy Student”。"/>
+
+    <meta property="og:title" content="25——Noisy Student训练" />
+<meta property="og:description" content="想要提高模型的精度和鲁棒性，尝试考虑使用无标注数据！
+实际在普通的 ImageNet 数据集上，近年来的模型不断在刷新 Top-1 识别率，幅度不高，趋近于饱和，但是该模型在一些鲁棒性测试数据集上的提高确实惊人的。
+论文地址：https://arxiv.org/pdf/1911.04252.pdf
+  1. 数据集简介 2. 2.Self-training 方法 3. Noisy Student  1. 数据集简介 mage-A/C/P 是三种不同的鲁棒性测试数据集。
+Image-A: A 是 Adversarial，对抗的意思。从真实世界搜集了 7500 张未经修改、完全自然生成的图片作为对抗样本测试常规 ImageNet 下训练的模型鲁棒性，以 DenseNet-121 为例，其测试准确率仅为 2%，准确率下降了约 90%，由此可知该数据集的难度。
+其中红色的是标签是 ResNet-50 模型给出的，黑色的标签是实际真实标签，而且以很高的信任度识别错误，要注意虽然这些样本是对抗样本，但都是来自真实世界未加对抗调整的自然图片。
+Image-C/P：C 是 Corruption 腐蚀、污染的意思，即在图片中引入 75 种不同的噪音形式，测试模型的抗击能力。
+这里给出 15 种不同类型的算法干扰，如引入噪声，模糊处理，模仿天气因素干扰以及基于色彩空间数字化干扰等；P 是 Perturbations 扰动的意思，它与 C 差不多，但是会在一个连续的时间步内连续对一个干净的原始图像做处理，且每一次处理都是微小的扰动，比如平移像素点，旋转，缩放以及 C 中使用的干扰模糊等扰动。
+2. 2.Self-training 方法 Self-training是最简单的半监督方法之一，其主要思想是找到一种方法，用未标记的数据集来扩充已标记的数据集。算法流程如下：
+（1）首先，利用已标记的数据来训练一个好的模型，然后使用这个模型对未标记的数据进行标记。
+（2）然后，进行伪标签的生成，因为我们知道，已训练好的模型对未标记数据的所有预测都不可能都是好的，因此对于经典的Self-training，通常是使用分数阈值过滤部分预测，以选择出未标记数据的预测标签的一个子集。
+（3）其次，将生成的伪标签与原始的标记数据相结合，并在合并后数据上进行联合训练。
+（4）整个过程可以重复n次，直到达到收敛。
+3. Noisy Student Self-training是利用未标记数据的好方法。但这篇来自Google的文章却强调了Noisy Student。怎么回事？它与经典方法有什么不同吗？
+Noisy Student的作者发现，要使这种方法发挥作用，student model在训练过程中应加噪声，如dropout, stochastic depth andaugmentation等。而teacher model在产生伪标签时不应加噪声。因为Noisy 是整个算法的一个重要部分，所以他们称之为“Noisy Student”。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ioyy900205.github.io/post/2021-06-04-24noisy-student%E6%8F%90%E9%AB%98%E7%B2%BE%E5%BA%A6%E7%9A%84%E7%A5%9E%E5%99%A8/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-06-04T14:47:02&#43;08:00" />
+<meta property="article:modified_time" content="2021-06-04T14:47:02&#43;08:00" />
+
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3520060145,2875461924&amp;fm=26&amp;gp=0.jpg" alt="Liu Liang" /></a>
+      <h1>亮的笔记</h1>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>深度学习笔记本</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/ioyy900205" target="_blank" rel="noreferrer noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/ioyy900205" target="_blank" rel="noreferrer noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">25——Noisy Student训练</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Jun 4, 2021
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://ioyy900205.github.io/tags/paper_review/">Paper_Review</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>想要提高模型的精度和鲁棒性，尝试考虑使用无标注数据！</p>
+<p>实际在普通的 ImageNet 数据集上，近年来的模型不断在刷新 Top-1 识别率，幅度不高，趋近于饱和，但是该模型在一些鲁棒性测试数据集上的提高确实惊人的。</p>
+<p>论文地址：https://arxiv.org/pdf/1911.04252.pdf</p>
+<hr>
+<ul>
+<li><a href="#1-%E6%95%B0%E6%8D%AE%E9%9B%86%E7%AE%80%E4%BB%8B">1. 数据集简介</a></li>
+<li><a href="#2-2self-training-%E6%96%B9%E6%B3%95">2. 2.Self-training 方法</a></li>
+<li><a href="#3-noisy-student">3. Noisy Student</a></li>
+</ul>
+<h2 id="1-数据集简介">1. 数据集简介</h2>
+<p>mage-A/C/P 是三种不同的鲁棒性测试数据集。</p>
+<p>Image-A: A 是 Adversarial，对抗的意思。从真实世界搜集了 7500 张未经修改、完全自然生成的图片作为对抗样本测试常规 ImageNet 下训练的模型鲁棒性，以 DenseNet-121 为例，其测试准确率仅为 2%，准确率下降了约 90%，由此可知该数据集的难度。</p>
+<p><img src="https://img-blog.csdnimg.cn/20191116170511322.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zNzE3OTc0NA==,size_16,color_FFFFFF,t_70" alt=""></p>
+<p>其中红色的是标签是 ResNet-50 模型给出的，黑色的标签是实际真实标签，而且以很高的信任度识别错误，要注意虽然这些样本是对抗样本，但都是来自真实世界未加对抗调整的自然图片。</p>
+<p>Image-C/P：C 是 Corruption 腐蚀、污染的意思，即在图片中引入 75 种不同的噪音形式，测试模型的抗击能力。</p>
+<p><img src="https://img-blog.csdnimg.cn/2019111617054279.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zNzE3OTc0NA==,size_16,color_FFFFFF,t_70" alt=""></p>
+<p>这里给出 15 种不同类型的算法干扰，如引入噪声，模糊处理，模仿天气因素干扰以及基于色彩空间数字化干扰等；P 是 Perturbations 扰动的意思，它与 C 差不多，但是会在一个连续的时间步内连续对一个干净的原始图像做处理，且每一次处理都是微小的扰动，比如平移像素点，旋转，缩放以及 C 中使用的干扰模糊等扰动。</p>
+<h2 id="2-2self-training-方法">2. 2.Self-training 方法</h2>
+<p>Self-training是最简单的半监督方法之一，其主要思想是找到一种方法，用未标记的数据集来扩充已标记的数据集。算法流程如下：</p>
+<p>（1）首先，利用已标记的数据来训练一个好的模型，然后使用这个模型对未标记的数据进行标记。</p>
+<p>（2）然后，进行伪标签的生成，因为我们知道，已训练好的模型对未标记数据的所有预测都不可能都是好的，因此对于经典的Self-training，通常是使用分数阈值过滤部分预测，以选择出未标记数据的预测标签的一个子集。</p>
+<p>（3）其次，将生成的伪标签与原始的标记数据相结合，并在合并后数据上进行联合训练。</p>
+<p>（4）整个过程可以重复n次，直到达到收敛。</p>
+<h2 id="3-noisy-student">3. Noisy Student</h2>
+<p>Self-training是利用未标记数据的好方法。但这篇来自Google的文章却强调了Noisy Student。怎么回事？它与经典方法有什么不同吗？</p>
+<p>Noisy Student的作者发现，要使这种方法发挥作用，student model在训练过程中应加噪声，如dropout, stochastic depth andaugmentation等。而teacher model在产生伪标签时不应加噪声。因为Noisy 是整个算法的一个重要部分，所以他们称之为“Noisy Student”。</p>
+<p>Noisy Student与经典的自学习算法相似，但主要区别在于使用不同的方法给学生增加噪音。需要注意的是，当生成伪标签时，教师并没有被噪声干扰。</p>
+<p>除了噪音，还有两点对Noisy Student来说很重要。</p>
+<p>（1）尽管教师和学生的结构可以相同，但学生模型的容量应该更高。为什么？因为它必须适合一个更大的数据集（标签和伪标签）。因此，学生模型必须大于教师模型。</p>
+<p>（2）平衡数据：作者发现，当每个类的未标记图像数量相同时，学生模型效果良好。</p>
+<p><img src="https://pic4.zhimg.com/v2-d8ce9de0b6d27038c8d68260707dfd33_r.jpg" alt=""></p>
+<hr>
+<p><strong>参考资料</strong></p>
+<p><a href="https://blog.csdn.net/weixin_37179744/article/details/103100544">https://blog.csdn.net/weixin_37179744/article/details/103100544</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/164597142">https://zhuanlan.zhihu.com/p/164597142</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/107901537">https://zhuanlan.zhihu.com/p/107901537</a></p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
