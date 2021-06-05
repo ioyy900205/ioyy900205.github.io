@@ -5,7 +5,34 @@
     <link>https://ioyy900205.github.io/post/</link>
     <description>Recent content in Posts on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 04 Jun 2021 14:47:02 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 05 Jun 2021 10:54:57 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>25——GFNet</title>
+      <link>https://ioyy900205.github.io/post/2021-06-05-25gfnet/</link>
+      <pubDate>Sat, 05 Jun 2021 10:54:57 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-06-05-25gfnet/</guid>
+      <description>NeurIPS 2020录用的一篇论文：《Glance and Focus: a Dynamic Approach to Reducing Spatial Redundancy in Image Classiﬁcation
+论文链接：https://arxiv.org/pdf/2010.05300.pdf
+代码和预训练模型链接：https://github.com/blackfeather-wang/GFNet-Pytorch
+论文第一作者：
+王语霖，清华大学自动化系直博二年级，导师为吴澄院士和黄高助理教授，研究兴趣为深度学习与计算机视觉，在NeurIPS 2019/2020以第一作者发表两篇学术论文。
+ @TOC
+研究动机及简介 推理CNN所需的计算量（FLOPs）基本与像素数目成正比，即与图形的长、宽成二次关系。
+在实际应用（例如手机APP、自动驾驶系统、图片搜索引擎）中，计算量往往正比于能耗或者时间开销，显然，无论出于成本因素还是从安全性和用户体验的角度考虑，网络的计算开销都应当尽可能小。
+这便是本文所提出方法的出发点，我们的目标是，对于输入图片，自适应地找到其与任务最相关的区域，进而通过使神经网络只处理这些区域，以尽可能小的计算量得到可信的结果。具体而言，我们采用的方法是，将一张分辨率较高的图片表征为若干个包含其关键部分的“小块”（Patch），而后仅将这些小块输入神经网络。以下面的示意图为例，将一张224x224的图片分解为3个96x96的Patch进行处理所需的计算量仅为原图的55.2%。
+Method 为了实现上述目的，事实上，有两个显然的困难：
+(a) 任意给定一张输入图片，如何判断其与任务最相关的区域在哪里呢？
+(b) 考虑到我们的最终目的是使神经网络得到正确的预测结果，不同输入所需的计算量是不一样的，例如对于下面所示的两个输入图片，神经网络可能仅需要处理一个patch就能识别出特征非常突出的月亮，但是需要处理更多的patch才能分辨出猫咪的具体品种。
+为了解决这两个问题，我们设计了一个Glance and Focus的框架，将这一思路建模为了一个序列决策过程，如下图所示。
+其具体执行流程为：
+ 首先，对于一张任意给定的输入图片，由于我们没有任何关于它的先验知识，我们直接将其放缩为一个patch的大小，输入网络，这一方面产生了一个初步的判断结果，另一方面也提供了原始输入图片的空间分布信息；这一阶段称为扫视（Glance）。 而后，我们再以这些基本的空间分布信息为基础，逐步从原图上取得高分辨率的patch，将其不断输入网络，以此逐步更新预测结果和空间分布信息，得到更为准确的判断，并逐步寻找神经网络尚未见到过的关键区域；这一阶段称为关注（Focus）。  值得注意的是，在上述序列过程的每一步结束之后，我们会将神经网络的预测自信度（confidence）与一个预先定义的阈值进行比较，一旦confidence超过阈值，我们便视为网络已经得到了可信的结果，这一过程立即终止。此机制称为自适应推理（Adaptive Inference）。通过这种机制，我们一方面可以使不同难易度的样本具有不同的序列长度，从而动态分配计算量、提高整体效率；另一方面可以简单地通过改变阈值调整网络的整体计算开销，而不需要重新训练网络，这使得我们的模型可以动态地以最小的计算开销达到所需的性能，或者实时最大化地利用所有可用的计算资源以提升模型表现。
+网络结构 GFNet共有四个组件，分别为：
+全局编码器${f_g}$和局部编码器${f_l}$ （Global Encoder and Local Encoder）为两个CNN，分别用于从放缩后的原图和局部patch中提取信息，之所以用两个CNN，是因为我们发现一个CNN很难同时适应缩略图和局部patch两种尺度（scale）的输入。几乎所有现有的网络结构均可以作为这两个编码器以提升其推理效率（如MobileNet-V3、EfficientNet、RegNet等）。 分类器 [公式] （Classifier）为一个循环神经网络（RNN），输入为全局池化后的特征向量，用于整合过去所有输入的信息，以得到目前最优的分类结果。 图像块选择网络 [公式] （Patch Proposal Network）是另一个循环神经网络（RNN），输入为全局池化前的特征图（不做池化是为了避免损失空间信息），用于整合目前为止所有的空间分布信息，并决定下一个patch的位置。值得注意的是由于取得patch的crop操作不可求导，[公式]是使用强化学习中的策略梯度方法（policy gradient）训练的。
+ 参考资料
+https://zhuanlan.zhihu.com/p/266306870</description>
+    </item>
+    
     <item>
       <title>25——Noisy Student训练</title>
       <link>https://ioyy900205.github.io/post/2021-06-04-24noisy-student%E6%8F%90%E9%AB%98%E7%B2%BE%E5%BA%A6%E7%9A%84%E7%A5%9E%E5%99%A8/</link>
