@@ -5,7 +5,30 @@
     <link>https://ioyy900205.github.io/tags/paper_review/</link>
     <description>Recent content in Paper_Review on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sat, 05 Jun 2021 10:54:57 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/paper_review/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 09 Jun 2021 16:05:03 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/paper_review/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>29——GRU 3步介绍</title>
+      <link>https://ioyy900205.github.io/post/2021-06-09-29gru%E4%B8%89%E6%AD%A5/</link>
+      <pubDate>Wed, 09 Jun 2021 16:05:03 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-06-09-29gru%E4%B8%89%E6%AD%A5/</guid>
+      <description>29——GRU 3步介绍
+ @TOC
+标题  参考资料</description>
+    </item>
+    
+    <item>
+      <title>28——训练trick之优化器</title>
+      <link>https://ioyy900205.github.io/post/2021-06-09-28%E8%AE%AD%E7%BB%83trick%E4%B9%8B%E4%BC%98%E5%8C%96%E5%99%A8/</link>
+      <pubDate>Wed, 09 Jun 2021 15:24:43 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-06-09-28%E8%AE%AD%E7%BB%83trick%E4%B9%8B%E4%BC%98%E5%8C%96%E5%99%A8/</guid>
+      <description>在机器学习的场景下，梯度下降学习的目标通常是最小化机器学习问题的损失函数。 一个好的算法能够快速可靠地找到最小值.(也就是说，它不会陷入局部极小值、鞍点或高原区域，而是寻找全局最小值)。
+ @TOC
+标题  参考资料
+https://zhuanlan.zhihu.com/p/147275344</description>
+    </item>
+    
     <item>
       <title>25——GFNet论文阅读</title>
       <link>https://ioyy900205.github.io/post/2021-06-05-25gfnet/</link>

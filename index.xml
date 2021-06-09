@@ -5,9 +5,32 @@
     <link>https://ioyy900205.github.io/</link>
     <description>Recent content on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 09 Jun 2021 12:14:22 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 09 Jun 2021 16:05:03 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>27——计算机视觉还得懂LSTM</title>
+      <title>29——GRU 3步介绍</title>
+      <link>https://ioyy900205.github.io/post/2021-06-09-29gru%E4%B8%89%E6%AD%A5/</link>
+      <pubDate>Wed, 09 Jun 2021 16:05:03 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-06-09-29gru%E4%B8%89%E6%AD%A5/</guid>
+      <description>29——GRU 3步介绍
+ @TOC
+标题  参考资料</description>
+    </item>
+    
+    <item>
+      <title>28——训练trick之优化器</title>
+      <link>https://ioyy900205.github.io/post/2021-06-09-28%E8%AE%AD%E7%BB%83trick%E4%B9%8B%E4%BC%98%E5%8C%96%E5%99%A8/</link>
+      <pubDate>Wed, 09 Jun 2021 15:24:43 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-06-09-28%E8%AE%AD%E7%BB%83trick%E4%B9%8B%E4%BC%98%E5%8C%96%E5%99%A8/</guid>
+      <description>在机器学习的场景下，梯度下降学习的目标通常是最小化机器学习问题的损失函数。 一个好的算法能够快速可靠地找到最小值.(也就是说，它不会陷入局部极小值、鞍点或高原区域，而是寻找全局最小值)。
+ @TOC
+标题  参考资料
+https://zhuanlan.zhihu.com/p/147275344</description>
+    </item>
+    
+    <item>
+      <title>27——做计算机视觉还得懂LSTM</title>
       <link>https://ioyy900205.github.io/post/2021-06-09-27%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%BF%98%E5%BE%97%E6%87%82lstm/</link>
       <pubDate>Wed, 09 Jun 2021 12:14:22 +0800</pubDate>
       
@@ -15,8 +38,7 @@
       <description>Long Short-Term Memory Networks
 LSTMs are a special kind of Recurrent Neural Network — capable of learning long-term dependencies by remembering information for long periods is the default behavior.
 All recurrent neural networks are in the form of a chain of repeating modules of a neural network. In standard RNNs, this repeating module will have a very simple structure, such as a single tanh layer.
- @TOC
-标题  参考资料</description>
+  1. Step 1: Decide how much past data it should remember 2.</description>
     </item>
     
     <item>

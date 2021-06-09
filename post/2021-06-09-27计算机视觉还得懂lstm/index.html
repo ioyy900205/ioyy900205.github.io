@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en-us">
   <head>
-    <title>27——计算机视觉还得懂LSTM // 亮的笔记</title>
+    <title>27——做计算机视觉还得懂LSTM // 亮的笔记</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
     <meta name="generator" content="Hugo 0.82.1" />
@@ -12,19 +12,17 @@
 
     
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="27——计算机视觉还得懂LSTM"/>
+<meta name="twitter:title" content="27——做计算机视觉还得懂LSTM"/>
 <meta name="twitter:description" content="Long Short-Term Memory Networks
 LSTMs are a special kind of Recurrent Neural Network — capable of learning long-term dependencies by remembering information for long periods is the default behavior.
 All recurrent neural networks are in the form of a chain of repeating modules of a neural network. In standard RNNs, this repeating module will have a very simple structure, such as a single tanh layer.
- @TOC
-标题  参考资料"/>
+  1. Step 1: Decide how much past data it should remember 2."/>
 
-    <meta property="og:title" content="27——计算机视觉还得懂LSTM" />
+    <meta property="og:title" content="27——做计算机视觉还得懂LSTM" />
 <meta property="og:description" content="Long Short-Term Memory Networks
 LSTMs are a special kind of Recurrent Neural Network — capable of learning long-term dependencies by remembering information for long periods is the default behavior.
 All recurrent neural networks are in the form of a chain of repeating modules of a neural network. In standard RNNs, this repeating module will have a very simple structure, such as a single tanh layer.
- @TOC
-标题  参考资料" />
+  1. Step 1: Decide how much past data it should remember 2." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ioyy900205.github.io/post/2021-06-09-27%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%BF%98%E5%BE%97%E6%87%82lstm/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2021-06-09T12:14:22&#43;08:00" />
@@ -69,7 +67,7 @@ All recurrent neural networks are in the form of a chain of repeating modules of
       
   <article class="post">
     <header class="post-header">
-      <h1 class ="post-title">27——计算机视觉还得懂LSTM</h1>
+      <h1 class ="post-title">27——做计算机视觉还得懂LSTM</h1>
       <div class="post-meta">
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
@@ -83,7 +81,7 @@ All recurrent neural networks are in the form of a chain of repeating modules of
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          1 min read
+          3 min read
         </div>
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
@@ -98,12 +96,34 @@ All recurrent neural networks are in the form of a chain of repeating modules of
       <p>Long Short-Term Memory Networks</p>
 <p>LSTMs are a special kind of Recurrent Neural Network — capable of learning long-term dependencies by remembering information for long periods is the default behavior.</p>
 <p>All recurrent neural networks are in the form of a chain of repeating modules of a neural network. In standard RNNs, this repeating module will have a very simple structure, such as a single tanh layer.</p>
-<!-- raw HTML omitted -->
+<p><img src="https://www.simplilearn.com/ice9/free_resources_article_thumb/Workings_of_LSTMs.png" alt=""></p>
 <hr>
-<p>@<a href="%E6%9C%AC%E6%96%87%E5%86%85%E5%AE%B9">TOC</a></p>
-<h2 id="标题">标题</h2>
+<ul>
+<li><a href="#1-step-1-decide-how-much-past-data-it-should-remember">1. Step 1: Decide how much past data it should remember</a></li>
+<li><a href="#2-step-2-decide-how-much-this-unit-adds-to-the-current-state">2. Step 2: Decide how much this unit adds to the current state</a></li>
+<li><a href="#3-step-3-decide-what-part-of-the-current-cell-state-makes-it-to-the-output">3. Step 3: Decide what part of the current cell state makes it to the output</a></li>
+</ul>
+<h2 id="1-step-1-decide-how-much-past-data-it-should-remember">1. Step 1: Decide how much past data it should remember</h2>
+<p>The first step in the LSTM is to decide which information should be omitted（省略） from the cell in that particular time step. The sigmoid function determines this. It looks at the previous state (ht-1) along with the current input xt and computes the function.</p>
+<p><img src="https://www.simplilearn.com/ice9/free_resources_article_thumb/LSTMs_step1.png" alt=""></p>
+<p>Consider the following two sentences:</p>
+<p>Let the output of h(t-1) be “Alice is good in Physics. John, on the other hand, is good at Chemistry.”</p>
+<p>Let the current input at x(t) be “John plays football well. He told me yesterday over the phone that he had served as the captain of his college football team.”</p>
+<p>The forget gate realizes there might be a change in context after encountering the first full stop. It compares with the current input sentence at x(t). The next sentence talks about John, so the information on Alice is deleted. The position of the subject is vacated and assigned to John.</p>
+<h2 id="2-step-2-decide-how-much-this-unit-adds-to-the-current-state">2. Step 2: Decide how much this unit adds to the current state</h2>
+<p>In the second layer, there are two parts. One is the sigmoid function, and the other is the tanh function. In the sigmoid function, it decides which values to let through (0 or 1). tanh function gives weightage to the values which are passed, deciding their level of importance (-1 to 1).</p>
+<p><img src="https://www.simplilearn.com/ice9/free_resources_article_thumb/LSTMs_step2.png" alt=""></p>
+<p>With the current input at x(t), the input gate analyzes the important information — John plays football, and the fact that he was the captain of his college team is important.</p>
+<p>“He told me yesterday over the phone” is less important; hence it&rsquo;s forgotten. This process of adding some new information can be done via the input gate.</p>
+<h2 id="3-step-3-decide-what-part-of-the-current-cell-state-makes-it-to-the-output">3. Step 3: Decide what part of the current cell state makes it to the output</h2>
+<p>The third step is to decide what the output will be. First, we run a sigmoid layer, which decides what parts of the cell state make it to the output. Then, we put the cell state through tanh to push the values to be between -1 and 1 and multiply it by the output of the sigmoid gate.</p>
+<p><img src="https://s3.amazonaws.com/static2.simplilearn.com/ice9/free_resources_article_thumb/LSTMs_step3.png" alt=""></p>
+<p>Let’s consider this example to predict the next word in the sentence: “John played tremendously well against the opponent and won for his team. For his contributions, brave ____ was awarded player of the match.”</p>
+<p>There could be many choices for the empty space. The current input brave is an adjective, and adjectives describe a noun. So, “John” could be the best output after brave.</p>
 <hr>
 <p><strong>参考资料</strong></p>
+<p><a href="https://www.simplilearn.com/tutorials/deep-learning-tutorial/rnn">https://www.simplilearn.com/tutorials/deep-learning-tutorial/rnn</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/34203833">https://zhuanlan.zhihu.com/p/34203833</a></p>
 
     </div>
     <div class="post-footer">
