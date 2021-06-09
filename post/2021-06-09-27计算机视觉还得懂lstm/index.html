@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en-us">
   <head>
-    <title>[2021-06-05 【old】conda命令] // 亮的笔记</title>
+    <title>27——计算机视觉还得懂LSTM // 亮的笔记</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
     <meta name="generator" content="Hugo 0.82.1" />
@@ -12,35 +12,23 @@
 
     
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="[2021-06-05 【old】conda命令]"/>
-<meta name="twitter:description" content="环境配置
-  1. 安装环境 2. 克隆环境 3. 删除环境 4. mmdetection安装 5. detection2安装  1. 安装环境 conda create -n env_ori python=3.7 -y conda activate env_ori pip install torch==1.8.0 torchvision==0.9.0 torchaudio==0.8.0 2. 克隆环境 conda create -n env_ori_1 &ndash;clone env_ori
-3. 删除环境 conda remove -n py36 &ndash;all
-4. mmdetection安装 conda create -n mmdet &ndash;clone env_ori
-git clone https://github.com/open-mmlab/mmdetection.git
-cd mmdetection
-pip install mmcv
-python setup.py develop
-以上图片是网上随便down了一个，然后在跑了一下demo，测试成功！
-5. detection2安装  参考资料
-https://github.com/open-mmlab/mmdetection"/>
+<meta name="twitter:title" content="27——计算机视觉还得懂LSTM"/>
+<meta name="twitter:description" content="Long Short-Term Memory Networks
+LSTMs are a special kind of Recurrent Neural Network — capable of learning long-term dependencies by remembering information for long periods is the default behavior.
+All recurrent neural networks are in the form of a chain of repeating modules of a neural network. In standard RNNs, this repeating module will have a very simple structure, such as a single tanh layer.
+ @TOC
+标题  参考资料"/>
 
-    <meta property="og:title" content="[2021-06-05 【old】conda命令]" />
-<meta property="og:description" content="环境配置
-  1. 安装环境 2. 克隆环境 3. 删除环境 4. mmdetection安装 5. detection2安装  1. 安装环境 conda create -n env_ori python=3.7 -y conda activate env_ori pip install torch==1.8.0 torchvision==0.9.0 torchaudio==0.8.0 2. 克隆环境 conda create -n env_ori_1 &ndash;clone env_ori
-3. 删除环境 conda remove -n py36 &ndash;all
-4. mmdetection安装 conda create -n mmdet &ndash;clone env_ori
-git clone https://github.com/open-mmlab/mmdetection.git
-cd mmdetection
-pip install mmcv
-python setup.py develop
-以上图片是网上随便down了一个，然后在跑了一下demo，测试成功！
-5. detection2安装  参考资料
-https://github.com/open-mmlab/mmdetection" />
+    <meta property="og:title" content="27——计算机视觉还得懂LSTM" />
+<meta property="og:description" content="Long Short-Term Memory Networks
+LSTMs are a special kind of Recurrent Neural Network — capable of learning long-term dependencies by remembering information for long periods is the default behavior.
+All recurrent neural networks are in the form of a chain of repeating modules of a neural network. In standard RNNs, this repeating module will have a very simple structure, such as a single tanh layer.
+ @TOC
+标题  参考资料" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://ioyy900205.github.io/post/2021-06-05-oldconda%E5%91%BD%E4%BB%A4/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2021-06-05T13:55:38&#43;08:00" />
-<meta property="article:modified_time" content="2021-06-05T13:55:38&#43;08:00" />
+<meta property="og:url" content="https://ioyy900205.github.io/post/2021-06-09-27%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%BF%98%E5%BE%97%E6%87%82lstm/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-06-09T12:14:22&#43;08:00" />
+<meta property="article:modified_time" content="2021-06-09T12:14:22&#43;08:00" />
 
 
 
@@ -81,14 +69,14 @@ https://github.com/open-mmlab/mmdetection" />
       
   <article class="post">
     <header class="post-header">
-      <h1 class ="post-title">[2021-06-05 【old】conda命令]</h1>
+      <h1 class ="post-title">27——计算机视觉还得懂LSTM</h1>
       <div class="post-meta">
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
   <title>calendar</title>
   <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
 </svg>
-          Jun 5, 2021
+          Jun 9, 2021
         </div>
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
@@ -102,43 +90,20 @@ https://github.com/open-mmlab/mmdetection" />
   <title>tag</title>
   <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
 </svg>
-              <a class="tag" href="https://ioyy900205.github.io/tags/object_detection/">Object_Detection</a>
+              <a class="tag" href="https://ioyy900205.github.io/tags/pytorch/">PyTorch</a>
         </div>
       </div>
     </header>
     <div class="post-content">
-      <p>环境配置</p>
+      <p>Long Short-Term Memory Networks</p>
+<p>LSTMs are a special kind of Recurrent Neural Network — capable of learning long-term dependencies by remembering information for long periods is the default behavior.</p>
+<p>All recurrent neural networks are in the form of a chain of repeating modules of a neural network. In standard RNNs, this repeating module will have a very simple structure, such as a single tanh layer.</p>
+<!-- raw HTML omitted -->
 <hr>
-<ul>
-<li><a href="#1-%E5%AE%89%E8%A3%85%E7%8E%AF%E5%A2%83">1. 安装环境</a></li>
-<li><a href="#2-%E5%85%8B%E9%9A%86%E7%8E%AF%E5%A2%83">2. 克隆环境</a></li>
-<li><a href="#3-%E5%88%A0%E9%99%A4%E7%8E%AF%E5%A2%83">3. 删除环境</a></li>
-<li><a href="#4-mmdetection%E5%AE%89%E8%A3%85">4. mmdetection安装</a></li>
-<li><a href="#5-detection2%E5%AE%89%E8%A3%85">5. detection2安装</a></li>
-</ul>
-<h2 id="1-安装环境">1. 安装环境</h2>
-<pre><code class="language-linux" data-lang="linux">conda create -n env_ori python=3.7 -y
-
-conda activate env_ori
-
-pip install torch==1.8.0 torchvision==0.9.0 torchaudio==0.8.0
-
-</code></pre><h2 id="2-克隆环境">2. 克隆环境</h2>
-<p>conda create -n env_ori_1 &ndash;clone env_ori</p>
-<h2 id="3-删除环境">3. 删除环境</h2>
-<p>conda remove -n py36 &ndash;all</p>
-<h2 id="4-mmdetection安装">4. mmdetection安装</h2>
-<p>conda create -n mmdet &ndash;clone env_ori</p>
-<p>git clone <a href="https://github.com/open-mmlab/mmdetection.git">https://github.com/open-mmlab/mmdetection.git</a></p>
-<p>cd mmdetection</p>
-<p>pip install mmcv</p>
-<p>python setup.py develop</p>
-<p><img src="https://github.com/ioyy900205/ioyy900205.github.io/raw/main/post/images/cd9b3ddabcafbdb592ba1715a062c9adb7dadac18eb515a7bc7de67711f741ee.png" alt="图 1"></p>
-<p>以上图片是网上随便down了一个，然后在跑了一下demo，测试成功！</p>
-<h2 id="5-detection2安装">5. detection2安装</h2>
+<p>@<a href="%E6%9C%AC%E6%96%87%E5%86%85%E5%AE%B9">TOC</a></p>
+<h2 id="标题">标题</h2>
 <hr>
 <p><strong>参考资料</strong></p>
-<p><a href="https://github.com/open-mmlab/mmdetection">https://github.com/open-mmlab/mmdetection</a></p>
 
     </div>
     <div class="post-footer">
