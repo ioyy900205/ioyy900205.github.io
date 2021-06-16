@@ -5,7 +5,27 @@
     <link>https://ioyy900205.github.io/</link>
     <description>Recent content on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 09 Jun 2021 16:05:03 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 16 Jun 2021 11:25:16 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>30——强化学习</title>
+      <link>https://ioyy900205.github.io/post/2021-06-16-30%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/</link>
+      <pubDate>Wed, 16 Jun 2021 11:25:16 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-06-16-30%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/</guid>
+      <description>维基百科：
+强化学习（RL）是机器学习的一个领域，涉及软件代理如何在环境中采取行动以最大化一些累积奖励的概念。该问题由于其一般性，在许多其他学科中得到研究，如博弈论，控制理论，运筹学，信息论，基于仿真的优化，多智能体系统，群智能，统计和遗传算法。在运筹学和控制文献中，强化学习被称为近似动态规划或神经动态规划。
+百度：
+强化学习(reinforcement learning)，又称再励学习、评价学习，是一种重要的机器学习方法，在智能控制机器人及分析预测等领域有许多应用。
+但在传统的机器学习分类中没有提到过强化学习，而在连接主义学习中，把学习算法分为三种类型，即非监督学习(unsupervised learning)、监督学习(supervised leaning)和强化学习。
+ @TOC
+强化学习的主流算法 免模型学习（Model-Free） vs 有模型学习（Model-Based）
+在介绍详细算法之前，我们先来了解一下强化学习算法的2大分类。这2个分类的重要差异是：智能体是否能完整了解或学习到所在环境的模型
+有模型学习（Model-Based）对环境有提前的认知，可以提前考虑规划，但是缺点是如果模型跟真实世界不一致，那么在实际使用场景下会表现的不好。
+免模型学习（Model-Free）放弃了模型学习，在效率上不如前者，但是这种方式更加容易实现，也容易在真实场景下调整到很好的状态。所以免模型学习方法更受欢迎，得到更加广泛的开发和测试。
+ 参考资料
+https://easyai.tech/ai-definition/reinforcement-learning/</description>
+    </item>
+    
     <item>
       <title>29——GRU 3步介绍</title>
       <link>https://ioyy900205.github.io/post/2021-06-09-29gru%E4%B8%89%E6%AD%A5/</link>
