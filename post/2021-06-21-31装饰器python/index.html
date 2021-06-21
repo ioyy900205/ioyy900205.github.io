@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>31——装饰器python // 亮的笔记</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.82.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Liu Liang" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="31——装饰器python"/>
+<meta name="twitter:description" content="一个装饰器的例子，很方便理解
+ @TOC
+标题 先定义一个简单的函数foo
+def foo(): print &#39;call foo()&#39; 现在我们想要计算次函数执行的时间，于是修改代码如下
+import time def foo(): start = time.clock() print &#39;call foo()&#39; end = time.clock() print &#39;using time:&#39;,end - start 然后有一个更快的方法
+import time def foo(): print &#39;call foo()&#39; def cal_time(func): start = time.clock() func() end =time.clock() print &#39;using time:&#39;, end - start cal_time(foo) 但是这样比较麻烦，如果foo换了，还得重新写其他的例如foo_1
+import time def foo(): print &#39;call foo()&#39; # 定义一个计时器，传入一个函数，并返回另一个附加了计时功能的方法 def cal_time(func): # 定义一个内嵌的包装函数，给传入的函数加上计时功能的包装 def wrapper(): start = time."/>
+
+    <meta property="og:title" content="31——装饰器python" />
+<meta property="og:description" content="一个装饰器的例子，很方便理解
+ @TOC
+标题 先定义一个简单的函数foo
+def foo(): print &#39;call foo()&#39; 现在我们想要计算次函数执行的时间，于是修改代码如下
+import time def foo(): start = time.clock() print &#39;call foo()&#39; end = time.clock() print &#39;using time:&#39;,end - start 然后有一个更快的方法
+import time def foo(): print &#39;call foo()&#39; def cal_time(func): start = time.clock() func() end =time.clock() print &#39;using time:&#39;, end - start cal_time(foo) 但是这样比较麻烦，如果foo换了，还得重新写其他的例如foo_1
+import time def foo(): print &#39;call foo()&#39; # 定义一个计时器，传入一个函数，并返回另一个附加了计时功能的方法 def cal_time(func): # 定义一个内嵌的包装函数，给传入的函数加上计时功能的包装 def wrapper(): start = time." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ioyy900205.github.io/post/2021-06-21-31%E8%A3%85%E9%A5%B0%E5%99%A8python/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-06-21T12:00:10&#43;08:00" />
+<meta property="article:modified_time" content="2021-06-21T12:00:10&#43;08:00" />
+
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3520060145,2875461924&amp;fm=26&amp;gp=0.jpg" alt="Liu Liang" /></a>
+      <h1>亮的笔记</h1>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>深度学习笔记本</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/ioyy900205" target="_blank" rel="noreferrer noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/ioyy900205" target="_blank" rel="noreferrer noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">31——装饰器python</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Jun 21, 2021
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://ioyy900205.github.io/tags/pytorch/">PyTorch</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>一个装饰器的例子，很方便理解</p>
+<hr>
+<p>@<a href="%E6%9C%AC%E6%96%87%E5%86%85%E5%AE%B9">TOC</a></p>
+<h2 id="标题">标题</h2>
+<p>先定义一个简单的函数foo</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">foo</span>():
+    <span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#39;call foo()&#39;</span>
+</code></pre></div><p>现在我们想要计算次函数执行的时间，于是修改代码如下</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> time
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">foo</span>():
+    start <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>clock()
+    <span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#39;call foo()&#39;</span>
+    end <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>clock()
+    <span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#39;using time:&#39;</span>,end <span style="color:#f92672">-</span> start
+</code></pre></div><p>然后有一个更快的方法</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> time
+ 
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">foo</span>():
+    <span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#39;call foo()&#39;</span>
+ 
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">cal_time</span>(func):
+    start <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>clock()
+    func()
+    end <span style="color:#f92672">=</span>time<span style="color:#f92672">.</span>clock()
+    <span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#39;using time:&#39;</span>, end <span style="color:#f92672">-</span> start
+ 
+cal_time(foo)
+</code></pre></div><p>但是这样比较麻烦，如果foo换了，还得重新写其他的例如foo_1</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> time
+ 
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">foo</span>():
+    <span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#39;call foo()&#39;</span>
+ 
+<span style="color:#75715e"># 定义一个计时器，传入一个函数，并返回另一个附加了计时功能的方法</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">cal_time</span>(func):
+     
+    <span style="color:#75715e"># 定义一个内嵌的包装函数，给传入的函数加上计时功能的包装</span>
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">wrapper</span>():
+        start <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>clock()
+        func()
+        end <span style="color:#f92672">=</span>time<span style="color:#f92672">.</span>clock()
+        <span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#39;using time:&#39;</span>, end <span style="color:#f92672">-</span> start
+     
+    <span style="color:#75715e"># 将包装后的函数返回</span>
+    <span style="color:#66d9ef">return</span> wrapper
+ 
+foo <span style="color:#f92672">=</span> cal_time(foo)
+foo()
+</code></pre></div><p>再简化一点 其实 foo = cal_time(foo) 可以写成</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
+<span style="color:#a6e22e">@cal_time</span> 
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">foo</span>()
+
+</code></pre></div><p>于是</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> time
+ 
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">cal_time</span>(func):
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">wrapper</span>():
+        start <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>clock()
+        func()
+        end <span style="color:#f92672">=</span>time<span style="color:#f92672">.</span>clock()
+        <span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#39;using time:&#39;</span>, end <span style="color:#f92672">-</span> start
+    <span style="color:#66d9ef">return</span> wrapper
+ 
+<span style="color:#a6e22e">@cal_time</span>               <span style="color:#75715e">#定义函数时加上这一行与另外写foo = cal_time(func):完全等价</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">foo</span>():
+    <span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#39;call foo()&#39;</span>
+ 
+foo()
+</code></pre></div><hr>
+<p><strong>参考资料</strong></p>
+<p><a href="https://segmentfault.com/a/1190000012361982">https://segmentfault.com/a/1190000012361982</a></p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

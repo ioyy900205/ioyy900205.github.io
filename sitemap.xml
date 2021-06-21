@@ -2,19 +2,25 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://ioyy900205.github.io/post/2021-06-21-31%E8%A3%85%E9%A5%B0%E5%99%A8python/</loc>
+    <lastmod>2021-06-21T12:00:10+08:00</lastmod>
+  </url><url>
+    <loc>https://ioyy900205.github.io/post/</loc>
+    <lastmod>2021-06-21T12:00:10+08:00</lastmod>
+  </url><url>
+    <loc>https://ioyy900205.github.io/tags/pytorch/</loc>
+    <lastmod>2021-06-21T12:00:10+08:00</lastmod>
+  </url><url>
+    <loc>https://ioyy900205.github.io/tags/</loc>
+    <lastmod>2021-06-21T12:00:10+08:00</lastmod>
+  </url><url>
+    <loc>https://ioyy900205.github.io/</loc>
+    <lastmod>2021-06-21T12:00:10+08:00</lastmod>
+  </url><url>
     <loc>https://ioyy900205.github.io/post/2021-06-16-30%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2021-06-16T11:25:16+08:00</lastmod>
   </url><url>
     <loc>https://ioyy900205.github.io/tags/paper_review/</loc>
-    <lastmod>2021-06-16T11:25:16+08:00</lastmod>
-  </url><url>
-    <loc>https://ioyy900205.github.io/post/</loc>
-    <lastmod>2021-06-16T11:25:16+08:00</lastmod>
-  </url><url>
-    <loc>https://ioyy900205.github.io/tags/</loc>
-    <lastmod>2021-06-16T11:25:16+08:00</lastmod>
-  </url><url>
-    <loc>https://ioyy900205.github.io/</loc>
     <lastmod>2021-06-16T11:25:16+08:00</lastmod>
   </url><url>
     <loc>https://ioyy900205.github.io/post/2021-06-09-29gru%E4%B8%89%E6%AD%A5/</loc>
@@ -24,9 +30,6 @@
     <lastmod>2021-06-09T15:24:43+08:00</lastmod>
   </url><url>
     <loc>https://ioyy900205.github.io/post/2021-06-09-27%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%BF%98%E5%BE%97%E6%87%82lstm/</loc>
-    <lastmod>2021-06-09T12:14:22+08:00</lastmod>
-  </url><url>
-    <loc>https://ioyy900205.github.io/tags/pytorch/</loc>
     <lastmod>2021-06-09T12:14:22+08:00</lastmod>
   </url><url>
     <loc>https://ioyy900205.github.io/post/2021-06-07-26gfnet-%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/</loc>

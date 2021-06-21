@@ -5,7 +5,22 @@
     <link>https://ioyy900205.github.io/</link>
     <description>Recent content on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 16 Jun 2021 11:25:16 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 21 Jun 2021 12:00:10 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>31——装饰器python</title>
+      <link>https://ioyy900205.github.io/post/2021-06-21-31%E8%A3%85%E9%A5%B0%E5%99%A8python/</link>
+      <pubDate>Mon, 21 Jun 2021 12:00:10 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-06-21-31%E8%A3%85%E9%A5%B0%E5%99%A8python/</guid>
+      <description>一个装饰器的例子，很方便理解
+ @TOC
+标题 先定义一个简单的函数foo
+def foo(): print &amp;#39;call foo()&amp;#39; 现在我们想要计算次函数执行的时间，于是修改代码如下
+import time def foo(): start = time.clock() print &amp;#39;call foo()&amp;#39; end = time.clock() print &amp;#39;using time:&amp;#39;,end - start 然后有一个更快的方法
+import time def foo(): print &amp;#39;call foo()&amp;#39; def cal_time(func): start = time.clock() func() end =time.clock() print &amp;#39;using time:&amp;#39;, end - start cal_time(foo) 但是这样比较麻烦，如果foo换了，还得重新写其他的例如foo_1
+import time def foo(): print &amp;#39;call foo()&amp;#39; # 定义一个计时器，传入一个函数，并返回另一个附加了计时功能的方法 def cal_time(func): # 定义一个内嵌的包装函数，给传入的函数加上计时功能的包装 def wrapper(): start = time.</description>
+    </item>
+    
     <item>
       <title>30——强化学习</title>
       <link>https://ioyy900205.github.io/post/2021-06-16-30%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/</link>
