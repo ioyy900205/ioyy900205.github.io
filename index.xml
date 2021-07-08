@@ -5,7 +5,22 @@
     <link>https://ioyy900205.github.io/</link>
     <description>Recent content on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 05 Jul 2021 15:14:54 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 08 Jul 2021 17:43:31 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>36——如何写模型（一）</title>
+      <link>https://ioyy900205.github.io/post/2021-07-08-36%E5%A6%82%E4%BD%95%E5%86%99%E6%A8%A1%E5%9E%8B%E4%B8%80/</link>
+      <pubDate>Thu, 08 Jul 2021 17:43:31 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-07-08-36%E5%A6%82%E4%BD%95%E5%86%99%E6%A8%A1%E5%9E%8B%E4%B8%80/</guid>
+      <description>如何写模型（一） 以ResNet为例
+ @TOC
+1. ResNet的构建 以ResNet为例，forward函数中，是前向传播过程，也是计算的核心内容。
+def forward(self, x): x = self.conv1(x) x = self.bn1(x) x = self.relu(x) x = self.maxpool(x) x = self.layer1(x) x = self.layer2(x) x = self.layer3(x) x = self.layer4(x) if self.include_top: x = self.avgpool(x) x = torch.flatten(x, 1) x = self.fc(x) return x 这里conv1、bn1、relu、maxpool、avgpool、fc都已经在__init__内很直观的定义好了。
+问题就在于layer1-4的构建。那么我们以Restnet50为例，中间4个层每个block都要重复[3, 4, 6, 3]这么多次。e.g.第一层3次, 第二层4次，第三层6次，第四层3次。
+那么可以看一下self.layer1-4是如何定义的。
+self.layer1 = self._make_layer(block, 64, blocks_num[0]) self.layer2 = self._make_layer(block, 128, blocks_num[1], stride=2) self.layer3 = self._make_layer(block, 256, blocks_num[2], stride=2) self.</description>
+    </item>
+    
     <item>
       <title>35——NMS非极大值抑制</title>
       <link>https://ioyy900205.github.io/post/2021-07-05-35nms/</link>
