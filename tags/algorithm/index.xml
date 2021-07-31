@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Algorithm on 亮的笔记</title>
+    <link>https://ioyy900205.github.io/tags/algorithm/</link>
+    <description>Recent content in Algorithm on 亮的笔记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sat, 31 Jul 2021 16:09:29 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>40——C&#43;&#43;代码调试</title>
+      <link>https://ioyy900205.github.io/post/2021-07-31-40_c&#43;&#43;%E8%B0%83%E8%AF%95%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Sat, 31 Jul 2021 16:09:29 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-07-31-40_c&#43;&#43;%E8%B0%83%E8%AF%95%E9%97%AE%E9%A2%98/</guid>
+      <description>json文件配置，复制粘贴即可
+ 1. 神奇的json文件 ctrl+c ctrl+v 深藏功与名
+{ &amp;#34;version&amp;#34;: &amp;#34;2.0.0&amp;#34;, &amp;#34;options&amp;#34;: { &amp;#34;cwd&amp;#34;: &amp;#34;${workspaceFolder}/build&amp;#34; }, &amp;#34;tasks&amp;#34;: [ { &amp;#34;type&amp;#34;: &amp;#34;shell&amp;#34;, &amp;#34;label&amp;#34;: &amp;#34;cmake&amp;#34;, &amp;#34;command&amp;#34;: &amp;#34;cmake&amp;#34;, &amp;#34;args&amp;#34;: [ &amp;#34;..&amp;#34; ] }, { &amp;#34;label&amp;#34;: &amp;#34;make&amp;#34;, &amp;#34;group&amp;#34;: { &amp;#34;kind&amp;#34;: &amp;#34;build&amp;#34;, &amp;#34;isDefault&amp;#34;: true }, &amp;#34;command&amp;#34;: &amp;#34;make&amp;#34;, &amp;#34;args&amp;#34;: [ ] }, { &amp;#34;label&amp;#34;: &amp;#34;Build&amp;#34;, &amp;#34;dependsOrder&amp;#34;: &amp;#34;sequence&amp;#34;, // 按列出的顺序执行任务依赖项 &amp;#34;dependsOn&amp;#34;:[ &amp;#34;cmake&amp;#34;, &amp;#34;make&amp;#34; ] } ] }  参考资料</description>
+    </item>
+    
+    <item>
+      <title>39--迭代对象问题</title>
+      <link>https://ioyy900205.github.io/post/2021-07-17-39%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Sat, 17 Jul 2021 14:14:14 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-07-17-39%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1%E9%97%AE%E9%A2%98/</guid>
+      <description>简单讨论 Iterable\Iterator\Generator的概念
+  1. Iterable 2. Iterator 3. Generator  1. Iterable  一个可迭代的对象是实现了__iter__()方法的对象 它要在for循环中使用，就必须满足iter()的调用(即调用这个函数不会出错，能够正确转成一个Iterator对象) 可以通过已知的可迭代对象来辅助实现我们自定义的可迭代对象。 一个对象实现了__getitem__()方法可以通过iter()函数转成Iterator，即可以在for循环中使用，但它不是一个可迭代对象(可用isinstance方法检测())  2. Iterator 一个对象实现了__iter__()和__next__()方法，那么它就是一个迭代器对象
+class IterObj: def __init__(self): self.a = [3, 5, 7, 11, 13, 17, 19] self.n = len(self.a) self.i = 0 def __iter__(self): return iter(self.a) def __next__(self): while self.i &amp;lt; self.n: v = self.a[self.i] self.i += 1 return v else: self.i = 0 raise StopIteration() 集合和序列对象是可迭代的但不是迭代器. 文件对象是迭代器
+一个迭代器(Iterator)对象不仅可以在for循环中使用，还可以通过内置函数next()函数进行调用。 例如
+it = IterObj() next(it) # 3 next(it) # 5 3.</description>
+    </item>
+    
+    <item>
+      <title>38--binary_search</title>
+      <link>https://ioyy900205.github.io/post/2021-07-13-38binary_search/</link>
+      <pubDate>Tue, 13 Jul 2021 14:29:59 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-07-13-38binary_search/</guid>
+      <description>Algorithm is amazing
+ @TOC
+1. 传统二分的问题 1.1. 取中位数索引的代码有问题 int mid = (left + right) / 2 这行代码是有问题的，在 left 和 right 都比较大的时候，left + right 很有可能超过 int 类型能表示的最大值，即整型溢出，为了避免这个问题，应该写成：
+int mid = left + (right - left) / 2 2. 神奇二分查找 （1）首先把循环可以进行的条件写成 while(left &amp;lt; right)，在退出循环的时候，一定有 left == right 成立，此时返回 left 或者 right 都可以
+&amp;#39;&amp;#39;&amp;#39; Date: 2021-07-13 15:13:49 LastEditors: Liuliang LastEditTime: 2021-07-13 15:20:27 Description: &amp;#39;&amp;#39;&amp;#39; class solution: def search_left(self,nums,target): left = 0 right = len(nums) if right == 0: return 0 while left &amp;lt; right: mid = (left + right) // 2 if nums[mid] &amp;lt; target: left = mid + 1 else: right = mid return left def search_right(self,nums,target): left = 0 right = len(nums) if right == 0: return 0 while left &amp;lt; right: mid = (left + right) // 2 if nums[mid] &amp;gt; target: right = mid - 1 else: left = mid return left c = solution() list = [2,4,4,4,5,6] m = c.</description>
+    </item>
+    
+  </channel>
+</rss>
