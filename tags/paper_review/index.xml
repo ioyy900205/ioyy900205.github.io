@@ -5,7 +5,23 @@
     <link>https://ioyy900205.github.io/tags/paper_review/</link>
     <description>Recent content in Paper_Review on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 05 Jul 2021 15:14:54 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/paper_review/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 06 Aug 2021 14:30:00 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/paper_review/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>41-NCNN模型部署</title>
+      <link>https://ioyy900205.github.io/post/2021-08-06-41-ncnn%E6%A8%A1%E5%9E%8B%E9%83%A8%E7%BD%B2%E4%B8%80/</link>
+      <pubDate>Fri, 06 Aug 2021 14:30:00 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-08-06-41-ncnn%E6%A8%A1%E5%9E%8B%E9%83%A8%E7%BD%B2%E4%B8%80/</guid>
+      <description>争取比全网做的都要清晰
+ @TOC
+文件变化 整个工作流程文件有：
+1.pth文件
+2.onnx文件 （普通onnx、onnxsim）
+3.ncnn文件 （普通ncnn、ncnnoptimal、ncnn压缩）
+编译问题 多的就解释不了了，看代码
+-std=c++11 -I/usr/local/include/opencv4 -I/home/liuliang/ncnn/build/install/include/ncnn -L/home/liuliang/ncnn/build/install/lib -lncnn -fopenmp -lopencv_imgcodecs -lopencv_flann -lopencv_core  参考资料</description>
+    </item>
+    
     <item>
       <title>35——NMS非极大值抑制</title>
       <link>https://ioyy900205.github.io/post/2021-07-05-35nms/</link>
