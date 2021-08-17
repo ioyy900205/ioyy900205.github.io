@@ -5,7 +5,29 @@
     <link>https://ioyy900205.github.io/</link>
     <description>Recent content on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 06 Aug 2021 14:30:00 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 17 Aug 2021 14:33:12 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>43-NCNN模型在imagenet上的推理验证</title>
+      <link>https://ioyy900205.github.io/post/2021-08-17-43-ncnn%E6%A8%A1%E5%9E%8B%E5%9C%A8imagenet%E4%B8%8A%E7%9A%84%E6%8E%A8%E7%90%86%E9%AA%8C%E8%AF%81/</link>
+      <pubDate>Tue, 17 Aug 2021 14:33:12 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-08-17-43-ncnn%E6%A8%A1%E5%9E%8B%E5%9C%A8imagenet%E4%B8%8A%E7%9A%84%E6%8E%A8%E7%90%86%E9%AA%8C%E8%AF%81/</guid>
+      <description>这里给出NCNN模型的推理代码，供大家参考。
+说一句题外话，这里我的tensor操作感觉有点繁琐，导致推理速度非常非常慢，也希望各位有比较好的方法能够提供给我。
+我的联系方式是18811555730
+  1. NCNN推理代码 2. 结果验证  1. NCNN推理代码 &amp;#39;&amp;#39;&amp;#39; Date: 2021-08-10 14:12:17 LastEditors: Liuliang LastEditTime: 2021-08-17 14:08:50 Description: NCNN在imagenet上的推理验证 &amp;#39;&amp;#39;&amp;#39; import argparse import os import random import shutil import time import warnings from Average_ import AverageMeter from Progress_ import ProgressMeter import torch import torch.nn as nn import torch.nn.parallel import torch.backends.cudnn as cudnn import torch.distributed as dist import torch.optim import torch.multiprocessing as mp import torch.utils.data import torch.utils.data.distributed import torchvision.</description>
+    </item>
+    
+    <item>
+      <title>42-ONNX模型在imagenet上的推理验证</title>
+      <link>https://ioyy900205.github.io/post/2021-08-17-42-onnx%E6%A8%A1%E5%9E%8B%E5%9C%A8imagenet%E4%B8%8A%E7%9A%84%E6%8E%A8%E7%90%86%E9%AA%8C%E8%AF%81/</link>
+      <pubDate>Tue, 17 Aug 2021 14:28:07 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-08-17-42-onnx%E6%A8%A1%E5%9E%8B%E5%9C%A8imagenet%E4%B8%8A%E7%9A%84%E6%8E%A8%E7%90%86%E9%AA%8C%E8%AF%81/</guid>
+      <description>当训练模型转到ONNX模型之后，我一直在思考是否需要对转换后的ONNX模型进行验证。网上也找不到代码，这里我提供一个，方便大家验证。
+  1. ONNX验证代码 2. 结果展示  1. ONNX验证代码 &amp;#39;&amp;#39;&amp;#39; Date: 2021-08-10 14:12:17 LastEditors: Liuliang LastEditTime: 2021-08-17 11:11:54 Description: onnx在imagenet上的推理验证 &amp;#39;&amp;#39;&amp;#39; import argparse import os import random import shutil import time import warnings from Average_ import AverageMeter from Progress_ import ProgressMeter import torch import torch.nn as nn import torch.nn.parallel import torch.backends.cudnn as cudnn import torch.distributed as dist import torch.optim import torch.multiprocessing as mp import torch.utils.data import torch.utils.data.distributed import torchvision.transforms as transforms import torchvision.</description>
+    </item>
+    
     <item>
       <title>41-NCNN模型部署</title>
       <link>https://ioyy900205.github.io/post/2021-08-06-41-ncnn%E6%A8%A1%E5%9E%8B%E9%83%A8%E7%BD%B2%E4%B8%80/</link>
