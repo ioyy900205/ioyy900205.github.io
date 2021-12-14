@@ -5,7 +5,24 @@
     <link>https://ioyy900205.github.io/</link>
     <description>Recent content on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 27 Sep 2021 09:10:57 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 14 Dec 2021 14:13:16 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Pytorch Lightning的调试bug</title>
+      <link>https://ioyy900205.github.io/post/2021-12-14-lightning%E5%A4%AA%E5%9D%91%E4%BA%861/</link>
+      <pubDate>Tue, 14 Dec 2021 14:13:16 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-12-14-lightning%E5%A4%AA%E5%9D%91%E4%BA%861/</guid>
+      <description>一些非常奇怪的问题
+ @TOC
+DeadLock detected from rank: 0 这真的是个头疼的问题。
+这个问题与模型参数的保存有关。我还没有发现比较好的解决办法。
+不是很完美的解决办法是在ModelCheckpoint中设置save_weights_only=True
+checkopint字典的k,v有
+1.epoch 2.global_step 3.pytorch-lightning_version 4.state_dict 5.hparams_name 6.hyper_parameters
+ 参考资料
+无</description>
+    </item>
+    
     <item>
       <title>48-论文阅读小目标检测综述</title>
       <link>https://ioyy900205.github.io/post/2021-09-27-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/</link>
