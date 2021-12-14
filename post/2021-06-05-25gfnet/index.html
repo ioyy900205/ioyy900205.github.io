@@ -4,7 +4,7 @@
     <title>25——GFNet论文阅读 // 亮的笔记</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
-    <meta name="generator" content="Hugo 0.82.1" />
+    <meta name="generator" content="Hugo 0.90.1" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Liu Liang" />
     <meta name="description" content="" />
@@ -55,8 +55,8 @@ how to determine the number of class-discriminative regions? 如何确定类区�
 全局编码器${f_g}$和局部编码器${f_l}$ （Global Encoder and Local Encoder）为两个CNN，分别用于从放缩后的原图和局部patch中提取信息，之所以用两个CNN，是因为我们发现一个CNN很难同时适应缩略图和局部patch两种尺度（scale）的输入。几乎所有现有的网络结构均可以作为这两个编码器以提升其推理效率（如MobileNet-V3、EfficientNet、RegNet等）。 分类器 [公式] （Classifier）为一个循环神经网络（RNN），输入为全局池化后的特征向量，用于整合过去所有输入的信息，以得到目前最优的分类结果。 图像块选择网络 [公式] （Patch Proposal Network）是另一个循环神经网络（RNN），输入为全局池化前的特征图（不做池化是为了避免损失空间信息），用于整合目前为止所有的空间分布信息，并决定下一个patch的位置。值得注意的是由于取得patch的crop操作不可求导，[公式]是使用强化学习中的策略梯度方法（policy gradient）训练的。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ioyy900205.github.io/post/2021-06-05-25gfnet/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2021-06-05T10:54:57&#43;08:00" />
-<meta property="article:modified_time" content="2021-06-05T10:54:57&#43;08:00" />
+<meta property="article:published_time" content="2021-06-05T10:54:57+08:00" />
+<meta property="article:modified_time" content="2021-06-05T10:54:57+08:00" />
 
 
 

@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en-us">
   <head>
-    <title>16——计算机视觉大类分类 // 亮的笔记</title>
+    <title>47-今日阅读记录 // 亮的笔记</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
     <meta name="generator" content="Hugo 0.90.1" />
@@ -12,23 +12,25 @@
 
     
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="16——计算机视觉大类分类"/>
-<meta name="twitter:description" content="待完善
-框架重新梳理一下
-在语义感知层面下
-  1. 任务分类  1. 任务分类 分类、检测、识别、分割、检索、描述、生成
+<meta name="twitter:title" content="47-今日阅读记录"/>
+<meta name="twitter:description" content="现在时间比较少了，只能做一下阅读记录
+ @TOC
+1. 工具类 Pytorch中requires_grad_(), detach(), torch.no_grad()的区别
+https://noahsnail.com/2020/05/29/2020-05-29-Pytorch%E4%B8%ADrequires_grad_(),%20detach(),%20torch.no_grad()%E7%9A%84%E5%8C%BA%E5%88%AB/
+a = torch.tensor([1.0, 2.0]) b = a.data a.data返回的是一个新的Tensor对象b，a, b的id不同，说明二者不是同一个Tensor，但b与a共享数据的存储空间，即二者的数据部分指向同一块内存，因此修改b的元素时，a的元素也对应修改。
  参考资料"/>
 
-    <meta property="og:title" content="16——计算机视觉大类分类" />
-<meta property="og:description" content="待完善
-框架重新梳理一下
-在语义感知层面下
-  1. 任务分类  1. 任务分类 分类、检测、识别、分割、检索、描述、生成
+    <meta property="og:title" content="47-今日阅读记录" />
+<meta property="og:description" content="现在时间比较少了，只能做一下阅读记录
+ @TOC
+1. 工具类 Pytorch中requires_grad_(), detach(), torch.no_grad()的区别
+https://noahsnail.com/2020/05/29/2020-05-29-Pytorch%E4%B8%ADrequires_grad_(),%20detach(),%20torch.no_grad()%E7%9A%84%E5%8C%BA%E5%88%AB/
+a = torch.tensor([1.0, 2.0]) b = a.data a.data返回的是一个新的Tensor对象b，a, b的id不同，说明二者不是同一个Tensor，但b与a共享数据的存储空间，即二者的数据部分指向同一块内存，因此修改b的元素时，a的元素也对应修改。
  参考资料" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://ioyy900205.github.io/post/2021-05-19-16%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%A4%A7%E7%B1%BB%E5%88%86%E7%B1%BB/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2021-05-19T16:22:00+08:00" />
-<meta property="article:modified_time" content="2021-05-19T16:22:00+08:00" />
+<meta property="og:url" content="https://ioyy900205.github.io/post/2021-09-24-47-%E4%BB%8A%E6%97%A5%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-09-24T10:05:01+08:00" />
+<meta property="article:modified_time" content="2021-09-24T10:05:01+08:00" />
 
 
 
@@ -69,14 +71,14 @@
       
   <article class="post">
     <header class="post-header">
-      <h1 class ="post-title">16——计算机视觉大类分类</h1>
+      <h1 class ="post-title">47-今日阅读记录</h1>
       <div class="post-meta">
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
   <title>calendar</title>
   <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
 </svg>
-          May 19, 2021
+          Sep 24, 2021
         </div>
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
@@ -90,20 +92,20 @@
   <title>tag</title>
   <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
 </svg>
-              <a class="tag" href="https://ioyy900205.github.io/tags/%E7%95%AA%E5%A4%96%E7%AF%87/">番外篇</a>
+              <a class="tag" href="https://ioyy900205.github.io/tags/algorithm/">Algorithm</a>
         </div>
       </div>
     </header>
     <div class="post-content">
-      <p>待完善</p>
-<p>框架重新梳理一下</p>
-<p>在语义感知层面下</p>
+      <p>现在时间比较少了，只能做一下阅读记录</p>
 <hr>
-<ul>
-<li><a href="#1-%E4%BB%BB%E5%8A%A1%E5%88%86%E7%B1%BB">1. 任务分类</a></li>
-</ul>
-<h2 id="1-任务分类">1. 任务分类</h2>
-<p>分类、检测、识别、分割、检索、描述、生成</p>
+<p>@<a href="%E6%9C%AC%E6%96%87%E5%86%85%E5%AE%B9">TOC</a></p>
+<h2 id="1-工具类">1. 工具类</h2>
+<p>Pytorch中requires_grad_(), detach(), torch.no_grad()的区别</p>
+<p><a href="https://noahsnail.com/2020/05/29/2020-05-29-Pytorch%E4%B8%ADrequires_grad_(),%20detach(),%20torch.no_grad()%E7%9A%84%E5%8C%BA%E5%88%AB/">https://noahsnail.com/2020/05/29/2020-05-29-Pytorch%E4%B8%ADrequires_grad_(),%20detach(),%20torch.no_grad()%E7%9A%84%E5%8C%BA%E5%88%AB/</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([<span style="color:#ae81ff">1.0</span>, <span style="color:#ae81ff">2.0</span>])
+b <span style="color:#f92672">=</span> a<span style="color:#f92672">.</span>data
+</code></pre></div><p>a.data返回的是一个新的Tensor对象b，a, b的id不同，说明二者不是同一个Tensor，但b与a<strong>共享数据的存储空间</strong>，即二者的数据部分指向同一块内存，因此修改b的元素时，a的元素也对应修改。</p>
 <hr>
 <p><strong>参考资料</strong></p>
 

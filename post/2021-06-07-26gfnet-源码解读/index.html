@@ -4,7 +4,7 @@
     <title>26——GFNet源码解读 // 亮的笔记</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
-    <meta name="generator" content="Hugo 0.82.1" />
+    <meta name="generator" content="Hugo 0.90.1" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Liu Liang" />
     <meta name="description" content="" />
@@ -29,8 +29,8 @@ model_arch = checkpoint[&#39;model_name&#39;] patch_size = checkpoint[&#39;patch
 1.3. 载入数据集部分 traindir = args.data_url &#43; &#39;train/&#39; valdir = args.data_url &#43; &#39;val/&#39; normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ioyy900205.github.io/post/2021-06-07-26gfnet-%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2021-06-07T10:45:08&#43;08:00" />
-<meta property="article:modified_time" content="2021-06-07T10:45:08&#43;08:00" />
+<meta property="article:published_time" content="2021-06-07T10:45:08+08:00" />
+<meta property="article:modified_time" content="2021-06-07T10:45:08+08:00" />
 
 
 
@@ -107,7 +107,7 @@ model_arch = checkpoint[&#39;model_name&#39;] patch_size = checkpoint[&#39;patch
 <p>设置参数：数据集地址;checkpoint_path;eval_model</p>
 <h3 id="12-载入模型部分">1.2. 载入模型部分</h3>
 <p><strong>导入checkpoint,并读取数据</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">        model_arch <span style="color:#f92672">=</span> checkpoint[<span style="color:#e6db74">&#39;model_name&#39;</span>]
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">        model_arch <span style="color:#f92672">=</span> checkpoint[<span style="color:#e6db74">&#39;model_name&#39;</span>]
         patch_size <span style="color:#f92672">=</span> checkpoint[<span style="color:#e6db74">&#39;patch_size&#39;</span>]
         prime_size <span style="color:#f92672">=</span> checkpoint[<span style="color:#e6db74">&#39;patch_size&#39;</span>]
         flops <span style="color:#f92672">=</span> checkpoint[<span style="color:#e6db74">&#39;flops&#39;</span>]
@@ -121,7 +121,7 @@ model_arch = checkpoint[&#39;model_name&#39;] patch_size = checkpoint[&#39;patch
 </code></pre></div><p>model_configurations载入字典对应文件。</p>
 <p>检查eval_model 并载入模型 (model and model_prime)</p>
 <h3 id="13-载入数据集部分">1.3. 载入数据集部分</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
         traindir <span style="color:#f92672">=</span> args<span style="color:#f92672">.</span>data_url <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;train/&#39;</span>
         valdir <span style="color:#f92672">=</span> args<span style="color:#f92672">.</span>data_url <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;val/&#39;</span>
 
@@ -134,7 +134,7 @@ model_arch = checkpoint[&#39;model_name&#39;] patch_size = checkpoint[&#39;patch
                 transforms<span style="color:#f92672">.</span>ToTensor(),
                 normalize ]))
         train_set_index <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>randperm(len(train_set))
-        train_loader <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>DataLoader(train_set, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">256</span>, num_workers<span style="color:#f92672">=</span><span style="color:#ae81ff">32</span>, pin_memory<span style="color:#f92672">=</span>False,
+        train_loader <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>DataLoader(train_set, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">256</span>, num_workers<span style="color:#f92672">=</span><span style="color:#ae81ff">32</span>, pin_memory<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>,
                 sampler<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>sampler<span style="color:#f92672">.</span>SubsetRandomSampler(train_set_index[<span style="color:#f92672">-</span><span style="color:#ae81ff">200000</span>:]))
 
         val_loader <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>DataLoader(
@@ -143,7 +143,7 @@ model_arch = checkpoint[&#39;model_name&#39;] patch_size = checkpoint[&#39;patch
                 transforms<span style="color:#f92672">.</span>CenterCrop(model_configuration[<span style="color:#e6db74">&#39;image_size&#39;</span>]),
                 transforms<span style="color:#f92672">.</span>ToTensor(),
                 normalize])),
-            batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">256</span>, shuffle<span style="color:#f92672">=</span>False, num_workers<span style="color:#f92672">=</span><span style="color:#ae81ff">16</span>, pin_memory<span style="color:#f92672">=</span>False)
+            batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">256</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, num_workers<span style="color:#f92672">=</span><span style="color:#ae81ff">16</span>, pin_memory<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
 
 </code></pre></div><h3 id="14-step3">1.4. step3</h3>
 <hr>

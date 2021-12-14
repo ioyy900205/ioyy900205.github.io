@@ -4,7 +4,7 @@
     <title>38--binary_search // 亮的笔记</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
-    <meta name="generator" content="Hugo 0.82.1" />
+    <meta name="generator" content="Hugo 0.90.1" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Liu Liang" />
     <meta name="description" content="" />
@@ -27,8 +27,8 @@ int mid = left &#43; (right - left) / 2 2. 神奇二分查找 （1）首先把�
 &#39;&#39;&#39; Date: 2021-07-13 15:13:49 LastEditors: Liuliang LastEditTime: 2021-07-13 15:20:27 Description: &#39;&#39;&#39; class solution: def search_left(self,nums,target): left = 0 right = len(nums) if right == 0: return 0 while left &lt; right: mid = (left &#43; right) // 2 if nums[mid] &lt; target: left = mid &#43; 1 else: right = mid return left def search_right(self,nums,target): left = 0 right = len(nums) if right == 0: return 0 while left &lt; right: mid = (left &#43; right) // 2 if nums[mid] &gt; target: right = mid - 1 else: left = mid return left c = solution() list = [2,4,4,4,5,6] m = c." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ioyy900205.github.io/post/2021-07-13-38binary_search/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2021-07-13T14:29:59&#43;08:00" />
-<meta property="article:modified_time" content="2021-07-13T14:29:59&#43;08:00" />
+<meta property="article:published_time" content="2021-07-13T14:29:59+08:00" />
+<meta property="article:modified_time" content="2021-07-13T14:29:59+08:00" />
 
 
 
@@ -100,12 +100,12 @@ int mid = left &#43; (right - left) / 2 2. 神奇二分查找 （1）首先把�
 <p>@<a href="%E6%9C%AC%E6%96%87%E5%86%85%E5%AE%B9">TOC</a></p>
 <h2 id="1-传统二分的问题">1. 传统二分的问题</h2>
 <h3 id="11-取中位数索引的代码有问题">1.1. 取中位数索引的代码有问题</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">int</span> mid <span style="color:#f92672">=</span> (left <span style="color:#f92672">+</span> right) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span> 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">int</span> mid <span style="color:#f92672">=</span> (left <span style="color:#f92672">+</span> right) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span> 
 </code></pre></div><p>这行代码是有问题的，在 left 和 right 都比较大的时候，left + right 很有可能超过 int 类型能表示的最大值，即整型溢出，为了避免这个问题，应该写成：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">int</span> mid <span style="color:#f92672">=</span> left <span style="color:#f92672">+</span> (right <span style="color:#f92672">-</span> left) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span> 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">int</span> mid <span style="color:#f92672">=</span> left <span style="color:#f92672">+</span> (right <span style="color:#f92672">-</span> left) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span> 
 </code></pre></div><h2 id="2-神奇二分查找">2. 神奇二分查找</h2>
 <p>（1）首先把循环可以进行的条件写成 while(left &lt; right)，在退出循环的时候，一定有 left == right 成立，此时返回 left 或者 right 都可以</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#e6db74">&#39;&#39;&#39;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#e6db74">&#39;&#39;&#39;
 </span><span style="color:#e6db74">Date: 2021-07-13 15:13:49
 </span><span style="color:#e6db74">LastEditors: Liuliang
 </span><span style="color:#e6db74">LastEditTime: 2021-07-13 15:20:27
@@ -144,7 +144,7 @@ int mid = left &#43; (right - left) / 2 2. 神奇二分查找 （1）首先把�
 c <span style="color:#f92672">=</span> solution()
 list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">6</span>]
 m <span style="color:#f92672">=</span> c<span style="color:#f92672">.</span>search_right(nums <span style="color:#f92672">=</span> list,target <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>)
-<span style="color:#66d9ef">print</span>(m)
+print(m)
 
 
 

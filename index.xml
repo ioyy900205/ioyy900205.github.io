@@ -5,7 +5,67 @@
     <link>https://ioyy900205.github.io/</link>
     <description>Recent content on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 18 Aug 2021 10:11:35 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 27 Sep 2021 09:10:57 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>48-论文阅读小目标检测综述</title>
+      <link>https://ioyy900205.github.io/post/2021-09-27-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/</link>
+      <pubDate>Mon, 27 Sep 2021 09:10:57 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-09-27-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/</guid>
+      <description>小目标检测方法的问题和方法整理。
+ @TOC
+0.1. 多尺度方法 YOLO、Faster-RCNN只用最后一层，SSD首次采用了多尺度预测的方式。
+0.1.1. 图像金字塔方法 首先将图像缩放的不同的分辨率，通过不同分辨率的图像上分别提取特征来形成多尺度的特征表达。
+缺点：由于需要多种分辨率图像分别提取特征，严重增加了推理时间，限制了该方法在实时性要求比较高的条件下应用。
+0.1.2. DSDD算法  用101替代VGG16 将高层特征的语义信息融入底层特征（反卷积）  0.1.3. 特征金字塔方法 自底向上的分支用于产生多尺度的特征。自顶向下的方法用于将丰富语义信息传递到底层。
+方法：高层特征进行2倍上采样得到和相邻底层一样的分辨率，然后底层特征经过1x1卷积和上采样之后的高层特征进行元素级别的相加，再经过3x3卷积得到最终特征图。
+FPN目前已经成为了一个标准配置，也有很多基于FPN的优化工作相继涌现出来。
+0.1.4. PANet算法 作者再FPN的基础上又增加了一个自底向上的路径增强分支。
+FPN中，高层特征与低层特征之间路径较长，造成在金字塔的顶部含有的底层信息较少。为了解决这个问题，PANet使用较少数量的卷积层构建了路径增强模块，尽可能多的保留底层信息。同时增加了自适应的池化层模块，使得感兴趣的区域中包含多层特征，而不是单层特征，进行了进一步的特征融合。
+0.1.5. ASFF算法 注意到一个问题，FPN中，目标在某层被当作正类时，但是在其他层可能会被当成负类。这样在特征金字塔的某一层单独检测时会引入其他层的矛盾信息。
+自适应的空间特征融合方法。该方法在FPN的基础上通过学习权重参数的方式将不同特征层融合到一起，得到融合之后的特征图用于最终的预测。
+在论文中，作者将 ASFF 应用到 YOLO3 中，为了验证 ASFF 的有效性，首先在 YOLO3 应用了一系列的技巧，对 YOLO3 进行优化，将其在 COCO 2017验证集上的APs 指标由 18. 3 提升到 24. 6，将优化之后的 YOLO3 作为一个强的基线． 然后，在此基础上加入 ASFF，APs 指标由 24. 6 提升到 27. 5，提升了将近 3 个百分点，由此可见 ASFF 对于小目标检测的有效性。
+0.1.6. Libra-RCNN算法 改进的方法分别提取了 4 个级别的多尺度特征{ C2，C3，C4，C5} ，然后将 { C2，C3，C5 } 缩放到和 C4 同样大小，进行集成操作，也就是将这 4 个尺度的特征进行 求和取平均得到集成之后的特征，再将得到的特征送入设计的增强模块中进行一个加强操作，最后再将加强后的特征和{ C2，C3，C4，C5} 相加，增强原特征．</description>
+    </item>
+    
+    <item>
+      <title>论文阅读BN</title>
+      <link>https://ioyy900205.github.io/post/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-bn/</link>
+      <pubDate>Fri, 24 Sep 2021 14:07:57 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-bn/</guid>
+      <description>原来在训练深层网络的时候非常困难。这是因为在训练过程中，每一层的输入分布都会随着前几层的参数变化而变化。
+原来的问题：
+ 训练速度慢：降低学习率和谨慎的参数初始化 训练困难：训练具有饱和非线性的模型非常困难  内部协变量转移
+ @TOC
+标题  参考资料</description>
+    </item>
+    
+    <item>
+      <title>47-今日阅读记录</title>
+      <link>https://ioyy900205.github.io/post/2021-09-24-47-%E4%BB%8A%E6%97%A5%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/</link>
+      <pubDate>Fri, 24 Sep 2021 10:05:01 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-09-24-47-%E4%BB%8A%E6%97%A5%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/</guid>
+      <description>现在时间比较少了，只能做一下阅读记录
+ @TOC
+1. 工具类 Pytorch中requires_grad_(), detach(), torch.no_grad()的区别
+https://noahsnail.com/2020/05/29/2020-05-29-Pytorch%E4%B8%ADrequires_grad_(),%20detach(),%20torch.no_grad()%E7%9A%84%E5%8C%BA%E5%88%AB/
+a = torch.tensor([1.0, 2.0]) b = a.data a.data返回的是一个新的Tensor对象b，a, b的id不同，说明二者不是同一个Tensor，但b与a共享数据的存储空间，即二者的数据部分指向同一块内存，因此修改b的元素时，a的元素也对应修改。
+ 参考资料</description>
+    </item>
+    
+    <item>
+      <title>46——binarySearch很好的理解方式</title>
+      <link>https://ioyy900205.github.io/post/2021-08-24-46-%E4%BA%8C%E5%88%86%E5%8F%98%E7%A7%8D%E5%BE%88%E5%A5%BD%E7%90%86%E8%A7%A3%E7%9A%84%E6%96%B9%E5%BC%8F/</link>
+      <pubDate>Tue, 24 Aug 2021 09:52:47 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-08-24-46-%E4%BA%8C%E5%88%86%E5%8F%98%E7%A7%8D%E5%BE%88%E5%A5%BD%E7%90%86%E8%A7%A3%E7%9A%84%E6%96%B9%E5%BC%8F/</guid>
+      <description>本文介绍四种二分查找：
+ 查找第⼀个值等于给定值的元素 查找最后⼀个值等于给定值的元素 查找第⼀个⼤于等于给定值的元素 查找最后⼀个⼩于等于给定值的元素    1. 查找第⼀个值等于给定值的元素 2. 查找最后⼀个值等于给定值的元素 3. 查找第⼀个⼤于等于给定值的元素 4. 查找最后⼀个⼩于等于给定值的元素 2. 对于a[mid]&amp;lt;=value，如果mid = len -1 或者 mid 后面的值 大于 value 则返回mid ,否则 mid+1:high  1. 查找第⼀个值等于给定值的元素 a[mid]跟要查找的value的⼤⼩关系有三种情况：⼤于、⼩于、等于。
+1. 对于a[mid]&amp;gt;value的情况，我们需要更新high= mid-1。2. 对于a[mid]&amp;lt;value的情况，我们需要更新 low=mid+1。3. 那当a[mid]=value的时候， 我们就需要确认⼀下这个a[mid]是不是第⼀个值等于给定值的元素。3.1 如果mid等于0，那这个元素已经是数组的第⼀个元素，那它肯定是我们要 找的；3.2 如果mid不等于0，但a[mid]的前⼀个元素a[mid-1]不等于value，那也说明a[mid]就是我们要 找的第⼀个值等于给定值的元素。 3.3 如果经过检查之后发现a[mid]前⾯的⼀个元素a[mid-1]也等于value，那说明此时的a[mid]肯定不是我 们要查找的第⼀个值等于给定值的元素。那我们就更新high=mid-1，因为要找的元素肯定出现在 [low, mid-1]之间。 2. 查找最后⼀个值等于给定值的元素 1. 对于a[mid]&amp;gt;value的情况，我们需要更新high= mid-1。2. 对于a[mid]&amp;lt;value的情况，我们需要更新 low=mid+1。3. 那当a[mid]=value的时候， 我们就需要确认⼀下这个a[mid]是不是最后一个等于给定值的元素。3.1 如果mid = len(nums)-1，那么这个元素已经数组最后一个元素，那它肯定是需要找的。3.</description>
+    </item>
+    
     <item>
       <title>45-PyTorch在imagenet上的推理验证</title>
       <link>https://ioyy900205.github.io/post/2021-08-18-45-pytorch%E5%9C%A8imagenet%E4%B8%8A%E7%9A%84%E6%8E%A8%E7%90%86%E9%AA%8C%E8%AF%81/</link>
@@ -82,7 +142,7 @@
       <guid>https://ioyy900205.github.io/post/2021-07-31-40_c&#43;&#43;%E8%B0%83%E8%AF%95%E9%97%AE%E9%A2%98/</guid>
       <description>json文件配置，复制粘贴即可
  1. 神奇的json文件 ctrl+c ctrl+v 深藏功与名
-{ &amp;#34;version&amp;#34;: &amp;#34;2.0.0&amp;#34;, &amp;#34;options&amp;#34;: { &amp;#34;cwd&amp;#34;: &amp;#34;${workspaceFolder}/build&amp;#34; }, &amp;#34;tasks&amp;#34;: [ { &amp;#34;type&amp;#34;: &amp;#34;shell&amp;#34;, &amp;#34;label&amp;#34;: &amp;#34;cmake&amp;#34;, &amp;#34;command&amp;#34;: &amp;#34;cmake&amp;#34;, &amp;#34;args&amp;#34;: [ &amp;#34;..&amp;#34; ] }, { &amp;#34;label&amp;#34;: &amp;#34;make&amp;#34;, &amp;#34;group&amp;#34;: { &amp;#34;kind&amp;#34;: &amp;#34;build&amp;#34;, &amp;#34;isDefault&amp;#34;: true }, &amp;#34;command&amp;#34;: &amp;#34;make&amp;#34;, &amp;#34;args&amp;#34;: [ ] }, { &amp;#34;label&amp;#34;: &amp;#34;Build&amp;#34;, &amp;#34;dependsOrder&amp;#34;: &amp;#34;sequence&amp;#34;, // 按列出的顺序执行任务依赖项 &amp;#34;dependsOn&amp;#34;:[ &amp;#34;cmake&amp;#34;, &amp;#34;make&amp;#34; ] } ] }  参考资料</description>
+{ &amp;#34;version&amp;#34;: &amp;#34;2.0.0&amp;#34;, &amp;#34;options&amp;#34;: { &amp;#34;cwd&amp;#34;: &amp;#34;${workspaceFolder}/build&amp;#34; }, &amp;#34;tasks&amp;#34;: [ { &amp;#34;type&amp;#34;: &amp;#34;shell&amp;#34;, &amp;#34;label&amp;#34;: &amp;#34;cmake&amp;#34;, &amp;#34;command&amp;#34;: &amp;#34;cmake&amp;#34;, &amp;#34;args&amp;#34;: [ &amp;#34;..&amp;#34; ] }, { &amp;#34;label&amp;#34;: &amp;#34;make&amp;#34;, &amp;#34;group&amp;#34;: { &amp;#34;kind&amp;#34;: &amp;#34;build&amp;#34;, &amp;#34;isDefault&amp;#34;: true }, &amp;#34;command&amp;#34;: &amp;#34;make&amp;#34;, &amp;#34;args&amp;#34;: [ ] }, { &amp;#34;label&amp;#34;: &amp;#34;Build&amp;#34;, &amp;#34;dependsOrder&amp;#34;: &amp;#34;sequence&amp;#34;, // 按列出的顺序执行任务依赖项  &amp;#34;dependsOn&amp;#34;:[ &amp;#34;cmake&amp;#34;, &amp;#34;make&amp;#34; ] } ] }  参考资料</description>
     </item>
     
     <item>
@@ -407,8 +467,7 @@ export DISPLAY=:10.0  参考资料 https://www.pythonheidong.com/blog/article/71
 2. 推理部分 2.1. 实时推理方法 其实就是将每个出口的结果打印出来。
 只不过在推理过程中，考虑了载入数据的时间（大约0.45s），整个batch的推理时间大约是0.6-0.7s&amp;rsquo;s之间。
 程序在最后的地方对每个出口进行了输出
- prec@1 56.632 prec@5 79.942 prec@1 65.136 prec@5 86.252 prec@1 68.420 prec@5 88.632 prec@1 69.770 prec@5 89.418 prec@1 71.336 prec@5 90.364   之前有统计过计算量的地方，所以这里结合计算量就可以得到论文的结果。
-2.2. 出口分配 这种方式对5个出口进行了样本数量设定（这里设置了40组）。进而可以学习到每个出口的threshold，从而实现了不同出口的退出机制。
+ prec@1 56.632 prec@5 79.942 prec@1 65.136 prec@5 86.252 prec@1 68.420 prec@5 88.632 prec@1 69.770 prec@5 89.418 prec@1 71.336 prec@5 90.364   2.2. 出口分配 这种方式对5个出口进行了样本数量设定（这里设置了40组）。进而可以学习到每个出口的threshold，从而实现了不同出口的退出机制。
 3. 讨论 每个出口样本数量设定 是一个超参数。MSDNet所得到的结果目前来看不一定是最好的。
 以下有收获：
  多尺度架构的编程方法。 网络模型参数和计算量的计算。 退出机制的学习方法。   参考资料

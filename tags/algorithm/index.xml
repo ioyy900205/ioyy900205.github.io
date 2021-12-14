@@ -5,7 +5,32 @@
     <link>https://ioyy900205.github.io/tags/algorithm/</link>
     <description>Recent content in Algorithm on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 17 Aug 2021 15:41:06 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 24 Sep 2021 10:05:01 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>47-今日阅读记录</title>
+      <link>https://ioyy900205.github.io/post/2021-09-24-47-%E4%BB%8A%E6%97%A5%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/</link>
+      <pubDate>Fri, 24 Sep 2021 10:05:01 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-09-24-47-%E4%BB%8A%E6%97%A5%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/</guid>
+      <description>现在时间比较少了，只能做一下阅读记录
+ @TOC
+1. 工具类 Pytorch中requires_grad_(), detach(), torch.no_grad()的区别
+https://noahsnail.com/2020/05/29/2020-05-29-Pytorch%E4%B8%ADrequires_grad_(),%20detach(),%20torch.no_grad()%E7%9A%84%E5%8C%BA%E5%88%AB/
+a = torch.tensor([1.0, 2.0]) b = a.data a.data返回的是一个新的Tensor对象b，a, b的id不同，说明二者不是同一个Tensor，但b与a共享数据的存储空间，即二者的数据部分指向同一块内存，因此修改b的元素时，a的元素也对应修改。
+ 参考资料</description>
+    </item>
+    
+    <item>
+      <title>46——binarySearch很好的理解方式</title>
+      <link>https://ioyy900205.github.io/post/2021-08-24-46-%E4%BA%8C%E5%88%86%E5%8F%98%E7%A7%8D%E5%BE%88%E5%A5%BD%E7%90%86%E8%A7%A3%E7%9A%84%E6%96%B9%E5%BC%8F/</link>
+      <pubDate>Tue, 24 Aug 2021 09:52:47 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-08-24-46-%E4%BA%8C%E5%88%86%E5%8F%98%E7%A7%8D%E5%BE%88%E5%A5%BD%E7%90%86%E8%A7%A3%E7%9A%84%E6%96%B9%E5%BC%8F/</guid>
+      <description>本文介绍四种二分查找：
+ 查找第⼀个值等于给定值的元素 查找最后⼀个值等于给定值的元素 查找第⼀个⼤于等于给定值的元素 查找最后⼀个⼩于等于给定值的元素    1. 查找第⼀个值等于给定值的元素 2. 查找最后⼀个值等于给定值的元素 3. 查找第⼀个⼤于等于给定值的元素 4. 查找最后⼀个⼩于等于给定值的元素 2. 对于a[mid]&amp;lt;=value，如果mid = len -1 或者 mid 后面的值 大于 value 则返回mid ,否则 mid+1:high  1. 查找第⼀个值等于给定值的元素 a[mid]跟要查找的value的⼤⼩关系有三种情况：⼤于、⼩于、等于。
+1. 对于a[mid]&amp;gt;value的情况，我们需要更新high= mid-1。2. 对于a[mid]&amp;lt;value的情况，我们需要更新 low=mid+1。3. 那当a[mid]=value的时候， 我们就需要确认⼀下这个a[mid]是不是第⼀个值等于给定值的元素。3.1 如果mid等于0，那这个元素已经是数组的第⼀个元素，那它肯定是我们要 找的；3.2 如果mid不等于0，但a[mid]的前⼀个元素a[mid-1]不等于value，那也说明a[mid]就是我们要 找的第⼀个值等于给定值的元素。 3.3 如果经过检查之后发现a[mid]前⾯的⼀个元素a[mid-1]也等于value，那说明此时的a[mid]肯定不是我 们要查找的第⼀个值等于给定值的元素。那我们就更新high=mid-1，因为要找的元素肯定出现在 [low, mid-1]之间。 2. 查找最后⼀个值等于给定值的元素 1. 对于a[mid]&amp;gt;value的情况，我们需要更新high= mid-1。2. 对于a[mid]&amp;lt;value的情况，我们需要更新 low=mid+1。3. 那当a[mid]=value的时候， 我们就需要确认⼀下这个a[mid]是不是最后一个等于给定值的元素。3.1 如果mid = len(nums)-1，那么这个元素已经数组最后一个元素，那它肯定是需要找的。3.</description>
+    </item>
+    
     <item>
       <title>44-用递归树分析复杂度</title>
       <link>https://ioyy900205.github.io/post/2021-08-17-44-%E7%94%A8%E9%80%92%E5%BD%92%E6%A0%91%E5%88%86%E6%9E%90%E5%A4%8D%E6%9D%82%E5%BA%A6/</link>
@@ -52,7 +77,7 @@
       <guid>https://ioyy900205.github.io/post/2021-07-31-40_c&#43;&#43;%E8%B0%83%E8%AF%95%E9%97%AE%E9%A2%98/</guid>
       <description>json文件配置，复制粘贴即可
  1. 神奇的json文件 ctrl+c ctrl+v 深藏功与名
-{ &amp;#34;version&amp;#34;: &amp;#34;2.0.0&amp;#34;, &amp;#34;options&amp;#34;: { &amp;#34;cwd&amp;#34;: &amp;#34;${workspaceFolder}/build&amp;#34; }, &amp;#34;tasks&amp;#34;: [ { &amp;#34;type&amp;#34;: &amp;#34;shell&amp;#34;, &amp;#34;label&amp;#34;: &amp;#34;cmake&amp;#34;, &amp;#34;command&amp;#34;: &amp;#34;cmake&amp;#34;, &amp;#34;args&amp;#34;: [ &amp;#34;..&amp;#34; ] }, { &amp;#34;label&amp;#34;: &amp;#34;make&amp;#34;, &amp;#34;group&amp;#34;: { &amp;#34;kind&amp;#34;: &amp;#34;build&amp;#34;, &amp;#34;isDefault&amp;#34;: true }, &amp;#34;command&amp;#34;: &amp;#34;make&amp;#34;, &amp;#34;args&amp;#34;: [ ] }, { &amp;#34;label&amp;#34;: &amp;#34;Build&amp;#34;, &amp;#34;dependsOrder&amp;#34;: &amp;#34;sequence&amp;#34;, // 按列出的顺序执行任务依赖项 &amp;#34;dependsOn&amp;#34;:[ &amp;#34;cmake&amp;#34;, &amp;#34;make&amp;#34; ] } ] }  参考资料</description>
+{ &amp;#34;version&amp;#34;: &amp;#34;2.0.0&amp;#34;, &amp;#34;options&amp;#34;: { &amp;#34;cwd&amp;#34;: &amp;#34;${workspaceFolder}/build&amp;#34; }, &amp;#34;tasks&amp;#34;: [ { &amp;#34;type&amp;#34;: &amp;#34;shell&amp;#34;, &amp;#34;label&amp;#34;: &amp;#34;cmake&amp;#34;, &amp;#34;command&amp;#34;: &amp;#34;cmake&amp;#34;, &amp;#34;args&amp;#34;: [ &amp;#34;..&amp;#34; ] }, { &amp;#34;label&amp;#34;: &amp;#34;make&amp;#34;, &amp;#34;group&amp;#34;: { &amp;#34;kind&amp;#34;: &amp;#34;build&amp;#34;, &amp;#34;isDefault&amp;#34;: true }, &amp;#34;command&amp;#34;: &amp;#34;make&amp;#34;, &amp;#34;args&amp;#34;: [ ] }, { &amp;#34;label&amp;#34;: &amp;#34;Build&amp;#34;, &amp;#34;dependsOrder&amp;#34;: &amp;#34;sequence&amp;#34;, // 按列出的顺序执行任务依赖项  &amp;#34;dependsOn&amp;#34;:[ &amp;#34;cmake&amp;#34;, &amp;#34;make&amp;#34; ] } ] }  参考资料</description>
     </item>
     
     <item>

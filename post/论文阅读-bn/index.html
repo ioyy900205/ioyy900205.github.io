@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en-us">
   <head>
-    <title>16——计算机视觉大类分类 // 亮的笔记</title>
+    <title>论文阅读BN // 亮的笔记</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
     <meta name="generator" content="Hugo 0.90.1" />
@@ -12,23 +12,23 @@
 
     
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="16——计算机视觉大类分类"/>
-<meta name="twitter:description" content="待完善
-框架重新梳理一下
-在语义感知层面下
-  1. 任务分类  1. 任务分类 分类、检测、识别、分割、检索、描述、生成
- 参考资料"/>
+<meta name="twitter:title" content="论文阅读BN"/>
+<meta name="twitter:description" content="原来在训练深层网络的时候非常困难。这是因为在训练过程中，每一层的输入分布都会随着前几层的参数变化而变化。
+原来的问题：
+ 训练速度慢：降低学习率和谨慎的参数初始化 训练困难：训练具有饱和非线性的模型非常困难  内部协变量转移
+ @TOC
+标题  参考资料"/>
 
-    <meta property="og:title" content="16——计算机视觉大类分类" />
-<meta property="og:description" content="待完善
-框架重新梳理一下
-在语义感知层面下
-  1. 任务分类  1. 任务分类 分类、检测、识别、分割、检索、描述、生成
- 参考资料" />
+    <meta property="og:title" content="论文阅读BN" />
+<meta property="og:description" content="原来在训练深层网络的时候非常困难。这是因为在训练过程中，每一层的输入分布都会随着前几层的参数变化而变化。
+原来的问题：
+ 训练速度慢：降低学习率和谨慎的参数初始化 训练困难：训练具有饱和非线性的模型非常困难  内部协变量转移
+ @TOC
+标题  参考资料" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://ioyy900205.github.io/post/2021-05-19-16%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%A4%A7%E7%B1%BB%E5%88%86%E7%B1%BB/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2021-05-19T16:22:00+08:00" />
-<meta property="article:modified_time" content="2021-05-19T16:22:00+08:00" />
+<meta property="og:url" content="https://ioyy900205.github.io/post/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-bn/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-09-24T14:07:57+08:00" />
+<meta property="article:modified_time" content="2021-09-24T14:07:57+08:00" />
 
 
 
@@ -69,14 +69,14 @@
       
   <article class="post">
     <header class="post-header">
-      <h1 class ="post-title">16——计算机视觉大类分类</h1>
+      <h1 class ="post-title">论文阅读BN</h1>
       <div class="post-meta">
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
   <title>calendar</title>
   <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
 </svg>
-          May 19, 2021
+          Sep 24, 2021
         </div>
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
@@ -90,20 +90,21 @@
   <title>tag</title>
   <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
 </svg>
-              <a class="tag" href="https://ioyy900205.github.io/tags/%E7%95%AA%E5%A4%96%E7%AF%87/">番外篇</a>
+              <a class="tag" href="https://ioyy900205.github.io/tags/paper_review/">Paper_Review</a>
         </div>
       </div>
     </header>
     <div class="post-content">
-      <p>待完善</p>
-<p>框架重新梳理一下</p>
-<p>在语义感知层面下</p>
+      <p>原来在训练深层网络的时候非常困难。这是因为在训练过程中，每一层的输入分布都会随着前几层的参数变化而变化。</p>
+<p>原来的问题：</p>
+<ol>
+<li>训练速度慢：降低学习率和谨慎的参数初始化</li>
+<li>训练困难：训练具有饱和非线性的模型非常困难</li>
+</ol>
+<p>内部协变量转移</p>
 <hr>
-<ul>
-<li><a href="#1-%E4%BB%BB%E5%8A%A1%E5%88%86%E7%B1%BB">1. 任务分类</a></li>
-</ul>
-<h2 id="1-任务分类">1. 任务分类</h2>
-<p>分类、检测、识别、分割、检索、描述、生成</p>
+<p>@<a href="%E6%9C%AC%E6%96%87%E5%86%85%E5%AE%B9">TOC</a></p>
+<h2 id="标题">标题</h2>
 <hr>
 <p><strong>参考资料</strong></p>
 

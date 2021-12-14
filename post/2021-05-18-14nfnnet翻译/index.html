@@ -4,7 +4,7 @@
     <title>14——NFNnet论文解读 // 亮的笔记</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
-    <meta name="generator" content="Hugo 0.82.1" />
+    <meta name="generator" content="Hugo 0.90.1" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Liu Liang" />
     <meta name="description" content="" />
@@ -41,8 +41,8 @@ github: https://github.com/deepmind/deepmind-research/tree/master/nfnets
 许多这些工作的一个关键主题是，通过抑制剩余分支上的隐性激活的规模，可以在没有规范化的情况下训练非常深的ResNets。实现这一目标的最简单方法是在每个残差分支的末端引入一个可学习的标量，初始化为零（Goyal等人，2017；Zhang等人，2019a；De &amp; Smith，2020；Bachlechner等人，2020）。然而仅靠这一招还不足以在具有挑战性的基准上获得有竞争力的测试精度。另一项工作表明，ReLU激活引入了一个 &ldquo;平均转移&rdquo;，这导致不同训练实例的隐藏激活随着网络深度的增加而变得越来越相关（Huang等人，2017；Jacot等人，2019）。在最近的一项工作中，Brock等人（2021）引入了 &ldquo;无正则化 &ldquo;的ResNets，它在初始化时抑制了残余分支，并应用Scaled Weight Standardization（Qiao等人，2019）来消除平均移动。通过额外的正则化，这些未正则化的网络在ImageNet（Russakovsky等人，2015）上与批量正则化的ResNets（He等人，2016a）的性能相匹配，但它们在大批量时并不稳定，也不符合EfficientNets（Tan &amp; Le，2019）的性能，即目前的技术状态（Gong等人，2020）。本文在这一工作思路的基础上，试图解决这些核心限制。我们的主要贡献如下:" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ioyy900205.github.io/post/2021-05-18-14nfnnet%E7%BF%BB%E8%AF%91/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2021-05-18T15:33:30&#43;08:00" />
-<meta property="article:modified_time" content="2021-05-18T15:33:30&#43;08:00" />
+<meta property="article:published_time" content="2021-05-18T15:33:30+08:00" />
+<meta property="article:modified_time" content="2021-05-18T15:33:30+08:00" />
 
 
 
