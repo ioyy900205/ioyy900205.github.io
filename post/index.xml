@@ -5,7 +5,19 @@
     <link>https://ioyy900205.github.io/post/</link>
     <description>Recent content in Posts on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 14 Dec 2021 14:13:16 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 15 Dec 2021 13:58:12 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>48-python自动化(1)</title>
+      <link>https://ioyy900205.github.io/post/2021-12-15-48-python%E8%87%AA%E5%8A%A8%E5%8C%961/</link>
+      <pubDate>Wed, 15 Dec 2021 13:58:12 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-12-15-48-python%E8%87%AA%E5%8A%A8%E5%8C%961/</guid>
+      <description>方便结果记录
+ @TOC
+1. 获取文件名 import pathlib pathlib.Path(__file__).stem 可以拿到运行xxx.py 的 xxx。简单来说是获取文件的名字
+ 参考资料</description>
+    </item>
+    
     <item>
       <title>Pytorch Lightning的调试bug</title>
       <link>https://ioyy900205.github.io/post/2021-12-14-lightning%E5%A4%AA%E5%9D%91%E4%BA%861/</link>
