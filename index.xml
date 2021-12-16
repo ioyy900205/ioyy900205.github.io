@@ -5,13 +5,27 @@
     <link>https://ioyy900205.github.io/</link>
     <description>Recent content on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 16 Dec 2021 16:03:44 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 16 Dec 2021 16:31:52 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>50-旷视NBNet</title>
+      <link>https://ioyy900205.github.io/post/2021-12-16-50-%E6%97%B7%E8%A7%86nbnet/</link>
+      <pubDate>Thu, 16 Dec 2021 16:31:52 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-12-16-50-%E6%97%B7%E8%A7%86nbnet/</guid>
+      <description>简单学习了一下旷视NBNet
+  1. 模型的基本参数 2. 子空间投影  1. 模型的基本参数 输入数据 [1,3,128,128]
+2. 子空间投影 NBNet的创新在于子空间投影，包括两个主要的步骤：基底向量生成和投影。
+ 参考资料
+https://github.com/leonmakise/NBNet_Pytorch https://github.com/pminhtam/NBNet
+https://arxiv.org/abs/2012.15028</description>
+    </item>
+    
     <item>
       <title>49-字节残差unet的思考</title>
-      <link>https://ioyy900205.github.io/post/2021-12-16-%E5%AD%97%E8%8A%82%E6%AE%8B%E5%B7%AEunet%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/</link>
+      <link>https://ioyy900205.github.io/post/2021-12-16-49-%E5%AD%97%E8%8A%82%E6%AE%8B%E5%B7%AEunet%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/</link>
       <pubDate>Thu, 16 Dec 2021 16:03:44 +0800</pubDate>
       
-      <guid>https://ioyy900205.github.io/post/2021-12-16-%E5%AD%97%E8%8A%82%E6%AE%8B%E5%B7%AEunet%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/</guid>
+      <guid>https://ioyy900205.github.io/post/2021-12-16-49-%E5%AD%97%E8%8A%82%E6%AE%8B%E5%B7%AEunet%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/</guid>
       <description>1. 无需LSTM结构 2. 无需将网络的 freq_bins 维度压缩至1. 3. 数据归一化的方式 4. 在融合了之后还进行了信息整理 5. 将频带切分 堆叠 送入网络 6. 优化目标 7. 关于Mask  1. 无需LSTM结构 中间做信息处理的部分是block7a-block7d
 每个block都有4个残差conv块
 每个残差conv块有2层卷积
