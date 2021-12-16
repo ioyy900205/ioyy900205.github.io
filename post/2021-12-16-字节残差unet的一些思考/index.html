@@ -13,13 +13,13 @@
     
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="49-字节残差unet的思考"/>
-<meta name="twitter:description" content="1. 无需LSTM结构 2. 无需将网络的 freq_bins 维度压缩至1. 3. 数据归一化的方式 4. 在融合了之后还进行了信息整理 5. 将频带切分 堆叠 送入网络  1. 无需LSTM结构 中间做信息处理的部分是block7a-block7d
+<meta name="twitter:description" content="1. 无需LSTM结构 2. 无需将网络的 freq_bins 维度压缩至1. 3. 数据归一化的方式 4. 在融合了之后还进行了信息整理 5. 将频带切分 堆叠 送入网络 6. 优化目标 7. 关于Mask  1. 无需LSTM结构 中间做信息处理的部分是block7a-block7d
 每个block都有4个残差conv块
 每个残差conv块有2层卷积
 (x_center, _) = self.conv_block7a(x6_pool) # (bs, 384, T / 32, F / 64) (x_center, _) = self.conv_block7b(x_center) # (bs, 384, T / 32, F / 64) (x_center, _) = self.conv_block7c(x_center) # (bs, 384, T / 32, F / 64) (x_center, _) = self.conv_block7d(x_center) # (bs, 384, T / 32, F / 64) 2."/>
 
     <meta property="og:title" content="49-字节残差unet的思考" />
-<meta property="og:description" content="1. 无需LSTM结构 2. 无需将网络的 freq_bins 维度压缩至1. 3. 数据归一化的方式 4. 在融合了之后还进行了信息整理 5. 将频带切分 堆叠 送入网络  1. 无需LSTM结构 中间做信息处理的部分是block7a-block7d
+<meta property="og:description" content="1. 无需LSTM结构 2. 无需将网络的 freq_bins 维度压缩至1. 3. 数据归一化的方式 4. 在融合了之后还进行了信息整理 5. 将频带切分 堆叠 送入网络 6. 优化目标 7. 关于Mask  1. 无需LSTM结构 中间做信息处理的部分是block7a-block7d
 每个block都有4个残差conv块
 每个残差conv块有2层卷积
 (x_center, _) = self.conv_block7a(x6_pool) # (bs, 384, T / 32, F / 64) (x_center, _) = self.conv_block7b(x_center) # (bs, 384, T / 32, F / 64) (x_center, _) = self.conv_block7c(x_center) # (bs, 384, T / 32, F / 64) (x_center, _) = self.conv_block7d(x_center) # (bs, 384, T / 32, F / 64) 2." />
@@ -81,7 +81,7 @@
   <title>clock</title>
   <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
 </svg>
-          2 min read
+          3 min read
         </div>
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
@@ -100,18 +100,20 @@
 <li><a href="#3-%E6%95%B0%E6%8D%AE%E5%BD%92%E4%B8%80%E5%8C%96%E7%9A%84%E6%96%B9%E5%BC%8F">3. 数据归一化的方式</a></li>
 <li><a href="#4-%E5%9C%A8%E8%9E%8D%E5%90%88%E4%BA%86%E4%B9%8B%E5%90%8E%E8%BF%98%E8%BF%9B%E8%A1%8C%E4%BA%86%E4%BF%A1%E6%81%AF%E6%95%B4%E7%90%86">4. 在融合了之后还进行了信息整理</a></li>
 <li><a href="#5-%E5%B0%86%E9%A2%91%E5%B8%A6%E5%88%87%E5%88%86-%E5%A0%86%E5%8F%A0-%E9%80%81%E5%85%A5%E7%BD%91%E7%BB%9C">5. 将频带切分 堆叠 送入网络</a></li>
+<li><a href="#6-%E4%BC%98%E5%8C%96%E7%9B%AE%E6%A0%87">6. 优化目标</a></li>
+<li><a href="#7-%E5%85%B3%E4%BA%8Emask">7. 关于Mask</a></li>
 </ul>
 <h2 id="1-无需lstm结构">1. 无需LSTM结构</h2>
 <p>中间做信息处理的部分是block7a-block7d</p>
 <p>每个block都有4个残差conv块</p>
 <p>每个残差conv块有2层卷积</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">(x_center, _) <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>conv_block7a(x6_pool)  <span style="color:#75715e"># (bs, 384, T / 32, F / 64)</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">        (x_center, _) <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>conv_block7a(x6_pool)  <span style="color:#75715e"># (bs, 384, T / 32, F / 64)</span>
         (x_center, _) <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>conv_block7b(x_center)  <span style="color:#75715e"># (bs, 384, T / 32, F / 64)</span>
         (x_center, _) <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>conv_block7c(x_center)  <span style="color:#75715e"># (bs, 384, T / 32, F / 64)</span>
         (x_center, _) <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>conv_block7d(x_center)  <span style="color:#75715e"># (bs, 384, T / 32, F / 64)</span>
 </code></pre></div><h2 id="2-无需将网络的-freq_bins-维度压缩至1">2. 无需将网络的 freq_bins 维度压缩至1.</h2>
 <p>重点考虑的是下采样了多少倍 代码是64倍  2**6 6层block</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">(x1_pool, x1) <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>encoder_block1(x)  <span style="color:#75715e"># x1_pool: (bs, 32, T / 2, F / 2)</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">        (x1_pool, x1) <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>encoder_block1(x)  <span style="color:#75715e"># x1_pool: (bs, 32, T / 2, F / 2)</span>
         (x2_pool, x2) <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>encoder_block2(x1_pool)  <span style="color:#75715e"># x2_pool: (bs, 64, T / 4, F / 4)</span>
         (x3_pool, x3) <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>encoder_block3(x2_pool)  <span style="color:#75715e"># x3_pool: (bs, 128, T / 8, F / 8)</span>
         (x4_pool, x4) <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>encoder_block4(
@@ -124,12 +126,12 @@
             x5_pool
         )  <span style="color:#75715e"># x6_pool: (bs, 384, T / 32, F / 64)</span>
 </code></pre></div><h2 id="3-数据归一化的方式">3. 数据归一化的方式</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">   x <span style="color:#f92672">=</span> mag<span style="color:#f92672">.</span>transpose(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">        x <span style="color:#f92672">=</span> mag<span style="color:#f92672">.</span>transpose(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>)
         x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>bn0(x)
         x <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span>transpose(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>)
         <span style="color:#e6db74">&#34;&#34;&#34;(batch_size, input_channels, time_steps, freq_bins)&#34;&#34;&#34;</span>
 </code></pre></div><h2 id="4-在融合了之后还进行了信息整理">4. 在融合了之后还进行了信息整理</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x12 <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>decoder_block6(x11, x1)  <span style="color:#75715e"># (bs, 32, T, F)</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">        x12 <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>decoder_block6(x11, x1)  <span style="color:#75715e"># (bs, 32, T, F)</span>
         (x, _) <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>after_conv_block1(x12)  <span style="color:#75715e"># (bs, 32, T, F)</span>
 
         x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>after_conv2(x)  <span style="color:#75715e"># (bs, channels * 3, T, F)</span>
@@ -137,11 +139,82 @@
 
 </code></pre></div><h2 id="5-将频带切分-堆叠-送入网络">5. 将频带切分 堆叠 送入网络</h2>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
-x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>subband<span style="color:#f92672">.</span>analysis(x)
+        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>subband<span style="color:#f92672">.</span>analysis(x)
         <span style="color:#75715e"># (bs, input_channels, T, F&#39;), where F&#39; = F // subbands_num</span>
 
-</code></pre></div><hr>
+</code></pre></div><h2 id="6-优化目标">6. 优化目标</h2>
+<p>传给损失函数的参数有：</p>
+<ol>
+<li>处理过后的output</li>
+<li>target音源</li>
+<li>mixture音源</li>
+</ol>
+<p>损失函数是一种联合损失函数：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">        <span style="color:#75715e"># L1 loss in the time-domain.</span>
+        wav_loss <span style="color:#f92672">=</span> l1_wav(output, target)
+
+        <span style="color:#75715e"># L1 loss on the spectrogram.</span>
+        sp_loss <span style="color:#f92672">=</span> l1(
+            self<span style="color:#f92672">.</span>wav_to_spectrogram(output, eps<span style="color:#f92672">=</span><span style="color:#ae81ff">1e-8</span>),
+            self<span style="color:#f92672">.</span>wav_to_spectrogram(target, eps<span style="color:#f92672">=</span><span style="color:#ae81ff">1e-8</span>),
+        )
+
+        <span style="color:#75715e"># sp_loss /= math.sqrt(self.window_size)</span>
+        <span style="color:#75715e"># sp_loss *= 1.</span>
+
+        <span style="color:#75715e"># Total loss.</span>
+        <span style="color:#66d9ef">return</span> wav_loss <span style="color:#f92672">+</span> sp_loss
+</code></pre></div><h2 id="7-关于mask">7. 关于Mask</h2>
+<p>从pytorch_lightning文件上面来看，感觉是直接输出需要的语音，没有mask的结构</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">training_step</span>(self, batch_data_dict: Dict, batch_idx: int) <span style="color:#f92672">-&gt;</span> torch<span style="color:#f92672">.</span>float:
+        <span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;&#34;&#34;Forward a mini-batch data to model, calculate loss function, and
+</span><span style="color:#e6db74">        train for one step. A mini-batch data is evenly distributed to multiple
+</span><span style="color:#e6db74">        devices (if there are) for parallel training.
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">        Args:
+</span><span style="color:#e6db74">            batch_data_dict: e.g. {
+</span><span style="color:#e6db74">                &#39;vocals&#39;: (batch_size, channels_num, segment_samples),
+</span><span style="color:#e6db74">                &#39;accompaniment&#39;: (batch_size, channels_num, segment_samples),
+</span><span style="color:#e6db74">                &#39;mixture&#39;: (batch_size, channels_num, segment_samples)
+</span><span style="color:#e6db74">            }
+</span><span style="color:#e6db74">            batch_idx: int
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">        Returns:
+</span><span style="color:#e6db74">            loss: float, loss function of this mini-batch
+</span><span style="color:#e6db74">        &#34;&#34;&#34;</span>
+        input_dict, target_dict <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>batch_data_preprocessor(batch_data_dict)
+        <span style="color:#75715e"># input_dict: {</span>
+        <span style="color:#75715e">#     &#39;waveform&#39;: (batch_size, channels_num, segment_samples),</span>
+        <span style="color:#75715e">#     (if_exist) &#39;condition&#39;: (batch_size, channels_num),</span>
+        <span style="color:#75715e"># }</span>
+        <span style="color:#75715e"># target_dict: {</span>
+        <span style="color:#75715e">#     &#39;waveform&#39;: (batch_size, target_sources_num * channels_num, segment_samples),</span>
+        <span style="color:#75715e"># }</span>
+
+        <span style="color:#75715e"># Forward.</span>
+        self<span style="color:#f92672">.</span>model<span style="color:#f92672">.</span>train()
+
+        output_dict <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>model(input_dict)
+        <span style="color:#75715e"># output_dict: {</span>
+        <span style="color:#75715e">#     &#39;waveform&#39;: (batch_size, target_sources_num * channels_num, segment_samples),</span>
+        <span style="color:#75715e"># }</span>
+
+        outputs <span style="color:#f92672">=</span> output_dict[<span style="color:#e6db74">&#39;waveform&#39;</span>]
+        <span style="color:#75715e"># outputs:, e.g, (batch_size, target_sources_num * channels_num, segment_samples)</span>
+
+        <span style="color:#75715e"># Calculate loss.</span>
+        loss <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>loss_function(
+            output<span style="color:#f92672">=</span>outputs,
+            target<span style="color:#f92672">=</span>target_dict[<span style="color:#e6db74">&#39;waveform&#39;</span>],
+            mixture<span style="color:#f92672">=</span>input_dict[<span style="color:#e6db74">&#39;waveform&#39;</span>],
+        )
+
+        <span style="color:#66d9ef">return</span> loss
+
+</code></pre></div><p>也许简单有效才是王道。92fork 668star表明这个网络应该是不错的。</p>
+<hr>
 <p><strong>参考资料</strong></p>
+<p><a href="https://github.com/bytedance/music_source_separation">https://github.com/bytedance/music_source_separation</a></p>
 
     </div>
     <div class="post-footer">
