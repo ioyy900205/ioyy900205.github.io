@@ -5,7 +5,29 @@
     <link>https://ioyy900205.github.io/post/</link>
     <description>Recent content in Posts on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 16 Dec 2021 16:31:52 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 20 Dec 2021 10:27:57 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>52-torch.cuda.stream的使用 </title>
+      <link>https://ioyy900205.github.io/post/2021-12-18-52-cuda.stream/</link>
+      <pubDate>Mon, 20 Dec 2021 10:27:57 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-12-18-52-cuda.stream/</guid>
+      <description>How to use CUDA stream in Pytorch?
+  1. 流程 2. 最佳答案  1. 流程 stream0 = torch.get_stream() stream1 = torch.get_stream() with torch.now_stream(stream0): // task A with torch.now_stream(stream1): // task B torch.synchronize() // get A and B&amp;#39;s answer 2. 最佳答案 s1 = torch.cuda.Stream() s2 = torch.cuda.Stream() # Initialise cuda tensors here. E.g.: A = torch.rand(1000, 1000, device = ‘cuda’) B = torch.rand(1000, 1000, device = ‘cuda’) # Wait for the above tensors to initialise.</description>
+    </item>
+    
+    <item>
+      <title>51-pytorch lightning中train.fit函数的解读 </title>
+      <link>https://ioyy900205.github.io/post/2021-12-17-51-pytorch_lighting%E4%B8%AD-train.fit%E5%87%BD%E6%95%B0%E8%A7%A3%E8%AF%BB-copy/</link>
+      <pubDate>Fri, 17 Dec 2021 10:27:57 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-12-17-51-pytorch_lighting%E4%B8%AD-train.fit%E5%87%BD%E6%95%B0%E8%A7%A3%E8%AF%BB-copy/</guid>
+      <description>train.fit 用于训练。
+先挖了个坑，以后填
+ @TOC
+传入参数  参考资料</description>
+    </item>
+    
     <item>
       <title>50-旷视NBNet</title>
       <link>https://ioyy900205.github.io/post/2021-12-16-50-%E6%97%B7%E8%A7%86nbnet/</link>

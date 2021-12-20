@@ -2,25 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://ioyy900205.github.io/post/2021-12-18-52-cuda.stream/</loc>
+    <lastmod>2021-12-20T10:27:57+08:00</lastmod>
+  </url><url>
+    <loc>https://ioyy900205.github.io/post/</loc>
+    <lastmod>2021-12-20T10:27:57+08:00</lastmod>
+  </url><url>
+    <loc>https://ioyy900205.github.io/tags/pytorch/</loc>
+    <lastmod>2021-12-20T10:27:57+08:00</lastmod>
+  </url><url>
+    <loc>https://ioyy900205.github.io/tags/</loc>
+    <lastmod>2021-12-20T10:27:57+08:00</lastmod>
+  </url><url>
+    <loc>https://ioyy900205.github.io/</loc>
+    <lastmod>2021-12-20T10:27:57+08:00</lastmod>
+  </url><url>
+    <loc>https://ioyy900205.github.io/post/2021-12-17-51-pytorch_lighting%E4%B8%AD-train.fit%E5%87%BD%E6%95%B0%E8%A7%A3%E8%AF%BB-copy/</loc>
+    <lastmod>2021-12-17T10:27:57+08:00</lastmod>
+  </url><url>
     <loc>https://ioyy900205.github.io/post/2021-12-16-50-%E6%97%B7%E8%A7%86nbnet/</loc>
     <lastmod>2021-12-16T16:31:52+08:00</lastmod>
   </url><url>
     <loc>https://ioyy900205.github.io/tags/backbone/</loc>
     <lastmod>2021-12-16T16:31:52+08:00</lastmod>
   </url><url>
-    <loc>https://ioyy900205.github.io/post/</loc>
-    <lastmod>2021-12-16T16:31:52+08:00</lastmod>
-  </url><url>
-    <loc>https://ioyy900205.github.io/tags/</loc>
-    <lastmod>2021-12-16T16:31:52+08:00</lastmod>
-  </url><url>
-    <loc>https://ioyy900205.github.io/</loc>
-    <lastmod>2021-12-16T16:31:52+08:00</lastmod>
-  </url><url>
     <loc>https://ioyy900205.github.io/post/2021-12-16-49-%E5%AD%97%E8%8A%82%E6%AE%8B%E5%B7%AEunet%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/</loc>
-    <lastmod>2021-12-16T16:03:44+08:00</lastmod>
-  </url><url>
-    <loc>https://ioyy900205.github.io/tags/pytorch/</loc>
     <lastmod>2021-12-16T16:03:44+08:00</lastmod>
   </url><url>
     <loc>https://ioyy900205.github.io/post/2021-12-15-48-python%E8%87%AA%E5%8A%A8%E5%8C%961/</loc>
