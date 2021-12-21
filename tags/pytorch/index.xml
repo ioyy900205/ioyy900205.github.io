@@ -5,7 +5,23 @@
     <link>https://ioyy900205.github.io/tags/pytorch/</link>
     <description>Recent content in PyTorch on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 20 Dec 2021 10:27:57 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/pytorch/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 21 Dec 2021 19:40:52 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/pytorch/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>53-model.train解读</title>
+      <link>https://ioyy900205.github.io/post/2021-12-21-53-model.train%E8%A7%A3%E8%AF%BB/</link>
+      <pubDate>Tue, 21 Dec 2021 19:40:52 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-12-21-53-model.train%E8%A7%A3%E8%AF%BB/</guid>
+      <description>还没有看到有人从源码的角度去解决这个问题，所以研究了一下。
+ @TOC
+寄生关系 model.train()实际上是 nn.moduel 下的一个函数
+打开网页： https://github.com/pytorch/pytorch/tree/master/torch/nn/modules 可以看到nn.modules下面有各种py文件，其中module.py 中实现的是非常重要的基类。
+官网的注释是：Base class for all neural network modules,your models should also subclass this class.
+其中：默认了一个self.training=True
+training: bool _is_full_backward_hook: Optional[bool] def __init__(self) -&amp;gt; None: &amp;#34;&amp;#34;&amp;#34; Initializes internal Module state, shared by both nn.Module and ScriptModule. &amp;#34;&amp;#34;&amp;#34; torch._C._log_api_usage_once(&amp;#34;python.nn_module&amp;#34;) self.training = True self._parameters: Dict[str, Optional[Parameter]] = OrderedDict() self._buffers: Dict[str, Optional[Tensor]] = OrderedDict() self._non_persistent_buffers_set: Set[str] = set() 接下来看train函数
+def train(self: T, mode: bool = True) -&amp;gt; T: r&amp;#34;&amp;#34;&amp;#34;Sets the module in training mode.</description>
+    </item>
+    
     <item>
       <title>52-torch.cuda.stream的使用 </title>
       <link>https://ioyy900205.github.io/post/2021-12-18-52-cuda.stream/</link>

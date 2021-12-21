@@ -2,19 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://ioyy900205.github.io/post/2021-12-18-52-cuda.stream/</loc>
-    <lastmod>2021-12-20T10:27:57+08:00</lastmod>
+    <loc>https://ioyy900205.github.io/post/2021-12-21-53-model.train%E8%A7%A3%E8%AF%BB/</loc>
+    <lastmod>2021-12-21T19:40:52+08:00</lastmod>
   </url><url>
     <loc>https://ioyy900205.github.io/post/</loc>
-    <lastmod>2021-12-20T10:27:57+08:00</lastmod>
+    <lastmod>2021-12-21T19:40:52+08:00</lastmod>
   </url><url>
     <loc>https://ioyy900205.github.io/tags/pytorch/</loc>
-    <lastmod>2021-12-20T10:27:57+08:00</lastmod>
+    <lastmod>2021-12-21T19:40:52+08:00</lastmod>
   </url><url>
     <loc>https://ioyy900205.github.io/tags/</loc>
-    <lastmod>2021-12-20T10:27:57+08:00</lastmod>
+    <lastmod>2021-12-21T19:40:52+08:00</lastmod>
   </url><url>
     <loc>https://ioyy900205.github.io/</loc>
+    <lastmod>2021-12-21T19:40:52+08:00</lastmod>
+  </url><url>
+    <loc>https://ioyy900205.github.io/post/2021-12-18-52-cuda.stream/</loc>
     <lastmod>2021-12-20T10:27:57+08:00</lastmod>
   </url><url>
     <loc>https://ioyy900205.github.io/post/2021-12-17-51-pytorch_lighting%E4%B8%AD-train.fit%E5%87%BD%E6%95%B0%E8%A7%A3%E8%AF%BB-copy/</loc>
