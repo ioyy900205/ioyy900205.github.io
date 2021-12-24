@@ -5,7 +5,18 @@
     <link>https://ioyy900205.github.io/tags/algorithm/</link>
     <description>Recent content in Algorithm on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 24 Sep 2021 10:05:01 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 24 Dec 2021 13:43:04 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>55-python多进程</title>
+      <link>https://ioyy900205.github.io/post/2021-12-24-55-python%E5%A4%9A%E8%BF%9B%E7%A8%8B/</link>
+      <pubDate>Fri, 24 Dec 2021 13:43:04 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-12-24-55-python%E5%A4%9A%E8%BF%9B%E7%A8%8B/</guid>
+      <description>处理数据需要
+  1. 基本原理 2. 实现代码  1. 基本原理 创建一个池子p=Pool()，将子任务通过p.apply_async(传入的任务，传入任务的参数)，添加进去。
+2. 实现代码 &amp;#39;&amp;#39;&amp;#39; Date: 2021-12-23 21:37:55 LastEditors: Liuliang LastEditTime: 2021-12-23 21:39:15 Description: &amp;#39;&amp;#39;&amp;#39; import os import random import time from multiprocessing import Pool, Process def long_time_task(name): print (&amp;#39;Run task %s(%s)...&amp;#39; % (name, os.getpid())) start = time.time() time.sleep(random.random() * 3) end = time.time() print (&amp;#39;Task %sruns %0.2fseconds.&amp;#39; % (name, (end - start)) ) if __name__==&amp;#39;__main__&amp;#39;: print (&amp;#39;Parent process %s.&amp;#39; % os.</description>
+    </item>
+    
     <item>
       <title>47-今日阅读记录</title>
       <link>https://ioyy900205.github.io/post/2021-09-24-47-%E4%BB%8A%E6%97%A5%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/</link>

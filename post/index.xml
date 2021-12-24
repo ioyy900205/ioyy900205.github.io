@@ -5,7 +5,31 @@
     <link>https://ioyy900205.github.io/post/</link>
     <description>Recent content in Posts on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 21 Dec 2021 19:40:52 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 24 Dec 2021 13:43:04 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>55-python多进程</title>
+      <link>https://ioyy900205.github.io/post/2021-12-24-55-python%E5%A4%9A%E8%BF%9B%E7%A8%8B/</link>
+      <pubDate>Fri, 24 Dec 2021 13:43:04 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-12-24-55-python%E5%A4%9A%E8%BF%9B%E7%A8%8B/</guid>
+      <description>处理数据需要
+  1. 基本原理 2. 实现代码  1. 基本原理 创建一个池子p=Pool()，将子任务通过p.apply_async(传入的任务，传入任务的参数)，添加进去。
+2. 实现代码 &amp;#39;&amp;#39;&amp;#39; Date: 2021-12-23 21:37:55 LastEditors: Liuliang LastEditTime: 2021-12-23 21:39:15 Description: &amp;#39;&amp;#39;&amp;#39; import os import random import time from multiprocessing import Pool, Process def long_time_task(name): print (&amp;#39;Run task %s(%s)...&amp;#39; % (name, os.getpid())) start = time.time() time.sleep(random.random() * 3) end = time.time() print (&amp;#39;Task %sruns %0.2fseconds.&amp;#39; % (name, (end - start)) ) if __name__==&amp;#39;__main__&amp;#39;: print (&amp;#39;Parent process %s.&amp;#39; % os.</description>
+    </item>
+    
+    <item>
+      <title>54-ConvTasnet解读</title>
+      <link>https://ioyy900205.github.io/post/2021-12-23-54-convtasnet%E8%A7%A3%E8%AF%BB/</link>
+      <pubDate>Thu, 23 Dec 2021 09:53:44 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2021-12-23-54-convtasnet%E8%A7%A3%E8%AF%BB/</guid>
+      <description>挖坑挖坑
+ @TOC
+1. 原来的缺点  信号相位和幅度的解耦 语音分离时频表示的次优性 以及计算频谱的时间延迟等  2. STFT的问题  第一，STFT是一种通用的信号变换方法，它对语音分离来说不一定是最佳的。 第二，对干净声源的相位进行精确重建是一个重要的问题，并且相位的错误估计- 会拉低重建音频的上限。尽管一些方法通过重建相位来缓解此问题，但性能仍然欠佳。 第三，成功地从时频表示中分离声源，要求对混合信号进行高分辨-率的频率分解，这需要较长的时间窗来计算STFT。该要求增加了系统的最小延迟，这限制了其在实时、低延迟应用中的适用性。例如，在大多数语音分离系统中，STFT的窗口长度至少为32 ms，在音乐分离应用中甚至更大，而音乐分离应用则需要更高分辨率的频谱（高于90 ms ）。  3. LSTM的问题 原始TasNet将深度长短时记忆（LSTM）网络作为分离模块会大大限制其适用性。
+ 第一，在编码器中选择较小的核大小（即波形段的长度）会增加编码器输出的长度，这使得LSTM的训练变得难以管理。 第二，深度LSTM网络中的大量参数显著增加了其计算成本，并限制了其在低资源、低功耗平台（例如可穿戴式听力设备）中的适用性。 第三个问题是LSTM网络在时间上的长期依赖性，这经常导致分离准确性不一致，  4. 代码给你的启发 我这里参考的是官方pytorch example里面实现的代码
+def forward(self, input: torch.Tensor) -&amp;gt; torch.Tensor: &amp;#34;&amp;#34;&amp;#34;Perform source separation. Generate audio source waveforms. Args: input (torch.Tensor): 3D Tensor with shape [batch, channel==1, frames] Returns: Tensor: 3D Tensor with shape [batch, channel==num_sources, frames] &amp;#34;&amp;#34;&amp;#34; if input.ndim != 3 or input.</description>
+    </item>
+    
     <item>
       <title>53-model.train解读</title>
       <link>https://ioyy900205.github.io/post/2021-12-21-53-model.train%E8%A7%A3%E8%AF%BB/</link>
