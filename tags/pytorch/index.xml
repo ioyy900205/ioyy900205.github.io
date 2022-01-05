@@ -5,7 +5,19 @@
     <link>https://ioyy900205.github.io/tags/pytorch/</link>
     <description>Recent content in PyTorch on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 23 Dec 2021 09:53:44 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/pytorch/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 05 Jan 2022 14:32:39 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/pytorch/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>57-pytorch-lightning伪代码训练过程</title>
+      <link>https://ioyy900205.github.io/post/2022-01-05-57-pytorch-lightning-%E4%BC%AA%E4%BB%A3%E7%A0%81%E8%AE%AD%E7%BB%83%E8%BF%87%E7%A8%8B/</link>
+      <pubDate>Wed, 05 Jan 2022 14:32:39 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2022-01-05-57-pytorch-lightning-%E4%BC%AA%E4%BB%A3%E7%A0%81%E8%AE%AD%E7%BB%83%E8%BF%87%E7%A8%8B/</guid>
+      <description>这里有宝藏
+请自行提取
+ @TOC
+1. 训练伪代码 def fit(...): on_fit_start() if global_rank == 0: # prepare data is called on GLOBAL_ZERO only prepare_data() for gpu/tpu in gpu/tpus: train_on_device(model.copy()) on_fit_end() def train_on_device(model): # setup is called PER DEVICE setup() configure_optimizers() on_pretrain_routine_start() for epoch in epochs: train_loop() teardown() def train_loop(): on_train_epoch_start() train_outs = [] for train_batch in train_dataloader(): on_train_batch_start() # ----- train_step methods ------- out = training_step(batch) train_outs.append(out) loss = out.loss backward() on_after_backward() optimizer_step() on_before_zero_grad() optimizer_zero_grad() on_train_batch_end(out) if should_check_val: val_loop() # end training epoch logs = training_epoch_end(outs) def val_loop(): model.</description>
+    </item>
+    
     <item>
       <title>54-ConvTasnet解读</title>
       <link>https://ioyy900205.github.io/post/2021-12-23-54-convtasnet%E8%A7%A3%E8%AF%BB/</link>

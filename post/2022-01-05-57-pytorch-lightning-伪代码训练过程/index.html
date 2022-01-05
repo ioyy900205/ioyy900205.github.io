@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>57-pytorch-lightning伪代码训练过程 // 亮的笔记</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.90.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Liu Liang" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="57-pytorch-lightning伪代码训练过程"/>
+<meta name="twitter:description" content="这里有宝藏
+请自行提取
+ @TOC
+1. 训练伪代码 def fit(...): on_fit_start() if global_rank == 0: # prepare data is called on GLOBAL_ZERO only prepare_data() for gpu/tpu in gpu/tpus: train_on_device(model.copy()) on_fit_end() def train_on_device(model): # setup is called PER DEVICE setup() configure_optimizers() on_pretrain_routine_start() for epoch in epochs: train_loop() teardown() def train_loop(): on_train_epoch_start() train_outs = [] for train_batch in train_dataloader(): on_train_batch_start() # ----- train_step methods ------- out = training_step(batch) train_outs.append(out) loss = out.loss backward() on_after_backward() optimizer_step() on_before_zero_grad() optimizer_zero_grad() on_train_batch_end(out) if should_check_val: val_loop() # end training epoch logs = training_epoch_end(outs) def val_loop(): model."/>
+
+    <meta property="og:title" content="57-pytorch-lightning伪代码训练过程" />
+<meta property="og:description" content="这里有宝藏
+请自行提取
+ @TOC
+1. 训练伪代码 def fit(...): on_fit_start() if global_rank == 0: # prepare data is called on GLOBAL_ZERO only prepare_data() for gpu/tpu in gpu/tpus: train_on_device(model.copy()) on_fit_end() def train_on_device(model): # setup is called PER DEVICE setup() configure_optimizers() on_pretrain_routine_start() for epoch in epochs: train_loop() teardown() def train_loop(): on_train_epoch_start() train_outs = [] for train_batch in train_dataloader(): on_train_batch_start() # ----- train_step methods ------- out = training_step(batch) train_outs.append(out) loss = out.loss backward() on_after_backward() optimizer_step() on_before_zero_grad() optimizer_zero_grad() on_train_batch_end(out) if should_check_val: val_loop() # end training epoch logs = training_epoch_end(outs) def val_loop(): model." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ioyy900205.github.io/post/2022-01-05-57-pytorch-lightning-%E4%BC%AA%E4%BB%A3%E7%A0%81%E8%AE%AD%E7%BB%83%E8%BF%87%E7%A8%8B/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-01-05T14:32:39+08:00" />
+<meta property="article:modified_time" content="2022-01-05T14:32:39+08:00" />
+
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3520060145,2875461924&amp;fm=26&amp;gp=0.jpg" alt="Liu Liang" /></a>
+      <h1>亮的笔记</h1>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>深度学习笔记本</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/ioyy900205" target="_blank" rel="noreferrer noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/ioyy900205" target="_blank" rel="noreferrer noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">57-pytorch-lightning伪代码训练过程</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Jan 5, 2022
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://ioyy900205.github.io/tags/pytorch/">PyTorch</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>这里有宝藏</p>
+<p>请自行提取</p>
+<hr>
+<p>@<a href="%E6%9C%AC%E6%96%87%E5%86%85%E5%AE%B9">TOC</a></p>
+<h2 id="1-训练伪代码">1. 训练伪代码</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fit</span>(<span style="color:#f92672">...</span>):
+    on_fit_start()
+
+    <span style="color:#66d9ef">if</span> global_rank <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+        <span style="color:#75715e"># prepare data is called on GLOBAL_ZERO only</span>
+        prepare_data()
+
+    <span style="color:#66d9ef">for</span> gpu<span style="color:#f92672">/</span>tpu <span style="color:#f92672">in</span> gpu<span style="color:#f92672">/</span>tpus:
+        train_on_device(model<span style="color:#f92672">.</span>copy())
+
+    on_fit_end()
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">train_on_device</span>(model):
+    <span style="color:#75715e"># setup is called PER DEVICE</span>
+    setup()
+    configure_optimizers()
+    on_pretrain_routine_start()
+
+    <span style="color:#66d9ef">for</span> epoch <span style="color:#f92672">in</span> epochs:
+        train_loop()
+
+    teardown()
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">train_loop</span>():
+    on_train_epoch_start()
+    train_outs <span style="color:#f92672">=</span> []
+    <span style="color:#66d9ef">for</span> train_batch <span style="color:#f92672">in</span> train_dataloader():
+        on_train_batch_start()
+
+        <span style="color:#75715e"># ----- train_step methods -------</span>
+        out <span style="color:#f92672">=</span> training_step(batch)
+        train_outs<span style="color:#f92672">.</span>append(out)
+
+        loss <span style="color:#f92672">=</span> out<span style="color:#f92672">.</span>loss
+
+        backward()
+        on_after_backward()
+        optimizer_step()
+        on_before_zero_grad()
+        optimizer_zero_grad()
+
+        on_train_batch_end(out)
+
+        <span style="color:#66d9ef">if</span> should_check_val:
+            val_loop()
+
+    <span style="color:#75715e"># end training epoch</span>
+    logs <span style="color:#f92672">=</span> training_epoch_end(outs)
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">val_loop</span>():
+    model<span style="color:#f92672">.</span>eval()
+    torch<span style="color:#f92672">.</span>set_grad_enabled(<span style="color:#66d9ef">False</span>)
+
+    on_validation_epoch_start()
+    val_outs <span style="color:#f92672">=</span> []
+    <span style="color:#66d9ef">for</span> val_batch <span style="color:#f92672">in</span> val_dataloader():
+        on_validation_batch_start()
+
+        <span style="color:#75715e"># -------- val step methods -------</span>
+        out <span style="color:#f92672">=</span> validation_step(val_batch)
+        val_outs<span style="color:#f92672">.</span>append(out)
+
+        on_validation_batch_end(out)
+
+    validation_epoch_end(val_outs)
+    on_validation_epoch_end()
+
+    <span style="color:#75715e"># set up for train</span>
+    model<span style="color:#f92672">.</span>train()
+    torch<span style="color:#f92672">.</span>set_grad_enabled(<span style="color:#66d9ef">True</span>)
+
+</code></pre></div><hr>
+<p><strong>参考资料</strong></p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
