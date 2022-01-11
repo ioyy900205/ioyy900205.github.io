@@ -5,7 +5,18 @@
     <link>https://ioyy900205.github.io/tags/pytorch/</link>
     <description>Recent content in PyTorch on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 05 Jan 2022 14:32:39 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/pytorch/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 05 Jan 2022 17:30:24 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/pytorch/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2022-01-05 框架太难受</title>
+      <link>https://ioyy900205.github.io/post/2022-01-05-%E6%A1%86%E6%9E%B6%E5%A4%AA%E9%9A%BE%E5%8F%97/</link>
+      <pubDate>Wed, 05 Jan 2022 17:30:24 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2022-01-05-%E6%A1%86%E6%9E%B6%E5%A4%AA%E9%9A%BE%E5%8F%97/</guid>
+      <description>记录一些以后可以用到修改的东西
+ @TOC
+选择模型 model_module, model_name = xx, xx model = getattr(importlib.import_module(model_module),model_name)  参考资料</description>
+    </item>
+    
     <item>
       <title>57-pytorch-lightning伪代码训练过程</title>
       <link>https://ioyy900205.github.io/post/2022-01-05-57-pytorch-lightning-%E4%BC%AA%E4%BB%A3%E7%A0%81%E8%AE%AD%E7%BB%83%E8%BF%87%E7%A8%8B/</link>

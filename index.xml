@@ -5,7 +5,29 @@
     <link>https://ioyy900205.github.io/</link>
     <description>Recent content on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 05 Jan 2022 14:32:39 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 10 Jan 2022 14:44:57 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>58-facebook denoiser 翻译</title>
+      <link>https://ioyy900205.github.io/post/2022-01-10-58facebook-denoiser-%E8%AE%BA%E6%96%87%E5%AD%A6%E4%B9%A0/</link>
+      <pubDate>Mon, 10 Jan 2022 14:44:57 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2022-01-10-58facebook-denoiser-%E8%AE%BA%E6%96%87%E5%AD%A6%E4%B9%A0/</guid>
+      <description>Real Time Speech Enhancement in the Waveform Domain
+网上找不到相关的翻译文章。 这里就做贡献了
+  1. 摘要 2. 简介 3. 模型  3.1. 符号和问题设置 3.2. DEMUCS architecture 3.3. 目标   4. 实验  4.1. 实施详情 4.2. 结果 4.3. 消融实验 4.4. 实时性评估 4.5. 对ASR模型的影响   5. 相关工作 6. 结论  1. 摘要 We present a causal speech enhancement model working on the raw waveform that runs in real-time on a laptop CPU. The proposed model is based on an encoder-decoder architecture with skip-connections.</description>
+    </item>
+    
+    <item>
+      <title>2022-01-05 框架太难受</title>
+      <link>https://ioyy900205.github.io/post/2022-01-05-%E6%A1%86%E6%9E%B6%E5%A4%AA%E9%9A%BE%E5%8F%97/</link>
+      <pubDate>Wed, 05 Jan 2022 17:30:24 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2022-01-05-%E6%A1%86%E6%9E%B6%E5%A4%AA%E9%9A%BE%E5%8F%97/</guid>
+      <description>记录一些以后可以用到修改的东西
+ @TOC
+选择模型 model_module, model_name = xx, xx model = getattr(importlib.import_module(model_module),model_name)  参考资料</description>
+    </item>
+    
     <item>
       <title>57-pytorch-lightning伪代码训练过程</title>
       <link>https://ioyy900205.github.io/post/2022-01-05-57-pytorch-lightning-%E4%BC%AA%E4%BB%A3%E7%A0%81%E8%AE%AD%E7%BB%83%E8%BF%87%E7%A8%8B/</link>

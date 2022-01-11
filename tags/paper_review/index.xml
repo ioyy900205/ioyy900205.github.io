@@ -5,7 +5,18 @@
     <link>https://ioyy900205.github.io/tags/paper_review/</link>
     <description>Recent content in Paper_Review on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 28 Dec 2021 15:32:05 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/paper_review/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 10 Jan 2022 14:44:57 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/paper_review/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>58-facebook denoiser 翻译</title>
+      <link>https://ioyy900205.github.io/post/2022-01-10-58facebook-denoiser-%E8%AE%BA%E6%96%87%E5%AD%A6%E4%B9%A0/</link>
+      <pubDate>Mon, 10 Jan 2022 14:44:57 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2022-01-10-58facebook-denoiser-%E8%AE%BA%E6%96%87%E5%AD%A6%E4%B9%A0/</guid>
+      <description>Real Time Speech Enhancement in the Waveform Domain
+网上找不到相关的翻译文章。 这里就做贡献了
+  1. 摘要 2. 简介 3. 模型  3.1. 符号和问题设置 3.2. DEMUCS architecture 3.3. 目标   4. 实验  4.1. 实施详情 4.2. 结果 4.3. 消融实验 4.4. 实时性评估 4.5. 对ASR模型的影响   5. 相关工作 6. 结论  1. 摘要 We present a causal speech enhancement model working on the raw waveform that runs in real-time on a laptop CPU. The proposed model is based on an encoder-decoder architecture with skip-connections.</description>
+    </item>
+    
     <item>
       <title>56-S-DCCRN论文阅读</title>
       <link>https://ioyy900205.github.io/post/2021-12-28-56-s-dccrn%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</link>
