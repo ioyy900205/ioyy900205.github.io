@@ -5,7 +5,25 @@
     <link>https://ioyy900205.github.io/</link>
     <description>Recent content on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 10 Jan 2022 14:44:57 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 14 Feb 2022 14:43:42 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>59-时频通道双重注意力</title>
+      <link>https://ioyy900205.github.io/post/2022-02-14-59-duality-temporal-channel-frequency-attention-enhanced-speaker-representation-learning/</link>
+      <pubDate>Mon, 14 Feb 2022 14:43:42 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2022-02-14-59-duality-temporal-channel-frequency-attention-enhanced-speaker-representation-learning/</guid>
+      <description>水一篇论文。。
+ @TOC
+标题  参考资料 @TOC
+谢磊老师团队作品 2021.12
+Audio, Speech and Language Processing Group (ASLP@NPU), School of Computer Science, Northwestern Polytechnical University, Xi’an, China
+标题：时间-通道-频率的双重性注意增强说话人的表征学习
+简单来说就是将图像中的CBAM重新拆分整合了一下。
+AI Labs - Trident &amp;gt; 7. DUALITY TEMPORAL-CHANNEL-FREQUENCY ATTENTION ENHANCED SPEAKER REPRESENTATION LEARNING &amp;gt; image2022-2-14 14:25:48.png
+我接着查看了参考文献
+Qibin Hou, Daquan Zhou, and Jiashi Feng, “Coordinate attention for efficient mobile network design,” in Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2021, pp.</description>
+    </item>
+    
     <item>
       <title>58-facebook denoiser 翻译</title>
       <link>https://ioyy900205.github.io/post/2022-01-10-58facebook-denoiser-%E8%AE%BA%E6%96%87%E5%AD%A6%E4%B9%A0/</link>
