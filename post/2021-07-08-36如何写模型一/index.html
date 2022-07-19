@@ -4,17 +4,17 @@
     <title>36——如何写模型（一） // 亮的笔记</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
-    <meta name="generator" content="Hugo 0.90.1" />
+    <meta name="generator" content="Hugo 0.101.0" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Liu Liang" />
     <meta name="description" content="" />
-    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.4a7ec8660f9a44b08c4da97c5f2e31b1192df1d4d0322e65c0dbbc6ecb1b863f.css" />
 
     
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="36——如何写模型（一）"/>
 <meta name="twitter:description" content="如何写模型（一） 以ResNet为例
- @TOC
+@TOC
 1. ResNet的构建 以ResNet为例，forward函数中，是前向传播过程，也是计算的核心内容。
 def forward(self, x): x = self.conv1(x) x = self.bn1(x) x = self.relu(x) x = self.maxpool(x) x = self.layer1(x) x = self.layer2(x) x = self.layer3(x) x = self.layer4(x) if self.include_top: x = self.avgpool(x) x = torch.flatten(x, 1) x = self.fc(x) return x 这里conv1、bn1、relu、maxpool、avgpool、fc都已经在__init__内很直观的定义好了。
 问题就在于layer1-4的构建。那么我们以Restnet50为例，中间4个层每个block都要重复[3, 4, 6, 3]这么多次。e.g.第一层3次, 第二层4次，第三层6次，第四层3次。
@@ -23,7 +23,7 @@ self.layer1 = self._make_layer(block, 64, blocks_num[0]) self.layer2 = self._mak
 
     <meta property="og:title" content="36——如何写模型（一）" />
 <meta property="og:description" content="如何写模型（一） 以ResNet为例
- @TOC
+@TOC
 1. ResNet的构建 以ResNet为例，forward函数中，是前向传播过程，也是计算的核心内容。
 def forward(self, x): x = self.conv1(x) x = self.bn1(x) x = self.relu(x) x = self.maxpool(x) x = self.layer1(x) x = self.layer2(x) x = self.layer3(x) x = self.layer4(x) if self.include_top: x = self.avgpool(x) x = torch.flatten(x, 1) x = self.fc(x) return x 这里conv1、bn1、relu、maxpool、avgpool、fc都已经在__init__内很直观的定义好了。
 问题就在于layer1-4的构建。那么我们以Restnet50为例，中间4个层每个block都要重复[3, 4, 6, 3]这么多次。e.g.第一层3次, 第二层4次，第三层6次，第四层3次。
@@ -105,58 +105,57 @@ self.layer1 = self._make_layer(block, 64, blocks_num[0]) self.layer2 = self._mak
 <p>@<a href="%E6%9C%AC%E6%96%87%E5%86%85%E5%AE%B9">TOC</a></p>
 <h2 id="1-resnet的构建">1. ResNet的构建</h2>
 <p>以ResNet为例，forward函数中，是前向传播过程，也是计算的核心内容。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
-   
-        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>conv1(x)
-        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>bn1(x)
-        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>relu(x)
-        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>maxpool(x)
-
-        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>layer1(x)      
-        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>layer2(x)   
-        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>layer3(x)  
-        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>layer4(x)
-  
-
-        <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>include_top:
-            x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>avgpool(x)
-            x <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>flatten(x, <span style="color:#ae81ff">1</span>)
-            x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>fc(x)
-
-        <span style="color:#66d9ef">return</span> x
-</code></pre></div><p>这里conv1、bn1、relu、maxpool、avgpool、fc都已经在__init__内很直观的定义好了。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
+</span></span><span style="display:flex;"><span>   
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>conv1(x)
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>bn1(x)
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>relu(x)
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>maxpool(x)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>layer1(x)      
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>layer2(x)   
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>layer3(x)  
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>layer4(x)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>include_top:
+</span></span><span style="display:flex;"><span>            x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>avgpool(x)
+</span></span><span style="display:flex;"><span>            x <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>flatten(x, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>            x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>fc(x)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> x
+</span></span></code></pre></div><p>这里conv1、bn1、relu、maxpool、avgpool、fc都已经在__init__内很直观的定义好了。</p>
 <p>问题就在于layer1-4的构建。那么我们以Restnet50为例，中间4个层每个block都要重复[3, 4, 6, 3]这么多次。e.g.第一层3次, 第二层4次，第三层6次，第四层3次。</p>
 <p>那么可以看一下self.layer1-4是如何定义的。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">self<span style="color:#f92672">.</span>layer1 <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>_make_layer(block, <span style="color:#ae81ff">64</span>, blocks_num[<span style="color:#ae81ff">0</span>])
-self<span style="color:#f92672">.</span>layer2 <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>_make_layer(block, <span style="color:#ae81ff">128</span>, blocks_num[<span style="color:#ae81ff">1</span>], stride<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)
-self<span style="color:#f92672">.</span>layer3 <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>_make_layer(block, <span style="color:#ae81ff">256</span>, blocks_num[<span style="color:#ae81ff">2</span>], stride<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)
-self<span style="color:#f92672">.</span>layer4 <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>_make_layer(block, <span style="color:#ae81ff">512</span>, blocks_num[<span style="color:#ae81ff">3</span>], stride<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)    
-</code></pre></div><p>这里是通过self._make_layer()这个方法实现的。接下来，我们看看这个方法。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">_make_layer</span>(self, block, channel, block_num, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>):
-        downsample <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>
-        <span style="color:#66d9ef">if</span> stride <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">or</span> self<span style="color:#f92672">.</span>in_channel <span style="color:#f92672">!=</span> channel <span style="color:#f92672">*</span> block<span style="color:#f92672">.</span>expansion:
-            downsample <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
-                nn<span style="color:#f92672">.</span>Conv2d(self<span style="color:#f92672">.</span>in_channel, channel <span style="color:#f92672">*</span> block<span style="color:#f92672">.</span>expansion, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, stride<span style="color:#f92672">=</span>stride, bias<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>),
-                nn<span style="color:#f92672">.</span>BatchNorm2d(channel <span style="color:#f92672">*</span> block<span style="color:#f92672">.</span>expansion))
-
-        layers <span style="color:#f92672">=</span> []
-        layers<span style="color:#f92672">.</span>append(block(self<span style="color:#f92672">.</span>in_channel,
-                            channel,
-                            downsample<span style="color:#f92672">=</span>downsample,
-                            stride<span style="color:#f92672">=</span>stride,
-                            groups<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>groups,
-                            width_per_group<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>width_per_group))
-        self<span style="color:#f92672">.</span>in_channel <span style="color:#f92672">=</span> channel <span style="color:#f92672">*</span> block<span style="color:#f92672">.</span>expansion
-
-        <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, block_num):
-            layers<span style="color:#f92672">.</span>append(block(self<span style="color:#f92672">.</span>in_channel,
-                                channel,
-                                groups<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>groups,
-                                width_per_group<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>width_per_group))
-
-        <span style="color:#66d9ef">return</span> nn<span style="color:#f92672">.</span>Sequential(<span style="color:#f92672">*</span>layers)
-
-</code></pre></div><p>返回的是nn.Sequential(*layers) 。简单来说，即把layers定义为一个列表，列表中传入对应的模块就行。代码中单独对layers[0]进行了定义，其他都是格式化操作。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>self<span style="color:#f92672">.</span>layer1 <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>_make_layer(block, <span style="color:#ae81ff">64</span>, blocks_num[<span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>self<span style="color:#f92672">.</span>layer2 <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>_make_layer(block, <span style="color:#ae81ff">128</span>, blocks_num[<span style="color:#ae81ff">1</span>], stride<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>self<span style="color:#f92672">.</span>layer3 <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>_make_layer(block, <span style="color:#ae81ff">256</span>, blocks_num[<span style="color:#ae81ff">2</span>], stride<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>self<span style="color:#f92672">.</span>layer4 <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>_make_layer(block, <span style="color:#ae81ff">512</span>, blocks_num[<span style="color:#ae81ff">3</span>], stride<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)    
+</span></span></code></pre></div><p>这里是通过self._make_layer()这个方法实现的。接下来，我们看看这个方法。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">_make_layer</span>(self, block, channel, block_num, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>        downsample <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> stride <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">or</span> self<span style="color:#f92672">.</span>in_channel <span style="color:#f92672">!=</span> channel <span style="color:#f92672">*</span> block<span style="color:#f92672">.</span>expansion:
+</span></span><span style="display:flex;"><span>            downsample <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+</span></span><span style="display:flex;"><span>                nn<span style="color:#f92672">.</span>Conv2d(self<span style="color:#f92672">.</span>in_channel, channel <span style="color:#f92672">*</span> block<span style="color:#f92672">.</span>expansion, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, stride<span style="color:#f92672">=</span>stride, bias<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>),
+</span></span><span style="display:flex;"><span>                nn<span style="color:#f92672">.</span>BatchNorm2d(channel <span style="color:#f92672">*</span> block<span style="color:#f92672">.</span>expansion))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        layers <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>        layers<span style="color:#f92672">.</span>append(block(self<span style="color:#f92672">.</span>in_channel,
+</span></span><span style="display:flex;"><span>                            channel,
+</span></span><span style="display:flex;"><span>                            downsample<span style="color:#f92672">=</span>downsample,
+</span></span><span style="display:flex;"><span>                            stride<span style="color:#f92672">=</span>stride,
+</span></span><span style="display:flex;"><span>                            groups<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>groups,
+</span></span><span style="display:flex;"><span>                            width_per_group<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>width_per_group))
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>in_channel <span style="color:#f92672">=</span> channel <span style="color:#f92672">*</span> block<span style="color:#f92672">.</span>expansion
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, block_num):
+</span></span><span style="display:flex;"><span>            layers<span style="color:#f92672">.</span>append(block(self<span style="color:#f92672">.</span>in_channel,
+</span></span><span style="display:flex;"><span>                                channel,
+</span></span><span style="display:flex;"><span>                                groups<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>groups,
+</span></span><span style="display:flex;"><span>                                width_per_group<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>width_per_group))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> nn<span style="color:#f92672">.</span>Sequential(<span style="color:#f92672">*</span>layers)
+</span></span></code></pre></div><p>返回的是nn.Sequential(*layers) 。简单来说，即把layers定义为一个列表，列表中传入对应的模块就行。代码中单独对layers[0]进行了定义，其他都是格式化操作。</p>
 <p>这个函数传入了block 分别对应BasicBlock和Bottleneck。这两个模块看起来相对简单，但也是resnet的核心模块。简单来说就是模块堆叠，50及以上都使用的是Bottleneck。</p>
 <hr>
 <p><strong>参考资料</strong></p>

@@ -4,23 +4,23 @@
     <title>03——nn.module学习——PyTorch // 亮的笔记</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
-    <meta name="generator" content="Hugo 0.90.1" />
+    <meta name="generator" content="Hugo 0.101.0" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Liu Liang" />
     <meta name="description" content="" />
-    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.4a7ec8660f9a44b08c4da97c5f2e31b1192df1d4d0322e65c0dbbc6ecb1b863f.css" />
 
     
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="03——nn.module学习——PyTorch"/>
 <meta name="twitter:description" content="请不要假装很努力， 因为结果不会陪你演戏！
-  1. nn.moduel初步  1.1. Linear类 1.2. Conv2d类 1.3. 自定义层的步骤   2. 自定义层  2.1. 定义一个自定义层MyLayer 2.2. 自定义模型并且训练    1. nn.moduel初步 keras更加注重的是层Layer、pytorch更加注重的是模型Module。
-1.1. Linear类 import math import torch from torch.nn.parameter import Parameter from .. import functional as F from .. import init from .module import Module from ..._jit_internal import weak_module, weak_script_method class Linear(Module): __constants__ = [&#39;bias&#39;] def __init__(self, in_features, out_features, bias=True): super(Linear, self).__init__() self."/>
+1. nn.moduel初步 1.1. Linear类 1.2. Conv2d类 1.3. 自定义层的步骤 2. 自定义层 2.1. 定义一个自定义层MyLayer 2.2. 自定义模型并且训练 1. nn.moduel初步 keras更加注重的是层Layer、pytorch更加注重的是模型Module。
+1.1. Linear类 import math import torch from torch.nn.parameter import Parameter from .. import functional as F from .. import init from .module import Module from ..._jit_internal import weak_module, weak_script_method class Linear(Module): __constants__ = [&#39;bias&#39;] def __init__(self, in_features, out_features, bias=True): super(Linear, self).__init__() self.in_features = in_features self.out_features = out_features self.weight = Parameter(torch.Tensor(out_features, in_features)) if bias: self."/>
 
     <meta property="og:title" content="03——nn.module学习——PyTorch" />
 <meta property="og:description" content="请不要假装很努力， 因为结果不会陪你演戏！
-  1. nn.moduel初步  1.1. Linear类 1.2. Conv2d类 1.3. 自定义层的步骤   2. 自定义层  2.1. 定义一个自定义层MyLayer 2.2. 自定义模型并且训练    1. nn.moduel初步 keras更加注重的是层Layer、pytorch更加注重的是模型Module。
-1.1. Linear类 import math import torch from torch.nn.parameter import Parameter from .. import functional as F from .. import init from .module import Module from ..._jit_internal import weak_module, weak_script_method class Linear(Module): __constants__ = [&#39;bias&#39;] def __init__(self, in_features, out_features, bias=True): super(Linear, self).__init__() self." />
+1. nn.moduel初步 1.1. Linear类 1.2. Conv2d类 1.3. 自定义层的步骤 2. 自定义层 2.1. 定义一个自定义层MyLayer 2.2. 自定义模型并且训练 1. nn.moduel初步 keras更加注重的是层Layer、pytorch更加注重的是模型Module。
+1.1. Linear类 import math import torch from torch.nn.parameter import Parameter from .. import functional as F from .. import init from .module import Module from ..._jit_internal import weak_module, weak_script_method class Linear(Module): __constants__ = [&#39;bias&#39;] def __init__(self, in_features, out_features, bias=True): super(Linear, self).__init__() self.in_features = in_features self.out_features = out_features self.weight = Parameter(torch.Tensor(out_features, in_features)) if bias: self." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ioyy900205.github.io/post/2021-04-27-nn.module/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2021-04-27T00:00:00+00:00" />
@@ -112,69 +112,67 @@
 <h1 id="1-nnmoduel初步">1. nn.moduel初步</h1>
 <p>keras更加注重的是层Layer、pytorch更加注重的是模型Module。</p>
 <h2 id="11-linear类">1.1. Linear类</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> math
-<span style="color:#f92672">import</span> torch
-<span style="color:#f92672">from</span> torch.nn.parameter <span style="color:#f92672">import</span> Parameter
-<span style="color:#f92672">from</span> .. <span style="color:#f92672">import</span> functional <span style="color:#66d9ef">as</span> F
-<span style="color:#f92672">from</span> .. <span style="color:#f92672">import</span> init
-<span style="color:#f92672">from</span> .module <span style="color:#f92672">import</span> Module
-<span style="color:#f92672">from</span> ..._jit_internal <span style="color:#f92672">import</span> weak_module, weak_script_method
- 
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Linear</span>(Module):
-    __constants__ <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;bias&#39;</span>]
- 
-    <span style="color:#66d9ef">def</span> __init__(self, in_features, out_features, bias<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>):
-        super(Linear, self)<span style="color:#f92672">.</span>__init__()
-        self<span style="color:#f92672">.</span>in_features <span style="color:#f92672">=</span> in_features
-        self<span style="color:#f92672">.</span>out_features <span style="color:#f92672">=</span> out_features
-        self<span style="color:#f92672">.</span>weight <span style="color:#f92672">=</span> Parameter(torch<span style="color:#f92672">.</span>Tensor(out_features, in_features))
-        <span style="color:#66d9ef">if</span> bias:
-            self<span style="color:#f92672">.</span>bias <span style="color:#f92672">=</span> Parameter(torch<span style="color:#f92672">.</span>Tensor(out_features))
-        <span style="color:#66d9ef">else</span>:
-            self<span style="color:#f92672">.</span>register_parameter(<span style="color:#e6db74">&#39;bias&#39;</span>, <span style="color:#66d9ef">None</span>)
-        self<span style="color:#f92672">.</span>reset_parameters()
- 
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">reset_parameters</span>(self):
-        init<span style="color:#f92672">.</span>kaiming_uniform_(self<span style="color:#f92672">.</span>weight, a<span style="color:#f92672">=</span>math<span style="color:#f92672">.</span>sqrt(<span style="color:#ae81ff">5</span>))
-        <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>bias <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> <span style="color:#66d9ef">None</span>:
-            fan_in, _ <span style="color:#f92672">=</span> init<span style="color:#f92672">.</span>_calculate_fan_in_and_fan_out(self<span style="color:#f92672">.</span>weight)
-            bound <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">/</span> math<span style="color:#f92672">.</span>sqrt(fan_in)
-            init<span style="color:#f92672">.</span>uniform_(self<span style="color:#f92672">.</span>bias, <span style="color:#f92672">-</span>bound, bound)
- 
-    <span style="color:#a6e22e">@weak_script_method</span>
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, input):
-        <span style="color:#66d9ef">return</span> F<span style="color:#f92672">.</span>linear(input, self<span style="color:#f92672">.</span>weight, self<span style="color:#f92672">.</span>bias)
- 
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">extra_repr</span>(self):
-        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39;in_features=</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">, out_features=</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">, bias=</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(
-            self<span style="color:#f92672">.</span>in_features, self<span style="color:#f92672">.</span>out_features, self<span style="color:#f92672">.</span>bias <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> <span style="color:#66d9ef">None</span>
-        )
-
-</code></pre></div><h2 id="12-conv2d类">1.2. Conv2d类</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Conv2d</span>(_ConvNd):
-    <span style="color:#66d9ef">def</span> __init__(self, in_channels, out_channels, kernel_size, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>,
-                 padding<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, dilation<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, groups<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>,
-                 bias<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, padding_mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;zeros&#39;</span>):
-        kernel_size <span style="color:#f92672">=</span> _pair(kernel_size)
-        stride <span style="color:#f92672">=</span> _pair(stride)
-        padding <span style="color:#f92672">=</span> _pair(padding)
-        dilation <span style="color:#f92672">=</span> _pair(dilation)
-        super(Conv2d, self)<span style="color:#f92672">.</span>__init__(
-            in_channels, out_channels, kernel_size, stride, padding, dilation,
-            <span style="color:#66d9ef">False</span>, _pair(<span style="color:#ae81ff">0</span>), groups, bias, padding_mode)
- 
-    <span style="color:#a6e22e">@weak_script_method</span>
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, input):
-        <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>padding_mode <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;circular&#39;</span>:
-            expanded_padding <span style="color:#f92672">=</span> ((self<span style="color:#f92672">.</span>padding[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>, self<span style="color:#f92672">.</span>padding[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>,
-                                (self<span style="color:#f92672">.</span>padding[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>, self<span style="color:#f92672">.</span>padding[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>)
-            <span style="color:#66d9ef">return</span> F<span style="color:#f92672">.</span>conv2d(F<span style="color:#f92672">.</span>pad(input, expanded_padding, mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;circular&#39;</span>),
-                            self<span style="color:#f92672">.</span>weight, self<span style="color:#f92672">.</span>bias, self<span style="color:#f92672">.</span>stride,
-                            _pair(<span style="color:#ae81ff">0</span>), self<span style="color:#f92672">.</span>dilation, self<span style="color:#f92672">.</span>groups)
-        <span style="color:#66d9ef">return</span> F<span style="color:#f92672">.</span>conv2d(input, self<span style="color:#f92672">.</span>weight, self<span style="color:#f92672">.</span>bias, self<span style="color:#f92672">.</span>stride,
-
-</code></pre></div><h2 id="13-自定义层的步骤">1.3. 自定义层的步骤</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> math
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> torch.nn.parameter <span style="color:#f92672">import</span> Parameter
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> .. <span style="color:#f92672">import</span> functional <span style="color:#66d9ef">as</span> F
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> .. <span style="color:#f92672">import</span> init
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> .module <span style="color:#f92672">import</span> Module
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> ..._jit_internal <span style="color:#f92672">import</span> weak_module, weak_script_method
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Linear</span>(Module):
+</span></span><span style="display:flex;"><span>    __constants__ <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;bias&#39;</span>]
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, in_features, out_features, bias<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>):
+</span></span><span style="display:flex;"><span>        super(Linear, self)<span style="color:#f92672">.</span>__init__()
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>in_features <span style="color:#f92672">=</span> in_features
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>out_features <span style="color:#f92672">=</span> out_features
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>weight <span style="color:#f92672">=</span> Parameter(torch<span style="color:#f92672">.</span>Tensor(out_features, in_features))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> bias:
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>bias <span style="color:#f92672">=</span> Parameter(torch<span style="color:#f92672">.</span>Tensor(out_features))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>register_parameter(<span style="color:#e6db74">&#39;bias&#39;</span>, <span style="color:#66d9ef">None</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>reset_parameters()
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">reset_parameters</span>(self):
+</span></span><span style="display:flex;"><span>        init<span style="color:#f92672">.</span>kaiming_uniform_(self<span style="color:#f92672">.</span>weight, a<span style="color:#f92672">=</span>math<span style="color:#f92672">.</span>sqrt(<span style="color:#ae81ff">5</span>))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>bias <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>            fan_in, _ <span style="color:#f92672">=</span> init<span style="color:#f92672">.</span>_calculate_fan_in_and_fan_out(self<span style="color:#f92672">.</span>weight)
+</span></span><span style="display:flex;"><span>            bound <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">/</span> math<span style="color:#f92672">.</span>sqrt(fan_in)
+</span></span><span style="display:flex;"><span>            init<span style="color:#f92672">.</span>uniform_(self<span style="color:#f92672">.</span>bias, <span style="color:#f92672">-</span>bound, bound)
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@weak_script_method</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, input):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> F<span style="color:#f92672">.</span>linear(input, self<span style="color:#f92672">.</span>weight, self<span style="color:#f92672">.</span>bias)
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">extra_repr</span>(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39;in_features=</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">, out_features=</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">, bias=</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>in_features, self<span style="color:#f92672">.</span>out_features, self<span style="color:#f92672">.</span>bias <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>        )
+</span></span></code></pre></div><h2 id="12-conv2d类">1.2. Conv2d类</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Conv2d</span>(_ConvNd):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, in_channels, out_channels, kernel_size, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>                 padding<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, dilation<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, groups<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>                 bias<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, padding_mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;zeros&#39;</span>):
+</span></span><span style="display:flex;"><span>        kernel_size <span style="color:#f92672">=</span> _pair(kernel_size)
+</span></span><span style="display:flex;"><span>        stride <span style="color:#f92672">=</span> _pair(stride)
+</span></span><span style="display:flex;"><span>        padding <span style="color:#f92672">=</span> _pair(padding)
+</span></span><span style="display:flex;"><span>        dilation <span style="color:#f92672">=</span> _pair(dilation)
+</span></span><span style="display:flex;"><span>        super(Conv2d, self)<span style="color:#f92672">.</span>__init__(
+</span></span><span style="display:flex;"><span>            in_channels, out_channels, kernel_size, stride, padding, dilation,
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">False</span>, _pair(<span style="color:#ae81ff">0</span>), groups, bias, padding_mode)
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@weak_script_method</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, input):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>padding_mode <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;circular&#39;</span>:
+</span></span><span style="display:flex;"><span>            expanded_padding <span style="color:#f92672">=</span> ((self<span style="color:#f92672">.</span>padding[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>, self<span style="color:#f92672">.</span>padding[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>,
+</span></span><span style="display:flex;"><span>                                (self<span style="color:#f92672">.</span>padding[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>, self<span style="color:#f92672">.</span>padding[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> F<span style="color:#f92672">.</span>conv2d(F<span style="color:#f92672">.</span>pad(input, expanded_padding, mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;circular&#39;</span>),
+</span></span><span style="display:flex;"><span>                            self<span style="color:#f92672">.</span>weight, self<span style="color:#f92672">.</span>bias, self<span style="color:#f92672">.</span>stride,
+</span></span><span style="display:flex;"><span>                            _pair(<span style="color:#ae81ff">0</span>), self<span style="color:#f92672">.</span>dilation, self<span style="color:#f92672">.</span>groups)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> F<span style="color:#f92672">.</span>conv2d(input, self<span style="color:#f92672">.</span>weight, self<span style="color:#f92672">.</span>bias, self<span style="color:#f92672">.</span>stride,
+</span></span></code></pre></div><h2 id="13-自定义层的步骤">1.3. 自定义层的步骤</h2>
 <p>要实现一个自定义层大致分以下几个主要的步骤：</p>
 <p>（1）自定义一个类，继承自Module类，并且一定要实现两个基本的函数:</p>
 <pre><code>第一是构造函数__init__;
@@ -191,101 +189,100 @@
 <h1 id="2-自定义层">2. 自定义层</h1>
 <p>这个层的功能是$y=w*sqrt(x^2+bias)$</p>
 <h2 id="21-定义一个自定义层mylayer">2.1. 定义一个自定义层MyLayer</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 定义一个 my_layer.py</span>
-<span style="color:#f92672">import</span> torch
- 
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyLayer</span>(torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Module):
-    <span style="color:#e6db74">&#39;&#39;&#39;
-</span><span style="color:#e6db74">    因为这个层实现的功能是：y=weights*sqrt(x^2+bias),所以有两个参数：
-</span><span style="color:#e6db74">    权值矩阵weights
-</span><span style="color:#e6db74">    偏置矩阵bias
-</span><span style="color:#e6db74">    输入 x 的维度是（in_features,)
-</span><span style="color:#e6db74">    输出 y 的维度是（out_features,) 故而
-</span><span style="color:#e6db74">    bias 的维度是（in_fearures,)，注意这里为什么是in_features,而不是out_features，注意体会这里和Linear层的区别所在
-</span><span style="color:#e6db74">    weights 的维度是（in_features, out_features）注意这里为什么是（in_features, out_features）,而不是（out_features, in_features），注意体会这里和Linear层的区别所在
-</span><span style="color:#e6db74">    &#39;&#39;&#39;</span>
-    <span style="color:#66d9ef">def</span> __init__(self, in_features, out_features, bias<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>):
-        super(MyLayer, self)<span style="color:#f92672">.</span>__init__()  <span style="color:#75715e"># 和自定义模型一样，第一句话就是调用父类的构造函数</span>
-        self<span style="color:#f92672">.</span>in_features <span style="color:#f92672">=</span> in_features
-        self<span style="color:#f92672">.</span>out_features <span style="color:#f92672">=</span> out_features
-        self<span style="color:#f92672">.</span>weight <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Parameter(torch<span style="color:#f92672">.</span>Tensor(in_features, out_features)) <span style="color:#75715e"># 由于weights是可以训练的，所以使用Parameter来定义</span>
-        <span style="color:#66d9ef">if</span> bias:
-            self<span style="color:#f92672">.</span>bias <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Parameter(torch<span style="color:#f92672">.</span>Tensor(in_features))             <span style="color:#75715e"># 由于bias是可以训练的，所以使用Parameter来定义</span>
-        <span style="color:#66d9ef">else</span>:
-            self<span style="color:#f92672">.</span>register_parameter(<span style="color:#e6db74">&#39;bias&#39;</span>, <span style="color:#66d9ef">None</span>)
- 
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, input):
-        input_<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>pow(input,<span style="color:#ae81ff">2</span>)<span style="color:#f92672">+</span>self<span style="color:#f92672">.</span>bias
-        y<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>matmul(input_,self<span style="color:#f92672">.</span>weight)
-        <span style="color:#66d9ef">return</span> y
-</code></pre></div><h2 id="22-自定义模型并且训练">2.2. 自定义模型并且训练</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 定义一个 my_layer.py</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyLayer</span>(torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Module):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;&#39;&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    因为这个层实现的功能是：y=weights*sqrt(x^2+bias),所以有两个参数：
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    权值矩阵weights
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    偏置矩阵bias
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    输入 x 的维度是（in_features,)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    输出 y 的维度是（out_features,) 故而
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    bias 的维度是（in_fearures,)，注意这里为什么是in_features,而不是out_features，注意体会这里和Linear层的区别所在
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    weights 的维度是（in_features, out_features）注意这里为什么是（in_features, out_features）,而不是（out_features, in_features），注意体会这里和Linear层的区别所在
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#39;&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, in_features, out_features, bias<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>):
+</span></span><span style="display:flex;"><span>        super(MyLayer, self)<span style="color:#f92672">.</span>__init__()  <span style="color:#75715e"># 和自定义模型一样，第一句话就是调用父类的构造函数</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>in_features <span style="color:#f92672">=</span> in_features
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>out_features <span style="color:#f92672">=</span> out_features
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>weight <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Parameter(torch<span style="color:#f92672">.</span>Tensor(in_features, out_features)) <span style="color:#75715e"># 由于weights是可以训练的，所以使用Parameter来定义</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> bias:
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>bias <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Parameter(torch<span style="color:#f92672">.</span>Tensor(in_features))             <span style="color:#75715e"># 由于bias是可以训练的，所以使用Parameter来定义</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>register_parameter(<span style="color:#e6db74">&#39;bias&#39;</span>, <span style="color:#66d9ef">None</span>)
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, input):
+</span></span><span style="display:flex;"><span>        input_<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>pow(input,<span style="color:#ae81ff">2</span>)<span style="color:#f92672">+</span>self<span style="color:#f92672">.</span>bias
+</span></span><span style="display:flex;"><span>        y<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>matmul(input_,self<span style="color:#f92672">.</span>weight)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> y
+</span></span></code></pre></div><h2 id="22-自定义模型并且训练">2.2. 自定义模型并且训练</h2>
 <p>定义模型</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
-<span style="color:#f92672">from</span> my_layer <span style="color:#f92672">import</span> MyLayer <span style="color:#75715e"># 自定义层</span>
- 
- 
-N, D_in, D_out <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>  <span style="color:#75715e"># 一共10组样本，输入特征为5，输出特征为3 </span>
- 
-<span style="color:#75715e"># 先定义一个模型</span>
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyNet</span>(torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Module):
-    <span style="color:#66d9ef">def</span> __init__(self):
-        super(MyNet, self)<span style="color:#f92672">.</span>__init__()  <span style="color:#75715e"># 第一句话，调用父类的构造函数</span>
-        self<span style="color:#f92672">.</span>mylayer1 <span style="color:#f92672">=</span> MyLayer(D_in,D_out)
- 
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
-        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>mylayer1(x) 
-        <span style="color:#66d9ef">return</span> x
- 
-model <span style="color:#f92672">=</span> MyNet()
-print(model)
-<span style="color:#e6db74">&#39;&#39;&#39;运行结果为：
-</span><span style="color:#e6db74">MyNet(
-</span><span style="color:#e6db74">  (mylayer1): MyLayer()   # 这就是自己定义的一个层
-</span><span style="color:#e6db74">)
-</span><span style="color:#e6db74">&#39;&#39;&#39;</span>
-</code></pre></div><p>下面开始训练</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 创建输入、输出数据</span>
-x <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>randn(N, D_in)  <span style="color:#75715e">#（10，5）</span>
-y <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>randn(N, D_out) <span style="color:#75715e">#（10，3）</span>
- 
- 
-<span style="color:#75715e">#定义损失函数</span>
-loss_fn <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>MSELoss(reduction<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;sum&#39;</span>)
- 
-learning_rate <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-4</span>
-<span style="color:#75715e">#构造一个optimizer对象</span>
-optimizer <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>optim<span style="color:#f92672">.</span>Adam(model<span style="color:#f92672">.</span>parameters(), lr<span style="color:#f92672">=</span>learning_rate)
- 
-<span style="color:#66d9ef">for</span> t <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>): <span style="color:#75715e"># </span>
-    
-    <span style="color:#75715e"># 第一步：数据的前向传播，计算预测值p_pred</span>
-    y_pred <span style="color:#f92672">=</span> model(x)
- 
-    <span style="color:#75715e"># 第二步：计算计算预测值p_pred与真实值的误差</span>
-    loss <span style="color:#f92672">=</span> loss_fn(y_pred, y)
-    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;第 </span><span style="color:#e6db74">{</span>t<span style="color:#e6db74">}</span><span style="color:#e6db74"> 个epoch, 损失是 </span><span style="color:#e6db74">{</span>loss<span style="color:#f92672">.</span>item()<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
- 
-    <span style="color:#75715e"># 在反向传播之前，将模型的梯度归零，这</span>
-    optimizer<span style="color:#f92672">.</span>zero_grad()
- 
-    <span style="color:#75715e"># 第三步：反向传播误差</span>
-    loss<span style="color:#f92672">.</span>backward()
- 
-    <span style="color:#75715e"># 直接通过梯度一步到位，更新完整个网络的训练参数</span>
-    optimizer<span style="color:#f92672">.</span>step()
-
-</code></pre></div><p>结果如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">第 <span style="color:#ae81ff">0</span> 个epoch, 损失是 <span style="color:#ae81ff">42.33689498901367</span>
-第 <span style="color:#ae81ff">1</span> 个epoch, 损失是 <span style="color:#ae81ff">42.3133430480957</span>
-第 <span style="color:#ae81ff">2</span> 个epoch, 损失是 <span style="color:#ae81ff">42.289825439453125</span>
-第 <span style="color:#ae81ff">3</span> 个epoch, 损失是 <span style="color:#ae81ff">42.26634979248047</span>
-第 <span style="color:#ae81ff">4</span> 个epoch, 损失是 <span style="color:#ae81ff">42.2429084777832</span>
-第 <span style="color:#ae81ff">5</span> 个epoch, 损失是 <span style="color:#ae81ff">42.21950912475586</span>
-第 <span style="color:#ae81ff">6</span> 个epoch, 损失是 <span style="color:#ae81ff">42.19615173339844</span>
-第 <span style="color:#ae81ff">7</span> 个epoch, 损失是 <span style="color:#ae81ff">42.17283248901367</span>
-第 <span style="color:#ae81ff">8</span> 个epoch, 损失是 <span style="color:#ae81ff">42.14955520629883</span>
-第 <span style="color:#ae81ff">9</span> 个epoch, 损失是 <span style="color:#ae81ff">42.12631607055664</span>
-</code></pre></div><!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> my_layer <span style="color:#f92672">import</span> MyLayer <span style="color:#75715e"># 自定义层</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>N, D_in, D_out <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>  <span style="color:#75715e"># 一共10组样本，输入特征为5，输出特征为3 </span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 先定义一个模型</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyNet</span>(torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Module):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>        super(MyNet, self)<span style="color:#f92672">.</span>__init__()  <span style="color:#75715e"># 第一句话，调用父类的构造函数</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>mylayer1 <span style="color:#f92672">=</span> MyLayer(D_in,D_out)
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>mylayer1(x) 
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> x
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>model <span style="color:#f92672">=</span> MyNet()
+</span></span><span style="display:flex;"><span>print(model)
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;&#39;&#39;运行结果为：
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">MyNet(
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  (mylayer1): MyLayer()   # 这就是自己定义的一个层
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;&#39;&#39;</span>
+</span></span></code></pre></div><p>下面开始训练</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 创建输入、输出数据</span>
+</span></span><span style="display:flex;"><span>x <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>randn(N, D_in)  <span style="color:#75715e">#（10，5）</span>
+</span></span><span style="display:flex;"><span>y <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>randn(N, D_out) <span style="color:#75715e">#（10，3）</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#定义损失函数</span>
+</span></span><span style="display:flex;"><span>loss_fn <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>MSELoss(reduction<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;sum&#39;</span>)
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>learning_rate <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-4</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#构造一个optimizer对象</span>
+</span></span><span style="display:flex;"><span>optimizer <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>optim<span style="color:#f92672">.</span>Adam(model<span style="color:#f92672">.</span>parameters(), lr<span style="color:#f92672">=</span>learning_rate)
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> t <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>): <span style="color:#75715e"># </span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 第一步：数据的前向传播，计算预测值p_pred</span>
+</span></span><span style="display:flex;"><span>    y_pred <span style="color:#f92672">=</span> model(x)
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 第二步：计算计算预测值p_pred与真实值的误差</span>
+</span></span><span style="display:flex;"><span>    loss <span style="color:#f92672">=</span> loss_fn(y_pred, y)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;第 </span><span style="color:#e6db74">{</span>t<span style="color:#e6db74">}</span><span style="color:#e6db74"> 个epoch, 损失是 </span><span style="color:#e6db74">{</span>loss<span style="color:#f92672">.</span>item()<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 在反向传播之前，将模型的梯度归零，这</span>
+</span></span><span style="display:flex;"><span>    optimizer<span style="color:#f92672">.</span>zero_grad()
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 第三步：反向传播误差</span>
+</span></span><span style="display:flex;"><span>    loss<span style="color:#f92672">.</span>backward()
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 直接通过梯度一步到位，更新完整个网络的训练参数</span>
+</span></span><span style="display:flex;"><span>    optimizer<span style="color:#f92672">.</span>step()
+</span></span></code></pre></div><p>结果如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>第 <span style="color:#ae81ff">0</span> 个epoch, 损失是 <span style="color:#ae81ff">42.33689498901367</span>
+</span></span><span style="display:flex;"><span>第 <span style="color:#ae81ff">1</span> 个epoch, 损失是 <span style="color:#ae81ff">42.3133430480957</span>
+</span></span><span style="display:flex;"><span>第 <span style="color:#ae81ff">2</span> 个epoch, 损失是 <span style="color:#ae81ff">42.289825439453125</span>
+</span></span><span style="display:flex;"><span>第 <span style="color:#ae81ff">3</span> 个epoch, 损失是 <span style="color:#ae81ff">42.26634979248047</span>
+</span></span><span style="display:flex;"><span>第 <span style="color:#ae81ff">4</span> 个epoch, 损失是 <span style="color:#ae81ff">42.2429084777832</span>
+</span></span><span style="display:flex;"><span>第 <span style="color:#ae81ff">5</span> 个epoch, 损失是 <span style="color:#ae81ff">42.21950912475586</span>
+</span></span><span style="display:flex;"><span>第 <span style="color:#ae81ff">6</span> 个epoch, 损失是 <span style="color:#ae81ff">42.19615173339844</span>
+</span></span><span style="display:flex;"><span>第 <span style="color:#ae81ff">7</span> 个epoch, 损失是 <span style="color:#ae81ff">42.17283248901367</span>
+</span></span><span style="display:flex;"><span>第 <span style="color:#ae81ff">8</span> 个epoch, 损失是 <span style="color:#ae81ff">42.14955520629883</span>
+</span></span><span style="display:flex;"><span>第 <span style="color:#ae81ff">9</span> 个epoch, 损失是 <span style="color:#ae81ff">42.12631607055664</span>
+</span></span></code></pre></div><!-- raw HTML omitted -->
 <p>参考的原文链接：<a href="https://blog.csdn.net/qq_27825451/article/details/90705328">https://blog.csdn.net/qq_27825451/article/details/90705328</a></p>
 
     </div>

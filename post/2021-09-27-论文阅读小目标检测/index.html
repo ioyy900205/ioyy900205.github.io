@@ -4,21 +4,21 @@
     <title>48-论文阅读小目标检测综述 // 亮的笔记</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
-    <meta name="generator" content="Hugo 0.90.1" />
+    <meta name="generator" content="Hugo 0.101.0" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Liu Liang" />
     <meta name="description" content="" />
-    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.4a7ec8660f9a44b08c4da97c5f2e31b1192df1d4d0322e65c0dbbc6ecb1b863f.css" />
 
     
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="48-论文阅读小目标检测综述"/>
 <meta name="twitter:description" content="小目标检测方法的问题和方法整理。
- @TOC
+@TOC
 0.1. 多尺度方法 YOLO、Faster-RCNN只用最后一层，SSD首次采用了多尺度预测的方式。
 0.1.1. 图像金字塔方法 首先将图像缩放的不同的分辨率，通过不同分辨率的图像上分别提取特征来形成多尺度的特征表达。
 缺点：由于需要多种分辨率图像分别提取特征，严重增加了推理时间，限制了该方法在实时性要求比较高的条件下应用。
-0.1.2. DSDD算法  用101替代VGG16 将高层特征的语义信息融入底层特征（反卷积）  0.1.3. 特征金字塔方法 自底向上的分支用于产生多尺度的特征。自顶向下的方法用于将丰富语义信息传递到底层。
+0.1.2. DSDD算法 用101替代VGG16 将高层特征的语义信息融入底层特征（反卷积） 0.1.3. 特征金字塔方法 自底向上的分支用于产生多尺度的特征。自顶向下的方法用于将丰富语义信息传递到底层。
 方法：高层特征进行2倍上采样得到和相邻底层一样的分辨率，然后底层特征经过1x1卷积和上采样之后的高层特征进行元素级别的相加，再经过3x3卷积得到最终特征图。
 FPN目前已经成为了一个标准配置，也有很多基于FPN的优化工作相继涌现出来。
 0.1.4. PANet算法 作者再FPN的基础上又增加了一个自底向上的路径增强分支。
@@ -30,11 +30,11 @@ FPN中，高层特征与低层特征之间路径较长，造成在金字塔的�
 
     <meta property="og:title" content="48-论文阅读小目标检测综述" />
 <meta property="og:description" content="小目标检测方法的问题和方法整理。
- @TOC
+@TOC
 0.1. 多尺度方法 YOLO、Faster-RCNN只用最后一层，SSD首次采用了多尺度预测的方式。
 0.1.1. 图像金字塔方法 首先将图像缩放的不同的分辨率，通过不同分辨率的图像上分别提取特征来形成多尺度的特征表达。
 缺点：由于需要多种分辨率图像分别提取特征，严重增加了推理时间，限制了该方法在实时性要求比较高的条件下应用。
-0.1.2. DSDD算法  用101替代VGG16 将高层特征的语义信息融入底层特征（反卷积）  0.1.3. 特征金字塔方法 自底向上的分支用于产生多尺度的特征。自顶向下的方法用于将丰富语义信息传递到底层。
+0.1.2. DSDD算法 用101替代VGG16 将高层特征的语义信息融入底层特征（反卷积） 0.1.3. 特征金字塔方法 自底向上的分支用于产生多尺度的特征。自顶向下的方法用于将丰富语义信息传递到底层。
 方法：高层特征进行2倍上采样得到和相邻底层一样的分辨率，然后底层特征经过1x1卷积和上采样之后的高层特征进行元素级别的相加，再经过3x3卷积得到最终特征图。
 FPN目前已经成为了一个标准配置，也有很多基于FPN的优化工作相继涌现出来。
 0.1.4. PANet算法 作者再FPN的基础上又增加了一个自底向上的路径增强分支。

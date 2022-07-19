@@ -4,27 +4,39 @@
     <title>04——轻量级神经网络总结 // 亮的笔记</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
-    <meta name="generator" content="Hugo 0.90.1" />
+    <meta name="generator" content="Hugo 0.101.0" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Liu Liang" />
     <meta name="description" content="" />
-    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.4a7ec8660f9a44b08c4da97c5f2e31b1192df1d4d0322e65c0dbbc6ecb1b863f.css" />
 
     
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="04——轻量级神经网络总结"/>
 <meta name="twitter:description" content="请不要假装很努力， 因为结果不会陪你演戏！
-  1. 需解决的问题 2. 衡量指标  2.1. FLOPs 2.2. Params  2.2.1. 卷积层的参数量 2.2.2. 全连接层的参数量   2.3. MAC 2.4. MACC(也叫MADD)   3. 方法  3.1. 模型结构设计  3.1.1. 分组卷积 3.1.2. 分解卷积   3.2. 模型压缩  3.2.1. 权值量化 3.2.2. 网络剪枝 3.2.3. 低秩近似 3.2.4. 知识蒸馏      1. 需解决的问题 存储问题
-数百层网络有着大量的权值参数，保存大量权值参数对设备的内存要求很高； 速度问题
-在实际应用中，往往是毫秒级别，为了达到实际应用标准，要么提高处理器性能，要么就减少计算量。 而提高处理器性能在短时间内是无法完成的，因此减少计算量成为了主要的技术手段。 2. 衡量指标 目前，网络架构设计主要由计算复杂度的间接度量（如FLOPs）测量。然而，直接度量（例如，速度）还取决于诸如存储器访问成本和平台特性的其他因素。
-2.1. FLOPs FLOPS(floating point operations per second)"/>
+1. 需解决的问题 2. 衡量指标 2.1. FLOPs 2.2. Params 2.2.1. 卷积层的参数量 2.2.2. 全连接层的参数量 2.3. MAC 2.4. MACC(也叫MADD) 3. 方法 3.1. 模型结构设计 3.1.1. 分组卷积 3.1.2. 分解卷积 3.2. 模型压缩 3.2.1. 权值量化 3.2.2. 网络剪枝 3.2.3. 低秩近似 3.2.4. 知识蒸馏 1. 需解决的问题 存储问题
+数百层网络有着大量的权值参数，保存大量权值参数对设备的内存要求很高；速度问题
+在实际应用中，往往是毫秒级别，为了达到实际应用标准，要么提高处理器性能，要么就减少计算量。 而提高处理器性能在短时间内是无法完成的，因此减少计算量成为了主要的技术手段。2. 衡量指标 目前，网络架构设计主要由计算复杂度的间接度量（如FLOPs）测量。然而，直接度量（例如，速度）还取决于诸如存储器访问成本和平台特性的其他因素。
+2.1. FLOPs FLOPS(floating point operations per second)
+全大写，指每秒浮点运算次数，可以理解为计算的速度。是衡量硬件性能的一个指标。（硬件）
+FLOPs(floating point operations)
+s小写，指浮点运算数，理解为计算量。可以用来衡量算法/模型的复杂度。（模型） 在论文中常用GFLOPs（1 GFLOPs = 10^9 FLOPs）
+这里有个坑，HW应该是out feature的大小。
+常用的网络参数
+2.2. Params 模型的参数量。"/>
 
     <meta property="og:title" content="04——轻量级神经网络总结" />
 <meta property="og:description" content="请不要假装很努力， 因为结果不会陪你演戏！
-  1. 需解决的问题 2. 衡量指标  2.1. FLOPs 2.2. Params  2.2.1. 卷积层的参数量 2.2.2. 全连接层的参数量   2.3. MAC 2.4. MACC(也叫MADD)   3. 方法  3.1. 模型结构设计  3.1.1. 分组卷积 3.1.2. 分解卷积   3.2. 模型压缩  3.2.1. 权值量化 3.2.2. 网络剪枝 3.2.3. 低秩近似 3.2.4. 知识蒸馏      1. 需解决的问题 存储问题
-数百层网络有着大量的权值参数，保存大量权值参数对设备的内存要求很高； 速度问题
-在实际应用中，往往是毫秒级别，为了达到实际应用标准，要么提高处理器性能，要么就减少计算量。 而提高处理器性能在短时间内是无法完成的，因此减少计算量成为了主要的技术手段。 2. 衡量指标 目前，网络架构设计主要由计算复杂度的间接度量（如FLOPs）测量。然而，直接度量（例如，速度）还取决于诸如存储器访问成本和平台特性的其他因素。
-2.1. FLOPs FLOPS(floating point operations per second)" />
+1. 需解决的问题 2. 衡量指标 2.1. FLOPs 2.2. Params 2.2.1. 卷积层的参数量 2.2.2. 全连接层的参数量 2.3. MAC 2.4. MACC(也叫MADD) 3. 方法 3.1. 模型结构设计 3.1.1. 分组卷积 3.1.2. 分解卷积 3.2. 模型压缩 3.2.1. 权值量化 3.2.2. 网络剪枝 3.2.3. 低秩近似 3.2.4. 知识蒸馏 1. 需解决的问题 存储问题
+数百层网络有着大量的权值参数，保存大量权值参数对设备的内存要求很高；速度问题
+在实际应用中，往往是毫秒级别，为了达到实际应用标准，要么提高处理器性能，要么就减少计算量。 而提高处理器性能在短时间内是无法完成的，因此减少计算量成为了主要的技术手段。2. 衡量指标 目前，网络架构设计主要由计算复杂度的间接度量（如FLOPs）测量。然而，直接度量（例如，速度）还取决于诸如存储器访问成本和平台特性的其他因素。
+2.1. FLOPs FLOPS(floating point operations per second)
+全大写，指每秒浮点运算次数，可以理解为计算的速度。是衡量硬件性能的一个指标。（硬件）
+FLOPs(floating point operations)
+s小写，指浮点运算数，理解为计算量。可以用来衡量算法/模型的复杂度。（模型） 在论文中常用GFLOPs（1 GFLOPs = 10^9 FLOPs）
+这里有个坑，HW应该是out feature的大小。
+常用的网络参数
+2.2. Params 模型的参数量。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ioyy900205.github.io/post/2021-04-27-%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%80%BB%E7%BB%93/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2021-04-27T00:00:00+00:00" />

@@ -13,8 +13,8 @@
       
       <guid>https://ioyy900205.github.io/post/2021-12-24-55-python%E5%A4%9A%E8%BF%9B%E7%A8%8B/</guid>
       <description>处理数据需要
-  1. 基本原理 2. 实现代码  1. 基本原理 创建一个池子p=Pool()，将子任务通过p.apply_async(传入的任务，传入任务的参数)，添加进去。
-2. 实现代码 &amp;#39;&amp;#39;&amp;#39; Date: 2021-12-23 21:37:55 LastEditors: Liuliang LastEditTime: 2021-12-23 21:39:15 Description: &amp;#39;&amp;#39;&amp;#39; import os import random import time from multiprocessing import Pool, Process def long_time_task(name): print (&amp;#39;Run task %s(%s)...&amp;#39; % (name, os.getpid())) start = time.time() time.sleep(random.random() * 3) end = time.time() print (&amp;#39;Task %sruns %0.2fseconds.&amp;#39; % (name, (end - start)) ) if __name__==&amp;#39;__main__&amp;#39;: print (&amp;#39;Parent process %s.&amp;#39; % os.</description>
+1. 基本原理 2. 实现代码 1. 基本原理 创建一个池子p=Pool()，将子任务通过p.apply_async(传入的任务，传入任务的参数)，添加进去。
+2. 实现代码 &amp;#39;&amp;#39;&amp;#39; Date: 2021-12-23 21:37:55 LastEditors: Liuliang LastEditTime: 2021-12-23 21:39:15 Description: &amp;#39;&amp;#39;&amp;#39; import os import random import time from multiprocessing import Pool, Process def long_time_task(name): print (&amp;#39;Run task %s (%s)...&amp;#39; % (name, os.getpid())) start = time.time() time.sleep(random.random() * 3) end = time.time() print (&amp;#39;Task %s runs %0.2f seconds.&amp;#39; % (name, (end - start)) ) if __name__==&amp;#39;__main__&amp;#39;: print (&amp;#39;Parent process %s.&amp;#39; % os.</description>
     </item>
     
     <item>
@@ -24,11 +24,11 @@
       
       <guid>https://ioyy900205.github.io/post/2021-09-24-47-%E4%BB%8A%E6%97%A5%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/</guid>
       <description>现在时间比较少了，只能做一下阅读记录
- @TOC
+@TOC
 1. 工具类 Pytorch中requires_grad_(), detach(), torch.no_grad()的区别
 https://noahsnail.com/2020/05/29/2020-05-29-Pytorch%E4%B8%ADrequires_grad_(),%20detach(),%20torch.no_grad()%E7%9A%84%E5%8C%BA%E5%88%AB/
 a = torch.tensor([1.0, 2.0]) b = a.data a.data返回的是一个新的Tensor对象b，a, b的id不同，说明二者不是同一个Tensor，但b与a共享数据的存储空间，即二者的数据部分指向同一块内存，因此修改b的元素时，a的元素也对应修改。
- 参考资料</description>
+参考资料</description>
     </item>
     
     <item>
@@ -38,8 +38,8 @@ a = torch.tensor([1.0, 2.0]) b = a.data a.data返回的是一个新的Tensor对�
       
       <guid>https://ioyy900205.github.io/post/2021-08-24-46-%E4%BA%8C%E5%88%86%E5%8F%98%E7%A7%8D%E5%BE%88%E5%A5%BD%E7%90%86%E8%A7%A3%E7%9A%84%E6%96%B9%E5%BC%8F/</guid>
       <description>本文介绍四种二分查找：
- 查找第⼀个值等于给定值的元素 查找最后⼀个值等于给定值的元素 查找第⼀个⼤于等于给定值的元素 查找最后⼀个⼩于等于给定值的元素    1. 查找第⼀个值等于给定值的元素 2. 查找最后⼀个值等于给定值的元素 3. 查找第⼀个⼤于等于给定值的元素 4. 查找最后⼀个⼩于等于给定值的元素 2. 对于a[mid]&amp;lt;=value，如果mid = len -1 或者 mid 后面的值 大于 value 则返回mid ,否则 mid+1:high  1. 查找第⼀个值等于给定值的元素 a[mid]跟要查找的value的⼤⼩关系有三种情况：⼤于、⼩于、等于。
-1. 对于a[mid]&amp;gt;value的情况，我们需要更新high= mid-1。2. 对于a[mid]&amp;lt;value的情况，我们需要更新 low=mid+1。3. 那当a[mid]=value的时候， 我们就需要确认⼀下这个a[mid]是不是第⼀个值等于给定值的元素。3.1 如果mid等于0，那这个元素已经是数组的第⼀个元素，那它肯定是我们要 找的；3.2 如果mid不等于0，但a[mid]的前⼀个元素a[mid-1]不等于value，那也说明a[mid]就是我们要 找的第⼀个值等于给定值的元素。 3.3 如果经过检查之后发现a[mid]前⾯的⼀个元素a[mid-1]也等于value，那说明此时的a[mid]肯定不是我 们要查找的第⼀个值等于给定值的元素。那我们就更新high=mid-1，因为要找的元素肯定出现在 [low, mid-1]之间。 2. 查找最后⼀个值等于给定值的元素 1. 对于a[mid]&amp;gt;value的情况，我们需要更新high= mid-1。2. 对于a[mid]&amp;lt;value的情况，我们需要更新 low=mid+1。3. 那当a[mid]=value的时候， 我们就需要确认⼀下这个a[mid]是不是最后一个等于给定值的元素。3.1 如果mid = len(nums)-1，那么这个元素已经数组最后一个元素，那它肯定是需要找的。3.</description>
+查找第⼀个值等于给定值的元素 查找最后⼀个值等于给定值的元素 查找第⼀个⼤于等于给定值的元素 查找最后⼀个⼩于等于给定值的元素 1. 查找第⼀个值等于给定值的元素 2. 查找最后⼀个值等于给定值的元素 3. 查找第⼀个⼤于等于给定值的元素 4. 查找最后⼀个⼩于等于给定值的元素 2. 对于a[mid]&amp;lt;=value，如果mid = len -1 或者 mid 后面的值 大于 value 则返回mid ,否则 mid+1:high 1. 查找第⼀个值等于给定值的元素 a[mid]跟要查找的value的⼤⼩关系有三种情况：⼤于、⼩于、等于。
+1. 对于a[mid]&amp;gt;value的情况，我们需要更新high= mid-1。2. 对于a[mid]&amp;lt;value的情况，我们需要更新 low=mid+1。3. 那当a[mid]=value的时候， 我们就需要确认⼀下这个a[mid]是不是第⼀个值等于给定值的元素。3.1 如果mid等于0，那这个元素已经是数组的第⼀个元素，那它肯定是我们要 找的；3.2 如果mid不等于0，但a[mid]的前⼀个元素a[mid-1]不等于value，那也说明a[mid]就是我们要 找的第⼀个值等于给定值的元素。 3.3 如果经过检查之后发现a[mid]前⾯的⼀个元素a[mid-1]也等于value，那说明此时的a[mid]肯定不是我 们要查找的第⼀个值等于给定值的元素。那我们就更新high=mid-1，因为要找的元素肯定出现在 [low, mid-1]之间。2. 查找最后⼀个值等于给定值的元素 1. 对于a[mid]&amp;gt;value的情况，我们需要更新high= mid-1。2. 对于a[mid]&amp;lt;value的情况，我们需要更新 low=mid+1。3. 那当a[mid]=value的时候， 我们就需要确认⼀下这个a[mid]是不是最后一个等于给定值的元素。3.1 如果mid = len(nums)-1，那么这个元素已经数组最后一个元素，那它肯定是需要找的。3.2 如果mid ！= len(nums)-1 。但是 nus[mid] !</description>
     </item>
     
     <item>
@@ -49,13 +49,13 @@ a = torch.tensor([1.0, 2.0]) b = a.data a.data返回的是一个新的Tensor对�
       
       <guid>https://ioyy900205.github.io/post/2021-08-17-44-%E7%94%A8%E9%80%92%E5%BD%92%E6%A0%91%E5%88%86%E6%9E%90%E5%A4%8D%E6%9D%82%E5%BA%A6/</guid>
       <description>用递归树分析复杂度
- @TOC
+@TOC
 原理 归并排序每次会 将数据规模⼀分为⼆。
 因为每次分解都是⼀分为⼆，所以代价很低，我们把时间上的消耗记作常量$1$。归并算法中⽐较 耗时的是归并操作，也就是把两个⼦数组合并为⼤数组。从图中我们可以看出，每⼀层归并操作消 耗的时间总和是⼀样的，跟要排序的数据规模有关。我们把每⼀层归并操作消耗的时间记作$n$。 现在，我们只需要知道这棵树的⾼度$h$，⽤⾼度$h$乘以每⼀层的时间消耗$n$，就可以得到总的 时间复杂度$O(n*h)$。
 从归并排序的原理和递归树，可以看出来，归并排序递归树是⼀棵满⼆叉树。我们前两节中讲到， 满⼆叉树的⾼度⼤约是$\log_{2}n$，所以，归并排序递归实现的时间复杂度就是$O(n\log n)$。我 这⾥的时间复杂度都是估算的，对树的⾼度的计算也没有那么精确，但是这并不影响复杂度的计算 结果。 利⽤递归树的时间复杂度分析⽅法并不难理解，关键还是在实战，所以，接下来我会通过三个实际 的递归算法，带你实战⼀下递归的复杂度分析。学完这节课之后，你应该能真正掌握递归代码的复 杂度分析。
 实战1 在⽤递归树推导之前，我们先来回忆⼀下⽤递推公式的分析⽅法。你可以回想⼀下，当时，我们为 什么说⽤递推公式来求解平均时间复杂度⾮常复杂？ 快速排序在最好情况下，每次分区都能⼀分为⼆，这个时候⽤递推公式$T(n)=2T(\frac{n}{2})+n$， 很容易就能推导出时间复杂度是$O(n\log n)$。但是，我们并不可能每次分区都这么幸运，正好⼀ 分为⼆。 我们假设平均情况下，每次分区之后，两个分区的⼤⼩⽐例为$1:k$。当$k=9$时，如果⽤递推公式 的⽅法来求解时间复杂度的话，递推公式就写成$T(n)=T(\frac{n}{10})+T(\frac{9n}{10})+n$。 这个公式可以推导出时间复杂度，但是推导过程⾮常复杂。那我们来看看，⽤递归树来分析快速排 序的平均情况时间复杂度，是不是⽐较简单呢？ 我们还是取$k$等于$9$，也就是说，每次分区都很不平均，⼀个分区是另⼀个分区的$9$倍。如果 我们把递归分解的过程画成递归树，就是下⾯这个样⼦：
 快速排序的过程中，每次分区都要遍历待分区区间的所有数据，所以，每⼀层分区操作所遍历的数 据的个数之和就是$n$。我们现在只要求出递归树的⾼度$h$，这个快排过程遍历的数据个数就是 $h * n$ ，也就是说，时间复杂度就是$O(h * n)$。 因为每次分区并不是均匀地⼀分为⼆，所以递归树并不是满⼆叉树。这样⼀个递归树的⾼度是多少 呢？我们知道，快速排序结束的条件就是待排序的⼩区间，⼤⼩为$1$，也就是说叶⼦节点⾥的数据规 模是$1$。从根节点$n$到叶⼦节点$1$，递归树中最短的⼀个路径每次都乘以$\frac{1}{10}$，最⻓ 的⼀个路径每次都乘以$\frac{9}{10}$。通过计算，我们可以得到，从根节点到叶⼦节点的最短路径 是$\log_{10}n$，最⻓的路径是$\log_{\frac{10}{9}}n$。
- 参考资料</description>
+参考资料</description>
     </item>
     
     <item>
@@ -67,7 +67,7 @@ a = torch.tensor([1.0, 2.0]) b = a.data a.data返回的是一个新的Tensor对�
       <description>这里给出NCNN模型的推理代码，供大家参考。
 说一句题外话，这里我的tensor操作感觉有点繁琐，导致推理速度非常非常慢，也希望各位有比较好的方法能够提供给我。
 我的联系方式是18811555730
-  1. NCNN推理代码 2. 结果验证  1. NCNN推理代码 &amp;#39;&amp;#39;&amp;#39; Date: 2021-08-10 14:12:17 LastEditors: Liuliang LastEditTime: 2021-08-17 14:08:50 Description: NCNN在imagenet上的推理验证 &amp;#39;&amp;#39;&amp;#39; import argparse import os import random import shutil import time import warnings from Average_ import AverageMeter from Progress_ import ProgressMeter import torch import torch.nn as nn import torch.nn.parallel import torch.backends.cudnn as cudnn import torch.distributed as dist import torch.optim import torch.multiprocessing as mp import torch.utils.data import torch.utils.data.distributed import torchvision.</description>
+1. NCNN推理代码 2. 结果验证 1. NCNN推理代码 &amp;#39;&amp;#39;&amp;#39; Date: 2021-08-10 14:12:17 LastEditors: Liuliang LastEditTime: 2021-08-17 14:08:50 Description: NCNN在imagenet上的推理验证 &amp;#39;&amp;#39;&amp;#39; import argparse import os import random import shutil import time import warnings from Average_ import AverageMeter from Progress_ import ProgressMeter import torch import torch.nn as nn import torch.nn.parallel import torch.backends.cudnn as cudnn import torch.distributed as dist import torch.optim import torch.multiprocessing as mp import torch.utils.data import torch.utils.data.distributed import torchvision.transforms as transforms import torchvision.</description>
     </item>
     
     <item>
@@ -77,7 +77,7 @@ a = torch.tensor([1.0, 2.0]) b = a.data a.data返回的是一个新的Tensor对�
       
       <guid>https://ioyy900205.github.io/post/2021-08-17-42-onnx%E6%A8%A1%E5%9E%8B%E5%9C%A8imagenet%E4%B8%8A%E7%9A%84%E6%8E%A8%E7%90%86%E9%AA%8C%E8%AF%81/</guid>
       <description>当训练模型转到ONNX模型之后，我一直在思考是否需要对转换后的ONNX模型进行验证。网上也找不到代码，这里我提供一个，方便大家验证。
-  1. ONNX验证代码 2. 结果展示  1. ONNX验证代码 &amp;#39;&amp;#39;&amp;#39; Date: 2021-08-10 14:12:17 LastEditors: Liuliang LastEditTime: 2021-08-17 11:11:54 Description: onnx在imagenet上的推理验证 &amp;#39;&amp;#39;&amp;#39; import argparse import os import random import shutil import time import warnings from Average_ import AverageMeter from Progress_ import ProgressMeter import torch import torch.nn as nn import torch.nn.parallel import torch.backends.cudnn as cudnn import torch.distributed as dist import torch.optim import torch.multiprocessing as mp import torch.utils.data import torch.utils.data.distributed import torchvision.transforms as transforms import torchvision.</description>
+1. ONNX验证代码 2. 结果展示 1. ONNX验证代码 &amp;#39;&amp;#39;&amp;#39; Date: 2021-08-10 14:12:17 LastEditors: Liuliang LastEditTime: 2021-08-17 11:11:54 Description: onnx在imagenet上的推理验证 &amp;#39;&amp;#39;&amp;#39; import argparse import os import random import shutil import time import warnings from Average_ import AverageMeter from Progress_ import ProgressMeter import torch import torch.nn as nn import torch.nn.parallel import torch.backends.cudnn as cudnn import torch.distributed as dist import torch.optim import torch.multiprocessing as mp import torch.utils.data import torch.utils.data.distributed import torchvision.transforms as transforms import torchvision.</description>
     </item>
     
     <item>
@@ -87,8 +87,8 @@ a = torch.tensor([1.0, 2.0]) b = a.data a.data返回的是一个新的Tensor对�
       
       <guid>https://ioyy900205.github.io/post/2021-07-31-40_c&#43;&#43;%E8%B0%83%E8%AF%95%E9%97%AE%E9%A2%98/</guid>
       <description>json文件配置，复制粘贴即可
- 1. 神奇的json文件 ctrl+c ctrl+v 深藏功与名
-{ &amp;#34;version&amp;#34;: &amp;#34;2.0.0&amp;#34;, &amp;#34;options&amp;#34;: { &amp;#34;cwd&amp;#34;: &amp;#34;${workspaceFolder}/build&amp;#34; }, &amp;#34;tasks&amp;#34;: [ { &amp;#34;type&amp;#34;: &amp;#34;shell&amp;#34;, &amp;#34;label&amp;#34;: &amp;#34;cmake&amp;#34;, &amp;#34;command&amp;#34;: &amp;#34;cmake&amp;#34;, &amp;#34;args&amp;#34;: [ &amp;#34;..&amp;#34; ] }, { &amp;#34;label&amp;#34;: &amp;#34;make&amp;#34;, &amp;#34;group&amp;#34;: { &amp;#34;kind&amp;#34;: &amp;#34;build&amp;#34;, &amp;#34;isDefault&amp;#34;: true }, &amp;#34;command&amp;#34;: &amp;#34;make&amp;#34;, &amp;#34;args&amp;#34;: [ ] }, { &amp;#34;label&amp;#34;: &amp;#34;Build&amp;#34;, &amp;#34;dependsOrder&amp;#34;: &amp;#34;sequence&amp;#34;, // 按列出的顺序执行任务依赖项  &amp;#34;dependsOn&amp;#34;:[ &amp;#34;cmake&amp;#34;, &amp;#34;make&amp;#34; ] } ] }  参考资料</description>
+1. 神奇的json文件 ctrl+c ctrl+v 深藏功与名
+{ &amp;#34;version&amp;#34;: &amp;#34;2.0.0&amp;#34;, &amp;#34;options&amp;#34;: { &amp;#34;cwd&amp;#34;: &amp;#34;${workspaceFolder}/build&amp;#34; }, &amp;#34;tasks&amp;#34;: [ { &amp;#34;type&amp;#34;: &amp;#34;shell&amp;#34;, &amp;#34;label&amp;#34;: &amp;#34;cmake&amp;#34;, &amp;#34;command&amp;#34;: &amp;#34;cmake&amp;#34;, &amp;#34;args&amp;#34;: [ &amp;#34;..&amp;#34; ] }, { &amp;#34;label&amp;#34;: &amp;#34;make&amp;#34;, &amp;#34;group&amp;#34;: { &amp;#34;kind&amp;#34;: &amp;#34;build&amp;#34;, &amp;#34;isDefault&amp;#34;: true }, &amp;#34;command&amp;#34;: &amp;#34;make&amp;#34;, &amp;#34;args&amp;#34;: [ ] }, { &amp;#34;label&amp;#34;: &amp;#34;Build&amp;#34;, &amp;#34;dependsOrder&amp;#34;: &amp;#34;sequence&amp;#34;, // 按列出的顺序执行任务依赖项 &amp;#34;dependsOn&amp;#34;:[ &amp;#34;cmake&amp;#34;, &amp;#34;make&amp;#34; ] } ] } 参考资料</description>
     </item>
     
     <item>
@@ -98,7 +98,7 @@ a = torch.tensor([1.0, 2.0]) b = a.data a.data返回的是一个新的Tensor对�
       
       <guid>https://ioyy900205.github.io/post/2021-07-17-39%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1%E9%97%AE%E9%A2%98/</guid>
       <description>简单讨论 Iterable\Iterator\Generator的概念
-  1. Iterable 2. Iterator 3. Generator  1. Iterable  一个可迭代的对象是实现了__iter__()方法的对象 它要在for循环中使用，就必须满足iter()的调用(即调用这个函数不会出错，能够正确转成一个Iterator对象) 可以通过已知的可迭代对象来辅助实现我们自定义的可迭代对象。 一个对象实现了__getitem__()方法可以通过iter()函数转成Iterator，即可以在for循环中使用，但它不是一个可迭代对象(可用isinstance方法检测())  2. Iterator 一个对象实现了__iter__()和__next__()方法，那么它就是一个迭代器对象
+1. Iterable 2. Iterator 3. Generator 1. Iterable 一个可迭代的对象是实现了__iter__()方法的对象 它要在for循环中使用，就必须满足iter()的调用(即调用这个函数不会出错，能够正确转成一个Iterator对象) 可以通过已知的可迭代对象来辅助实现我们自定义的可迭代对象。 一个对象实现了__getitem__()方法可以通过iter()函数转成Iterator，即可以在for循环中使用，但它不是一个可迭代对象(可用isinstance方法检测()) 2. Iterator 一个对象实现了__iter__()和__next__()方法，那么它就是一个迭代器对象
 class IterObj: def __init__(self): self.a = [3, 5, 7, 11, 13, 17, 19] self.n = len(self.a) self.i = 0 def __iter__(self): return iter(self.a) def __next__(self): while self.i &amp;lt; self.n: v = self.a[self.i] self.i += 1 return v else: self.i = 0 raise StopIteration() 集合和序列对象是可迭代的但不是迭代器. 文件对象是迭代器
 一个迭代器(Iterator)对象不仅可以在for循环中使用，还可以通过内置函数next()函数进行调用。 例如
 it = IterObj() next(it) # 3 next(it) # 5 3.</description>
@@ -111,7 +111,7 @@ it = IterObj() next(it) # 3 next(it) # 5 3.</description>
       
       <guid>https://ioyy900205.github.io/post/2021-07-13-38binary_search/</guid>
       <description>Algorithm is amazing
- @TOC
+@TOC
 1. 传统二分的问题 1.1. 取中位数索引的代码有问题 int mid = (left + right) / 2 这行代码是有问题的，在 left 和 right 都比较大的时候，left + right 很有可能超过 int 类型能表示的最大值，即整型溢出，为了避免这个问题，应该写成：
 int mid = left + (right - left) / 2 2. 神奇二分查找 （1）首先把循环可以进行的条件写成 while(left &amp;lt; right)，在退出循环的时候，一定有 left == right 成立，此时返回 left 或者 right 都可以
 &amp;#39;&amp;#39;&amp;#39; Date: 2021-07-13 15:13:49 LastEditors: Liuliang LastEditTime: 2021-07-13 15:20:27 Description: &amp;#39;&amp;#39;&amp;#39; class solution: def search_left(self,nums,target): left = 0 right = len(nums) if right == 0: return 0 while left &amp;lt; right: mid = (left + right) // 2 if nums[mid] &amp;lt; target: left = mid + 1 else: right = mid return left def search_right(self,nums,target): left = 0 right = len(nums) if right == 0: return 0 while left &amp;lt; right: mid = (left + right) // 2 if nums[mid] &amp;gt; target: right = mid - 1 else: left = mid return left c = solution() list = [2,4,4,4,5,6] m = c.</description>

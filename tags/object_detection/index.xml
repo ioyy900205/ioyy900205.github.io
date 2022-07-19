@@ -13,7 +13,7 @@
       
       <guid>https://ioyy900205.github.io/post/2021-06-05-oldconda%E5%91%BD%E4%BB%A4/</guid>
       <description>环境配置
-  1. 安装环境 2. 克隆环境 3. 删除环境 4. mmdetection安装 5. detection2安装  1. 安装环境 conda create -n env_ori python=3.7 -y conda activate env_ori pip install torch==1.8.0 torchvision==0.9.0 torchaudio==0.8.0 2. 克隆环境 conda create -n env_ori_1 &amp;ndash;clone env_ori
+1. 安装环境 2. 克隆环境 3. 删除环境 4. mmdetection安装 5. detection2安装 1. 安装环境 conda create -n env_ori python=3.7 -y conda activate env_ori pip install torch==1.8.0 torchvision==0.9.0 torchaudio==0.8.0 2. 克隆环境 conda create -n env_ori_1 &amp;ndash;clone env_ori
 3. 删除环境 conda remove -n py36 &amp;ndash;all
 4. mmdetection安装 conda create -n mmdet &amp;ndash;clone env_ori
 git clone https://github.com/open-mmlab/mmdetection.git
@@ -21,7 +21,7 @@ cd mmdetection
 pip install mmcv
 python setup.py develop
 以上图片是网上随便down了一个，然后在跑了一下demo，测试成功！
-5. detection2安装  参考资料
+5. detection2安装 参考资料
 https://github.com/open-mmlab/mmdetection</description>
     </item>
     
@@ -32,7 +32,7 @@ https://github.com/open-mmlab/mmdetection</description>
       
       <guid>https://ioyy900205.github.io/post/2021-05-13-11ssd_single-shot-multibox-detector-copy/</guid>
       <description>请不要假装很努力， 因为结果不会陪你演戏！
-  1. background 2. 目标损失函数 3. 多尺度多比例默认框 4. 负样本均衡 5. 数据增强 6. 性能比较  6.1. 在VOC2007测试集上的检测性能 6.2. 在VOC2012测试集上的检测性能 6.3. 在COCO测试集上的检测性能   7. 总结  1. background ECCV2016 author:wei liu 实现真正的实时
+1. background 2. 目标损失函数 3. 多尺度多比例默认框 4. 负样本均衡 5. 数据增强 6. 性能比较 6.1. 在VOC2007测试集上的检测性能 6.2. 在VOC2012测试集上的检测性能 6.3. 在COCO测试集上的检测性能 7. 总结 1. background ECCV2016 author:wei liu 实现真正的实时
 2016年，Wei Liu等人提出了SSD算法，它是继YOLOv1算法提出后的又一单阶段目标检测算法。在当时，单阶段算法相比于以R-CNN系列为主的双阶段算法更快，所以被学术界和工业界所青睐。为了提高检测的精度，SSD创造性地提出了多尺度预测的目标检测算法，使得网络更容易适应对不同大小物体的检测。
 放上对比结构如下： 我的理解是 网络抽取不同的特征层进行预测，较低的特征层可以预测教细节物体，较高特征层可以预测教大物体.
 整体结构上，SSD采用了VGG-16作为骨干网络提取特征。在骨干网络末尾添加了若干个特征层，特征层与特征层之间使用1x1和3x3的卷积核计算特征和降采样，并从中选择了6个不同大小的特征层来预测目标。
@@ -48,7 +48,8 @@ https://github.com/open-mmlab/mmdetection</description>
 4. 负样本均衡 在训练过程中，大部分的预选框Anchors并不能和真实框匹配上，因此负样本很多，而正样本却很少，正负样本数量严重失衡，不利于训练。
 考虑到这个问题，SSD在训练过程中，没有选取所有的负样本。而是先将负样本的置信度损失进行排序，仅选取置信度高的一些负样本，使得负样本数与正样本数之间的比率最大不超过3：1。作者认为，这样使得训练更稳定更快。
 5. 数据增强 数据增强又叫数据增广，是扩大数据集的一种方式，经常用于深度学习中来防止过拟合。在SSD算法中，也使用了一些数据增强的技巧。采用数据增强后，目标检测性能也得到了明显的提升，具体实验结果如下:
-6. 性能比较 6.</description>
+6. 性能比较 6.1. 在VOC2007测试集上的检测性能 分析上表，容易得出结论：
+对比检测精度可知，SSD算法的性能整体上优于Fast R-CN 和 Faster R-CNN算法。对比SSD300和SSD512可知，图像输入尺寸为512x512的SSD算法比输入尺寸为300x300的SSD算法检测性能更好。对比07、 07+12、07+12+COCO可知，训练集的扩充有助于检测性能的提升。注：表格名词解释（下同）：</description>
     </item>
     
     <item>
@@ -58,11 +59,12 @@ https://github.com/open-mmlab/mmdetection</description>
       
       <guid>https://ioyy900205.github.io/post/2021-05-12-09-faster-r-cnn/</guid>
       <description>请不要假装很努力， 因为结果不会陪你演戏！
-  1. 背景  1.1. 时间线 1.2. 结构  1.2.1. CNN 1.2.2. RPN 1.2.3. ROI Pooling     2. 一些问题 3. 损失函数 4. 后处理  4.1. NMS 4.2. Proposal selection 4.3. Standalone application   5. 训练 6. 推理 7. 后记  1. 背景 Faster R-CNN最初发表于NIPS 2015。发表后，它经历了几次修改。
+1. 背景 1.1. 时间线 1.2. 结构 1.2.1. CNN 1.2.2. RPN 1.2.3. ROI Pooling 2. 一些问题 3. 损失函数 4. 后处理 4.1. NMS 4.2. Proposal selection 4.3. Standalone application 5. 训练 6. 推理 7. 后记 1. 背景 Faster R-CNN最初发表于NIPS 2015。发表后，它经历了几次修改。
 Faster R-CNN是R-CNN论文的第三次迭代&amp;ndash;Ross Girshick是作者和合作者。
-1.1. 时间线   R-CNN
+1.1. 时间线 R-CNN
 Published in 2014
-“Rich feature hierarchies for accurate object detection and semantic segmentation”,</description>
+“Rich feature hierarchies for accurate object detection and semantic segmentation”,
+which used an algorithm called Selective Search to propose possible regions of interest and a standard Convolutional Neural Network (CNN) to classify and adjust them.</description>
     </item>
     
     <item>
@@ -72,12 +74,14 @@ Published in 2014
       
       <guid>https://ioyy900205.github.io/post/2021-05-12-10%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%8F%82%E6%95%B0/</guid>
       <description>请不要假装很努力， 因为结果不会陪你演戏！
-  1. background Pascal VOC 和 COCO 2. precision 和 recall  2.1. 基本定义 2.2. precision-recall curve   3. COCO Evaluation Result 4. 参考  1. background Pascal VOC 和 COCO 最近看目标检测，少不了了解其中参数的意义。一顿搜所哎。
+1. background Pascal VOC 和 COCO 2. precision 和 recall 2.1. 基本定义 2.2. precision-recall curve 3. COCO Evaluation Result 4. 参考 1. background Pascal VOC 和 COCO 最近看目标检测，少不了了解其中参数的意义。一顿搜所哎。
 最精简的回答：
 目标检测中衡量识别精度的指标是mAP（mean average precision）。多个类别物体检测中，每一个类别都可以根据recall和precision绘制一条曲线，AP就是该曲线下的面积，mAP是多个类别AP的平均值
 番外篇 在coco数据集出来之前，基本都用pascal voc 现在都用coco了。
-2. precision 和 recall 2.1. 基本定义  precision查准率 preicision是在你认为的正样本中， 有多大比例真的是正样本 recall查全率 recall则是在真正的正样本中， 有多少被你找到了  2.2. precision-recall curve 如果threshold太高， prediction非常严格， 所以我们认为是鸭子的基本都是鸭子，precision就高了；但也因为筛选太严格， 我们也放过了一些score比较低的鸭子， 所以recall就低了
-如果threshold太低， 什么都会被当成鸭子， precision就会很低， recall就会很高。</description>
+2. precision 和 recall 2.1. 基本定义 precision查准率 preicision是在你认为的正样本中， 有多大比例真的是正样本 recall查全率 recall则是在真正的正样本中， 有多少被你找到了 2.2. precision-recall curve 如果threshold太高， prediction非常严格， 所以我们认为是鸭子的基本都是鸭子，precision就高了；但也因为筛选太严格， 我们也放过了一些score比较低的鸭子， 所以recall就低了
+如果threshold太低， 什么都会被当成鸭子， precision就会很低， recall就会很高。
+因为我们根据不同的threshold， 可以取到不同（也可能相同）的precision recall值。 这样想的话对于每个threshold，我们都有（precision， recall）的pair， 也就有了precision和recall之间的curve关系。
+有了这么一条precision-recall curve， 他衡量着两个有价值的判断标准， precision和recall的关系， 那么不如两个一起动态考虑， 就有了鸭子这个class的Average Precision， 即curve下的面积， 他可以充分的表示在这个model中， precision和recall的总体优劣。</description>
     </item>
     
   </channel>

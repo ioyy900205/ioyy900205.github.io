@@ -4,17 +4,17 @@
     <title>53-model.train解读 // 亮的笔记</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
-    <meta name="generator" content="Hugo 0.90.1" />
+    <meta name="generator" content="Hugo 0.101.0" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Liu Liang" />
     <meta name="description" content="" />
-    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.4a7ec8660f9a44b08c4da97c5f2e31b1192df1d4d0322e65c0dbbc6ecb1b863f.css" />
 
     
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="53-model.train解读"/>
 <meta name="twitter:description" content="还没有看到有人从源码的角度去解决这个问题，所以研究了一下。
- @TOC
+@TOC
 寄生关系 model.train()实际上是 nn.moduel 下的一个函数
 打开网页： https://github.com/pytorch/pytorch/tree/master/torch/nn/modules 可以看到nn.modules下面有各种py文件，其中module.py 中实现的是非常重要的基类。
 官网的注释是：Base class for all neural network modules,your models should also subclass this class.
@@ -24,7 +24,7 @@ def train(self: T, mode: bool = True) -&gt; T: r&#34;&#34;&#34;Sets the module i
 
     <meta property="og:title" content="53-model.train解读" />
 <meta property="og:description" content="还没有看到有人从源码的角度去解决这个问题，所以研究了一下。
- @TOC
+@TOC
 寄生关系 model.train()实际上是 nn.moduel 下的一个函数
 打开网页： https://github.com/pytorch/pytorch/tree/master/torch/nn/modules 可以看到nn.modules下面有各种py文件，其中module.py 中实现的是非常重要的基类。
 官网的注释是：Base class for all neural network modules,your models should also subclass this class.
@@ -111,176 +111,173 @@ def train(self: T, mode: bool = True) -&gt; T: r&#34;&#34;&#34;Sets the module i
 可以看到nn.modules下面有各种py文件，其中module.py 中实现的是非常重要的基类。</p>
 <p>官网的注释是：Base class for all neural network modules,your models should also subclass this class.</p>
 <p>其中：默认了一个self.training=True</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">training: bool
-    _is_full_backward_hook: Optional[bool]
-
-    <span style="color:#66d9ef">def</span> __init__(self) <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">None</span>:
-        <span style="color:#e6db74">&#34;&#34;&#34;
-</span><span style="color:#e6db74">        Initializes internal Module state, shared by both nn.Module and ScriptModule.
-</span><span style="color:#e6db74">        &#34;&#34;&#34;</span>
-        torch<span style="color:#f92672">.</span>_C<span style="color:#f92672">.</span>_log_api_usage_once(<span style="color:#e6db74">&#34;python.nn_module&#34;</span>)
-
-        self<span style="color:#f92672">.</span>training <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
-        self<span style="color:#f92672">.</span>_parameters: Dict[str, Optional[Parameter]] <span style="color:#f92672">=</span> OrderedDict()
-        self<span style="color:#f92672">.</span>_buffers: Dict[str, Optional[Tensor]] <span style="color:#f92672">=</span> OrderedDict()
-        self<span style="color:#f92672">.</span>_non_persistent_buffers_set: Set[str] <span style="color:#f92672">=</span> set()
-</code></pre></div><p>接下来看train函数</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">train</span>(self: T, mode: bool <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>) <span style="color:#f92672">-&gt;</span> T:
-        <span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;&#34;&#34;Sets the module in training mode.
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">        This has any effect only on certain modules. See documentations of
-</span><span style="color:#e6db74">        particular modules for details of their behaviors in training/evaluation
-</span><span style="color:#e6db74">        mode, if they are affected, e.g. :class:`Dropout`, :class:`BatchNorm`,
-</span><span style="color:#e6db74">        etc.
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">        Args:
-</span><span style="color:#e6db74">            mode (bool): whether to set training mode (``True``) or evaluation
-</span><span style="color:#e6db74">                         mode (``False``). Default: ``True``.
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">        Returns:
-</span><span style="color:#e6db74">            Module: self
-</span><span style="color:#e6db74">        &#34;&#34;&#34;</span>
-        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> isinstance(mode, bool):
-            <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">ValueError</span>(<span style="color:#e6db74">&#34;training mode is expected to be boolean&#34;</span>)
-        self<span style="color:#f92672">.</span>training <span style="color:#f92672">=</span> mode
-        <span style="color:#66d9ef">for</span> module <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>children():
-            module<span style="color:#f92672">.</span>train(mode)
-        <span style="color:#66d9ef">return</span> self
-
-</code></pre></div><p>这里也说了Droput,BN etc.那么到底有哪些呢？</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>training: bool
+</span></span><span style="display:flex;"><span>    _is_full_backward_hook: Optional[bool]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self) <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        Initializes internal Module state, shared by both nn.Module and ScriptModule.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>        torch<span style="color:#f92672">.</span>_C<span style="color:#f92672">.</span>_log_api_usage_once(<span style="color:#e6db74">&#34;python.nn_module&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>training <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>_parameters: Dict[str, Optional[Parameter]] <span style="color:#f92672">=</span> OrderedDict()
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>_buffers: Dict[str, Optional[Tensor]] <span style="color:#f92672">=</span> OrderedDict()
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>_non_persistent_buffers_set: Set[str] <span style="color:#f92672">=</span> set()
+</span></span></code></pre></div><p>接下来看train函数</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">train</span>(self: T, mode: bool <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>) <span style="color:#f92672">-&gt;</span> T:
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;&#34;&#34;Sets the module in training mode.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        This has any effect only on certain modules. See documentations of
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        particular modules for details of their behaviors in training/evaluation
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        mode, if they are affected, e.g. :class:`Dropout`, :class:`BatchNorm`,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        etc.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        Args:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            mode (bool): whether to set training mode (``True``) or evaluation
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                         mode (``False``). Default: ``True``.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        Returns:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            Module: self
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> isinstance(mode, bool):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">ValueError</span>(<span style="color:#e6db74">&#34;training mode is expected to be boolean&#34;</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>training <span style="color:#f92672">=</span> mode
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> module <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>children():
+</span></span><span style="display:flex;"><span>            module<span style="color:#f92672">.</span>train(mode)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self
+</span></span></code></pre></div><p>这里也说了Droput,BN etc.那么到底有哪些呢？</p>
 <p>先看一下dropout</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Dropout</span>(_DropoutNd):
-    <span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;&#34;&#34;During training, randomly zeroes some of the elements of the input
-</span><span style="color:#e6db74">    tensor with probability :attr:`p` using samples from a Bernoulli
-</span><span style="color:#e6db74">    distribution. Each channel will be zeroed out independently on every forward
-</span><span style="color:#e6db74">    call.
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">    This has proven to be an effective technique for regularization and
-</span><span style="color:#e6db74">    preventing the co-adaptation of neurons as described in the paper
-</span><span style="color:#e6db74">    `Improving neural networks by preventing co-adaptation of feature
-</span><span style="color:#e6db74">    detectors`_ .
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">    Furthermore, the outputs are scaled by a factor of :math:`\frac</span><span style="color:#e6db74">{1}</span><span style="color:#e6db74">{1-p}` during
-</span><span style="color:#e6db74">    training. This means that during evaluation the module simply computes an
-</span><span style="color:#e6db74">    identity function.
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">    Args:
-</span><span style="color:#e6db74">        p: probability of an element to be zeroed. Default: 0.5
-</span><span style="color:#e6db74">        inplace: If set to ``True``, will do this operation in-place. Default: ``False``
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">    Shape:
-</span><span style="color:#e6db74">        - Input: :math:`(*)`. Input can be of any shape
-</span><span style="color:#e6db74">        - Output: :math:`(*)`. Output is of the same shape as input
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">    Examples::
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">        &gt;&gt;&gt; m = nn.Dropout(p=0.2)
-</span><span style="color:#e6db74">        &gt;&gt;&gt; input = torch.randn(20, 16)
-</span><span style="color:#e6db74">        &gt;&gt;&gt; output = m(input)
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">    .. _Improving neural networks by preventing co-adaptation of feature
-</span><span style="color:#e6db74">        detectors: https://arxiv.org/abs/1207.0580
-</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
-
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, input: Tensor) <span style="color:#f92672">-&gt;</span> Tensor:
-        <span style="color:#66d9ef">return</span> F<span style="color:#f92672">.</span>dropout(input, self<span style="color:#f92672">.</span>p, self<span style="color:#f92672">.</span>training, self<span style="color:#f92672">.</span>inplace)
-
-</code></pre></div><p>这里self.training是一个开关。具体看F.dropout怎么实现</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dropout</span>(input: Tensor, p: float <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.5</span>, training: bool <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>, inplace: bool <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>) <span style="color:#f92672">-&gt;</span> Tensor:
-    <span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;&#34;&#34;
-</span><span style="color:#e6db74">    During training, randomly zeroes some of the elements of the input
-</span><span style="color:#e6db74">    tensor with probability :attr:`p` using samples from a Bernoulli
-</span><span style="color:#e6db74">    distribution.
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">    See :class:`~torch.nn.Dropout` for details.
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">    Args:
-</span><span style="color:#e6db74">        p: probability of an element to be zeroed. Default: 0.5
-</span><span style="color:#e6db74">        training: apply dropout if is ``True``. Default: ``True``
-</span><span style="color:#e6db74">        inplace: If set to ``True``, will do this operation in-place. Default: ``False``
-</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
-    <span style="color:#66d9ef">if</span> has_torch_function_unary(input):
-        <span style="color:#66d9ef">return</span> handle_torch_function(dropout, (input,), input, p<span style="color:#f92672">=</span>p, training<span style="color:#f92672">=</span>training, inplace<span style="color:#f92672">=</span>inplace)
-    <span style="color:#66d9ef">if</span> p <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0.0</span> <span style="color:#f92672">or</span> p <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1.0</span>:
-        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">ValueError</span>(<span style="color:#e6db74">&#34;dropout probability has to be between 0 and 1, &#34;</span> <span style="color:#e6db74">&#34;but got </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(p))
-    <span style="color:#66d9ef">return</span> _VF<span style="color:#f92672">.</span>dropout_(input, p, training) <span style="color:#66d9ef">if</span> inplace <span style="color:#66d9ef">else</span> _VF<span style="color:#f92672">.</span>dropout(input, p, training)
-</code></pre></div><p>默认的inplace是False 于是看一下_VF.dropout</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a6e22e">@parse_args</span>(<span style="color:#e6db74">&#34;v&#34;</span>, <span style="color:#e6db74">&#34;f&#34;</span>, <span style="color:#e6db74">&#34;i&#34;</span>)
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dropout</span>(g, input, p, train):
-    sym_help<span style="color:#f92672">.</span>check_training_mode(train, <span style="color:#e6db74">&#34;dropout&#34;</span>)
-    <span style="color:#75715e"># in eval mode, dropout is non-op - if the node&#39;s train param is set to False, dropout is non-op</span>
-    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> train:
-        <span style="color:#66d9ef">return</span> input
-    warnings<span style="color:#f92672">.</span>warn(<span style="color:#e6db74">&#34;Dropout is a training op and should not be exported in inference mode. &#34;</span>
-                  <span style="color:#e6db74">&#34;For inference, make sure to call eval() on the model and to export it with param training=False.&#34;</span>)
-    r, _ <span style="color:#f92672">=</span> g<span style="color:#f92672">.</span>op(<span style="color:#e6db74">&#34;Dropout&#34;</span>, input, ratio_f<span style="color:#f92672">=</span>p, outputs<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)
-    <span style="color:#66d9ef">return</span> r
-
-</code></pre></div><p>于是乎，我发现PReLU居然也跟trainning 有点关系</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RReLU</span>(Module):
-    <span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;&#34;&#34;Applies the randomized leaky rectified liner unit function, element-wise,
-</span><span style="color:#e6db74">    as described in the paper:
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">    `Empirical Evaluation of Rectified Activations in Convolutional Network`_.
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">    The function is defined as:
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">    .. math::
-</span><span style="color:#e6db74">        \text</span><span style="color:#e6db74">{RReLU}</span><span style="color:#e6db74">(x) =
-</span><span style="color:#e6db74">        \begin</span><span style="color:#e6db74">{cases}</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">            x &amp; \text{if } x \geq 0 \\
-</span><span style="color:#e6db74">            ax &amp; \text{ otherwise }
-</span><span style="color:#e6db74">        \end</span><span style="color:#e6db74">{cases}</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">    where :math:`a` is randomly sampled from uniform distribution
-</span><span style="color:#e6db74">    :math:`\mathcal</span><span style="color:#e6db74">{U}</span><span style="color:#e6db74">(\text</span><span style="color:#e6db74">{lower}</span><span style="color:#e6db74">, \text</span><span style="color:#e6db74">{upper}</span><span style="color:#e6db74">)`.
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">     See: https://arxiv.org/pdf/1505.00853.pdf
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">    Args:
-</span><span style="color:#e6db74">        lower: lower bound of the uniform distribution. Default: :math:`\frac</span><span style="color:#e6db74">{1}{8}</span><span style="color:#e6db74">`
-</span><span style="color:#e6db74">        upper: upper bound of the uniform distribution. Default: :math:`\frac</span><span style="color:#e6db74">{1}{3}</span><span style="color:#e6db74">`
-</span><span style="color:#e6db74">        inplace: can optionally do the operation in-place. Default: ``False``
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">    Shape:
-</span><span style="color:#e6db74">        - Input: :math:`(*)`, where :math:`*` means any number of dimensions.
-</span><span style="color:#e6db74">        - Output: :math:`(*)`, same shape as the input.
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">    .. image:: ../scripts/activation_images/RReLU.png
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">    Examples::
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">        &gt;&gt;&gt; m = nn.RReLU(0.1, 0.3)
-</span><span style="color:#e6db74">        &gt;&gt;&gt; input = torch.randn(2)
-</span><span style="color:#e6db74">        &gt;&gt;&gt; output = m(input)
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">    .. _`Empirical Evaluation of Rectified Activations in Convolutional Network`:
-</span><span style="color:#e6db74">        https://arxiv.org/abs/1505.00853
-</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
-    __constants__ <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;lower&#39;</span>, <span style="color:#e6db74">&#39;upper&#39;</span>, <span style="color:#e6db74">&#39;inplace&#39;</span>]
-
-    lower: float
-    upper: float
-    inplace: bool
-
-    <span style="color:#66d9ef">def</span> __init__(
-        self,
-        lower: float <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">8</span>,
-        upper: float <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">3</span>,
-        inplace: bool <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>
-    ):
-        super(RReLU, self)<span style="color:#f92672">.</span>__init__()
-        self<span style="color:#f92672">.</span>lower <span style="color:#f92672">=</span> lower
-        self<span style="color:#f92672">.</span>upper <span style="color:#f92672">=</span> upper
-        self<span style="color:#f92672">.</span>inplace <span style="color:#f92672">=</span> inplace
-
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, input: Tensor) <span style="color:#f92672">-&gt;</span> Tensor:
-        <span style="color:#66d9ef">return</span> F<span style="color:#f92672">.</span>rrelu(input, self<span style="color:#f92672">.</span>lower, self<span style="color:#f92672">.</span>upper, self<span style="color:#f92672">.</span>training, self<span style="color:#f92672">.</span>inplace)
-
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">extra_repr</span>(self):
-        inplace_str <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;, inplace=True&#39;</span> <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>inplace <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#39;&#39;</span>
-        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39;lower=</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">, upper=</span><span style="color:#e6db74">{}{}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(self<span style="color:#f92672">.</span>lower, self<span style="color:#f92672">.</span>upper, inplace_str)
-</code></pre></div><hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Dropout</span>(_DropoutNd):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;&#34;&#34;During training, randomly zeroes some of the elements of the input
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    tensor with probability :attr:`p` using samples from a Bernoulli
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    distribution. Each channel will be zeroed out independently on every forward
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    call.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    This has proven to be an effective technique for regularization and
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    preventing the co-adaptation of neurons as described in the paper
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    `Improving neural networks by preventing co-adaptation of feature
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    detectors`_ .
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Furthermore, the outputs are scaled by a factor of :math:`\frac</span><span style="color:#e6db74">{1}</span><span style="color:#e6db74">{1-p}` during
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    training. This means that during evaluation the module simply computes an
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    identity function.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Args:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        p: probability of an element to be zeroed. Default: 0.5
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        inplace: If set to ``True``, will do this operation in-place. Default: ``False``
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Shape:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        - Input: :math:`(*)`. Input can be of any shape
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        - Output: :math:`(*)`. Output is of the same shape as input
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Examples::
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &gt;&gt;&gt; m = nn.Dropout(p=0.2)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &gt;&gt;&gt; input = torch.randn(20, 16)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &gt;&gt;&gt; output = m(input)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    .. _Improving neural networks by preventing co-adaptation of feature
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        detectors: https://arxiv.org/abs/1207.0580
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, input: Tensor) <span style="color:#f92672">-&gt;</span> Tensor:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> F<span style="color:#f92672">.</span>dropout(input, self<span style="color:#f92672">.</span>p, self<span style="color:#f92672">.</span>training, self<span style="color:#f92672">.</span>inplace)
+</span></span></code></pre></div><p>这里self.training是一个开关。具体看F.dropout怎么实现</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dropout</span>(input: Tensor, p: float <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.5</span>, training: bool <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>, inplace: bool <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>) <span style="color:#f92672">-&gt;</span> Tensor:
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    During training, randomly zeroes some of the elements of the input
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    tensor with probability :attr:`p` using samples from a Bernoulli
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    distribution.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    See :class:`~torch.nn.Dropout` for details.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Args:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        p: probability of an element to be zeroed. Default: 0.5
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        training: apply dropout if is ``True``. Default: ``True``
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        inplace: If set to ``True``, will do this operation in-place. Default: ``False``
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> has_torch_function_unary(input):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> handle_torch_function(dropout, (input,), input, p<span style="color:#f92672">=</span>p, training<span style="color:#f92672">=</span>training, inplace<span style="color:#f92672">=</span>inplace)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> p <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0.0</span> <span style="color:#f92672">or</span> p <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1.0</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">ValueError</span>(<span style="color:#e6db74">&#34;dropout probability has to be between 0 and 1, &#34;</span> <span style="color:#e6db74">&#34;but got </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(p))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> _VF<span style="color:#f92672">.</span>dropout_(input, p, training) <span style="color:#66d9ef">if</span> inplace <span style="color:#66d9ef">else</span> _VF<span style="color:#f92672">.</span>dropout(input, p, training)
+</span></span></code></pre></div><p>默认的inplace是False 于是看一下_VF.dropout</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#a6e22e">@parse_args</span>(<span style="color:#e6db74">&#34;v&#34;</span>, <span style="color:#e6db74">&#34;f&#34;</span>, <span style="color:#e6db74">&#34;i&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dropout</span>(g, input, p, train):
+</span></span><span style="display:flex;"><span>    sym_help<span style="color:#f92672">.</span>check_training_mode(train, <span style="color:#e6db74">&#34;dropout&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># in eval mode, dropout is non-op - if the node&#39;s train param is set to False, dropout is non-op</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> train:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> input
+</span></span><span style="display:flex;"><span>    warnings<span style="color:#f92672">.</span>warn(<span style="color:#e6db74">&#34;Dropout is a training op and should not be exported in inference mode. &#34;</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#e6db74">&#34;For inference, make sure to call eval() on the model and to export it with param training=False.&#34;</span>)
+</span></span><span style="display:flex;"><span>    r, _ <span style="color:#f92672">=</span> g<span style="color:#f92672">.</span>op(<span style="color:#e6db74">&#34;Dropout&#34;</span>, input, ratio_f<span style="color:#f92672">=</span>p, outputs<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> r
+</span></span></code></pre></div><p>于是乎，我发现PReLU居然也跟trainning 有点关系</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RReLU</span>(Module):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;&#34;&#34;Applies the randomized leaky rectified liner unit function, element-wise,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    as described in the paper:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    `Empirical Evaluation of Rectified Activations in Convolutional Network`_.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    The function is defined as:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    .. math::
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        \text</span><span style="color:#e6db74">{RReLU}</span><span style="color:#e6db74">(x) =
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        \begin</span><span style="color:#e6db74">{cases}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            x &amp; \text{if } x \geq 0 \\
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            ax &amp; \text{ otherwise }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        \end</span><span style="color:#e6db74">{cases}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    where :math:`a` is randomly sampled from uniform distribution
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    :math:`\mathcal</span><span style="color:#e6db74">{U}</span><span style="color:#e6db74">(\text</span><span style="color:#e6db74">{lower}</span><span style="color:#e6db74">, \text</span><span style="color:#e6db74">{upper}</span><span style="color:#e6db74">)`.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">     See: https://arxiv.org/pdf/1505.00853.pdf
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Args:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        lower: lower bound of the uniform distribution. Default: :math:`\frac</span><span style="color:#e6db74">{1}{8}</span><span style="color:#e6db74">`
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        upper: upper bound of the uniform distribution. Default: :math:`\frac</span><span style="color:#e6db74">{1}{3}</span><span style="color:#e6db74">`
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        inplace: can optionally do the operation in-place. Default: ``False``
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Shape:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        - Input: :math:`(*)`, where :math:`*` means any number of dimensions.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        - Output: :math:`(*)`, same shape as the input.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    .. image:: ../scripts/activation_images/RReLU.png
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Examples::
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &gt;&gt;&gt; m = nn.RReLU(0.1, 0.3)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &gt;&gt;&gt; input = torch.randn(2)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &gt;&gt;&gt; output = m(input)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    .. _`Empirical Evaluation of Rectified Activations in Convolutional Network`:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        https://arxiv.org/abs/1505.00853
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    __constants__ <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;lower&#39;</span>, <span style="color:#e6db74">&#39;upper&#39;</span>, <span style="color:#e6db74">&#39;inplace&#39;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    lower: float
+</span></span><span style="display:flex;"><span>    upper: float
+</span></span><span style="display:flex;"><span>    inplace: bool
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(
+</span></span><span style="display:flex;"><span>        self,
+</span></span><span style="display:flex;"><span>        lower: float <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">8</span>,
+</span></span><span style="display:flex;"><span>        upper: float <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">3</span>,
+</span></span><span style="display:flex;"><span>        inplace: bool <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>    ):
+</span></span><span style="display:flex;"><span>        super(RReLU, self)<span style="color:#f92672">.</span>__init__()
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>lower <span style="color:#f92672">=</span> lower
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>upper <span style="color:#f92672">=</span> upper
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>inplace <span style="color:#f92672">=</span> inplace
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, input: Tensor) <span style="color:#f92672">-&gt;</span> Tensor:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> F<span style="color:#f92672">.</span>rrelu(input, self<span style="color:#f92672">.</span>lower, self<span style="color:#f92672">.</span>upper, self<span style="color:#f92672">.</span>training, self<span style="color:#f92672">.</span>inplace)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">extra_repr</span>(self):
+</span></span><span style="display:flex;"><span>        inplace_str <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;, inplace=True&#39;</span> <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>inplace <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39;lower=</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">, upper=</span><span style="color:#e6db74">{}{}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(self<span style="color:#f92672">.</span>lower, self<span style="color:#f92672">.</span>upper, inplace_str)
+</span></span></code></pre></div><hr>
 <p><strong>参考资料</strong></p>
 
     </div>

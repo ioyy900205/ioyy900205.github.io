@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title> // 亮的笔记</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.101.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Liu Liang" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.4a7ec8660f9a44b08c4da97c5f2e31b1192df1d4d0322e65c0dbbc6ecb1b863f.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="&#43;&#43;&#43; title= &ldquo;59-时频通道双重注意力&rdquo; date= &ldquo;2022-02-14 14:43:42 &#43;0800&rdquo; tags= [&ldquo;Paper_review&rdquo;] &#43;&#43;&#43;
+水一篇论文。。
+@TOC
+标题 参考资料 @TOC
+谢磊老师团队作品 2021.12
+Audio, Speech and Language Processing Group (ASLP@NPU), School of Computer Science, Northwestern Polytechnical University, Xi’an, China
+标题：时间-通道-频率的双重性注意增强说话人的表征学习
+简单来说就是将图像中的CBAM重新拆分整合了一下。
+AI Labs - Trident &gt; 7. DUALITY TEMPORAL-CHANNEL-FREQUENCY ATTENTION ENHANCED SPEAKER REPRESENTATION LEARNING &gt; image2022-2-14 14:25:48.png
+我接着查看了参考文献
+Qibin Hou, Daquan Zhou, and Jiashi Feng, “Coordinate attention for efficient mobile network design,” in Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2021, pp."/>
+
+    <meta property="og:title" content="" />
+<meta property="og:description" content="&#43;&#43;&#43; title= &ldquo;59-时频通道双重注意力&rdquo; date= &ldquo;2022-02-14 14:43:42 &#43;0800&rdquo; tags= [&ldquo;Paper_review&rdquo;] &#43;&#43;&#43;
+水一篇论文。。
+@TOC
+标题 参考资料 @TOC
+谢磊老师团队作品 2021.12
+Audio, Speech and Language Processing Group (ASLP@NPU), School of Computer Science, Northwestern Polytechnical University, Xi’an, China
+标题：时间-通道-频率的双重性注意增强说话人的表征学习
+简单来说就是将图像中的CBAM重新拆分整合了一下。
+AI Labs - Trident &gt; 7. DUALITY TEMPORAL-CHANNEL-FREQUENCY ATTENTION ENHANCED SPEAKER REPRESENTATION LEARNING &gt; image2022-2-14 14:25:48.png
+我接着查看了参考文献
+Qibin Hou, Daquan Zhou, and Jiashi Feng, “Coordinate attention for efficient mobile network design,” in Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2021, pp." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ioyy900205.github.io/post/2022-02-14-59-duality-temporal-channel-frequency-attention-enhanced-speaker-representation-learning-copy/" /><meta property="article:section" content="post" />
+
+
+
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3520060145,2875461924&amp;fm=26&amp;gp=0.jpg" alt="Liu Liang" /></a>
+      <h1>亮的笔记</h1>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>深度学习笔记本</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/ioyy900205" target="_blank" rel="noreferrer noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/ioyy900205" target="_blank" rel="noreferrer noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title"></h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Jan 1, 0001
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          11 min read
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>+++
+title= &ldquo;59-时频通道双重注意力&rdquo;
+date= &ldquo;2022-02-14 14:43:42 +0800&rdquo;
+tags= [&ldquo;Paper_review&rdquo;]
++++</p>
+<p>水一篇论文。。</p>
+<hr>
+<p>@<a href="%E6%9C%AC%E6%96%87%E5%86%85%E5%AE%B9">TOC</a></p>
+<h2 id="标题">标题</h2>
+<hr>
+<h2 id="参考资料"><strong>参考资料</strong></h2>
+<p>@<a href="%E6%9C%AC%E6%96%87%E5%86%85%E5%AE%B9">TOC</a></p>
+<p>谢磊老师团队作品 2021.12</p>
+<p>Audio, Speech and Language Processing Group (ASLP@NPU), School of Computer Science, Northwestern Polytechnical University, Xi’an, China</p>
+<p>标题：时间-通道-频率的双重性注意增强说话人的表征学习</p>
+<p>简单来说就是将图像中的CBAM重新拆分整合了一下。</p>
+<p>AI Labs - Trident &gt; 7. DUALITY TEMPORAL-CHANNEL-FREQUENCY ATTENTION ENHANCED SPEAKER REPRESENTATION LEARNING &gt; image2022-2-14 14:25:48.png</p>
+<p>我接着查看了参考文献</p>
+<p>Qibin Hou, Daquan Zhou, and Jiashi Feng, “Coordinate attention for efficient mobile network design,” in Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2021, pp. 13713–13722.</p>
+<p>果然还是参考cvpr搬运过来的风格。</p>
+<p>简单介绍一下这篇论文：在轻量级网络上的研究表明，通道注意力会给模型带来比较显著的性能提升，但是通道注意力通常会忽略对生成空间选择性注意力图非常重要的位置信息。因此，新加坡国立大学的Qibin Hou等人提出了一种为轻量级网络设计的新的注意力机制，该机制将位置信息嵌入到了通道注意力中，称为coordinate attention（简称CoordAttention，下文也称CA），该论文已被CVPR2021收录。不同于通道注意力将输入通过2D全局池化转化为单个特征向量，CoordAttention将通道注意力分解为两个沿着不同方向聚合特征的1D特征编码过程。这样的好处是可以沿着一个空间方向捕获长程依赖，沿着另一个空间方向保留精确的位置信息。然后，将生成的特征图分别编码，形成一对方向感知和位置敏感的特征图，它们可以互补地应用到输入特征图来增强感兴趣的目标的表示。</p>
+<p>这种注意力机制直接碾压了。</p>
+<p>AI Labs - Trident &gt; 7. DUALITY TEMPORAL-CHANNEL-FREQUENCY ATTENTION ENHANCED SPEAKER REPRESENTATION LEARNING &gt; image2022-2-14 14:31:27.png</p>
+<p>论文标题</p>
+<p>Coordinate Attention for Efficient Mobile Network Design</p>
+<p>论文地址</p>
+<p><a href="http://arxiv.org/abs/2103.02907">http://arxiv.org/abs/2103.02907</a></p>
+<p>论文源码</p>
+<p><a href="https://github.com/Andrew-Qibin/CoordAttention">https://github.com/Andrew-Qibin/CoordAttention</a></p>
+<p>看看人家总结的SEblock.</p>
+<p>考虑到轻量级网络有限的计算能力，目前最流行的注意力机制仍然是SENet提出的SE Attention。如上图所示，它通过2D全局池化来计算通道注意力，在相当低的计算成本下提供了显著的性能提升。遗憾的是，SE模块只考虑了通道间信息的编码而忽视了位置信息的重要性，而位置信息其实对于很多需要捕获目标结构的视觉任务至关重要。因此，后来CBAM等方法通过减少通道数继而使用大尺寸卷积来利用位置信息，如下图所示。然而，卷积仅仅能够捕获局部相关性，建模对视觉任务非常重要的长程依赖则显得有些有心无力。（第二个图就是目前我们网络中的Spatial Attention）</p>
+<p>在这里插入图片描述AI Labs - Trident &gt; 7. DUALITY TEMPORAL-CHANNEL-FREQUENCY ATTENTION ENHANCED SPEAKER REPRESENTATION LEARNING &gt; image2022-2-14 14:34:3.png</p>
+<p>因此，这篇论文的作者提出了一种新的高效注意力机制，通过将位置信息嵌入到通道注意力中，使得轻量级网络能够在更大的区域上进行注意力，同时避免了产生大量的计算开销。为了缓解2D全局池化造成的位置信息丢失，论文作者将通道注意力分解为两个并行的1D特征编码过程，有效地将空间坐标信息整合到生成的注意图中。更具体来说，作者利用两个一维全局池化操作分别将垂直和水平方向的输入特征聚合为两个独立的方向感知特征图。然后，这两个嵌入特定方向信息的特征图分别被编码为两个注意力图，每个注意力图都捕获了输入特征图沿着一个空间方向的长程依赖。因此，位置信息就被保存在生成的注意力图里了，两个注意力图接着被乘到输入特征图上来增强特征图的表示能力。由于这种注意力操作能够区分空间方向（即坐标）并且生成坐标感知的特征图，因此将提出的方法称为坐标注意力（coordinate attention）。</p>
+<p>接着，为了更好地利用上面coordinate information embedding模块产生的具有全局感受野并拥有精确位置信息的表示，设计了coordinate attention generation操作，它生成注意力图，遵循如下三个标准。</p>
+<p>首先，对于移动环境中的应用来说，这种转换应该尽可能简单高效；
+其次，它可以充分利用捕获到的位置信息，精确定位感兴趣区域；
+最后，它还应该能够有效地捕捉通道之间的关系，这是根本。</p>
+<p>实现代码：</p>
+<p>import torch
+import torch.nn as nn</p>
+<p>class h_sigmoid(nn.Module):
+def <strong>init</strong>(self, inplace=True):
+super(h_sigmoid, self).<strong>init</strong>()
+self.relu = nn.ReLU6(inplace=inplace)</p>
+<p>def forward(self, x):
+return self.relu(x + 3) / 6</p>
+<p>class h_swish(nn.Module):
+def <strong>init</strong>(self, inplace=True):
+super(h_swish, self).<strong>init</strong>()
+self.sigmoid = h_sigmoid(inplace=inplace)</p>
+<p>def forward(self, x):
+return x * self.sigmoid(x)</p>
+<p>class CoordAttention(nn.Module):</p>
+<p>def <strong>init</strong>(self, in_channels, out_channels, reduction=32):
+super(CoordAttention, self).<strong>init</strong>()
+self.pool_w, self.pool_h = nn.AdaptiveAvgPool2d((1, None)), nn.AdaptiveAvgPool2d((None, 1))
+temp_c = max(8, in_channels // reduction)
+self.conv1 = nn.Conv2d(in_channels, temp_c, kernel_size=1, stride=1, padding=0)</p>
+<p>self.bn1 = nn.BatchNorm2d(temp_c)
+self.act1 = h_swish()</p>
+<p>self.conv2 = nn.Conv2d(temp_c, out_channels, kernel_size=1, stride=1, padding=0)
+self.conv3 = nn.Conv2d(temp_c, out_channels, kernel_size=1, stride=1, padding=0)</p>
+<p>def forward(self, x):
+short = x
+n, c, H, W = x.shape
+x_h, x_w = self.pool_h(x), self.pool_w(x).permute(0, 1, 3, 2)
+x_cat = torch.cat([x_h, x_w], dim=2)
+out = self.act1(self.bn1(self.conv1(x_cat)))
+x_h, x_w = torch.split(out, [H, W], dim=2)
+x_w = x_w.permute(0, 1, 3, 2)
+out_h = torch.sigmoid(self.conv2(x_h))
+out_w = torch.sigmoid(self.conv3(x_w))
+return short * out_w * out_h</p>
+<p>翻译
+ABSTRACT
+The use of channel-wise attention in CNN based speaker representation networks has achieved remarkable performance in speaker verification (SV). But these approaches do simple averaging on time and frequency feature maps before channel-wise attention learning and ignore the essential mutual interaction among temporal, channel as well as frequency scales. To address this problem, we propose the Duality Temporal-Channel-Frequency (DTCF) attention to re-calibrate the channel-wise features with aggregation of global context on temporal and frequency dimensions. Specifically, the duality attention - time-channel (T-C) attention as well as frequency-channel (F-C) attention - aims to focus on salient regions along the T-C and F-C feature maps that may have more considerable impact on the global context, leading to more discriminative speaker representations. We evaluate the effectiveness of the proposed DTCF attention on the CN-Celeb and VoxCeleb datasets. On the CN-Celeb evaluation set, the EER/minDCF of ResNet34-DTCF are reduced by 0.63%/0.0718 compared with those of ResNet34- SE. On VoxCeleb1-O, VoxCeleb1-E and VoxCeleb1-H evaluation sets, the EER/minDCF of ResNet34-DTCF achieve 0.36%/0.0263, 0.39%/0.0382 and 0.74%/0.0753 reductions compared with those of ResNet34-SE.</p>
+<p>在基于CNN的说话人表示网络中，使用通道导向注意力在说话人验证（SV）中取得了显著的表现。但是，这些方法在通道式注意力学习之前对时间和频率特征图做了简单的平均化处理，忽略了时间、通道以及频率尺度之间的基本相互作用。为了解决这个问题，我们提出了 &ldquo;时间-通道-频率双重性&rdquo;（DTCF）注意力，通过对时间和频率维度上的全局背景进行聚合，重新校准通道性特征。具体来说，双重性注意&ndash;时间通道（T-C）注意和频率通道（F-C）注意&ndash;旨在关注T-C和F-C特征图上的突出区域，这些区域可能对全局背景有更大的影响，从而导致更有辨识度的说话人表征。我们在CN-Celeb和VoxCeleb数据集上评估了拟议的DTCF注意力的有效性。在CN-Celeb评估集上，ResNet34-DTCF的EER/minDCF与ResNet34-SE相比，降低了0.63%/0.0718。在VoxCeleb1-O、VoxCeleb1-E和VoxCeleb1-H评价集上，ResNet34-DTCF的EER/minDCF与ResNet34-SE相比，分别减少了0.36%/0.0263、0.39%/0.0382和0.74%/0.0753。</p>
+<ol>
+<li>INTRODUCTION
+Speaker verification (SV) is to decide to accept or reject test utterances according to the enrollment utterances of the claimed speaker [1]. Recently, speaker verification based on neural networks has occupied the predominance with the distinguished speaker representation learning ability [2, 3]. In general, an SV system based on neural networks consists of a speaker representation extractor and a supervised classification loss [4, 5, 6]. Specifically, the speaker representation extractor includes a frame-level feature extractor and an utterance-level speaker embedding aggregator. The most vital work in SV is to construct a speaker representation extractor that can generate discriminative speaker embedding [7, 8, 9].</li>
+</ol>
+<p>说话人验证（SV）是根据所声称的说话人的注册语料来决定接受或拒绝测试语料[1]。最近，基于神经网络的说话人验证以其杰出的说话人表征学习能力占据了主导地位[2, 3]。一般来说，基于神经网络的SV系统包括一个说话人表征提取器和一个有监督的分类损失[4, 5, 6]。具体来说，说话人表征提取器包括一个帧级特征提取器和一个语料级说话人嵌入聚合器。SV中最关键的工作是构建一个能够产生鉴别性的说话人嵌入的说话人表征提取器[7, 8, 9]。</p>
+<p>Currently, convolutional neural network (CNN) is the most popular neural network topology of speaker representation extractor in speaker verification [10]. Variants of CNN-based speaker representation models have been explored because of their strong representation extracting ability. X-vector [8, 11, 12] based on 1D convolution is a pioneer work in speaker verification. Additionally, ResNet [13, 14] based on 2D convolution has become predominant in various speaker verification challenges [15, 16, 17, 18]. However, convolution neural networks are not flawless. The mechanism of convolution operation is to adopt a fixed-size convolution kernel to capture the local time and frequency speaker patterns in speech. But the fixed-size kernel limits the receptive field on speech features. Thus, representation extracting ability [19, 20, 21] is constrained without the essential global context information which is also important. Meanwhile, convolution neglects the interaction among channels (convolutional filters) as well.</p>
+<p>目前，卷积神经网络（CNN）是说话人验证中最流行的说话人表征提取器的神经网络拓扑结构[10]。基于CNN的说话人表征模型的变体因其强大的表征提取能力而得到了探索。基于一维卷积的X-vector[8, 11, 12]是说话人验证中的一项先驱工作。此外，基于二维卷积的ResNet[13, 14]已经在各种说话人验证挑战中占据主导地位[15, 16, 17, 18]。然而，卷积神经网络并非完美无缺。卷积操作的机制是采用一个固定大小的卷积核来捕捉语音中局部时间和频率的说话人模式。但是，固定大小的核限制了对语音特征的接受域。因此，表征提取能力[19, 20, 21]受到限制，没有必要的全局信息，这也是很重要的。同时，卷积也忽略了通道（卷积滤波器）之间的相互作用。</p>
+<p>To mitigate the above problems, attention mechanism [22] has been introduced in ResNet and x-vector. Zhou et al. [23] adopted channel-wise response feature attention in ResNet to enhance the speaker representation ability, which was the first work introducing Squeeze-and-Excitation (SE) [19] attention in the speaker verification. The SE attention mainly learns the inter-dependency relationships of channels. Its superior performance has triggered awareness of adopting a variety of attention modules in the residual block of ResNet further to promote CNN’s discriminative speaker representation learning ability. Inspired by the convolutional block attention module (CBAM) [24] in computer vision, Sarthak and Rai [25] proposed the multi-path (Channel, Temporal and Frequency respectively) attention of intermediate tensors in the residual blocks of ResNet. In addition to the SE attention, this work further introduced a time-frequency domain attention mask learned by large-size kernels. Xia and Hansen [26] further proposed to combine the SE attention and non-local timefrequency attention to re-calibrate the channel and temporalfrequency feature maps. Meanwhile, some recent works [9, 18] also introduced the SE attention into TDNN (1D convolutional neural network) [12] with excellent performance in speaker verification.</p>
+<p>为了缓解上述问题，ResNet和x-vector中引入了注意力机制[22]。Zhou等人[23]在ResNet中采用了通道导向的响应特征注意力来增强说话人的表示能力，这是第一个在说话人验证中引入挤压和激发（SE）[19]注意力的工作。SE注意主要学习通道的相互依赖关系。它的优越性能引发了人们对在ResNet的残差块中进一步采用各种注意模块以促进CNN的辨别性说话人表示学习能力的认识。受计算机视觉中的卷积块注意模块（CBAM）[24]的启发，Sarthak和Rai[25]提出了ResNet剩余块中的中间张量的多路径（分别是通道、时间和频率）注意。除了SE注意外，这项工作还进一步引入了由大尺寸核学习的时频域注意掩码。Xia和Hansen[26]进一步提出将SE注意和非局部时频注意结合起来，重新校准通道和时频特征图。同时，最近的一些工作[9，18]也将SE注意引入到TDNN（1D卷积神经网络）[12]中，在说话人验证中表现出色。</p>
+<p>Although the above SE-attention approaches have achieved superior SV performance, there is still substantial space to further improve the discriminative power of attention-guided speaker embeddings. Note that these approaches do averaging on time and frequency feature maps before channel-wise attention learning and ignore the essential mutual interaction among temporal, channel as well as frequency scales.</p>
+<p>尽管上述SE-注意力方法已经取得了卓越的SV性能，但仍有很大的空间来进一步提高注意力引导的说话人嵌入的鉴别能力。需要注意的是，这些方法在通道式注意力学习之前对时间和频率特征图做了平均化处理，忽略了时间、通道以及频率尺度之间的基本相互作用。</p>
+<p>In this study, we propose the Duality Temporal-ChannelFrequency (DTCF) attention to assemble the temporal and frequency information into the channel-wise attention. Recent studies [18, 25] have shown that adopting attention mechanism in frequency domain has great potential to improve the representation ability of speaker embedding models. There are important interactions between channel, temporal and frequency dimensions, which can lead to clear performance gain. In this paper, instead of simple averaging on time and frequency feature maps in previous studies, we specifically encode temporal and frequency information into channel-wise attention, resulting in the so-called duality attention – time-channel (T-C) attention as well as frequency-channel (F-C) attention. The proposed duality attention mechanism aims to focus on salient regions along the T-C and F-C feature maps that may have more considerable impact on the global context, leading to more discriminative speaker representations. Experimental results show that our proposed attention module significantly outperforms the SE attention and other competitive attention modules.</p>
+<p>在这项研究中，我们提出了双重性时间-通道-频率（DTCF）注意，将时间和频率信息集合到通道明智注意中。最近的研究[18, 25]表明，在频域中采用注意机制对提高说话人嵌入模型的表示能力有很大潜力。通道、时间和频率维度之间存在着重要的相互作用，这可以带来明显的性能增益。在本文中，我们没有像以前的研究那样对时间和频率特征图进行简单的平均，而是将时间和频率信息专门编码为通道导向的注意，从而形成了所谓的双重性注意&ndash;时间通道（T-C）注意以及频率通道（F-C）注意。所提出的双重性注意机制旨在关注T-C和F-C特征图上的突出区域，这些区域可能对全局环境有更大的影响，从而导致更有鉴别力的说话人表征。实验结果表明，我们提出的注意模块明显优于SE注意和其他竞争性注意模块。</p>
+<p>The most similar structure to ours is [27], in which coordinate attention is introduced to mobile networks [28, 29] to solve computer vision problems. Specifically, the coordinate attention embeds positional information of images into the channel attention, achieving promising performance in the image segmentation task. In this paper, we introduce a similar structure, the DTCF attention to the popular ResNet in speaker verification, to explore the salient regions in timechannel and frequency-channel dimensions in speech signals, aiming to learn more discriminative speaker representation.</p>
+<p>与我们的结构最相似的是[27]，其中坐标注意被引入到移动网络[28, 29]，以解决计算机视觉问题。具体来说，坐标注意将图像的位置信息嵌入到通道注意中，在图像分割任务中取得了很好的性能。在本文中，我们将类似的结构，即DTCF注意引入到流行的说话人验证中的ResNet中，以探索语音信号中时间通道和频率通道维度的突出区域，旨在学习更多的鉴别性的说话人表示。</p>
+<p>The rest of the paper is organized as follows. Section 2 overviews of the speaker representation extractor framework. Section 3 details our proposed attention module. Section 4 introduces the experimental setup and Section 5 summarizes the experimental results. Finally, conclusions are drawn in Section 6.</p>
+<p>本文的其余部分组织如下。第2节概述了说话人表征提取器的框架。第3节详细介绍了我们提出的注意力模块。第4节介绍了实验设置，第5节总结了实验结果。最后，在第6节中得出结论。</p>
+<ol start="2">
+<li>SPEAKER REPRESENTATION FRAMEWORK
+Deep residual networks [13] are widely used in image recognition and have recently been applied to speaker representation learning [2, 30]. In our study, the backbone of speaker representation learning network is the classical ResNet34 [16, 31], which has achieved good results [32, 33] on different datasets of speaker verification.</li>
+</ol>
+<p>深度残差网络[13]被广泛用于图像识别，最近也被应用于说话人表示学习[2, 30]。在我们的研究中，说话人表示学习网络的骨干是经典的ResNet34[16, 31]，它在说话人验证的不同数据集上取得了良好的效果[32, 33]。</p>
+<p>The overview of the speaker representation learning framework is illustrated in Fig. 1. It mainly consists of two modules, which are speaker representation extractor and classifier respectively. The speaker representation extractor includes two sub-modules, which are a frame-level representation extractor in the dashed frame in Fig. 1 and an utterance-level aggregator. In general, there are four residual blocks in ResNet34. The output of each residual block flows through the attention block (e.g., SE-attention) to learn the inter-dependence of channels before the skip connection [23]. The utterance-level aggregator encodes various length frame-level speaker representations into fixed-length utterance-level speaker representations. We use the attention statistic pooling (ASP) [34] aggregator in the speaker representation framework. In the classification module, we adopt the Additive Angular Margin Softmax (AAM-Sotfmax) [35] as the loss function.</p>
+<p>图1显示了说话人表征学习框架的概况。它主要由两个模块组成，分别是说话人表征提取器和分类器。言语表征提取器包括两个子模块，即图1中虚线框内的帧级表征提取器和语料级聚合器。一般来说，ResNet34中有四个残差块。每个残差块的输出流经注意块（如SE-attention），以学习跳过连接前通道的相互依赖性[23]。语料级集合器将各种长度的框架级说话人表示编码为固定长度的语料级说话人表示。我们在说话人表征框架中使用注意统计池（ASP）[34]聚合器。在分类模块中，我们采用了加法角差Softmax（AAM-Sotfmax）[35]作为损失函数。</p>
+<p>AI Labs - Trident &gt; 7. DUALITY TEMPORAL-CHANNEL-FREQUENCY ATTENTION ENHANCED SPEAKER REPRESENTATION LEARNING &gt; image2022-2-14 14:9:11.png</p>
+<p>In this paper, we mainly focus on expanding the respective field of CNN with innovative channel-wise attention as well as exploiting the global context information of time and frequency dimensions. Thus, we introduce the Duality Temporal-Channel-Frequency (DTCF) attention mechanism after each residual block in ResNet34 to encode the temporal and frequency information into the channel-wise attention masks. Compared with other channel-wise attention modules or their variants, the DTCF attention can preserve the time and frequency information as well as learn the interactions among temporal, channel, and frequency.</p>
+<p>在本文中，我们主要关注的是通过创新的通道式注意力以及利用时间和频率维度的全局背景信息来扩展CNN的各自领域。因此，我们在ResNet34的每个残余块之后引入了Duality Temporal-Channel-Frequency（DTCF）注意机制，将时间和频率信息编码到通道明智注意掩码中。与其他通道明智的注意模块或其变体相比，DTCF注意可以保留时间和频率信息，以及学习时间、通道和频率之间的相互作用。</p>
+<ol start="3">
+<li>DUALITY TEMPORAL-CHANNEL-FREQUENCY ATTENTION
+3.1. SE Attention
+Channel-wise attention modules are widely embedded in ResNet to learn the inter-dependence of channels in intermediate feature maps. As shown in Fig. 2, SE attention adopts global average pooling (GAP) to squeeze the 3D temporalchannel-frequency tensor into a 1D channel-wise feature, then with two fully connected (FC) layers and a sigmoid method to weigh different channel importance for boosting speaker representation learning ability. Given the intermediate tensor X ∈ R C×T ×F is the 3D speech feature map in networks, C is the number of channels (convolutional kernels), T is the number of frames in the temporal domain, F is the number of frequency bins. The average pooling on time and frequency dimension of SE attention [19] is formulated as:</li>
+</ol>
+<p>通道明智的注意力模块被广泛地嵌入ResNet中，以学习中间特征图中通道的相互依赖性。如图2所示，SE注意力采用全局平均池（GAP）将三维时空-通道-频率张量挤压成一维通道明智特征，然后用两个全连接（FC）层和一个sigmoid方法来权衡不同通道的重要性，以提高说话人表征学习能力。给出中间张量X∈R C×T×F是网络中的三维语音特征图，C是通道数（卷积核），T是时域中的帧数，F是频点的数目。SE注意力的时间和频率维度上的平均集合[19]被表述为。</p>
+<p>AI Labs - Trident &gt; 7. DUALITY TEMPORAL-CHANNEL-FREQUENCY ATTENTION ENHANCED SPEAKER REPRESENTATION LEARNING &gt; image2022-2-14 14:13:12.png</p>
+<p>where XC is the results of global average pooling of the intermediate feature map X on time and frequency dimensions. Next is to learn the channel-wise attention weights of XC . The channel-wise attention mask learning is formulated as:</p>
+<p>其中XC是中间特征图X在时间和频率维度上的全局平均集合的结果。接下来是学习XC的通道-明智的注意力权重。信道-明智的注意掩码学习被表述为：。</p>
+<p>AI Labs - Trident &gt; 7. DUALITY TEMPORAL-CHANNEL-FREQUENCY ATTENTION ENHANCED SPEAKER REPRESENTATION LEARNING &gt; image2022-2-14 14:13:50.png</p>
+<p>3.2. Encode Time-Frequency Information
+The above SE attention averages the time-channel-frequency feature map XT ×C×F into XC , which may lose the discriminative speaker information in temporal and frequency domain. Moreover, the SE attention neglects the exploration in global context relationships on time and frequency dimensions. To alleviate these issues, we firstly encode global time and frequency information into the channel-wise feature and then conduct the duality channel-wise attention with the assist of temporal and frequency dimensions respectively. The DTCF attention module is illustrated in Fig. 3. We average the time and frequency domains in parallel with 2D adaptive average pooling (GAP(1D)) as Eq. 3 and Eq. 4. GAP(1D) denotes average operation on time or frequency separately. After we concatenate XC×F and XC×T , a convolution operation with kernel size (1×1×C 0 ) is adopted to learn the interdependence relationships between channels with the help of global time and frequency information. Here WC 0×C is the weights indicating the relationship of global channels with aggregation of temporal and frequency dimensions.</p>
+<p>上述SE注意将时间通道-频率特征图XT×C×F平均到XC中，这可能会失去时域和频域的辨别性说话人信息。此外，SE注意忽略了在时间和频率维度上的全局背景关系的探索。为了缓解这些问题，我们首先将全局的时间和频率信息编码到信道特征中，然后在时间和频率维度的辅助下分别进行对偶信道的注意。DTCF的注意模块如图3所示。我们用二维自适应平均池（GAP(1D)）对时域和频域进行平行平均，如公式3和公式4。GAP(1D)表示对时间或频率分别进行平均运算。将XC×F和XC×T连接起来后，采用核大小为(1×1×C 0)的卷积运算，在全局时间和频率信息的帮助下学习通道之间的相互依赖关系。这里WC 0×C是表示全局通道与时间和频率维度的聚合关系的权重。</p>
+<p>AI Labs - Trident &gt; 7. DUALITY TEMPORAL-CHANNEL-FREQUENCY ATTENTION ENHANCED SPEAKER REPRESENTATION LEARNING &gt; image2022-2-14 14:22:14.png</p>
+<p>3.3. Duality Channel-wise Attention
+After encoding the global temporal and frequency domains into the channel attention mask learning, we split X C 0×(T +F ) 1 into X C 0×T 2 and X C 0×F 2 respectively. Then we conduct channel-wise attention twice with the help of temporal and frequency domain separately. The formulas of the duality channel-wise attention are as follows:</p>
+<p>在将全局时域和频域编码到通道注意掩码学习中后，我们将X C 0×(T +F )1分别拆分为X C 0×T 2和X C 0×F 2。然后，我们在时域和频域的帮助下，分别进行两次通道式注意。对偶性信道-明智注意的公式如下。</p>
+<p>AI Labs - Trident &gt; 7. DUALITY TEMPORAL-CHANNEL-FREQUENCY ATTENTION ENHANCED SPEAKER REPRESENTATION LEARNING &gt; image2022-2-14 14:22:44.png</p>
+<p>The above proposed attention module is called as Duality Temporal-Channel-Frequency (DTCF) attention, because it learns duality channel-wise attention with the help of time and frequency information.  As shown in Fig. 3, the attention masks XC×F and XC×T dot multiply the original feature map XT ×C×F to enhance the necessary channels and suppress the useless channels with consideration of global time and frequency information.</p>
+<p>In a word, the proposed DTCF attention learns the global context information of speech feature map with the consideration of both temporal and frequency dimensions. At the same time, the DTCF attention learns the inter-dependence channel relationship just like the SE attention mechanism [23].</p>
+<p>上述提出的注意模块被称为双重性时间-通道-频率（DTCF）注意，因为它在时间和频率信息的帮助下学习双重性通道-明智注意。 如图3所示，注意力掩码XC×F和XC×T点乘以原始特征图XT×C×F，在考虑全局时间和频率信息的情况下，增强必要的通道，抑制无用的通道。</p>
+<p>总之，所提出的DTCF注意力在考虑了时间和频率两个维度的情况下学习了语音特征图的全局背景信息。同时，DTCF注意也像SE注意机制一样，学习了相互依赖的通道关系[23]。</p>
+<hr>
+<p><strong>参考资料</strong></p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
