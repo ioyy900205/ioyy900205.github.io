@@ -4,11 +4,11 @@
     <title>43-NCNN模型在imagenet上的推理验证 // 亮的笔记</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
-    <meta name="generator" content="Hugo 0.101.0" />
+    <meta name="generator" content="Hugo 0.90.1" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Liu Liang" />
     <meta name="description" content="" />
-    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.4a7ec8660f9a44b08c4da97c5f2e31b1192df1d4d0322e65c0dbbc6ecb1b863f.css" />
+    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
 
     
     <meta name="twitter:card" content="summary"/>
@@ -16,13 +16,13 @@
 <meta name="twitter:description" content="这里给出NCNN模型的推理代码，供大家参考。
 说一句题外话，这里我的tensor操作感觉有点繁琐，导致推理速度非常非常慢，也希望各位有比较好的方法能够提供给我。
 我的联系方式是18811555730
-1. NCNN推理代码 2. 结果验证 1. NCNN推理代码 &#39;&#39;&#39; Date: 2021-08-10 14:12:17 LastEditors: Liuliang LastEditTime: 2021-08-17 14:08:50 Description: NCNN在imagenet上的推理验证 &#39;&#39;&#39; import argparse import os import random import shutil import time import warnings from Average_ import AverageMeter from Progress_ import ProgressMeter import torch import torch.nn as nn import torch.nn.parallel import torch.backends.cudnn as cudnn import torch.distributed as dist import torch.optim import torch.multiprocessing as mp import torch.utils.data import torch.utils.data.distributed import torchvision.transforms as transforms import torchvision."/>
+  1. NCNN推理代码 2. 结果验证  1. NCNN推理代码 &#39;&#39;&#39; Date: 2021-08-10 14:12:17 LastEditors: Liuliang LastEditTime: 2021-08-17 14:08:50 Description: NCNN在imagenet上的推理验证 &#39;&#39;&#39; import argparse import os import random import shutil import time import warnings from Average_ import AverageMeter from Progress_ import ProgressMeter import torch import torch.nn as nn import torch.nn.parallel import torch.backends.cudnn as cudnn import torch.distributed as dist import torch.optim import torch.multiprocessing as mp import torch.utils.data import torch.utils.data.distributed import torchvision."/>
 
     <meta property="og:title" content="43-NCNN模型在imagenet上的推理验证" />
 <meta property="og:description" content="这里给出NCNN模型的推理代码，供大家参考。
 说一句题外话，这里我的tensor操作感觉有点繁琐，导致推理速度非常非常慢，也希望各位有比较好的方法能够提供给我。
 我的联系方式是18811555730
-1. NCNN推理代码 2. 结果验证 1. NCNN推理代码 &#39;&#39;&#39; Date: 2021-08-10 14:12:17 LastEditors: Liuliang LastEditTime: 2021-08-17 14:08:50 Description: NCNN在imagenet上的推理验证 &#39;&#39;&#39; import argparse import os import random import shutil import time import warnings from Average_ import AverageMeter from Progress_ import ProgressMeter import torch import torch.nn as nn import torch.nn.parallel import torch.backends.cudnn as cudnn import torch.distributed as dist import torch.optim import torch.multiprocessing as mp import torch.utils.data import torch.utils.data.distributed import torchvision.transforms as transforms import torchvision." />
+  1. NCNN推理代码 2. 结果验证  1. NCNN推理代码 &#39;&#39;&#39; Date: 2021-08-10 14:12:17 LastEditors: Liuliang LastEditTime: 2021-08-17 14:08:50 Description: NCNN在imagenet上的推理验证 &#39;&#39;&#39; import argparse import os import random import shutil import time import warnings from Average_ import AverageMeter from Progress_ import ProgressMeter import torch import torch.nn as nn import torch.nn.parallel import torch.backends.cudnn as cudnn import torch.distributed as dist import torch.optim import torch.multiprocessing as mp import torch.utils.data import torch.utils.data.distributed import torchvision." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ioyy900205.github.io/post/2021-08-17-43-ncnn%E6%A8%A1%E5%9E%8B%E5%9C%A8imagenet%E4%B8%8A%E7%9A%84%E6%8E%A8%E7%90%86%E9%AA%8C%E8%AF%81/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2021-08-17T14:33:12+08:00" />
@@ -33,7 +33,7 @@
   </head>
   <body>
     <header class="app-header">
-      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://www.qqtouxiang.com/d/file/tupian/mx/20170926/jixq0zs051pwa.jpg" alt="Liu Liang" /></a>
+      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3520060145,2875461924&amp;fm=26&amp;gp=0.jpg" alt="Liu Liang" /></a>
       <h1>亮的笔记</h1>
       <nav class="app-header-menu">
           <a class="app-header-menu-item" href="/">Home</a>
@@ -102,212 +102,214 @@
 <li><a href="#2-%E7%BB%93%E6%9E%9C%E9%AA%8C%E8%AF%81">2. 结果验证</a></li>
 </ul>
 <h2 id="1-ncnn推理代码">1. NCNN推理代码</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e6db74">&#39;&#39;&#39;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Date: 2021-08-10 14:12:17
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">LastEditors: Liuliang
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">LastEditTime: 2021-08-17 14:08:50
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Description: NCNN在imagenet上的推理验证
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;&#39;&#39;</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> argparse
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> random
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> shutil
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> time
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> warnings
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> Average_ <span style="color:#f92672">import</span> AverageMeter
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> Progress_ <span style="color:#f92672">import</span> ProgressMeter
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn <span style="color:#66d9ef">as</span> nn
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn.parallel
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.backends.cudnn <span style="color:#66d9ef">as</span> cudnn
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.distributed <span style="color:#66d9ef">as</span> dist
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.optim
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.multiprocessing <span style="color:#66d9ef">as</span> mp
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.utils.data
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.utils.data.distributed
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torchvision.transforms <span style="color:#66d9ef">as</span> transforms
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torchvision.datasets <span style="color:#66d9ef">as</span> datasets
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torchvision.models <span style="color:#66d9ef">as</span> models
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> onnxruntime
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> ncnn
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> ncnn.model_zoo.model_store <span style="color:#f92672">import</span> get_model_file
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># ================================================================== #</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#                说明：设置随机数，保证结果可以复现                                             </span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># ================================================================== #	</span>
-</span></span><span style="display:flex;"><span>seed <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>random<span style="color:#f92672">.</span>seed(seed)
-</span></span><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>manual_seed(seed)
-</span></span><span style="display:flex;"><span>cudnn<span style="color:#f92672">.</span>deterministic <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
-</span></span><span style="display:flex;"><span>cudnn<span style="color:#f92672">.</span>benchmark <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># ================================================================== #</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#                说明：验证集op         batch_size,num_workers可以自己设置                                  </span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># ================================================================== #	</span>
-</span></span><span style="display:flex;"><span>val_data <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;/media/data/data02/Imagenet2012/&#39;</span>
-</span></span><span style="display:flex;"><span>valdir <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(val_data, <span style="color:#e6db74">&#39;val&#39;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>normalize <span style="color:#f92672">=</span> transforms<span style="color:#f92672">.</span>Normalize(mean<span style="color:#f92672">=</span>[<span style="color:#ae81ff">0.485</span>, <span style="color:#ae81ff">0.456</span>, <span style="color:#ae81ff">0.406</span>],
-</span></span><span style="display:flex;"><span>                                     std<span style="color:#f92672">=</span>[<span style="color:#ae81ff">0.229</span>, <span style="color:#ae81ff">0.224</span>, <span style="color:#ae81ff">0.225</span>])
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>val_loader <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>DataLoader(
-</span></span><span style="display:flex;"><span>        datasets<span style="color:#f92672">.</span>ImageFolder(valdir, transforms<span style="color:#f92672">.</span>Compose([
-</span></span><span style="display:flex;"><span>            transforms<span style="color:#f92672">.</span>Resize(<span style="color:#ae81ff">256</span>),
-</span></span><span style="display:flex;"><span>            transforms<span style="color:#f92672">.</span>CenterCrop(<span style="color:#ae81ff">227</span>),
-</span></span><span style="display:flex;"><span>            transforms<span style="color:#f92672">.</span>ToTensor(),
-</span></span><span style="display:flex;"><span>            normalize,
-</span></span><span style="display:flex;"><span>        ])),
-</span></span><span style="display:flex;"><span>        batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">128</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>,
-</span></span><span style="display:flex;"><span>        num_workers<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span>, pin_memory<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># ================================================================== #</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#                说明：定义损失                                             </span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># ================================================================== #	       </span>
-</span></span><span style="display:flex;"><span>criterion <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>CrossEntropyLoss()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># ================================================================== #</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#                说明：定义模型                                             </span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># ================================================================== #	</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SqueezeNet</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, target_size<span style="color:#f92672">=</span><span style="color:#ae81ff">224</span>, num_threads<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, use_gpu<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>):
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>target_size <span style="color:#f92672">=</span> target_size
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>num_threads <span style="color:#f92672">=</span> num_threads
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>use_gpu <span style="color:#f92672">=</span> use_gpu
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>mean_vals <span style="color:#f92672">=</span> [<span style="color:#ae81ff">104.0</span>, <span style="color:#ae81ff">117.0</span>, <span style="color:#ae81ff">123.0</span>]
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>norm_vals <span style="color:#f92672">=</span> []
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>net <span style="color:#f92672">=</span> ncnn<span style="color:#f92672">.</span>Net()
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>net<span style="color:#f92672">.</span>opt<span style="color:#f92672">.</span>use_vulkan_compute <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>use_gpu
-</span></span><span style="display:flex;"><span>        
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>net<span style="color:#f92672">.</span>load_param(<span style="color:#e6db74">&#34;/home/liuliang/.ncnn/models/resnet50.param&#34;</span>)
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>net<span style="color:#f92672">.</span>load_model(<span style="color:#e6db74">&#34;/home/liuliang/.ncnn/models/resnet50.bin&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __del__(self):
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>net <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __call__(self, img):
-</span></span><span style="display:flex;"><span>        img_h <span style="color:#f92672">=</span> img<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]
-</span></span><span style="display:flex;"><span>        img_w <span style="color:#f92672">=</span> img<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>]
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># mat_in = ncnn.Mat.from_pixels_resize(</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#     img,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#     ncnn.Mat.PixelType.PIXEL_BGR,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#     img.shape[1],</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#     img.shape[0],</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#     self.target_size,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#     self.target_size,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># )</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        mat_in <span style="color:#f92672">=</span> ncnn<span style="color:#f92672">.</span>Mat(img)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># mat_in.substract_mean_normalize(self.mean_vals, self.norm_vals)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        ex <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>net<span style="color:#f92672">.</span>create_extractor()
-</span></span><span style="display:flex;"><span>        ex<span style="color:#f92672">.</span>set_num_threads(self<span style="color:#f92672">.</span>num_threads)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        ex<span style="color:#f92672">.</span>input(<span style="color:#e6db74">&#34;input&#34;</span>, mat_in)
-</span></span><span style="display:flex;"><span>        
-</span></span><span style="display:flex;"><span>        ret, mat_out <span style="color:#f92672">=</span> ex<span style="color:#f92672">.</span>extract(<span style="color:#e6db74">&#34;output&#34;</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># print(&#34;%d %d %d\n&#34;, mat_out.w, mat_out.h, mat_out.c)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        out <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(mat_out)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> out
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>model <span style="color:#f92672">=</span> SqueezeNet()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># ================================================================== #</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#                说明：def验证                                             </span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># ================================================================== #	</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">validate</span>(val_loader, model, criterion):
-</span></span><span style="display:flex;"><span>    batch_time <span style="color:#f92672">=</span> AverageMeter(<span style="color:#e6db74">&#39;Time&#39;</span>, <span style="color:#e6db74">&#39;:6.3f&#39;</span>)
-</span></span><span style="display:flex;"><span>    losses <span style="color:#f92672">=</span> AverageMeter(<span style="color:#e6db74">&#39;Loss&#39;</span>, <span style="color:#e6db74">&#39;:.4e&#39;</span>)
-</span></span><span style="display:flex;"><span>    top1 <span style="color:#f92672">=</span> AverageMeter(<span style="color:#e6db74">&#39;Acc@1&#39;</span>, <span style="color:#e6db74">&#39;:6.2f&#39;</span>)
-</span></span><span style="display:flex;"><span>    top5 <span style="color:#f92672">=</span> AverageMeter(<span style="color:#e6db74">&#39;Acc@5&#39;</span>, <span style="color:#e6db74">&#39;:6.2f&#39;</span>)
-</span></span><span style="display:flex;"><span>    progress <span style="color:#f92672">=</span> ProgressMeter(
-</span></span><span style="display:flex;"><span>        len(val_loader),
-</span></span><span style="display:flex;"><span>        [batch_time, losses, top1, top5],
-</span></span><span style="display:flex;"><span>        prefix<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Test: &#39;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># switch to evaluate mode</span>
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    end <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>time()
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i, (images, target) <span style="color:#f92672">in</span> enumerate(val_loader):
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># compute output</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># output = model(images)</span>
-</span></span><span style="display:flex;"><span>        output <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>zeros(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1000</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> image <span style="color:#f92672">in</span> images:            
-</span></span><span style="display:flex;"><span>            _output <span style="color:#f92672">=</span> model(to_numpy(image))
-</span></span><span style="display:flex;"><span>            _output <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>from_numpy(_output)
-</span></span><span style="display:flex;"><span>            _output <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>unsqueeze(_output,<span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>            output <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>cat((output, _output),<span style="color:#ae81ff">0</span>)            
-</span></span><span style="display:flex;"><span>        output <span style="color:#f92672">=</span> output[<span style="color:#ae81ff">1</span>:]      
-</span></span><span style="display:flex;"><span>            
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># output = output.argmax(axis=1)</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># print(out)</span>
-</span></span><span style="display:flex;"><span>        loss <span style="color:#f92672">=</span> criterion(output, target)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># measure accuracy and record loss</span>
-</span></span><span style="display:flex;"><span>        acc1, acc5 <span style="color:#f92672">=</span> accuracy(output, target, topk<span style="color:#f92672">=</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">5</span>))
-</span></span><span style="display:flex;"><span>        losses<span style="color:#f92672">.</span>update(loss<span style="color:#f92672">.</span>item(), images<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">0</span>))
-</span></span><span style="display:flex;"><span>        top1<span style="color:#f92672">.</span>update(acc1[<span style="color:#ae81ff">0</span>], images<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">0</span>))
-</span></span><span style="display:flex;"><span>        top5<span style="color:#f92672">.</span>update(acc5[<span style="color:#ae81ff">0</span>], images<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">0</span>))
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># measure elapsed time</span>
-</span></span><span style="display:flex;"><span>        batch_time<span style="color:#f92672">.</span>update(time<span style="color:#f92672">.</span>time() <span style="color:#f92672">-</span> end)
-</span></span><span style="display:flex;"><span>        end <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>time()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> i <span style="color:#f92672">%</span> <span style="color:#ae81ff">50</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
-</span></span><span style="display:flex;"><span>            progress<span style="color:#f92672">.</span>display(i)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># TODO: this should also be done with the ProgressMeter</span>
-</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39; * Acc@1 </span><span style="color:#e6db74">{top1.avg:.3f}</span><span style="color:#e6db74"> Acc@5 </span><span style="color:#e6db74">{top5.avg:.3f}</span><span style="color:#e6db74">&#39;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">.</span>format(top1<span style="color:#f92672">=</span>top1, top5<span style="color:#f92672">=</span>top5))
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">to_numpy</span>(tensor):
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> tensor<span style="color:#f92672">.</span>detach()<span style="color:#f92672">.</span>cpu()<span style="color:#f92672">.</span>numpy() <span style="color:#66d9ef">if</span> tensor<span style="color:#f92672">.</span>requires_grad <span style="color:#66d9ef">else</span> tensor<span style="color:#f92672">.</span>cpu()<span style="color:#f92672">.</span>numpy()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">accuracy</span>(output, target, topk<span style="color:#f92672">=</span>(<span style="color:#ae81ff">1</span>,)):
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Computes the accuracy over the k top predictions for the specified values of k&#34;&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
-</span></span><span style="display:flex;"><span>        maxk <span style="color:#f92672">=</span> max(topk)
-</span></span><span style="display:flex;"><span>        batch_size <span style="color:#f92672">=</span> target<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        _, pred <span style="color:#f92672">=</span> output<span style="color:#f92672">.</span>topk(maxk, <span style="color:#ae81ff">1</span>, <span style="color:#66d9ef">True</span>, <span style="color:#66d9ef">True</span>)
-</span></span><span style="display:flex;"><span>        pred <span style="color:#f92672">=</span> pred<span style="color:#f92672">.</span>t()
-</span></span><span style="display:flex;"><span>        correct <span style="color:#f92672">=</span> pred<span style="color:#f92672">.</span>eq(target<span style="color:#f92672">.</span>view(<span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>expand_as(pred))
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        res <span style="color:#f92672">=</span> []
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> k <span style="color:#f92672">in</span> topk:
-</span></span><span style="display:flex;"><span>            correct_k <span style="color:#f92672">=</span> correct[:k]<span style="color:#f92672">.</span>reshape(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>float()<span style="color:#f92672">.</span>sum(<span style="color:#ae81ff">0</span>, keepdim<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-</span></span><span style="display:flex;"><span>            res<span style="color:#f92672">.</span>append(correct_k<span style="color:#f92672">.</span>mul_(<span style="color:#ae81ff">100.0</span> <span style="color:#f92672">/</span> batch_size))
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> res
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>validate(val_loader, model, criterion)
-</span></span></code></pre></div><h2 id="2-结果验证">2. 结果验证</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>(<span style="color:#ae81ff">0419</span>) liuliang<span style="color:#a6e22e">@ubuntu</span><span style="color:#f92672">-</span>server<span style="color:#f92672">-</span><span style="color:#ae81ff">129</span>:<span style="color:#f92672">~/</span>deep_learning<span style="color:#f92672">/</span>PyTorch_mess<span style="color:#f92672">-</span>around<span style="color:#f92672">/</span>Model Deployment<span style="color:#f92672">/</span><span style="color:#ae81ff">20210810</span>_liu<span style="color:#960050;background-color:#1e0010">$</span>  cd <span style="color:#e6db74">&#34;/home/liuliang/deep_learning/PyTorch_mess-around/Model Deployment/20210810_liu&#34;</span> ; <span style="color:#f92672">/</span>usr<span style="color:#f92672">/</span>bin<span style="color:#f92672">/</span>env <span style="color:#f92672">/</span>home<span style="color:#f92672">/</span>liuliang<span style="color:#f92672">/</span>anaconda3<span style="color:#f92672">/</span>envs<span style="color:#f92672">/</span><span style="color:#ae81ff">0419</span><span style="color:#f92672">/</span>bin<span style="color:#f92672">/</span>python <span style="color:#f92672">/</span>home<span style="color:#f92672">/</span>liuliang<span style="color:#f92672">/.</span>vscode<span style="color:#f92672">-</span>server<span style="color:#f92672">/</span>extensions<span style="color:#f92672">/</span>ms<span style="color:#f92672">-</span>python<span style="color:#f92672">.</span>python<span style="color:#f92672">-</span><span style="color:#ae81ff">2021.8.1105858891</span><span style="color:#f92672">/</span>pythonFiles<span style="color:#f92672">/</span>lib<span style="color:#f92672">/</span>python<span style="color:#f92672">/</span>debugpy<span style="color:#f92672">/</span>launcher <span style="color:#ae81ff">37671</span> <span style="color:#f92672">--</span> <span style="color:#e6db74">&#34;/home/liuliang/deep_learning/PyTorch_mess-around/Model Deployment/20210810_liu/imagenet_NCNN_infer.py&#34;</span> 
-</span></span><span style="display:flex;"><span>Test: [  <span style="color:#ae81ff">0</span><span style="color:#f92672">/</span><span style="color:#ae81ff">391</span>] Time <span style="color:#ae81ff">17.888</span> (<span style="color:#ae81ff">17.888</span>)    Loss <span style="color:#ae81ff">5.7633e-01</span> (<span style="color:#ae81ff">5.7633e-01</span>)    Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">85.94</span> ( <span style="color:#ae81ff">85.94</span>)   Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">96.88</span> ( <span style="color:#ae81ff">96.88</span>)
-</span></span><span style="display:flex;"><span>Test: [ <span style="color:#ae81ff">50</span><span style="color:#f92672">/</span><span style="color:#ae81ff">391</span>] Time <span style="color:#ae81ff">12.459</span> (<span style="color:#ae81ff">12.535</span>)    Loss <span style="color:#ae81ff">5.5321e-01</span> (<span style="color:#ae81ff">1.0547e+00</span>)    Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">85.16</span> ( <span style="color:#ae81ff">73.70</span>)   Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">96.09</span> ( <span style="color:#ae81ff">91.18</span>)
-</span></span><span style="display:flex;"><span>Test: [<span style="color:#ae81ff">100</span><span style="color:#f92672">/</span><span style="color:#ae81ff">391</span>] Time <span style="color:#ae81ff">12.512</span> (<span style="color:#ae81ff">12.512</span>)    Loss <span style="color:#ae81ff">9.7529e-01</span> (<span style="color:#ae81ff">1.0268e+00</span>)    Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">78.91</span> ( <span style="color:#ae81ff">73.72</span>)   Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">90.62</span> ( <span style="color:#ae81ff">92.24</span>)
-</span></span><span style="display:flex;"><span>Test: [<span style="color:#ae81ff">150</span><span style="color:#f92672">/</span><span style="color:#ae81ff">391</span>] Time <span style="color:#ae81ff">12.517</span> (<span style="color:#ae81ff">12.546</span>)    Loss <span style="color:#ae81ff">7.8398e-01</span> (<span style="color:#ae81ff">1.0033e+00</span>)    Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">73.44</span> ( <span style="color:#ae81ff">74.32</span>)   Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">96.88</span> ( <span style="color:#ae81ff">92.70</span>)
-</span></span><span style="display:flex;"><span>Test: [<span style="color:#ae81ff">200</span><span style="color:#f92672">/</span><span style="color:#ae81ff">391</span>] Time <span style="color:#ae81ff">12.592</span> (<span style="color:#ae81ff">12.546</span>)    Loss <span style="color:#ae81ff">1.5378e+00</span> (<span style="color:#ae81ff">1.1540e+00</span>)    Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">60.94</span> ( <span style="color:#ae81ff">71.43</span>)   Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">85.94</span> ( <span style="color:#ae81ff">90.64</span>)
-</span></span><span style="display:flex;"><span>Test: [<span style="color:#ae81ff">250</span><span style="color:#f92672">/</span><span style="color:#ae81ff">391</span>] Time <span style="color:#ae81ff">12.670</span> (<span style="color:#ae81ff">12.524</span>)    Loss <span style="color:#ae81ff">1.2155e+00</span> (<span style="color:#ae81ff">1.2531e+00</span>)    Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">71.09</span> ( <span style="color:#ae81ff">69.55</span>)   Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">85.94</span> ( <span style="color:#ae81ff">89.21</span>)
-</span></span><span style="display:flex;"><span>Test: [<span style="color:#ae81ff">300</span><span style="color:#f92672">/</span><span style="color:#ae81ff">391</span>] Time <span style="color:#ae81ff">12.415</span> (<span style="color:#ae81ff">12.524</span>)    Loss <span style="color:#ae81ff">1.4842e+00</span> (<span style="color:#ae81ff">1.3287e+00</span>)    Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">72.66</span> ( <span style="color:#ae81ff">68.20</span>)   Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">85.94</span> ( <span style="color:#ae81ff">88.22</span>)
-</span></span><span style="display:flex;"><span>Test: [<span style="color:#ae81ff">350</span><span style="color:#f92672">/</span><span style="color:#ae81ff">391</span>] Time <span style="color:#ae81ff">12.606</span> (<span style="color:#ae81ff">12.535</span>)    Loss <span style="color:#ae81ff">1.6262e+00</span> (<span style="color:#ae81ff">1.3861e+00</span>)    Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">63.28</span> ( <span style="color:#ae81ff">67.15</span>)   Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">84.38</span> ( <span style="color:#ae81ff">87.43</span>)
-</span></span><span style="display:flex;"><span> <span style="color:#f92672">*</span> Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">1</span> <span style="color:#ae81ff">67.042</span> Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">5</span> <span style="color:#ae81ff">87.374</span>
-</span></span></code></pre></div><hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#e6db74">&#39;&#39;&#39;
+</span><span style="color:#e6db74">Date: 2021-08-10 14:12:17
+</span><span style="color:#e6db74">LastEditors: Liuliang
+</span><span style="color:#e6db74">LastEditTime: 2021-08-17 14:08:50
+</span><span style="color:#e6db74">Description: NCNN在imagenet上的推理验证
+</span><span style="color:#e6db74">&#39;&#39;&#39;</span>
+<span style="color:#f92672">import</span> argparse
+<span style="color:#f92672">import</span> os
+<span style="color:#f92672">import</span> random
+<span style="color:#f92672">import</span> shutil
+<span style="color:#f92672">import</span> time
+<span style="color:#f92672">import</span> warnings
+
+
+<span style="color:#f92672">from</span> Average_ <span style="color:#f92672">import</span> AverageMeter
+<span style="color:#f92672">from</span> Progress_ <span style="color:#f92672">import</span> ProgressMeter
+<span style="color:#f92672">import</span> torch
+<span style="color:#f92672">import</span> torch.nn <span style="color:#66d9ef">as</span> nn
+<span style="color:#f92672">import</span> torch.nn.parallel
+<span style="color:#f92672">import</span> torch.backends.cudnn <span style="color:#66d9ef">as</span> cudnn
+<span style="color:#f92672">import</span> torch.distributed <span style="color:#66d9ef">as</span> dist
+<span style="color:#f92672">import</span> torch.optim
+<span style="color:#f92672">import</span> torch.multiprocessing <span style="color:#66d9ef">as</span> mp
+<span style="color:#f92672">import</span> torch.utils.data
+<span style="color:#f92672">import</span> torch.utils.data.distributed
+<span style="color:#f92672">import</span> torchvision.transforms <span style="color:#66d9ef">as</span> transforms
+<span style="color:#f92672">import</span> torchvision.datasets <span style="color:#66d9ef">as</span> datasets
+<span style="color:#f92672">import</span> torchvision.models <span style="color:#66d9ef">as</span> models
+<span style="color:#f92672">import</span> onnxruntime
+<span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+<span style="color:#f92672">import</span> ncnn
+<span style="color:#f92672">from</span> ncnn.model_zoo.model_store <span style="color:#f92672">import</span> get_model_file
+
+
+<span style="color:#75715e"># ================================================================== #</span>
+<span style="color:#75715e">#                说明：设置随机数，保证结果可以复现                                             </span>
+<span style="color:#75715e"># ================================================================== #	</span>
+seed <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+random<span style="color:#f92672">.</span>seed(seed)
+torch<span style="color:#f92672">.</span>manual_seed(seed)
+cudnn<span style="color:#f92672">.</span>deterministic <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
+cudnn<span style="color:#f92672">.</span>benchmark <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
+
+<span style="color:#75715e"># ================================================================== #</span>
+<span style="color:#75715e">#                说明：验证集op         batch_size,num_workers可以自己设置                                  </span>
+<span style="color:#75715e"># ================================================================== #	</span>
+val_data <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;/media/data/data02/Imagenet2012/&#39;</span>
+valdir <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(val_data, <span style="color:#e6db74">&#39;val&#39;</span>)
+
+normalize <span style="color:#f92672">=</span> transforms<span style="color:#f92672">.</span>Normalize(mean<span style="color:#f92672">=</span>[<span style="color:#ae81ff">0.485</span>, <span style="color:#ae81ff">0.456</span>, <span style="color:#ae81ff">0.406</span>],
+                                     std<span style="color:#f92672">=</span>[<span style="color:#ae81ff">0.229</span>, <span style="color:#ae81ff">0.224</span>, <span style="color:#ae81ff">0.225</span>])
+
+val_loader <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>DataLoader(
+        datasets<span style="color:#f92672">.</span>ImageFolder(valdir, transforms<span style="color:#f92672">.</span>Compose([
+            transforms<span style="color:#f92672">.</span>Resize(<span style="color:#ae81ff">256</span>),
+            transforms<span style="color:#f92672">.</span>CenterCrop(<span style="color:#ae81ff">227</span>),
+            transforms<span style="color:#f92672">.</span>ToTensor(),
+            normalize,
+        ])),
+        batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">128</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>,
+        num_workers<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span>, pin_memory<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+
+<span style="color:#75715e"># ================================================================== #</span>
+<span style="color:#75715e">#                说明：定义损失                                             </span>
+<span style="color:#75715e"># ================================================================== #	       </span>
+criterion <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>CrossEntropyLoss()
+
+<span style="color:#75715e"># ================================================================== #</span>
+<span style="color:#75715e">#                说明：定义模型                                             </span>
+<span style="color:#75715e"># ================================================================== #	</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SqueezeNet</span>:
+    <span style="color:#66d9ef">def</span> __init__(self, target_size<span style="color:#f92672">=</span><span style="color:#ae81ff">224</span>, num_threads<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, use_gpu<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>):
+        self<span style="color:#f92672">.</span>target_size <span style="color:#f92672">=</span> target_size
+        self<span style="color:#f92672">.</span>num_threads <span style="color:#f92672">=</span> num_threads
+        self<span style="color:#f92672">.</span>use_gpu <span style="color:#f92672">=</span> use_gpu
+
+        self<span style="color:#f92672">.</span>mean_vals <span style="color:#f92672">=</span> [<span style="color:#ae81ff">104.0</span>, <span style="color:#ae81ff">117.0</span>, <span style="color:#ae81ff">123.0</span>]
+        self<span style="color:#f92672">.</span>norm_vals <span style="color:#f92672">=</span> []
+
+        self<span style="color:#f92672">.</span>net <span style="color:#f92672">=</span> ncnn<span style="color:#f92672">.</span>Net()
+        self<span style="color:#f92672">.</span>net<span style="color:#f92672">.</span>opt<span style="color:#f92672">.</span>use_vulkan_compute <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>use_gpu
+        
+        self<span style="color:#f92672">.</span>net<span style="color:#f92672">.</span>load_param(<span style="color:#e6db74">&#34;/home/liuliang/.ncnn/models/resnet50.param&#34;</span>)
+        self<span style="color:#f92672">.</span>net<span style="color:#f92672">.</span>load_model(<span style="color:#e6db74">&#34;/home/liuliang/.ncnn/models/resnet50.bin&#34;</span>)
+
+    <span style="color:#66d9ef">def</span> __del__(self):
+        self<span style="color:#f92672">.</span>net <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>
+
+    <span style="color:#66d9ef">def</span> __call__(self, img):
+        img_h <span style="color:#f92672">=</span> img<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]
+        img_w <span style="color:#f92672">=</span> img<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>]
+
+        <span style="color:#75715e"># mat_in = ncnn.Mat.from_pixels_resize(</span>
+        <span style="color:#75715e">#     img,</span>
+        <span style="color:#75715e">#     ncnn.Mat.PixelType.PIXEL_BGR,</span>
+        <span style="color:#75715e">#     img.shape[1],</span>
+        <span style="color:#75715e">#     img.shape[0],</span>
+        <span style="color:#75715e">#     self.target_size,</span>
+        <span style="color:#75715e">#     self.target_size,</span>
+        <span style="color:#75715e"># )</span>
+
+        mat_in <span style="color:#f92672">=</span> ncnn<span style="color:#f92672">.</span>Mat(img)
+
+        <span style="color:#75715e"># mat_in.substract_mean_normalize(self.mean_vals, self.norm_vals)</span>
+
+        ex <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>net<span style="color:#f92672">.</span>create_extractor()
+        ex<span style="color:#f92672">.</span>set_num_threads(self<span style="color:#f92672">.</span>num_threads)
+
+        ex<span style="color:#f92672">.</span>input(<span style="color:#e6db74">&#34;input&#34;</span>, mat_in)
+        
+        ret, mat_out <span style="color:#f92672">=</span> ex<span style="color:#f92672">.</span>extract(<span style="color:#e6db74">&#34;output&#34;</span>)
+        <span style="color:#75715e"># print(&#34;%d %d %d\n&#34;, mat_out.w, mat_out.h, mat_out.c)</span>
+
+        out <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(mat_out)
+        <span style="color:#66d9ef">return</span> out
+
+
+model <span style="color:#f92672">=</span> SqueezeNet()
+
+<span style="color:#75715e"># ================================================================== #</span>
+<span style="color:#75715e">#                说明：def验证                                             </span>
+<span style="color:#75715e"># ================================================================== #	</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">validate</span>(val_loader, model, criterion):
+    batch_time <span style="color:#f92672">=</span> AverageMeter(<span style="color:#e6db74">&#39;Time&#39;</span>, <span style="color:#e6db74">&#39;:6.3f&#39;</span>)
+    losses <span style="color:#f92672">=</span> AverageMeter(<span style="color:#e6db74">&#39;Loss&#39;</span>, <span style="color:#e6db74">&#39;:.4e&#39;</span>)
+    top1 <span style="color:#f92672">=</span> AverageMeter(<span style="color:#e6db74">&#39;Acc@1&#39;</span>, <span style="color:#e6db74">&#39;:6.2f&#39;</span>)
+    top5 <span style="color:#f92672">=</span> AverageMeter(<span style="color:#e6db74">&#39;Acc@5&#39;</span>, <span style="color:#e6db74">&#39;:6.2f&#39;</span>)
+    progress <span style="color:#f92672">=</span> ProgressMeter(
+        len(val_loader),
+        [batch_time, losses, top1, top5],
+        prefix<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Test: &#39;</span>)
+
+    <span style="color:#75715e"># switch to evaluate mode</span>
+    
+
+    end <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>time()
+    <span style="color:#66d9ef">for</span> i, (images, target) <span style="color:#f92672">in</span> enumerate(val_loader):
+        <span style="color:#75715e"># compute output</span>
+        <span style="color:#75715e"># output = model(images)</span>
+        output <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>zeros(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1000</span>)
+        <span style="color:#66d9ef">for</span> image <span style="color:#f92672">in</span> images:            
+            _output <span style="color:#f92672">=</span> model(to_numpy(image))
+            _output <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>from_numpy(_output)
+            _output <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>unsqueeze(_output,<span style="color:#ae81ff">0</span>)
+            output <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>cat((output, _output),<span style="color:#ae81ff">0</span>)            
+        output <span style="color:#f92672">=</span> output[<span style="color:#ae81ff">1</span>:]      
+            
+        <span style="color:#75715e"># output = output.argmax(axis=1)</span>
+        <span style="color:#75715e"># print(out)</span>
+        loss <span style="color:#f92672">=</span> criterion(output, target)
+
+        <span style="color:#75715e"># measure accuracy and record loss</span>
+        acc1, acc5 <span style="color:#f92672">=</span> accuracy(output, target, topk<span style="color:#f92672">=</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">5</span>))
+        losses<span style="color:#f92672">.</span>update(loss<span style="color:#f92672">.</span>item(), images<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">0</span>))
+        top1<span style="color:#f92672">.</span>update(acc1[<span style="color:#ae81ff">0</span>], images<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">0</span>))
+        top5<span style="color:#f92672">.</span>update(acc5[<span style="color:#ae81ff">0</span>], images<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">0</span>))
+
+        <span style="color:#75715e"># measure elapsed time</span>
+        batch_time<span style="color:#f92672">.</span>update(time<span style="color:#f92672">.</span>time() <span style="color:#f92672">-</span> end)
+        end <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>time()
+
+        <span style="color:#66d9ef">if</span> i <span style="color:#f92672">%</span> <span style="color:#ae81ff">50</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+            progress<span style="color:#f92672">.</span>display(i)
+
+    <span style="color:#75715e"># TODO: this should also be done with the ProgressMeter</span>
+    print(<span style="color:#e6db74">&#39; * Acc@1 </span><span style="color:#e6db74">{top1.avg:.3f}</span><span style="color:#e6db74"> Acc@5 </span><span style="color:#e6db74">{top5.avg:.3f}</span><span style="color:#e6db74">&#39;</span>
+            <span style="color:#f92672">.</span>format(top1<span style="color:#f92672">=</span>top1, top5<span style="color:#f92672">=</span>top5))
+
+
+
+
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">to_numpy</span>(tensor):
+    <span style="color:#66d9ef">return</span> tensor<span style="color:#f92672">.</span>detach()<span style="color:#f92672">.</span>cpu()<span style="color:#f92672">.</span>numpy() <span style="color:#66d9ef">if</span> tensor<span style="color:#f92672">.</span>requires_grad <span style="color:#66d9ef">else</span> tensor<span style="color:#f92672">.</span>cpu()<span style="color:#f92672">.</span>numpy()
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">accuracy</span>(output, target, topk<span style="color:#f92672">=</span>(<span style="color:#ae81ff">1</span>,)):
+    <span style="color:#e6db74">&#34;&#34;&#34;Computes the accuracy over the k top predictions for the specified values of k&#34;&#34;&#34;</span>
+    <span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+        maxk <span style="color:#f92672">=</span> max(topk)
+        batch_size <span style="color:#f92672">=</span> target<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">0</span>)
+
+        _, pred <span style="color:#f92672">=</span> output<span style="color:#f92672">.</span>topk(maxk, <span style="color:#ae81ff">1</span>, <span style="color:#66d9ef">True</span>, <span style="color:#66d9ef">True</span>)
+        pred <span style="color:#f92672">=</span> pred<span style="color:#f92672">.</span>t()
+        correct <span style="color:#f92672">=</span> pred<span style="color:#f92672">.</span>eq(target<span style="color:#f92672">.</span>view(<span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>expand_as(pred))
+
+        res <span style="color:#f92672">=</span> []
+        <span style="color:#66d9ef">for</span> k <span style="color:#f92672">in</span> topk:
+            correct_k <span style="color:#f92672">=</span> correct[:k]<span style="color:#f92672">.</span>reshape(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>float()<span style="color:#f92672">.</span>sum(<span style="color:#ae81ff">0</span>, keepdim<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+            res<span style="color:#f92672">.</span>append(correct_k<span style="color:#f92672">.</span>mul_(<span style="color:#ae81ff">100.0</span> <span style="color:#f92672">/</span> batch_size))
+        <span style="color:#66d9ef">return</span> res
+
+validate(val_loader, model, criterion)
+
+</code></pre></div><h2 id="2-结果验证">2. 结果验证</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">(<span style="color:#ae81ff">0419</span>) liuliang<span style="color:#a6e22e">@ubuntu</span><span style="color:#f92672">-</span>server<span style="color:#f92672">-</span><span style="color:#ae81ff">129</span>:<span style="color:#f92672">~/</span>deep_learning<span style="color:#f92672">/</span>PyTorch_mess<span style="color:#f92672">-</span>around<span style="color:#f92672">/</span>Model Deployment<span style="color:#f92672">/</span><span style="color:#ae81ff">20210810</span>_liu<span style="color:#960050;background-color:#1e0010">$</span>  cd <span style="color:#e6db74">&#34;/home/liuliang/deep_learning/PyTorch_mess-around/Model Deployment/20210810_liu&#34;</span> ; <span style="color:#f92672">/</span>usr<span style="color:#f92672">/</span>bin<span style="color:#f92672">/</span>env <span style="color:#f92672">/</span>home<span style="color:#f92672">/</span>liuliang<span style="color:#f92672">/</span>anaconda3<span style="color:#f92672">/</span>envs<span style="color:#f92672">/</span><span style="color:#ae81ff">0419</span><span style="color:#f92672">/</span>bin<span style="color:#f92672">/</span>python <span style="color:#f92672">/</span>home<span style="color:#f92672">/</span>liuliang<span style="color:#f92672">/.</span>vscode<span style="color:#f92672">-</span>server<span style="color:#f92672">/</span>extensions<span style="color:#f92672">/</span>ms<span style="color:#f92672">-</span>python<span style="color:#f92672">.</span>python<span style="color:#f92672">-</span><span style="color:#ae81ff">2021.8.1105858891</span><span style="color:#f92672">/</span>pythonFiles<span style="color:#f92672">/</span>lib<span style="color:#f92672">/</span>python<span style="color:#f92672">/</span>debugpy<span style="color:#f92672">/</span>launcher <span style="color:#ae81ff">37671</span> <span style="color:#f92672">--</span> <span style="color:#e6db74">&#34;/home/liuliang/deep_learning/PyTorch_mess-around/Model Deployment/20210810_liu/imagenet_NCNN_infer.py&#34;</span> 
+Test: [  <span style="color:#ae81ff">0</span><span style="color:#f92672">/</span><span style="color:#ae81ff">391</span>] Time <span style="color:#ae81ff">17.888</span> (<span style="color:#ae81ff">17.888</span>)    Loss <span style="color:#ae81ff">5.7633e-01</span> (<span style="color:#ae81ff">5.7633e-01</span>)    Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">85.94</span> ( <span style="color:#ae81ff">85.94</span>)   Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">96.88</span> ( <span style="color:#ae81ff">96.88</span>)
+Test: [ <span style="color:#ae81ff">50</span><span style="color:#f92672">/</span><span style="color:#ae81ff">391</span>] Time <span style="color:#ae81ff">12.459</span> (<span style="color:#ae81ff">12.535</span>)    Loss <span style="color:#ae81ff">5.5321e-01</span> (<span style="color:#ae81ff">1.0547e+00</span>)    Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">85.16</span> ( <span style="color:#ae81ff">73.70</span>)   Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">96.09</span> ( <span style="color:#ae81ff">91.18</span>)
+Test: [<span style="color:#ae81ff">100</span><span style="color:#f92672">/</span><span style="color:#ae81ff">391</span>] Time <span style="color:#ae81ff">12.512</span> (<span style="color:#ae81ff">12.512</span>)    Loss <span style="color:#ae81ff">9.7529e-01</span> (<span style="color:#ae81ff">1.0268e+00</span>)    Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">78.91</span> ( <span style="color:#ae81ff">73.72</span>)   Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">90.62</span> ( <span style="color:#ae81ff">92.24</span>)
+Test: [<span style="color:#ae81ff">150</span><span style="color:#f92672">/</span><span style="color:#ae81ff">391</span>] Time <span style="color:#ae81ff">12.517</span> (<span style="color:#ae81ff">12.546</span>)    Loss <span style="color:#ae81ff">7.8398e-01</span> (<span style="color:#ae81ff">1.0033e+00</span>)    Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">73.44</span> ( <span style="color:#ae81ff">74.32</span>)   Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">96.88</span> ( <span style="color:#ae81ff">92.70</span>)
+Test: [<span style="color:#ae81ff">200</span><span style="color:#f92672">/</span><span style="color:#ae81ff">391</span>] Time <span style="color:#ae81ff">12.592</span> (<span style="color:#ae81ff">12.546</span>)    Loss <span style="color:#ae81ff">1.5378e+00</span> (<span style="color:#ae81ff">1.1540e+00</span>)    Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">60.94</span> ( <span style="color:#ae81ff">71.43</span>)   Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">85.94</span> ( <span style="color:#ae81ff">90.64</span>)
+Test: [<span style="color:#ae81ff">250</span><span style="color:#f92672">/</span><span style="color:#ae81ff">391</span>] Time <span style="color:#ae81ff">12.670</span> (<span style="color:#ae81ff">12.524</span>)    Loss <span style="color:#ae81ff">1.2155e+00</span> (<span style="color:#ae81ff">1.2531e+00</span>)    Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">71.09</span> ( <span style="color:#ae81ff">69.55</span>)   Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">85.94</span> ( <span style="color:#ae81ff">89.21</span>)
+Test: [<span style="color:#ae81ff">300</span><span style="color:#f92672">/</span><span style="color:#ae81ff">391</span>] Time <span style="color:#ae81ff">12.415</span> (<span style="color:#ae81ff">12.524</span>)    Loss <span style="color:#ae81ff">1.4842e+00</span> (<span style="color:#ae81ff">1.3287e+00</span>)    Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">72.66</span> ( <span style="color:#ae81ff">68.20</span>)   Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">85.94</span> ( <span style="color:#ae81ff">88.22</span>)
+Test: [<span style="color:#ae81ff">350</span><span style="color:#f92672">/</span><span style="color:#ae81ff">391</span>] Time <span style="color:#ae81ff">12.606</span> (<span style="color:#ae81ff">12.535</span>)    Loss <span style="color:#ae81ff">1.6262e+00</span> (<span style="color:#ae81ff">1.3861e+00</span>)    Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">63.28</span> ( <span style="color:#ae81ff">67.15</span>)   Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">84.38</span> ( <span style="color:#ae81ff">87.43</span>)
+ <span style="color:#f92672">*</span> Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">1</span> <span style="color:#ae81ff">67.042</span> Acc<span style="color:#f92672">@</span><span style="color:#ae81ff">5</span> <span style="color:#ae81ff">87.374</span>
+
+</code></pre></div><hr>
 <p><strong>参考资料</strong></p>
 
     </div>

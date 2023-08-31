@@ -4,24 +4,24 @@
     <title>38--binary_search // 亮的笔记</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
-    <meta name="generator" content="Hugo 0.101.0" />
+    <meta name="generator" content="Hugo 0.90.1" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Liu Liang" />
     <meta name="description" content="" />
-    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.4a7ec8660f9a44b08c4da97c5f2e31b1192df1d4d0322e65c0dbbc6ecb1b863f.css" />
+    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
 
     
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="38--binary_search"/>
 <meta name="twitter:description" content="Algorithm is amazing
-@TOC
+ @TOC
 1. 传统二分的问题 1.1. 取中位数索引的代码有问题 int mid = (left &#43; right) / 2 这行代码是有问题的，在 left 和 right 都比较大的时候，left &#43; right 很有可能超过 int 类型能表示的最大值，即整型溢出，为了避免这个问题，应该写成：
 int mid = left &#43; (right - left) / 2 2. 神奇二分查找 （1）首先把循环可以进行的条件写成 while(left &lt; right)，在退出循环的时候，一定有 left == right 成立，此时返回 left 或者 right 都可以
 &#39;&#39;&#39; Date: 2021-07-13 15:13:49 LastEditors: Liuliang LastEditTime: 2021-07-13 15:20:27 Description: &#39;&#39;&#39; class solution: def search_left(self,nums,target): left = 0 right = len(nums) if right == 0: return 0 while left &lt; right: mid = (left &#43; right) // 2 if nums[mid] &lt; target: left = mid &#43; 1 else: right = mid return left def search_right(self,nums,target): left = 0 right = len(nums) if right == 0: return 0 while left &lt; right: mid = (left &#43; right) // 2 if nums[mid] &gt; target: right = mid - 1 else: left = mid return left c = solution() list = [2,4,4,4,5,6] m = c."/>
 
     <meta property="og:title" content="38--binary_search" />
 <meta property="og:description" content="Algorithm is amazing
-@TOC
+ @TOC
 1. 传统二分的问题 1.1. 取中位数索引的代码有问题 int mid = (left &#43; right) / 2 这行代码是有问题的，在 left 和 right 都比较大的时候，left &#43; right 很有可能超过 int 类型能表示的最大值，即整型溢出，为了避免这个问题，应该写成：
 int mid = left &#43; (right - left) / 2 2. 神奇二分查找 （1）首先把循环可以进行的条件写成 while(left &lt; right)，在退出循环的时候，一定有 left == right 成立，此时返回 left 或者 right 都可以
 &#39;&#39;&#39; Date: 2021-07-13 15:13:49 LastEditors: Liuliang LastEditTime: 2021-07-13 15:20:27 Description: &#39;&#39;&#39; class solution: def search_left(self,nums,target): left = 0 right = len(nums) if right == 0: return 0 while left &lt; right: mid = (left &#43; right) // 2 if nums[mid] &lt; target: left = mid &#43; 1 else: right = mid return left def search_right(self,nums,target): left = 0 right = len(nums) if right == 0: return 0 while left &lt; right: mid = (left &#43; right) // 2 if nums[mid] &gt; target: right = mid - 1 else: left = mid return left c = solution() list = [2,4,4,4,5,6] m = c." />
@@ -35,7 +35,7 @@ int mid = left &#43; (right - left) / 2 2. 神奇二分查找 （1）首先把�
   </head>
   <body>
     <header class="app-header">
-      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://www.qqtouxiang.com/d/file/tupian/mx/20170926/jixq0zs051pwa.jpg" alt="Liu Liang" /></a>
+      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3520060145,2875461924&amp;fm=26&amp;gp=0.jpg" alt="Liu Liang" /></a>
       <h1>亮的笔记</h1>
       <nav class="app-header-menu">
           <a class="app-header-menu-item" href="/">Home</a>
@@ -100,52 +100,55 @@ int mid = left &#43; (right - left) / 2 2. 神奇二分查找 （1）首先把�
 <p>@<a href="%E6%9C%AC%E6%96%87%E5%86%85%E5%AE%B9">TOC</a></p>
 <h2 id="1-传统二分的问题">1. 传统二分的问题</h2>
 <h3 id="11-取中位数索引的代码有问题">1.1. 取中位数索引的代码有问题</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> mid <span style="color:#f92672">=</span> (left <span style="color:#f92672">+</span> right) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span> 
-</span></span></code></pre></div><p>这行代码是有问题的，在 left 和 right 都比较大的时候，left + right 很有可能超过 int 类型能表示的最大值，即整型溢出，为了避免这个问题，应该写成：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> mid <span style="color:#f92672">=</span> left <span style="color:#f92672">+</span> (right <span style="color:#f92672">-</span> left) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span> 
-</span></span></code></pre></div><h2 id="2-神奇二分查找">2. 神奇二分查找</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">int</span> mid <span style="color:#f92672">=</span> (left <span style="color:#f92672">+</span> right) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span> 
+</code></pre></div><p>这行代码是有问题的，在 left 和 right 都比较大的时候，left + right 很有可能超过 int 类型能表示的最大值，即整型溢出，为了避免这个问题，应该写成：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">int</span> mid <span style="color:#f92672">=</span> left <span style="color:#f92672">+</span> (right <span style="color:#f92672">-</span> left) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span> 
+</code></pre></div><h2 id="2-神奇二分查找">2. 神奇二分查找</h2>
 <p>（1）首先把循环可以进行的条件写成 while(left &lt; right)，在退出循环的时候，一定有 left == right 成立，此时返回 left 或者 right 都可以</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e6db74">&#39;&#39;&#39;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Date: 2021-07-13 15:13:49
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">LastEditors: Liuliang
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">LastEditTime: 2021-07-13 15:20:27
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Description: 
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;&#39;&#39;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">solution</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">search_left</span>(self,nums,target):
-</span></span><span style="display:flex;"><span>        left <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>        right <span style="color:#f92672">=</span> len(nums)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> right <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> left <span style="color:#f92672">&lt;</span> right:
-</span></span><span style="display:flex;"><span>            mid <span style="color:#f92672">=</span> (left <span style="color:#f92672">+</span> right) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> nums[mid] <span style="color:#f92672">&lt;</span> target:
-</span></span><span style="display:flex;"><span>                left <span style="color:#f92672">=</span> mid <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span>:
-</span></span><span style="display:flex;"><span>                right <span style="color:#f92672">=</span> mid
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> left
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">search_right</span>(self,nums,target):
-</span></span><span style="display:flex;"><span>        left <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>        right <span style="color:#f92672">=</span> len(nums)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> right <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> left <span style="color:#f92672">&lt;</span> right:
-</span></span><span style="display:flex;"><span>            mid <span style="color:#f92672">=</span> (left <span style="color:#f92672">+</span> right) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> nums[mid] <span style="color:#f92672">&gt;</span> target:
-</span></span><span style="display:flex;"><span>                right <span style="color:#f92672">=</span> mid <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span>:
-</span></span><span style="display:flex;"><span>                left <span style="color:#f92672">=</span> mid
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> left
-</span></span><span style="display:flex;"><span> 
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>c <span style="color:#f92672">=</span> solution()
-</span></span><span style="display:flex;"><span>list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">6</span>]
-</span></span><span style="display:flex;"><span>m <span style="color:#f92672">=</span> c<span style="color:#f92672">.</span>search_right(nums <span style="color:#f92672">=</span> list,target <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>)
-</span></span><span style="display:flex;"><span>print(m)
-</span></span></code></pre></div><hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#e6db74">&#39;&#39;&#39;
+</span><span style="color:#e6db74">Date: 2021-07-13 15:13:49
+</span><span style="color:#e6db74">LastEditors: Liuliang
+</span><span style="color:#e6db74">LastEditTime: 2021-07-13 15:20:27
+</span><span style="color:#e6db74">Description: 
+</span><span style="color:#e6db74">&#39;&#39;&#39;</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">solution</span>:
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">search_left</span>(self,nums,target):
+        left <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+        right <span style="color:#f92672">=</span> len(nums)
+        <span style="color:#66d9ef">if</span> right <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">while</span> left <span style="color:#f92672">&lt;</span> right:
+            mid <span style="color:#f92672">=</span> (left <span style="color:#f92672">+</span> right) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
+            <span style="color:#66d9ef">if</span> nums[mid] <span style="color:#f92672">&lt;</span> target:
+                left <span style="color:#f92672">=</span> mid <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+            <span style="color:#66d9ef">else</span>:
+                right <span style="color:#f92672">=</span> mid
+        <span style="color:#66d9ef">return</span> left
+    
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">search_right</span>(self,nums,target):
+        left <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+        right <span style="color:#f92672">=</span> len(nums)
+        <span style="color:#66d9ef">if</span> right <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">while</span> left <span style="color:#f92672">&lt;</span> right:
+            mid <span style="color:#f92672">=</span> (left <span style="color:#f92672">+</span> right) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
+            <span style="color:#66d9ef">if</span> nums[mid] <span style="color:#f92672">&gt;</span> target:
+                right <span style="color:#f92672">=</span> mid <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+            <span style="color:#66d9ef">else</span>:
+                left <span style="color:#f92672">=</span> mid
+
+        <span style="color:#66d9ef">return</span> left
+ 
+
+c <span style="color:#f92672">=</span> solution()
+list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">6</span>]
+m <span style="color:#f92672">=</span> c<span style="color:#f92672">.</span>search_right(nums <span style="color:#f92672">=</span> list,target <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>)
+print(m)
+
+
+
+</code></pre></div><hr>
 <p><strong>参考资料</strong></p>
 
     </div>

@@ -4,17 +4,17 @@
     <title>Pytorch Lightning的调试bug // 亮的笔记</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
-    <meta name="generator" content="Hugo 0.101.0" />
+    <meta name="generator" content="Hugo 0.90.1" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Liu Liang" />
     <meta name="description" content="" />
-    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.4a7ec8660f9a44b08c4da97c5f2e31b1192df1d4d0322e65c0dbbc6ecb1b863f.css" />
+    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
 
     
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Pytorch Lightning的调试bug"/>
 <meta name="twitter:description" content="一些非常奇怪的问题
-@TOC
+ @TOC
 DeadLock detected from rank: 0 这真的是个头疼的问题。
 这个问题与模型参数的保存有关。我还没有发现比较好的解决办法。
 网上查的解决办法是在ModelCheckpoint中设置save_weights_only=True 感觉不完美
@@ -22,12 +22,12 @@ DeadLock detected from rank: 0 这真的是个头疼的问题。
 解决方法： 找到 torch_lightning.utilities.cloud_io.py 定位到最后torch.save处
 加入一行代码: checkpoint.pop(&lsquo;hyper_parameters&rsquo;)
 备注： checkopint字典的k,v有 1.epoch 2.global_step 3.pytorch-lightning_version 4.state_dict 5.hparams_name 6.hyper_parameters
-参考资料
+ 参考资料
 1"/>
 
     <meta property="og:title" content="Pytorch Lightning的调试bug" />
 <meta property="og:description" content="一些非常奇怪的问题
-@TOC
+ @TOC
 DeadLock detected from rank: 0 这真的是个头疼的问题。
 这个问题与模型参数的保存有关。我还没有发现比较好的解决办法。
 网上查的解决办法是在ModelCheckpoint中设置save_weights_only=True 感觉不完美
@@ -35,7 +35,7 @@ DeadLock detected from rank: 0 这真的是个头疼的问题。
 解决方法： 找到 torch_lightning.utilities.cloud_io.py 定位到最后torch.save处
 加入一行代码: checkpoint.pop(&lsquo;hyper_parameters&rsquo;)
 备注： checkopint字典的k,v有 1.epoch 2.global_step 3.pytorch-lightning_version 4.state_dict 5.hparams_name 6.hyper_parameters
-参考资料
+ 参考资料
 1" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ioyy900205.github.io/post/2021-12-14-lightning%E5%A4%AA%E5%9D%91%E4%BA%861/" /><meta property="article:section" content="post" />
@@ -47,7 +47,7 @@ DeadLock detected from rank: 0 这真的是个头疼的问题。
   </head>
   <body>
     <header class="app-header">
-      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://www.qqtouxiang.com/d/file/tupian/mx/20170926/jixq0zs051pwa.jpg" alt="Liu Liang" /></a>
+      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3520060145,2875461924&amp;fm=26&amp;gp=0.jpg" alt="Liu Liang" /></a>
       <h1>亮的笔记</h1>
       <nav class="app-header-menu">
           <a class="app-header-menu-item" href="/">Home</a>

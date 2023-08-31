@@ -4,25 +4,25 @@
     <title>06——torch.cat维度操作——PyTorch // 亮的笔记</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
-    <meta name="generator" content="Hugo 0.101.0" />
+    <meta name="generator" content="Hugo 0.90.1" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Liu Liang" />
     <meta name="description" content="" />
-    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.4a7ec8660f9a44b08c4da97c5f2e31b1192df1d4d0322e65c0dbbc6ecb1b863f.css" />
+    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
 
     
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="06——torch.cat维度操作——PyTorch"/>
 <meta name="twitter:description" content="请不要假装很努力， 因为结果不会陪你演戏！
-1. torch.cat 1.1. 二维数组 1.1.1. dim=0 1.1.2. dim=1 1.2. 三维数组 1.2.1. dim=0 1.2.2. dim=1 1.2.3. dim=2 2. 小结 1. torch.cat 1.1. 二维数组 1.1.1. dim=0 运行
-import torch A = torch.ones(2,3) #2x3的张量（矩阵） print(&#34;A:&#34;,A) B=2*torch.ones(4,3) #4x3的张量（矩阵） print(&#34;B:&#34;,B) C=torch.cat((A,B),0)#按维数0（行）拼接 print(&#34;C:&#34;,C) print(C.size()) 结果
-A: tensor([[1., 1., 1.], [1., 1., 1.]]) B: tensor([[2., 2., 2.], [2., 2., 2.], [2., 2., 2.], [2., 2., 2.]]) C: tensor([[1., 1., 1.], [1., 1., 1.], [2., 2."/>
+  1. torch.cat  1.1. 二维数组  1.1.1. dim=0 1.1.2. dim=1   1.2. 三维数组  1.2.1. dim=0 1.2.2. dim=1 1.2.3. dim=2     2. 小结  1. torch.cat 1.1. 二维数组 1.1.1. dim=0 运行
+import torch A = torch.ones(2,3) #2x3的张量（矩阵）  print(&#34;A:&#34;,A) B=2*torch.ones(4,3) #4x3的张量（矩阵）  print(&#34;B:&#34;,B) C=torch.cat((A,B),0)#按维数0（行）拼接 print(&#34;C:&#34;,C) print(C.size()) 结果
+A: tensor([[1., 1., 1.], [1., 1., 1.]]) B: tensor([[2., 2., 2.], [2., 2., 2.], [2."/>
 
     <meta property="og:title" content="06——torch.cat维度操作——PyTorch" />
 <meta property="og:description" content="请不要假装很努力， 因为结果不会陪你演戏！
-1. torch.cat 1.1. 二维数组 1.1.1. dim=0 1.1.2. dim=1 1.2. 三维数组 1.2.1. dim=0 1.2.2. dim=1 1.2.3. dim=2 2. 小结 1. torch.cat 1.1. 二维数组 1.1.1. dim=0 运行
-import torch A = torch.ones(2,3) #2x3的张量（矩阵） print(&#34;A:&#34;,A) B=2*torch.ones(4,3) #4x3的张量（矩阵） print(&#34;B:&#34;,B) C=torch.cat((A,B),0)#按维数0（行）拼接 print(&#34;C:&#34;,C) print(C.size()) 结果
-A: tensor([[1., 1., 1.], [1., 1., 1.]]) B: tensor([[2., 2., 2.], [2., 2., 2.], [2., 2., 2.], [2., 2., 2.]]) C: tensor([[1., 1., 1.], [1., 1., 1.], [2., 2." />
+  1. torch.cat  1.1. 二维数组  1.1.1. dim=0 1.1.2. dim=1   1.2. 三维数组  1.2.1. dim=0 1.2.2. dim=1 1.2.3. dim=2     2. 小结  1. torch.cat 1.1. 二维数组 1.1.1. dim=0 运行
+import torch A = torch.ones(2,3) #2x3的张量（矩阵）  print(&#34;A:&#34;,A) B=2*torch.ones(4,3) #4x3的张量（矩阵）  print(&#34;B:&#34;,B) C=torch.cat((A,B),0)#按维数0（行）拼接 print(&#34;C:&#34;,C) print(C.size()) 结果
+A: tensor([[1., 1., 1.], [1., 1., 1.]]) B: tensor([[2., 2., 2.], [2., 2., 2.], [2." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ioyy900205.github.io/post/2021-05-10-torch.cat%E7%9A%84%E7%BB%B4%E5%BA%A6%E6%93%8D%E4%BD%9C/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2021-05-10T00:00:00+00:00" />
@@ -33,7 +33,7 @@ A: tensor([[1., 1., 1.], [1., 1., 1.]]) B: tensor([[2., 2., 2.], [2., 2., 2.], [
   </head>
   <body>
     <header class="app-header">
-      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://www.qqtouxiang.com/d/file/tupian/mx/20170926/jixq0zs051pwa.jpg" alt="Liu Liang" /></a>
+      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3520060145,2875461924&amp;fm=26&amp;gp=0.jpg" alt="Liu Liang" /></a>
       <h1>亮的笔记</h1>
       <nav class="app-header-menu">
           <a class="app-header-menu-item" href="/">Home</a>
@@ -120,168 +120,168 @@ A: tensor([[1., 1., 1.], [1., 1., 1.]]) B: tensor([[2., 2., 2.], [2., 2., 2.], [
 <h2 id="11-二维数组">1.1. 二维数组</h2>
 <h3 id="111-dim0">1.1.1. dim=0</h3>
 <p>运行</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
-</span></span><span style="display:flex;"><span>A <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>ones(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>) <span style="color:#75715e">#2x3的张量（矩阵） </span>
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;A:&#34;</span>,A)
-</span></span><span style="display:flex;"><span>B<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>torch<span style="color:#f92672">.</span>ones(<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">3</span>) <span style="color:#75715e">#4x3的张量（矩阵） </span>
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;B:&#34;</span>,B)
-</span></span><span style="display:flex;"><span>C<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>cat((A,B),<span style="color:#ae81ff">0</span>)<span style="color:#75715e">#按维数0（行）拼接</span>
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;C:&#34;</span>,C)
-</span></span><span style="display:flex;"><span>print(C<span style="color:#f92672">.</span>size())
-</span></span></code></pre></div><p>结果</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>A: tensor([[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
-</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>]])
-</span></span><span style="display:flex;"><span>B: tensor([[<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]])
-</span></span><span style="display:flex;"><span>C: tensor([[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
-</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
-</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]])
-</span></span><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>Size([<span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">3</span>])
-</span></span></code></pre></div><p>注意：这里如果设置<code>pythonC=torch.cat((A,B),1)</code>。程序会报错。<strong>要求除了dim=1之外的所有维度须相同。</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
+A <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>ones(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>) <span style="color:#75715e">#2x3的张量（矩阵） </span>
+print(<span style="color:#e6db74">&#34;A:&#34;</span>,A)
+B<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>torch<span style="color:#f92672">.</span>ones(<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">3</span>) <span style="color:#75715e">#4x3的张量（矩阵） </span>
+print(<span style="color:#e6db74">&#34;B:&#34;</span>,B)
+C<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>cat((A,B),<span style="color:#ae81ff">0</span>)<span style="color:#75715e">#按维数0（行）拼接</span>
+print(<span style="color:#e6db74">&#34;C:&#34;</span>,C)
+print(C<span style="color:#f92672">.</span>size())
+</code></pre></div><p>结果</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">A: tensor([[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
+        [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>]])
+B: tensor([[<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+        [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+        [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+        [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]])
+C: tensor([[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
+        [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
+        [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+        [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+        [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+        [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]])
+torch<span style="color:#f92672">.</span>Size([<span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">3</span>])
+</code></pre></div><p>注意：这里如果设置<code>pythonC=torch.cat((A,B),1)</code>。程序会报错。<strong>要求除了dim=1之外的所有维度须相同。</strong></p>
 <h3 id="112-dim1">1.1.2. dim=1</h3>
 <p>运行</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
-</span></span><span style="display:flex;"><span>A <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>ones(<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">2</span>) <span style="color:#75715e">#2x3的张量（矩阵） </span>
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;A:&#34;</span>,A)
-</span></span><span style="display:flex;"><span>B<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>torch<span style="color:#f92672">.</span>ones(<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>) <span style="color:#75715e">#4x3的张量（矩阵） </span>
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;B:&#34;</span>,B)
-</span></span><span style="display:flex;"><span>C<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>cat((A,B),<span style="color:#ae81ff">1</span>)<span style="color:#75715e">#按维数1（行）拼接</span>
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;C:&#34;</span>,C)
-</span></span><span style="display:flex;"><span>print(C<span style="color:#f92672">.</span>size())
-</span></span></code></pre></div><p>结果</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>A <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>ones(<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">2</span>) <span style="color:#75715e">#2x3的张量（矩阵） ...</span>
-</span></span><span style="display:flex;"><span>A: tensor([[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
-</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
-</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>]])
-</span></span><span style="display:flex;"><span>B: tensor([[<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]])
-</span></span><span style="display:flex;"><span>C: tensor([[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]])
-</span></span><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>Size([<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">6</span>])
-</span></span></code></pre></div><h2 id="12-三维数组">1.2. 三维数组</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
+A <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>ones(<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">2</span>) <span style="color:#75715e">#2x3的张量（矩阵） </span>
+print(<span style="color:#e6db74">&#34;A:&#34;</span>,A)
+B<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>torch<span style="color:#f92672">.</span>ones(<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>) <span style="color:#75715e">#4x3的张量（矩阵） </span>
+print(<span style="color:#e6db74">&#34;B:&#34;</span>,B)
+C<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>cat((A,B),<span style="color:#ae81ff">1</span>)<span style="color:#75715e">#按维数1（行）拼接</span>
+print(<span style="color:#e6db74">&#34;C:&#34;</span>,C)
+print(C<span style="color:#f92672">.</span>size())
+</code></pre></div><p>结果</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">A <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>ones(<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">2</span>) <span style="color:#75715e">#2x3的张量（矩阵） ...</span>
+A: tensor([[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
+        [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
+        [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>]])
+B: tensor([[<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+        [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+        [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]])
+C: tensor([[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+        [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+        [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]])
+torch<span style="color:#f92672">.</span>Size([<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">6</span>])
+</code></pre></div><h2 id="12-三维数组">1.2. 三维数组</h2>
 <h3 id="121-dim0">1.2.1. dim=0</h3>
 <p>运行</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
-</span></span><span style="display:flex;"><span>A <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>ones(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>) <span style="color:#75715e">#2x2x3的张量（矩阵） </span>
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;A:&#34;</span>,A)
-</span></span><span style="display:flex;"><span>B<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>torch<span style="color:#f92672">.</span>ones(<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>) <span style="color:#75715e">#4x3的张量（矩阵） </span>
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;B:&#34;</span>,B)
-</span></span><span style="display:flex;"><span>C<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>cat((A,B),<span style="color:#ae81ff">0</span>)<span style="color:#75715e">#按维数0（行）拼接</span>
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;C:&#34;</span>,C)
-</span></span><span style="display:flex;"><span>print(C<span style="color:#f92672">.</span>size())
-</span></span></code></pre></div><p>结果</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>A: tensor([[[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>]],
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        [[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>]]])
-</span></span><span style="display:flex;"><span>B: tensor([[[<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]],
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        [[<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]],
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        [[<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]],
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        [[<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]]])
-</span></span><span style="display:flex;"><span>C: tensor([[[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>]],
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        [[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>]],
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        [[<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]],
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        [[<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]],
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        [[<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]],
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        [[<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]]])
-</span></span><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>Size([<span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>])
-</span></span></code></pre></div><h3 id="122-dim1">1.2.2. dim=1</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
+A <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>ones(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>) <span style="color:#75715e">#2x2x3的张量（矩阵） </span>
+print(<span style="color:#e6db74">&#34;A:&#34;</span>,A)
+B<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>torch<span style="color:#f92672">.</span>ones(<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>) <span style="color:#75715e">#4x3的张量（矩阵） </span>
+print(<span style="color:#e6db74">&#34;B:&#34;</span>,B)
+C<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>cat((A,B),<span style="color:#ae81ff">0</span>)<span style="color:#75715e">#按维数0（行）拼接</span>
+print(<span style="color:#e6db74">&#34;C:&#34;</span>,C)
+print(C<span style="color:#f92672">.</span>size())
+</code></pre></div><p>结果</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">A: tensor([[[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
+         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>]],
+
+        [[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
+         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>]]])
+B: tensor([[[<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]],
+
+        [[<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]],
+
+        [[<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]],
+
+        [[<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]]])
+C: tensor([[[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
+         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>]],
+
+        [[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
+         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>]],
+
+        [[<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]],
+
+        [[<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]],
+
+        [[<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]],
+
+        [[<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]]])
+torch<span style="color:#f92672">.</span>Size([<span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>])
+</code></pre></div><h3 id="122-dim1">1.2.2. dim=1</h3>
 <p>运行</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>A <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>ones(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>) <span style="color:#75715e">#2x2x3的张量（矩阵） </span>
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;A:&#34;</span>,A)
-</span></span><span style="display:flex;"><span>B<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>torch<span style="color:#f92672">.</span>ones(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">3</span>) <span style="color:#75715e">#4x3的张量（矩阵） </span>
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;B:&#34;</span>,B)
-</span></span><span style="display:flex;"><span>C<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>cat((A,B),<span style="color:#ae81ff">1</span>)<span style="color:#75715e">#按维数1（行）拼接</span>
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;C:&#34;</span>,C)
-</span></span><span style="display:flex;"><span>print(C<span style="color:#f92672">.</span>size())
-</span></span></code></pre></div><p>结果</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>A: tensor([[[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>]],
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        [[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>]]])
-</span></span><span style="display:flex;"><span>B: tensor([[[<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]],
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        [[<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]]])
-</span></span><span style="display:flex;"><span>C: tensor([[[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]],
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        [[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]]])
-</span></span><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>Size([<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">3</span>])
-</span></span></code></pre></div><h3 id="123-dim2">1.2.3. dim=2</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">A <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>ones(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>) <span style="color:#75715e">#2x2x3的张量（矩阵） </span>
+print(<span style="color:#e6db74">&#34;A:&#34;</span>,A)
+B<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>torch<span style="color:#f92672">.</span>ones(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">3</span>) <span style="color:#75715e">#4x3的张量（矩阵） </span>
+print(<span style="color:#e6db74">&#34;B:&#34;</span>,B)
+C<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>cat((A,B),<span style="color:#ae81ff">1</span>)<span style="color:#75715e">#按维数1（行）拼接</span>
+print(<span style="color:#e6db74">&#34;C:&#34;</span>,C)
+print(C<span style="color:#f92672">.</span>size())
+</code></pre></div><p>结果</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">A: tensor([[[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
+         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>]],
+
+        [[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
+         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>]]])
+B: tensor([[[<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]],
+
+        [[<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]]])
+C: tensor([[[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
+         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
+         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]],
+
+        [[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
+         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
+         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]]])
+torch<span style="color:#f92672">.</span>Size([<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">3</span>])
+</code></pre></div><h3 id="123-dim2">1.2.3. dim=2</h3>
 <p>运行</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>A <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>ones(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">2</span>) <span style="color:#75715e">#2x2x3的张量（矩阵） </span>
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;A:&#34;</span>,A)
-</span></span><span style="display:flex;"><span>B<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>torch<span style="color:#f92672">.</span>ones(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>) <span style="color:#75715e">#4x3的张量（矩阵） </span>
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;B:&#34;</span>,B)
-</span></span><span style="display:flex;"><span>C<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>cat((A,B),<span style="color:#ae81ff">2</span>)<span style="color:#75715e">#按维数 2 拼接</span>
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;C:&#34;</span>,C)
-</span></span><span style="display:flex;"><span>print(C<span style="color:#f92672">.</span>size())
-</span></span></code></pre></div><p>结果</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>A: tensor([[[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>]],
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        [[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>]]])
-</span></span><span style="display:flex;"><span>B: tensor([[[<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]],
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        [[<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]]])
-</span></span><span style="display:flex;"><span>C: tensor([[[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]],
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        [[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
-</span></span><span style="display:flex;"><span>         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]]])
-</span></span><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>Size([<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">6</span>])
-</span></span></code></pre></div><h1 id="2-小结">2. 小结</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">A <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>ones(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">2</span>) <span style="color:#75715e">#2x2x3的张量（矩阵） </span>
+print(<span style="color:#e6db74">&#34;A:&#34;</span>,A)
+B<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>torch<span style="color:#f92672">.</span>ones(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>) <span style="color:#75715e">#4x3的张量（矩阵） </span>
+print(<span style="color:#e6db74">&#34;B:&#34;</span>,B)
+C<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>cat((A,B),<span style="color:#ae81ff">2</span>)<span style="color:#75715e">#按维数 2 拼接</span>
+print(<span style="color:#e6db74">&#34;C:&#34;</span>,C)
+print(C<span style="color:#f92672">.</span>size())
+</code></pre></div><p>结果</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">A: tensor([[[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
+         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
+         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>]],
+
+        [[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
+         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>],
+         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>]]])
+B: tensor([[[<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]],
+
+        [[<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+         [<span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]]])
+C: tensor([[[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]],
+
+        [[<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>],
+         [<span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>, <span style="color:#ae81ff">2.</span>]]])
+torch<span style="color:#f92672">.</span>Size([<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">6</span>])
+</code></pre></div><h1 id="2-小结">2. 小结</h1>
 <p>just feeling it</p>
 <p>dim等于几，即在某个维度拼接</p>
 

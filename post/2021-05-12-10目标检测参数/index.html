@@ -4,35 +4,31 @@
     <title>10——目标检测参数 // 亮的笔记</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
-    <meta name="generator" content="Hugo 0.101.0" />
+    <meta name="generator" content="Hugo 0.90.1" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Liu Liang" />
     <meta name="description" content="" />
-    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.4a7ec8660f9a44b08c4da97c5f2e31b1192df1d4d0322e65c0dbbc6ecb1b863f.css" />
+    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
 
     
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="10——目标检测参数"/>
 <meta name="twitter:description" content="请不要假装很努力， 因为结果不会陪你演戏！
-1. background Pascal VOC 和 COCO 2. precision 和 recall 2.1. 基本定义 2.2. precision-recall curve 3. COCO Evaluation Result 4. 参考 1. background Pascal VOC 和 COCO 最近看目标检测，少不了了解其中参数的意义。一顿搜所哎。
+  1. background Pascal VOC 和 COCO 2. precision 和 recall  2.1. 基本定义 2.2. precision-recall curve   3. COCO Evaluation Result 4. 参考  1. background Pascal VOC 和 COCO 最近看目标检测，少不了了解其中参数的意义。一顿搜所哎。
 最精简的回答：
 目标检测中衡量识别精度的指标是mAP（mean average precision）。多个类别物体检测中，每一个类别都可以根据recall和precision绘制一条曲线，AP就是该曲线下的面积，mAP是多个类别AP的平均值
 番外篇 在coco数据集出来之前，基本都用pascal voc 现在都用coco了。
-2. precision 和 recall 2.1. 基本定义 precision查准率 preicision是在你认为的正样本中， 有多大比例真的是正样本 recall查全率 recall则是在真正的正样本中， 有多少被你找到了 2.2. precision-recall curve 如果threshold太高， prediction非常严格， 所以我们认为是鸭子的基本都是鸭子，precision就高了；但也因为筛选太严格， 我们也放过了一些score比较低的鸭子， 所以recall就低了
-如果threshold太低， 什么都会被当成鸭子， precision就会很低， recall就会很高。
-因为我们根据不同的threshold， 可以取到不同（也可能相同）的precision recall值。 这样想的话对于每个threshold，我们都有（precision， recall）的pair， 也就有了precision和recall之间的curve关系。
-有了这么一条precision-recall curve， 他衡量着两个有价值的判断标准， precision和recall的关系， 那么不如两个一起动态考虑， 就有了鸭子这个class的Average Precision， 即curve下的面积， 他可以充分的表示在这个model中， precision和recall的总体优劣。"/>
+2. precision 和 recall 2.1. 基本定义  precision查准率 preicision是在你认为的正样本中， 有多大比例真的是正样本 recall查全率 recall则是在真正的正样本中， 有多少被你找到了  2.2. precision-recall curve 如果threshold太高， prediction非常严格， 所以我们认为是鸭子的基本都是鸭子，precision就高了；但也因为筛选太严格， 我们也放过了一些score比较低的鸭子， 所以recall就低了
+如果threshold太低， 什么都会被当成鸭子， precision就会很低， recall就会很高。"/>
 
     <meta property="og:title" content="10——目标检测参数" />
 <meta property="og:description" content="请不要假装很努力， 因为结果不会陪你演戏！
-1. background Pascal VOC 和 COCO 2. precision 和 recall 2.1. 基本定义 2.2. precision-recall curve 3. COCO Evaluation Result 4. 参考 1. background Pascal VOC 和 COCO 最近看目标检测，少不了了解其中参数的意义。一顿搜所哎。
+  1. background Pascal VOC 和 COCO 2. precision 和 recall  2.1. 基本定义 2.2. precision-recall curve   3. COCO Evaluation Result 4. 参考  1. background Pascal VOC 和 COCO 最近看目标检测，少不了了解其中参数的意义。一顿搜所哎。
 最精简的回答：
 目标检测中衡量识别精度的指标是mAP（mean average precision）。多个类别物体检测中，每一个类别都可以根据recall和precision绘制一条曲线，AP就是该曲线下的面积，mAP是多个类别AP的平均值
 番外篇 在coco数据集出来之前，基本都用pascal voc 现在都用coco了。
-2. precision 和 recall 2.1. 基本定义 precision查准率 preicision是在你认为的正样本中， 有多大比例真的是正样本 recall查全率 recall则是在真正的正样本中， 有多少被你找到了 2.2. precision-recall curve 如果threshold太高， prediction非常严格， 所以我们认为是鸭子的基本都是鸭子，precision就高了；但也因为筛选太严格， 我们也放过了一些score比较低的鸭子， 所以recall就低了
-如果threshold太低， 什么都会被当成鸭子， precision就会很低， recall就会很高。
-因为我们根据不同的threshold， 可以取到不同（也可能相同）的precision recall值。 这样想的话对于每个threshold，我们都有（precision， recall）的pair， 也就有了precision和recall之间的curve关系。
-有了这么一条precision-recall curve， 他衡量着两个有价值的判断标准， precision和recall的关系， 那么不如两个一起动态考虑， 就有了鸭子这个class的Average Precision， 即curve下的面积， 他可以充分的表示在这个model中， precision和recall的总体优劣。" />
+2. precision 和 recall 2.1. 基本定义  precision查准率 preicision是在你认为的正样本中， 有多大比例真的是正样本 recall查全率 recall则是在真正的正样本中， 有多少被你找到了  2.2. precision-recall curve 如果threshold太高， prediction非常严格， 所以我们认为是鸭子的基本都是鸭子，precision就高了；但也因为筛选太严格， 我们也放过了一些score比较低的鸭子， 所以recall就低了
+如果threshold太低， 什么都会被当成鸭子， precision就会很低， recall就会很高。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ioyy900205.github.io/post/2021-05-12-10%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%8F%82%E6%95%B0/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2021-05-12T00:00:00+00:00" />
@@ -43,7 +39,7 @@
   </head>
   <body>
     <header class="app-header">
-      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://www.qqtouxiang.com/d/file/tupian/mx/20170926/jixq0zs051pwa.jpg" alt="Liu Liang" /></a>
+      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3520060145,2875461924&amp;fm=26&amp;gp=0.jpg" alt="Liu Liang" /></a>
       <h1>亮的笔记</h1>
       <nav class="app-header-menu">
           <a class="app-header-menu-item" href="/">Home</a>
@@ -139,39 +135,40 @@ recall则是在真正的正样本中， 有多少被你找到了</li>
 <p>因为我们根据不同的threshold， 可以取到不同（也可能相同）的precision recall值。 这样想的话对于每个threshold，我们都有（precision， recall）的pair， 也就有了precision和recall之间的curve关系。</p>
 <p>有了这么一条precision-recall curve， 他衡量着两个有价值的判断标准， precision和recall的关系， 那么不如两个一起动态考虑， 就有了鸭子这个class的Average Precision， 即curve下的面积， 他可以充分的表示在这个model中， precision和recall的总体优劣。</p>
 <h1 id="3-coco-evaluation-result">3. COCO Evaluation Result</h1>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>IoU metric: bbox
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#1 Average Precision</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#1.1 用于COCO标准的检测</span>
-</span></span><span style="display:flex;"><span> Average Precision  (AP) <span style="color:#f92672">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>:<span style="color:#ae81ff">0.95</span> <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span>   all <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.529</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#1.2用于Pascal VOC标准的检测</span>
-</span></span><span style="display:flex;"><span> Average Precision  (AP) <span style="color:#f92672">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>      <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span>   all <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.803</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#1.3更严格的（IoU=0.75）的检测</span>
-</span></span><span style="display:flex;"><span> Average Precision  (AP) <span style="color:#f92672">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.75</span>      <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span>   all <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.593</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#2 AP Across Scales</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#2.1 小于32^2的area</span>
-</span></span><span style="display:flex;"><span> Average Precision  (AP) <span style="color:#f92672">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>:<span style="color:#ae81ff">0.95</span> <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span> small <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.206</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#2.2 32^2到96^2之间的area</span>
-</span></span><span style="display:flex;"><span> Average Precision  (AP) <span style="color:#f92672">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>:<span style="color:#ae81ff">0.95</span> <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span>medium <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.411</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#2.3 大于96^2的area</span>
-</span></span><span style="display:flex;"><span> Average Precision  (AP) <span style="color:#f92672">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>:<span style="color:#ae81ff">0.95</span> <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span> large <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.582</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#3 Average Recall</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#3.1 每个图最多检测1个目标</span>
-</span></span><span style="display:flex;"><span> Average Recall     (AR) <span style="color:#f92672">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>:<span style="color:#ae81ff">0.95</span> <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span>   all <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span>  <span style="color:#ae81ff">1</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.453</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#3.2 每个图最多检测10个目标</span>
-</span></span><span style="display:flex;"><span> Average Recall     (AR) <span style="color:#f92672">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>:<span style="color:#ae81ff">0.95</span> <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span>   all <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.639</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#3.3 每个图最多检测100个目标</span>
-</span></span><span style="display:flex;"><span> Average Recall     (AR) <span style="color:#f92672">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>:<span style="color:#ae81ff">0.95</span> <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span>   all <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.646</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#4 AR Across Scales</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#4.1 小于32^2的area</span>
-</span></span><span style="display:flex;"><span> Average Recall     (AR) <span style="color:#f92672">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>:<span style="color:#ae81ff">0.95</span> <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span> small <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.357</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#4.2 32^2到96^2之间的area</span>
-</span></span><span style="display:flex;"><span> Average Recall     (AR) <span style="color:#f92672">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>:<span style="color:#ae81ff">0.95</span> <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span>medium <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.543</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#4.3 大于96^2的area</span>
-</span></span><span style="display:flex;"><span> Average Recall     (AR) <span style="color:#f92672">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>:<span style="color:#ae81ff">0.95</span> <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span> large <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.691</span>
-</span></span></code></pre></div><h1 id="4-参考">4. 参考</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">IoU metric: bbox
+<span style="color:#75715e">#1 Average Precision</span>
+<span style="color:#75715e">#1.1 用于COCO标准的检测</span>
+ Average Precision  (AP) <span style="color:#f92672">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>:<span style="color:#ae81ff">0.95</span> <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span>   all <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.529</span>
+<span style="color:#75715e">#1.2用于Pascal VOC标准的检测</span>
+ Average Precision  (AP) <span style="color:#f92672">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>      <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span>   all <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.803</span>
+<span style="color:#75715e">#1.3更严格的（IoU=0.75）的检测</span>
+ Average Precision  (AP) <span style="color:#f92672">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.75</span>      <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span>   all <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.593</span>
+
+<span style="color:#75715e">#2 AP Across Scales</span>
+<span style="color:#75715e">#2.1 小于32^2的area</span>
+ Average Precision  (AP) <span style="color:#f92672">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>:<span style="color:#ae81ff">0.95</span> <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span> small <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.206</span>
+<span style="color:#75715e">#2.2 32^2到96^2之间的area</span>
+ Average Precision  (AP) <span style="color:#f92672">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>:<span style="color:#ae81ff">0.95</span> <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span>medium <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.411</span>
+<span style="color:#75715e">#2.3 大于96^2的area</span>
+ Average Precision  (AP) <span style="color:#f92672">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>:<span style="color:#ae81ff">0.95</span> <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span> large <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.582</span>
+
+<span style="color:#75715e">#3 Average Recall</span>
+<span style="color:#75715e">#3.1 每个图最多检测1个目标</span>
+ Average Recall     (AR) <span style="color:#f92672">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>:<span style="color:#ae81ff">0.95</span> <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span>   all <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span>  <span style="color:#ae81ff">1</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.453</span>
+<span style="color:#75715e">#3.2 每个图最多检测10个目标</span>
+ Average Recall     (AR) <span style="color:#f92672">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>:<span style="color:#ae81ff">0.95</span> <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span>   all <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.639</span>
+<span style="color:#75715e">#3.3 每个图最多检测100个目标</span>
+ Average Recall     (AR) <span style="color:#f92672">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>:<span style="color:#ae81ff">0.95</span> <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span>   all <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.646</span>
+
+<span style="color:#75715e">#4 AR Across Scales</span>
+<span style="color:#75715e">#4.1 小于32^2的area</span>
+ Average Recall     (AR) <span style="color:#f92672">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>:<span style="color:#ae81ff">0.95</span> <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span> small <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.357</span>
+<span style="color:#75715e">#4.2 32^2到96^2之间的area</span>
+ Average Recall     (AR) <span style="color:#f92672">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>:<span style="color:#ae81ff">0.95</span> <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span>medium <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.543</span>
+<span style="color:#75715e">#4.3 大于96^2的area</span>
+ Average Recall     (AR) <span style="color:#f92672">@</span>[ IoU<span style="color:#f92672">=</span><span style="color:#ae81ff">0.50</span>:<span style="color:#ae81ff">0.95</span> <span style="color:#f92672">|</span> area<span style="color:#f92672">=</span> large <span style="color:#f92672">|</span> maxDets<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span> ] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.691</span>
+
+</code></pre></div><h1 id="4-参考">4. 参考</h1>
 <p><a href="https://www.zhihu.com/question/53405779">https://www.zhihu.com/question/53405779</a></p>
 
     </div>

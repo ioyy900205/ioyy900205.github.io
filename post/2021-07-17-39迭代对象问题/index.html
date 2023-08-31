@@ -4,24 +4,24 @@
     <title>39--迭代对象问题 // 亮的笔记</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
-    <meta name="generator" content="Hugo 0.101.0" />
+    <meta name="generator" content="Hugo 0.90.1" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Liu Liang" />
     <meta name="description" content="" />
-    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.4a7ec8660f9a44b08c4da97c5f2e31b1192df1d4d0322e65c0dbbc6ecb1b863f.css" />
+    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
 
     
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="39--迭代对象问题"/>
 <meta name="twitter:description" content="简单讨论 Iterable\Iterator\Generator的概念
-1. Iterable 2. Iterator 3. Generator 1. Iterable 一个可迭代的对象是实现了__iter__()方法的对象 它要在for循环中使用，就必须满足iter()的调用(即调用这个函数不会出错，能够正确转成一个Iterator对象) 可以通过已知的可迭代对象来辅助实现我们自定义的可迭代对象。 一个对象实现了__getitem__()方法可以通过iter()函数转成Iterator，即可以在for循环中使用，但它不是一个可迭代对象(可用isinstance方法检测()) 2. Iterator 一个对象实现了__iter__()和__next__()方法，那么它就是一个迭代器对象
+  1. Iterable 2. Iterator 3. Generator  1. Iterable  一个可迭代的对象是实现了__iter__()方法的对象 它要在for循环中使用，就必须满足iter()的调用(即调用这个函数不会出错，能够正确转成一个Iterator对象) 可以通过已知的可迭代对象来辅助实现我们自定义的可迭代对象。 一个对象实现了__getitem__()方法可以通过iter()函数转成Iterator，即可以在for循环中使用，但它不是一个可迭代对象(可用isinstance方法检测())  2. Iterator 一个对象实现了__iter__()和__next__()方法，那么它就是一个迭代器对象
 class IterObj: def __init__(self): self.a = [3, 5, 7, 11, 13, 17, 19] self.n = len(self.a) self.i = 0 def __iter__(self): return iter(self.a) def __next__(self): while self.i &lt; self.n: v = self.a[self.i] self.i &#43;= 1 return v else: self.i = 0 raise StopIteration() 集合和序列对象是可迭代的但不是迭代器. 文件对象是迭代器
 一个迭代器(Iterator)对象不仅可以在for循环中使用，还可以通过内置函数next()函数进行调用。 例如
 it = IterObj() next(it) # 3 next(it) # 5 3."/>
 
     <meta property="og:title" content="39--迭代对象问题" />
 <meta property="og:description" content="简单讨论 Iterable\Iterator\Generator的概念
-1. Iterable 2. Iterator 3. Generator 1. Iterable 一个可迭代的对象是实现了__iter__()方法的对象 它要在for循环中使用，就必须满足iter()的调用(即调用这个函数不会出错，能够正确转成一个Iterator对象) 可以通过已知的可迭代对象来辅助实现我们自定义的可迭代对象。 一个对象实现了__getitem__()方法可以通过iter()函数转成Iterator，即可以在for循环中使用，但它不是一个可迭代对象(可用isinstance方法检测()) 2. Iterator 一个对象实现了__iter__()和__next__()方法，那么它就是一个迭代器对象
+  1. Iterable 2. Iterator 3. Generator  1. Iterable  一个可迭代的对象是实现了__iter__()方法的对象 它要在for循环中使用，就必须满足iter()的调用(即调用这个函数不会出错，能够正确转成一个Iterator对象) 可以通过已知的可迭代对象来辅助实现我们自定义的可迭代对象。 一个对象实现了__getitem__()方法可以通过iter()函数转成Iterator，即可以在for循环中使用，但它不是一个可迭代对象(可用isinstance方法检测())  2. Iterator 一个对象实现了__iter__()和__next__()方法，那么它就是一个迭代器对象
 class IterObj: def __init__(self): self.a = [3, 5, 7, 11, 13, 17, 19] self.n = len(self.a) self.i = 0 def __iter__(self): return iter(self.a) def __next__(self): while self.i &lt; self.n: v = self.a[self.i] self.i &#43;= 1 return v else: self.i = 0 raise StopIteration() 集合和序列对象是可迭代的但不是迭代器. 文件对象是迭代器
 一个迭代器(Iterator)对象不仅可以在for循环中使用，还可以通过内置函数next()函数进行调用。 例如
 it = IterObj() next(it) # 3 next(it) # 5 3." />
@@ -35,7 +35,7 @@ it = IterObj() next(it) # 3 next(it) # 5 3." />
   </head>
   <body>
     <header class="app-header">
-      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://www.qqtouxiang.com/d/file/tupian/mx/20170926/jixq0zs051pwa.jpg" alt="Liu Liang" /></a>
+      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3520060145,2875461924&amp;fm=26&amp;gp=0.jpg" alt="Liu Liang" /></a>
       <h1>亮的笔记</h1>
       <nav class="app-header-menu">
           <a class="app-header-menu-item" href="/">Home</a>
@@ -111,70 +111,75 @@ it = IterObj() next(it) # 3 next(it) # 5 3." />
 </ol>
 <h2 id="2-iterator">2. Iterator</h2>
 <p>一个对象实现了__iter__()和__next__()方法，那么它就是一个迭代器对象</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">IterObj</span>:
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self):
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>a <span style="color:#f92672">=</span> [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">17</span>, <span style="color:#ae81ff">19</span>]
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>n <span style="color:#f92672">=</span> len(self<span style="color:#f92672">.</span>a)
-</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __iter__(self):
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> iter(self<span style="color:#f92672">.</span>a)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __next__(self):
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> self<span style="color:#f92672">.</span>i <span style="color:#f92672">&lt;</span> self<span style="color:#f92672">.</span>n:
-</span></span><span style="display:flex;"><span>            v <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>a[self<span style="color:#f92672">.</span>i]
-</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>i <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> v
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
-</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">StopIteration</span>()
-</span></span></code></pre></div><p>集合和序列对象是可迭代的但不是迭代器.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">IterObj</span>:
+
+    <span style="color:#66d9ef">def</span> __init__(self):
+        self<span style="color:#f92672">.</span>a <span style="color:#f92672">=</span> [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">17</span>, <span style="color:#ae81ff">19</span>]
+
+        self<span style="color:#f92672">.</span>n <span style="color:#f92672">=</span> len(self<span style="color:#f92672">.</span>a)
+        self<span style="color:#f92672">.</span>i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+
+    <span style="color:#66d9ef">def</span> __iter__(self):
+        <span style="color:#66d9ef">return</span> iter(self<span style="color:#f92672">.</span>a)
+
+    <span style="color:#66d9ef">def</span> __next__(self):
+        <span style="color:#66d9ef">while</span> self<span style="color:#f92672">.</span>i <span style="color:#f92672">&lt;</span> self<span style="color:#f92672">.</span>n:
+            v <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>a[self<span style="color:#f92672">.</span>i]
+            self<span style="color:#f92672">.</span>i <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+            <span style="color:#66d9ef">return</span> v
+        <span style="color:#66d9ef">else</span>:
+            self<span style="color:#f92672">.</span>i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+            <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">StopIteration</span>()
+
+
+</code></pre></div><p>集合和序列对象是可迭代的但不是迭代器.
 文件对象是迭代器</p>
 <p>一个迭代器(Iterator)对象不仅可以在for循环中使用，还可以通过内置函数next()函数进行调用。 例如</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>it <span style="color:#f92672">=</span> IterObj()
-</span></span><span style="display:flex;"><span>next(it) <span style="color:#75715e"># 3</span>
-</span></span><span style="display:flex;"><span>next(it) <span style="color:#75715e"># 5</span>
-</span></span></code></pre></div><h2 id="3-generator">3. Generator</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">it <span style="color:#f92672">=</span> IterObj()
+next(it) <span style="color:#75715e"># 3</span>
+next(it) <span style="color:#75715e"># 5</span>
+
+</code></pre></div><h2 id="3-generator">3. Generator</h2>
 <p>一个生成器既是可迭代的也是迭代器</p>
 <p>定义生成器有两种方式：</p>
 <ol>
 <li>列表生成器</li>
 <li>使用yield定义生成器函数</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 第二种方法</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gen</span>():
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">yield</span> i 
-</span></span></code></pre></div><p>这里yield的作用就相当于return,这个函数就是顺序地返回[0,10)的之间的自然数，可以通过next()或使用for循环来遍历。
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 第二种方法</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gen</span>():
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
+        <span style="color:#66d9ef">yield</span> i 
+</code></pre></div><p>这里yield的作用就相当于return,这个函数就是顺序地返回[0,10)的之间的自然数，可以通过next()或使用for循环来遍历。
 当程序遇到yield关键字时，这个生成器函数就返回了，直到再次执行了next()函数，它就会从上次函数返回的执行点继续执行，即yield退出时保存了函数执行的位置、变量等信息，再次执行时，就从这个yield退出的地方继续往下执行。
 在Python中利用生成器的这些特点可以实现协程。协程可以理解为一个轻量级的线程，它相对于线程处理高并发场景有很多优势。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">producer</span>(c):
-</span></span><span style="display:flex;"><span>    n <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> n <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">5</span>:
-</span></span><span style="display:flex;"><span>        n <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#39;producer </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(n))
-</span></span><span style="display:flex;"><span>        r <span style="color:#f92672">=</span> c<span style="color:#f92672">.</span>send(n)
-</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#39;consumer return </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(r))
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">consumer</span>():
-</span></span><span style="display:flex;"><span>    r <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
-</span></span><span style="display:flex;"><span>        n <span style="color:#f92672">=</span> <span style="color:#66d9ef">yield</span> r
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> n:
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span>
-</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#39;consumer </span><span style="color:#e6db74">{}</span><span style="color:#e6db74"> &#39;</span><span style="color:#f92672">.</span>format(n))
-</span></span><span style="display:flex;"><span>        r <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;ok&#39;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
-</span></span><span style="display:flex;"><span>    c <span style="color:#f92672">=</span> consumer()
-</span></span><span style="display:flex;"><span>    next(c)  <span style="color:#75715e"># 启动consumer</span>
-</span></span><span style="display:flex;"><span>    producer(c)
-</span></span></code></pre></div><hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">producer</span>(c):
+    n <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+    <span style="color:#66d9ef">while</span> n <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">5</span>:
+        n <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+        print(<span style="color:#e6db74">&#39;producer </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(n))
+        r <span style="color:#f92672">=</span> c<span style="color:#f92672">.</span>send(n)
+        print(<span style="color:#e6db74">&#39;consumer return </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(r))
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">consumer</span>():
+    r <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
+    <span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+        n <span style="color:#f92672">=</span> <span style="color:#66d9ef">yield</span> r
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> n:
+            <span style="color:#66d9ef">return</span>
+        print(<span style="color:#e6db74">&#39;consumer </span><span style="color:#e6db74">{}</span><span style="color:#e6db74"> &#39;</span><span style="color:#f92672">.</span>format(n))
+        r <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;ok&#39;</span>
+
+
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+    c <span style="color:#f92672">=</span> consumer()
+    next(c)  <span style="color:#75715e"># 启动consumer</span>
+    producer(c)
+
+
+</code></pre></div><hr>
 <p><strong>参考资料</strong></p>
 <p><a href="https://juejin.cn/post/6844903834381189127">https://juejin.cn/post/6844903834381189127</a></p>
 

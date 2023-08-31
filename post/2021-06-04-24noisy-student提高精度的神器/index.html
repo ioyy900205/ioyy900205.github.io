@@ -4,11 +4,11 @@
     <title>25——Noisy Student训练 // 亮的笔记</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
-    <meta name="generator" content="Hugo 0.101.0" />
+    <meta name="generator" content="Hugo 0.90.1" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Liu Liang" />
     <meta name="description" content="" />
-    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.4a7ec8660f9a44b08c4da97c5f2e31b1192df1d4d0322e65c0dbbc6ecb1b863f.css" />
+    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
 
     
     <meta name="twitter:card" content="summary"/>
@@ -16,7 +16,7 @@
 <meta name="twitter:description" content="想要提高模型的精度和鲁棒性，尝试考虑使用无标注数据！
 实际在普通的 ImageNet 数据集上，近年来的模型不断在刷新 Top-1 识别率，幅度不高，趋近于饱和，但是该模型在一些鲁棒性测试数据集上的提高确实惊人的。
 论文地址：https://arxiv.org/pdf/1911.04252.pdf
-1. 数据集简介 2. 2.Self-training 方法 3. Noisy Student 1. 数据集简介 mage-A/C/P 是三种不同的鲁棒性测试数据集。
+  1. 数据集简介 2. 2.Self-training 方法 3. Noisy Student  1. 数据集简介 mage-A/C/P 是三种不同的鲁棒性测试数据集。
 Image-A: A 是 Adversarial，对抗的意思。从真实世界搜集了 7500 张未经修改、完全自然生成的图片作为对抗样本测试常规 ImageNet 下训练的模型鲁棒性，以 DenseNet-121 为例，其测试准确率仅为 2%，准确率下降了约 90%，由此可知该数据集的难度。
 其中红色的是标签是 ResNet-50 模型给出的，黑色的标签是实际真实标签，而且以很高的信任度识别错误，要注意虽然这些样本是对抗样本，但都是来自真实世界未加对抗调整的自然图片。
 Image-C/P：C 是 Corruption 腐蚀、污染的意思，即在图片中引入 75 种不同的噪音形式，测试模型的抗击能力。
@@ -33,7 +33,7 @@ Noisy Student的作者发现，要使这种方法发挥作用，student model在
 <meta property="og:description" content="想要提高模型的精度和鲁棒性，尝试考虑使用无标注数据！
 实际在普通的 ImageNet 数据集上，近年来的模型不断在刷新 Top-1 识别率，幅度不高，趋近于饱和，但是该模型在一些鲁棒性测试数据集上的提高确实惊人的。
 论文地址：https://arxiv.org/pdf/1911.04252.pdf
-1. 数据集简介 2. 2.Self-training 方法 3. Noisy Student 1. 数据集简介 mage-A/C/P 是三种不同的鲁棒性测试数据集。
+  1. 数据集简介 2. 2.Self-training 方法 3. Noisy Student  1. 数据集简介 mage-A/C/P 是三种不同的鲁棒性测试数据集。
 Image-A: A 是 Adversarial，对抗的意思。从真实世界搜集了 7500 张未经修改、完全自然生成的图片作为对抗样本测试常规 ImageNet 下训练的模型鲁棒性，以 DenseNet-121 为例，其测试准确率仅为 2%，准确率下降了约 90%，由此可知该数据集的难度。
 其中红色的是标签是 ResNet-50 模型给出的，黑色的标签是实际真实标签，而且以很高的信任度识别错误，要注意虽然这些样本是对抗样本，但都是来自真实世界未加对抗调整的自然图片。
 Image-C/P：C 是 Corruption 腐蚀、污染的意思，即在图片中引入 75 种不同的噪音形式，测试模型的抗击能力。
@@ -55,7 +55,7 @@ Noisy Student的作者发现，要使这种方法发挥作用，student model在
   </head>
   <body>
     <header class="app-header">
-      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://www.qqtouxiang.com/d/file/tupian/mx/20170926/jixq0zs051pwa.jpg" alt="Liu Liang" /></a>
+      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3520060145,2875461924&amp;fm=26&amp;gp=0.jpg" alt="Liu Liang" /></a>
       <h1>亮的笔记</h1>
       <nav class="app-header-menu">
           <a class="app-header-menu-item" href="/">Home</a>

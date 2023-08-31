@@ -4,17 +4,17 @@
     <title>11——SSD:Single Shot MultiBox Detector // 亮的笔记</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
-    <meta name="generator" content="Hugo 0.101.0" />
+    <meta name="generator" content="Hugo 0.90.1" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Liu Liang" />
     <meta name="description" content="" />
-    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.4a7ec8660f9a44b08c4da97c5f2e31b1192df1d4d0322e65c0dbbc6ecb1b863f.css" />
+    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
 
     
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="11——SSD:Single Shot MultiBox Detector"/>
 <meta name="twitter:description" content="请不要假装很努力， 因为结果不会陪你演戏！
-1. background 2. 目标损失函数 3. 多尺度多比例默认框 4. 负样本均衡 5. 数据增强 6. 性能比较 6.1. 在VOC2007测试集上的检测性能 6.2. 在VOC2012测试集上的检测性能 6.3. 在COCO测试集上的检测性能 7. 总结 1. background ECCV2016 author:wei liu 实现真正的实时
+  1. background 2. 目标损失函数 3. 多尺度多比例默认框 4. 负样本均衡 5. 数据增强 6. 性能比较  6.1. 在VOC2007测试集上的检测性能 6.2. 在VOC2012测试集上的检测性能 6.3. 在COCO测试集上的检测性能   7. 总结  1. background ECCV2016 author:wei liu 实现真正的实时
 2016年，Wei Liu等人提出了SSD算法，它是继YOLOv1算法提出后的又一单阶段目标检测算法。在当时，单阶段算法相比于以R-CNN系列为主的双阶段算法更快，所以被学术界和工业界所青睐。为了提高检测的精度，SSD创造性地提出了多尺度预测的目标检测算法，使得网络更容易适应对不同大小物体的检测。
 放上对比结构如下： 我的理解是 网络抽取不同的特征层进行预测，较低的特征层可以预测教细节物体，较高特征层可以预测教大物体.
 整体结构上，SSD采用了VGG-16作为骨干网络提取特征。在骨干网络末尾添加了若干个特征层，特征层与特征层之间使用1x1和3x3的卷积核计算特征和降采样，并从中选择了6个不同大小的特征层来预测目标。
@@ -30,12 +30,11 @@
 4. 负样本均衡 在训练过程中，大部分的预选框Anchors并不能和真实框匹配上，因此负样本很多，而正样本却很少，正负样本数量严重失衡，不利于训练。
 考虑到这个问题，SSD在训练过程中，没有选取所有的负样本。而是先将负样本的置信度损失进行排序，仅选取置信度高的一些负样本，使得负样本数与正样本数之间的比率最大不超过3：1。作者认为，这样使得训练更稳定更快。
 5. 数据增强 数据增强又叫数据增广，是扩大数据集的一种方式，经常用于深度学习中来防止过拟合。在SSD算法中，也使用了一些数据增强的技巧。采用数据增强后，目标检测性能也得到了明显的提升，具体实验结果如下:
-6. 性能比较 6.1. 在VOC2007测试集上的检测性能 分析上表，容易得出结论：
-对比检测精度可知，SSD算法的性能整体上优于Fast R-CN 和 Faster R-CNN算法。对比SSD300和SSD512可知，图像输入尺寸为512x512的SSD算法比输入尺寸为300x300的SSD算法检测性能更好。对比07、 07&#43;12、07&#43;12&#43;COCO可知，训练集的扩充有助于检测性能的提升。注：表格名词解释（下同）："/>
+6. 性能比较 6."/>
 
     <meta property="og:title" content="11——SSD:Single Shot MultiBox Detector" />
 <meta property="og:description" content="请不要假装很努力， 因为结果不会陪你演戏！
-1. background 2. 目标损失函数 3. 多尺度多比例默认框 4. 负样本均衡 5. 数据增强 6. 性能比较 6.1. 在VOC2007测试集上的检测性能 6.2. 在VOC2012测试集上的检测性能 6.3. 在COCO测试集上的检测性能 7. 总结 1. background ECCV2016 author:wei liu 实现真正的实时
+  1. background 2. 目标损失函数 3. 多尺度多比例默认框 4. 负样本均衡 5. 数据增强 6. 性能比较  6.1. 在VOC2007测试集上的检测性能 6.2. 在VOC2012测试集上的检测性能 6.3. 在COCO测试集上的检测性能   7. 总结  1. background ECCV2016 author:wei liu 实现真正的实时
 2016年，Wei Liu等人提出了SSD算法，它是继YOLOv1算法提出后的又一单阶段目标检测算法。在当时，单阶段算法相比于以R-CNN系列为主的双阶段算法更快，所以被学术界和工业界所青睐。为了提高检测的精度，SSD创造性地提出了多尺度预测的目标检测算法，使得网络更容易适应对不同大小物体的检测。
 放上对比结构如下： 我的理解是 网络抽取不同的特征层进行预测，较低的特征层可以预测教细节物体，较高特征层可以预测教大物体.
 整体结构上，SSD采用了VGG-16作为骨干网络提取特征。在骨干网络末尾添加了若干个特征层，特征层与特征层之间使用1x1和3x3的卷积核计算特征和降采样，并从中选择了6个不同大小的特征层来预测目标。
@@ -51,8 +50,7 @@
 4. 负样本均衡 在训练过程中，大部分的预选框Anchors并不能和真实框匹配上，因此负样本很多，而正样本却很少，正负样本数量严重失衡，不利于训练。
 考虑到这个问题，SSD在训练过程中，没有选取所有的负样本。而是先将负样本的置信度损失进行排序，仅选取置信度高的一些负样本，使得负样本数与正样本数之间的比率最大不超过3：1。作者认为，这样使得训练更稳定更快。
 5. 数据增强 数据增强又叫数据增广，是扩大数据集的一种方式，经常用于深度学习中来防止过拟合。在SSD算法中，也使用了一些数据增强的技巧。采用数据增强后，目标检测性能也得到了明显的提升，具体实验结果如下:
-6. 性能比较 6.1. 在VOC2007测试集上的检测性能 分析上表，容易得出结论：
-对比检测精度可知，SSD算法的性能整体上优于Fast R-CN 和 Faster R-CNN算法。对比SSD300和SSD512可知，图像输入尺寸为512x512的SSD算法比输入尺寸为300x300的SSD算法检测性能更好。对比07、 07&#43;12、07&#43;12&#43;COCO可知，训练集的扩充有助于检测性能的提升。注：表格名词解释（下同）：" />
+6. 性能比较 6." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ioyy900205.github.io/post/2021-05-13-11ssd_single-shot-multibox-detector-copy/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2021-05-13T10:40:00+08:00" />
@@ -63,7 +61,7 @@
   </head>
   <body>
     <header class="app-header">
-      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://www.qqtouxiang.com/d/file/tupian/mx/20170926/jixq0zs051pwa.jpg" alt="Liu Liang" /></a>
+      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3520060145,2875461924&amp;fm=26&amp;gp=0.jpg" alt="Liu Liang" /></a>
       <h1>亮的笔记</h1>
       <nav class="app-header-menu">
           <a class="app-header-menu-item" href="/">Home</a>

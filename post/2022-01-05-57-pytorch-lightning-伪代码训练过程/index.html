@@ -4,24 +4,24 @@
     <title>57-pytorch-lightning伪代码训练过程 // 亮的笔记</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
-    <meta name="generator" content="Hugo 0.101.0" />
+    <meta name="generator" content="Hugo 0.90.1" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Liu Liang" />
     <meta name="description" content="" />
-    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.4a7ec8660f9a44b08c4da97c5f2e31b1192df1d4d0322e65c0dbbc6ecb1b863f.css" />
+    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
 
     
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="57-pytorch-lightning伪代码训练过程"/>
 <meta name="twitter:description" content="这里有宝藏
 请自行提取
-@TOC
+ @TOC
 1. 训练伪代码 def fit(...): on_fit_start() if global_rank == 0: # prepare data is called on GLOBAL_ZERO only prepare_data() for gpu/tpu in gpu/tpus: train_on_device(model.copy()) on_fit_end() def train_on_device(model): # setup is called PER DEVICE setup() configure_optimizers() on_pretrain_routine_start() for epoch in epochs: train_loop() teardown() def train_loop(): on_train_epoch_start() train_outs = [] for train_batch in train_dataloader(): on_train_batch_start() # ----- train_step methods ------- out = training_step(batch) train_outs.append(out) loss = out.loss backward() on_after_backward() optimizer_step() on_before_zero_grad() optimizer_zero_grad() on_train_batch_end(out) if should_check_val: val_loop() # end training epoch logs = training_epoch_end(outs) def val_loop(): model."/>
 
     <meta property="og:title" content="57-pytorch-lightning伪代码训练过程" />
 <meta property="og:description" content="这里有宝藏
 请自行提取
-@TOC
+ @TOC
 1. 训练伪代码 def fit(...): on_fit_start() if global_rank == 0: # prepare data is called on GLOBAL_ZERO only prepare_data() for gpu/tpu in gpu/tpus: train_on_device(model.copy()) on_fit_end() def train_on_device(model): # setup is called PER DEVICE setup() configure_optimizers() on_pretrain_routine_start() for epoch in epochs: train_loop() teardown() def train_loop(): on_train_epoch_start() train_outs = [] for train_batch in train_dataloader(): on_train_batch_start() # ----- train_step methods ------- out = training_step(batch) train_outs.append(out) loss = out.loss backward() on_after_backward() optimizer_step() on_before_zero_grad() optimizer_zero_grad() on_train_batch_end(out) if should_check_val: val_loop() # end training epoch logs = training_epoch_end(outs) def val_loop(): model." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://ioyy900205.github.io/post/2022-01-05-57-pytorch-lightning-%E4%BC%AA%E4%BB%A3%E7%A0%81%E8%AE%AD%E7%BB%83%E8%BF%87%E7%A8%8B/" /><meta property="article:section" content="post" />
@@ -33,7 +33,7 @@
   </head>
   <body>
     <header class="app-header">
-      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://www.qqtouxiang.com/d/file/tupian/mx/20170926/jixq0zs051pwa.jpg" alt="Liu Liang" /></a>
+      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3520060145,2875461924&amp;fm=26&amp;gp=0.jpg" alt="Liu Liang" /></a>
       <h1>亮的笔记</h1>
       <nav class="app-header-menu">
           <a class="app-header-menu-item" href="/">Home</a>
@@ -98,77 +98,78 @@
 <hr>
 <p>@<a href="%E6%9C%AC%E6%96%87%E5%86%85%E5%AE%B9">TOC</a></p>
 <h2 id="1-训练伪代码">1. 训练伪代码</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fit</span>(<span style="color:#f92672">...</span>):
-</span></span><span style="display:flex;"><span>    on_fit_start()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> global_rank <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># prepare data is called on GLOBAL_ZERO only</span>
-</span></span><span style="display:flex;"><span>        prepare_data()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> gpu<span style="color:#f92672">/</span>tpu <span style="color:#f92672">in</span> gpu<span style="color:#f92672">/</span>tpus:
-</span></span><span style="display:flex;"><span>        train_on_device(model<span style="color:#f92672">.</span>copy())
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    on_fit_end()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">train_on_device</span>(model):
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># setup is called PER DEVICE</span>
-</span></span><span style="display:flex;"><span>    setup()
-</span></span><span style="display:flex;"><span>    configure_optimizers()
-</span></span><span style="display:flex;"><span>    on_pretrain_routine_start()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> epoch <span style="color:#f92672">in</span> epochs:
-</span></span><span style="display:flex;"><span>        train_loop()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    teardown()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">train_loop</span>():
-</span></span><span style="display:flex;"><span>    on_train_epoch_start()
-</span></span><span style="display:flex;"><span>    train_outs <span style="color:#f92672">=</span> []
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> train_batch <span style="color:#f92672">in</span> train_dataloader():
-</span></span><span style="display:flex;"><span>        on_train_batch_start()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># ----- train_step methods -------</span>
-</span></span><span style="display:flex;"><span>        out <span style="color:#f92672">=</span> training_step(batch)
-</span></span><span style="display:flex;"><span>        train_outs<span style="color:#f92672">.</span>append(out)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        loss <span style="color:#f92672">=</span> out<span style="color:#f92672">.</span>loss
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        backward()
-</span></span><span style="display:flex;"><span>        on_after_backward()
-</span></span><span style="display:flex;"><span>        optimizer_step()
-</span></span><span style="display:flex;"><span>        on_before_zero_grad()
-</span></span><span style="display:flex;"><span>        optimizer_zero_grad()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        on_train_batch_end(out)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> should_check_val:
-</span></span><span style="display:flex;"><span>            val_loop()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># end training epoch</span>
-</span></span><span style="display:flex;"><span>    logs <span style="color:#f92672">=</span> training_epoch_end(outs)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">val_loop</span>():
-</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>eval()
-</span></span><span style="display:flex;"><span>    torch<span style="color:#f92672">.</span>set_grad_enabled(<span style="color:#66d9ef">False</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    on_validation_epoch_start()
-</span></span><span style="display:flex;"><span>    val_outs <span style="color:#f92672">=</span> []
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> val_batch <span style="color:#f92672">in</span> val_dataloader():
-</span></span><span style="display:flex;"><span>        on_validation_batch_start()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># -------- val step methods -------</span>
-</span></span><span style="display:flex;"><span>        out <span style="color:#f92672">=</span> validation_step(val_batch)
-</span></span><span style="display:flex;"><span>        val_outs<span style="color:#f92672">.</span>append(out)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        on_validation_batch_end(out)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    validation_epoch_end(val_outs)
-</span></span><span style="display:flex;"><span>    on_validation_epoch_end()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># set up for train</span>
-</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>train()
-</span></span><span style="display:flex;"><span>    torch<span style="color:#f92672">.</span>set_grad_enabled(<span style="color:#66d9ef">True</span>)
-</span></span></code></pre></div><hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fit</span>(<span style="color:#f92672">...</span>):
+    on_fit_start()
+
+    <span style="color:#66d9ef">if</span> global_rank <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+        <span style="color:#75715e"># prepare data is called on GLOBAL_ZERO only</span>
+        prepare_data()
+
+    <span style="color:#66d9ef">for</span> gpu<span style="color:#f92672">/</span>tpu <span style="color:#f92672">in</span> gpu<span style="color:#f92672">/</span>tpus:
+        train_on_device(model<span style="color:#f92672">.</span>copy())
+
+    on_fit_end()
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">train_on_device</span>(model):
+    <span style="color:#75715e"># setup is called PER DEVICE</span>
+    setup()
+    configure_optimizers()
+    on_pretrain_routine_start()
+
+    <span style="color:#66d9ef">for</span> epoch <span style="color:#f92672">in</span> epochs:
+        train_loop()
+
+    teardown()
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">train_loop</span>():
+    on_train_epoch_start()
+    train_outs <span style="color:#f92672">=</span> []
+    <span style="color:#66d9ef">for</span> train_batch <span style="color:#f92672">in</span> train_dataloader():
+        on_train_batch_start()
+
+        <span style="color:#75715e"># ----- train_step methods -------</span>
+        out <span style="color:#f92672">=</span> training_step(batch)
+        train_outs<span style="color:#f92672">.</span>append(out)
+
+        loss <span style="color:#f92672">=</span> out<span style="color:#f92672">.</span>loss
+
+        backward()
+        on_after_backward()
+        optimizer_step()
+        on_before_zero_grad()
+        optimizer_zero_grad()
+
+        on_train_batch_end(out)
+
+        <span style="color:#66d9ef">if</span> should_check_val:
+            val_loop()
+
+    <span style="color:#75715e"># end training epoch</span>
+    logs <span style="color:#f92672">=</span> training_epoch_end(outs)
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">val_loop</span>():
+    model<span style="color:#f92672">.</span>eval()
+    torch<span style="color:#f92672">.</span>set_grad_enabled(<span style="color:#66d9ef">False</span>)
+
+    on_validation_epoch_start()
+    val_outs <span style="color:#f92672">=</span> []
+    <span style="color:#66d9ef">for</span> val_batch <span style="color:#f92672">in</span> val_dataloader():
+        on_validation_batch_start()
+
+        <span style="color:#75715e"># -------- val step methods -------</span>
+        out <span style="color:#f92672">=</span> validation_step(val_batch)
+        val_outs<span style="color:#f92672">.</span>append(out)
+
+        on_validation_batch_end(out)
+
+    validation_epoch_end(val_outs)
+    on_validation_epoch_end()
+
+    <span style="color:#75715e"># set up for train</span>
+    model<span style="color:#f92672">.</span>train()
+    torch<span style="color:#f92672">.</span>set_grad_enabled(<span style="color:#66d9ef">True</span>)
+
+</code></pre></div><hr>
 <p><strong>参考资料</strong></p>
 
     </div>

@@ -13,13 +13,12 @@
       
       <guid>https://ioyy900205.github.io/post/2021-05-10-%E5%AE%A1%E7%A8%BF%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%9701/</guid>
       <description>审稿学习系列01——图像质量评估 LIU Liang
-1. 背景 2. 图像质量评估（Image Quality Assessment, IQA）——方法分类 2.1. 主观方法 2.2. 客观方法 3. 图像质量评估（Image Quality Assessment, IQA）——图像提供信息分类 3.1. 全参考(Full Reference-IQA, FR-IQA) 3.2. 半参考(Reduced Reference-IQA, RR-IQA) 3.3. 无参考(No Reference-IQA, NR-IQA) 4. 数据集 5. 评估方法 5.1. 评估指标 6. 结果 1. 背景 质量评估(Quality Assessment，QA)在许多领域有其广泛的实用性。（比如图像压缩、视频编解码、视频监控等。）
+  1. 背景 2. 图像质量评估（Image Quality Assessment, IQA）——方法分类  2.1. 主观方法 2.2. 客观方法   3. 图像质量评估（Image Quality Assessment, IQA）——图像提供信息分类  3.1. 全参考(Full Reference-IQA, FR-IQA) 3.2. 半参考(Reduced Reference-IQA, RR-IQA) 3.3. 无参考(No Reference-IQA, NR-IQA)   4. 数据集 5. 评估方法  5.1. 评估指标   6. 结果  1. 背景 质量评估(Quality Assessment，QA)在许多领域有其广泛的实用性。（比如图像压缩、视频编解码、视频监控等。）
 并且对高效、可靠质量评估的需求日益增加，所以QA成为一个感兴趣的研究领域。
 每年都涌现出大量的新的QA算法，有些是扩展已有的算法，也有一些是QA算法的应用。
 质量评估可分为：
-图像质量评估（Image Quality Assessment, IQA）
-视频质量评估（Video Quality Assessment, VQA）
-2. 图像质量评估（Image Quality Assessment, IQA）——方法分类 2.1. 主观方法 主观评估就是从人的主观感知来评价图像的质量，首先给出原始参考图像和失真图像，让标注者给失真图像评分，一般采用平均主观得分（Mean Opinion Score, MOS）或平均主观得分差异（Differential Mean Opinion Score, DMOS）表示。</description>
+  图像质量评估（Image Quality Assessment, IQA）
+  视频质量评估（Video Quality Assessment, VQA）</description>
     </item>
     
   </channel>
