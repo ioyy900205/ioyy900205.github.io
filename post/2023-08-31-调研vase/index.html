@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>60-调研——Visual Audio Speech Enhancement // 亮的笔记</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.90.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Liu Liang" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="60-调研——Visual Audio Speech Enhancement"/>
+<meta name="twitter:description" content="在此处编辑 blog.walterlv.com 的博客摘要
+  1 论文调研  1.1 ICASSP 2023 Audio for Multimedia and Multimodal Processing 1.2 INTERSPEECH 2023   2  1 论文调研 1.1 ICASSP 2023 Audio for Multimedia and Multimodal Processing    :id: Title Repo Paper     647 Diverse and Vivid Sound Generation from Text Descriptions      2248 EPIC-SOUNDS: A Large-Scale Dataset of Actions that Sound       784 I See What You Hear: A Vision-inspired Method to Localize Words :heavy_minus_sign:     6119 Incorporating Lip Features Into Audio-Visual Multi-Speaker DOA Estimation by Gated Fusion :heavy_minus_sign:    6787 UAVM: Towards Unifying Audio and Visual Models (SPS Journal Paper)       1."/>
+
+    <meta property="og:title" content="60-调研——Visual Audio Speech Enhancement" />
+<meta property="og:description" content="在此处编辑 blog.walterlv.com 的博客摘要
+  1 论文调研  1.1 ICASSP 2023 Audio for Multimedia and Multimodal Processing 1.2 INTERSPEECH 2023   2  1 论文调研 1.1 ICASSP 2023 Audio for Multimedia and Multimodal Processing    :id: Title Repo Paper     647 Diverse and Vivid Sound Generation from Text Descriptions      2248 EPIC-SOUNDS: A Large-Scale Dataset of Actions that Sound       784 I See What You Hear: A Vision-inspired Method to Localize Words :heavy_minus_sign:     6119 Incorporating Lip Features Into Audio-Visual Multi-Speaker DOA Estimation by Gated Fusion :heavy_minus_sign:    6787 UAVM: Towards Unifying Audio and Visual Models (SPS Journal Paper)       1." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ioyy900205.github.io/post/2023-08-31-%E8%B0%83%E7%A0%94vase/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-08-31T11:28:02+08:00" />
+<meta property="article:modified_time" content="2023-08-31T11:28:02+08:00" />
+
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://img95.699pic.com/element/40141/6992.png_300.png" alt="Liu Liang" /></a>
+      <h1>亮的笔记</h1>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>深度学习笔记本</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/ioyy900205" target="_blank" rel="noreferrer noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/ioyy900205" target="_blank" rel="noreferrer noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">60-调研——Visual Audio Speech Enhancement</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Aug 31, 2023
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://ioyy900205.github.io/tags/paper_review/">Paper_Review</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>在此处编辑 blog.walterlv.com 的博客摘要</p>
+<hr>
+<ul>
+<li><a href="#1-%E8%AE%BA%E6%96%87%E8%B0%83%E7%A0%94">1 论文调研</a>
+<ul>
+<li><a href="#11-icassp-2023">1.1 ICASSP 2023</a></li>
+<li><a href="#audio-for-multimedia-and-multimodal-processing">Audio for Multimedia and Multimodal Processing</a></li>
+<li><a href="#12-interspeech-2023">1.2 INTERSPEECH 2023</a></li>
+</ul>
+</li>
+<li><a href="#2">2</a></li>
+</ul>
+<h2 id="1-论文调研">1 论文调研</h2>
+<h3 id="11-icassp-2023">1.1 ICASSP 2023</h3>
+<h3 id="audio-for-multimedia-and-multimodal-processing">Audio for Multimedia and Multimodal Processing</h3>
+<!-- raw HTML omitted -->
+<table>
+<thead>
+<tr>
+<th>:id:</th>
+<th><strong>Title</strong></th>
+<th style="text-align:center"><strong>Repo</strong></th>
+<th style="text-align:center"><strong>Paper</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>647</td>
+<td>Diverse and Vivid Sound Generation from Text Descriptions</td>
+<td style="text-align:center"><a href="https://ligw1998.github.io/audiogeneration.html"><img src="https://img.shields.io/badge/GitHub-Page-159957.svg" alt="GitHub Page"></a></td>
+<td style="text-align:center"><a href="https://ieeexplore.ieee.org/document/10096643"><img src="https://img.shields.io/badge/IEEE-10096643-E4A42C.svg" alt="IEEE Xplore"></a> <!-- raw HTML omitted --> <a href="https://arxiv.org/abs/2303.00628"><img src="https://img.shields.io/badge/arXiv-2303.00628-b31b1b.svg" alt="arXiv"></a></td>
+</tr>
+<tr>
+<td>2248</td>
+<td>EPIC-SOUNDS: A Large-Scale Dataset of Actions that Sound</td>
+<td style="text-align:center"><a href="https://epic-kitchens.github.io/epic-sounds/"><img src="https://img.shields.io/badge/GitHub-Page-159957.svg" alt="GitHub Page"></a> <!-- raw HTML omitted --> <a href="https://github.com/epic-kitchens/epic-sounds-annotations"><img src="https://img.shields.io/github/stars/epic-kitchens/epic-sounds-annotations" alt="GitHub"></a></td>
+<td style="text-align:center"><a href="https://ieeexplore.ieee.org/document/10096198"><img src="https://img.shields.io/badge/IEEE-10096198-E4A42C.svg" alt="IEEE Xplore"></a> <!-- raw HTML omitted --> <a href="https://arxiv.org/abs/2302.00646"><img src="https://img.shields.io/badge/arXiv-2302.00646-b31b1b.svg" alt="arXiv"></a></td>
+</tr>
+<tr>
+<td>784</td>
+<td>I See What You Hear: A Vision-inspired Method to Localize Words</td>
+<td style="text-align:center">:heavy_minus_sign:</td>
+<td style="text-align:center"><a href="https://ieeexplore.ieee.org/document/10095413"><img src="https://img.shields.io/badge/IEEE-10095413-E4A42C.svg" alt="IEEE Xplore"></a> <!-- raw HTML omitted --> <a href="https://arxiv.org/abs/2210.13567"><img src="https://img.shields.io/badge/arXiv-2210.13567-b31b1b.svg" alt="arXiv"></a></td>
+</tr>
+<tr>
+<td>6119</td>
+<td>Incorporating Lip Features Into Audio-Visual Multi-Speaker DOA Estimation by Gated Fusion</td>
+<td style="text-align:center">:heavy_minus_sign:</td>
+<td style="text-align:center"><a href="https://ieeexplore.ieee.org/document/10095549"><img src="https://img.shields.io/badge/IEEE-10095549-E4A42C.svg" alt="IEEE Xplore"></a></td>
+</tr>
+<tr>
+<td>6787</td>
+<td>UAVM: Towards Unifying Audio and Visual Models (SPS Journal Paper)</td>
+<td style="text-align:center"><a href="https://github.com/YuanGongND/uavm"><img src="https://img.shields.io/github/stars/YuanGongND/uavm" alt="GitHub"></a></td>
+<td style="text-align:center"><a href="https://ieeexplore.ieee.org/document/9964072"><img src="https://img.shields.io/badge/IEEE-9964072-E4A42C.svg" alt="IEEE Xplore"></a> <!-- raw HTML omitted --> <a href="https://arxiv.org/abs/2208.00061"><img src="https://img.shields.io/badge/arXiv-2208.00061-b31b1b.svg" alt="arXiv"></a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="12-interspeech-2023">1.2 INTERSPEECH 2023</h3>
+<h2 id="2">2</h2>
+<p><strong>参考资料</strong></p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
