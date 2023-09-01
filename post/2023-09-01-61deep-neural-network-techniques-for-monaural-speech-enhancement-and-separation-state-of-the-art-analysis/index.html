@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>61——Deep Neural Network Techniques for Monaural Speech Enhancement and Separation State of the art Analysis // 亮的笔记</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.90.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Liu Liang" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="61——Deep Neural Network Techniques for Monaural Speech Enhancement and Separation State of the art Analysis"/>
+<meta name="twitter:description" content="Deep Neural Network Techniques for Monaural Speech Enhancement and Separation: State of the art Analysis
+  摘要 介绍 特征  DFT magnitude features DFT complex features DFT log features MFCC 补充特征 相位处理 时域特征 趋势统计   长期时序建模  使用RNN 时序卷积 Transformer   模型缩小 客观工具 无监督 不匹配问题  摘要 深度神经网络（DNN）技术已经在自然语言处理和计算机视觉等领域广泛应用。它们在机器翻译和图像生成等任务中取得了巨大成功。由于它们的成功，这些数据驱动的技术已经应用于音频领域。具体而言，DNN模型已经应用于语音增强和分离，以实现单声道语音清晰度改进中的去噪、去混响、说话者提取和说话者分离。在本文中，我们回顾了一些用于实现语音增强和分离的主要DNN技术。该评论涵盖了从特征提取、DNN工具如何建模语音的全局和局部特征以及模型训练（监督和无监督）等语音增强和分离技术的流程。此外，评论还涵盖了使用领域适应技术和预训练模型来增强语音增强过程。
+介绍 单声道语音可懂度改进的技术可以分为语音增强和分离两大类。语音增强涉及从噪声[1]或混合语音[2]中分离目标语音。语音增强包括去混响、去噪和说话者提取等任务。而说话者分离则旨在估计混合语音中组成的独立语音[3]。语音增强和分离在多个领域具有应用，例如自动语音识别、移动语音通信和助听器设计[4]。最初的语音增强和分离研究利用了非负矩阵分解[5][6][7]、概率模型[8]和计算听觉场景分析（CASA）[9]等技术。然而，这些技术专为封闭集说话者设计（即，不适用于具有未知说话者的混合语音），这显著限制了它们在真实环境中的适用性。
+由于深度学习模型在自然语言处理和计算机视觉等不同领域的最近成功，因此引入了这些数据驱动的技术来处理音频数据集。特别是，DNN模型在语音增强和分离中变得流行，并在提升语音可懂度和增强具有未知说话者的语音方面表现出色[10][11]。为了在语音增强和分离中发挥作用，DNN模型必须提取语音的重要特征，保持音频帧的顺序，利用局部和全局上下文信息来实现连贯的语音分离。这需要DNN模型包括专门满足这些要求的技术。这些技术的讨论是本评论的核心内容。
+此外，在计算机视觉和文本领域，通常使用大型预训练模型来提取有益于下游任务的通用表示。本评论还讨论了语音增强和分离工具采用的DNN技术，以减少计算复杂性，使它们能够在低延迟和资源受限的环境中工作。因此，该评论关注了DNN应用于语音增强和分离的整个流程，即从特征提取、模型实现、训练和评估。我们的目标是揭示DNN实现的每个层面上的主要技术。在每个部分中，我们强调了关键的新兴特征和存在的挑战。一篇最近的评论[12]只关注了执行语音分离的监督技术，而在这篇评论中，我们讨论了监督和无监督方法。此外，随着深度学习领域的迅速发展，新的技术不断涌现，这需要重新审视这些技术在语音增强和分离中的应用方式。该评论限于讨论DNN技术如何应用于单声道语音增强，因此不关注多通道语音分离（已在[13]中涵盖）。
+该论文首先在第2节中解释了语音增强和分离的类型，突出它们的关键要素以及专注于每种类型的工具。在第3节中，它讨论了语音增强和分离工具使用的关键语音特征。这一部分探讨了特征是如何派生的以及它们如何在监督学习技术中用于训练DNN模型。第5节讨论了工具用于建模语音中存在的长期依赖性的技术。论文在第6节中讨论了模型大小压缩技术。在第7节中，论文讨论了在语音增强和分离中使用的一些流行的目标函数。第8节讨论了一些工具如何实现无监督技术来实现语音增强和分离。第9节讨论了语音分离和增强工具如何适应目标环境。在第10节中，论文探讨了在语音增强和分离流程中如何利用预训练模型。最后，第11节探讨了未来的发展方向。图1总体上展示了论文的组织结构以及涵盖的主题。
+特征 DFT magnitude features DFT幅度特征：这些特征首先将混合的原始波形y(t)转换为时间-频率（TF）表示（频谱图），使用DFT（具体来说，短时傅立叶变换（STFT））（方程11）[90]。时间-频率表示的幅度（方程13）作为深度神经网络（DNN）模型用于语音分离的输入。然后，DNN模型经过训练，学习如何分离TF-bin，以使每个源语音的成分被分组在一起。利用DFT特征的DNN语音增强和分离模型包括[91][83][92][93][94][95]等系统。使用DFT幅度作为特征的好处是具有高频率分辨率，因此需要使用较大的时间窗口，通常为32毫秒以上[20][21]用于语音，90毫秒以上用于音乐分离[96]。因此，这些模型必须处理增加的计算复杂性[97]。这促使其他语音分离模型使用比DFT幅度更低维度的特征。
+DFT complex features DFT复杂特征：与只使用T-F表示的幅度不同，使用DFT复杂特征的工具包括估算增强或分离语音中的噪声（混合）语音信号的幅度和相位。因此，复杂特征的每个T-F单元都是一个具有实部和虚部的复数（参见方程13）。信号的幅度和相位分别根据方程15和16计算。使用DFT复杂特征的工具包括[98][55][99][100]。
+DFT log features 对原始信号进行短时傅立叶分析，计算每个重叠波形的DFT（参见方程11）。然后，从DFT的输出计算对数功率谱。考虑一个在时间-频率域中的噪声语音信号，即已对信号应用DFT（参见方程12）。从方程14，噪声信号的功率谱可以表示如方程23所示。 但是有个地方需要注意："/>
+
+    <meta property="og:title" content="61——Deep Neural Network Techniques for Monaural Speech Enhancement and Separation State of the art Analysis" />
+<meta property="og:description" content="Deep Neural Network Techniques for Monaural Speech Enhancement and Separation: State of the art Analysis
+  摘要 介绍 特征  DFT magnitude features DFT complex features DFT log features MFCC 补充特征 相位处理 时域特征 趋势统计   长期时序建模  使用RNN 时序卷积 Transformer   模型缩小 客观工具 无监督 不匹配问题  摘要 深度神经网络（DNN）技术已经在自然语言处理和计算机视觉等领域广泛应用。它们在机器翻译和图像生成等任务中取得了巨大成功。由于它们的成功，这些数据驱动的技术已经应用于音频领域。具体而言，DNN模型已经应用于语音增强和分离，以实现单声道语音清晰度改进中的去噪、去混响、说话者提取和说话者分离。在本文中，我们回顾了一些用于实现语音增强和分离的主要DNN技术。该评论涵盖了从特征提取、DNN工具如何建模语音的全局和局部特征以及模型训练（监督和无监督）等语音增强和分离技术的流程。此外，评论还涵盖了使用领域适应技术和预训练模型来增强语音增强过程。
+介绍 单声道语音可懂度改进的技术可以分为语音增强和分离两大类。语音增强涉及从噪声[1]或混合语音[2]中分离目标语音。语音增强包括去混响、去噪和说话者提取等任务。而说话者分离则旨在估计混合语音中组成的独立语音[3]。语音增强和分离在多个领域具有应用，例如自动语音识别、移动语音通信和助听器设计[4]。最初的语音增强和分离研究利用了非负矩阵分解[5][6][7]、概率模型[8]和计算听觉场景分析（CASA）[9]等技术。然而，这些技术专为封闭集说话者设计（即，不适用于具有未知说话者的混合语音），这显著限制了它们在真实环境中的适用性。
+由于深度学习模型在自然语言处理和计算机视觉等不同领域的最近成功，因此引入了这些数据驱动的技术来处理音频数据集。特别是，DNN模型在语音增强和分离中变得流行，并在提升语音可懂度和增强具有未知说话者的语音方面表现出色[10][11]。为了在语音增强和分离中发挥作用，DNN模型必须提取语音的重要特征，保持音频帧的顺序，利用局部和全局上下文信息来实现连贯的语音分离。这需要DNN模型包括专门满足这些要求的技术。这些技术的讨论是本评论的核心内容。
+此外，在计算机视觉和文本领域，通常使用大型预训练模型来提取有益于下游任务的通用表示。本评论还讨论了语音增强和分离工具采用的DNN技术，以减少计算复杂性，使它们能够在低延迟和资源受限的环境中工作。因此，该评论关注了DNN应用于语音增强和分离的整个流程，即从特征提取、模型实现、训练和评估。我们的目标是揭示DNN实现的每个层面上的主要技术。在每个部分中，我们强调了关键的新兴特征和存在的挑战。一篇最近的评论[12]只关注了执行语音分离的监督技术，而在这篇评论中，我们讨论了监督和无监督方法。此外，随着深度学习领域的迅速发展，新的技术不断涌现，这需要重新审视这些技术在语音增强和分离中的应用方式。该评论限于讨论DNN技术如何应用于单声道语音增强，因此不关注多通道语音分离（已在[13]中涵盖）。
+该论文首先在第2节中解释了语音增强和分离的类型，突出它们的关键要素以及专注于每种类型的工具。在第3节中，它讨论了语音增强和分离工具使用的关键语音特征。这一部分探讨了特征是如何派生的以及它们如何在监督学习技术中用于训练DNN模型。第5节讨论了工具用于建模语音中存在的长期依赖性的技术。论文在第6节中讨论了模型大小压缩技术。在第7节中，论文讨论了在语音增强和分离中使用的一些流行的目标函数。第8节讨论了一些工具如何实现无监督技术来实现语音增强和分离。第9节讨论了语音分离和增强工具如何适应目标环境。在第10节中，论文探讨了在语音增强和分离流程中如何利用预训练模型。最后，第11节探讨了未来的发展方向。图1总体上展示了论文的组织结构以及涵盖的主题。
+特征 DFT magnitude features DFT幅度特征：这些特征首先将混合的原始波形y(t)转换为时间-频率（TF）表示（频谱图），使用DFT（具体来说，短时傅立叶变换（STFT））（方程11）[90]。时间-频率表示的幅度（方程13）作为深度神经网络（DNN）模型用于语音分离的输入。然后，DNN模型经过训练，学习如何分离TF-bin，以使每个源语音的成分被分组在一起。利用DFT特征的DNN语音增强和分离模型包括[91][83][92][93][94][95]等系统。使用DFT幅度作为特征的好处是具有高频率分辨率，因此需要使用较大的时间窗口，通常为32毫秒以上[20][21]用于语音，90毫秒以上用于音乐分离[96]。因此，这些模型必须处理增加的计算复杂性[97]。这促使其他语音分离模型使用比DFT幅度更低维度的特征。
+DFT complex features DFT复杂特征：与只使用T-F表示的幅度不同，使用DFT复杂特征的工具包括估算增强或分离语音中的噪声（混合）语音信号的幅度和相位。因此，复杂特征的每个T-F单元都是一个具有实部和虚部的复数（参见方程13）。信号的幅度和相位分别根据方程15和16计算。使用DFT复杂特征的工具包括[98][55][99][100]。
+DFT log features 对原始信号进行短时傅立叶分析，计算每个重叠波形的DFT（参见方程11）。然后，从DFT的输出计算对数功率谱。考虑一个在时间-频率域中的噪声语音信号，即已对信号应用DFT（参见方程12）。从方程14，噪声信号的功率谱可以表示如方程23所示。 但是有个地方需要注意：" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ioyy900205.github.io/post/2023-09-01-61deep-neural-network-techniques-for-monaural-speech-enhancement-and-separation-state-of-the-art-analysis/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-09-01T13:44:41+08:00" />
+<meta property="article:modified_time" content="2023-09-01T13:44:41+08:00" />
+
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://pic4.zhimg.com/v2-dc3acd582fdc15161e6d10f72aa82697_r.jpg" alt="Liu Liang" /></a>
+      <h1>亮的笔记</h1>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>深度学习笔记本</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/ioyy900205" target="_blank" rel="noreferrer noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/ioyy900205" target="_blank" rel="noreferrer noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">61——Deep Neural Network Techniques for Monaural Speech Enhancement and Separation State of the art Analysis</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Sep 1, 2023
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          5 min read
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://ioyy900205.github.io/tags/pytorch/">Pytorch</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>Deep Neural Network Techniques for Monaural Speech Enhancement and Separation: State of the art Analysis</p>
+<hr>
+<ul>
+<li><a href="#%E6%91%98%E8%A6%81">摘要</a></li>
+<li><a href="#%E4%BB%8B%E7%BB%8D">介绍</a></li>
+<li><a href="#%E7%89%B9%E5%BE%81">特征</a>
+<ul>
+<li><a href="#dft-magnitude-features">DFT magnitude features</a></li>
+<li><a href="#dft-complex-features">DFT complex features</a></li>
+<li><a href="#dft-log-features">DFT log features</a></li>
+<li><a href="#mfcc">MFCC</a></li>
+<li><a href="#%E8%A1%A5%E5%85%85%E7%89%B9%E5%BE%81">补充特征</a></li>
+<li><a href="#%E7%9B%B8%E4%BD%8D%E5%A4%84%E7%90%86">相位处理</a></li>
+<li><a href="#%E6%97%B6%E5%9F%9F%E7%89%B9%E5%BE%81">时域特征</a></li>
+<li><a href="#%E8%B6%8B%E5%8A%BF%E7%BB%9F%E8%AE%A1">趋势统计</a></li>
+</ul>
+</li>
+<li><a href="#%E9%95%BF%E6%9C%9F%E6%97%B6%E5%BA%8F%E5%BB%BA%E6%A8%A1">长期时序建模</a>
+<ul>
+<li><a href="#%E4%BD%BF%E7%94%A8rnn">使用RNN</a></li>
+<li><a href="#%E6%97%B6%E5%BA%8F%E5%8D%B7%E7%A7%AF">时序卷积</a></li>
+<li><a href="#transformer">Transformer</a></li>
+</ul>
+</li>
+<li><a href="#%E6%A8%A1%E5%9E%8B%E7%BC%A9%E5%B0%8F">模型缩小</a></li>
+<li><a href="#%E5%AE%A2%E8%A7%82%E5%B7%A5%E5%85%B7">客观工具</a></li>
+<li><a href="#%E6%97%A0%E7%9B%91%E7%9D%A3">无监督</a></li>
+<li><a href="#%E4%B8%8D%E5%8C%B9%E9%85%8D%E9%97%AE%E9%A2%98">不匹配问题</a></li>
+</ul>
+<h1 id="摘要">摘要</h1>
+<p>深度神经网络（DNN）技术已经在自然语言处理和计算机视觉等领域广泛应用。它们在机器翻译和图像生成等任务中取得了巨大成功。由于它们的成功，这些数据驱动的技术已经应用于音频领域。具体而言，DNN模型已经应用于语音增强和分离，以实现单声道语音清晰度改进中的去噪、去混响、说话者提取和说话者分离。在本文中，我们回顾了一些用于实现语音增强和分离的主要DNN技术。该评论涵盖了从特征提取、DNN工具如何建模语音的全局和局部特征以及模型训练（监督和无监督）等语音增强和分离技术的流程。此外，评论还涵盖了使用领域适应技术和预训练模型来增强语音增强过程。</p>
+<h1 id="介绍">介绍</h1>
+<p>单声道语音可懂度改进的技术可以分为语音增强和分离两大类。语音增强涉及从噪声[1]或混合语音[2]中分离目标语音。语音增强包括去混响、去噪和说话者提取等任务。而说话者分离则旨在估计混合语音中组成的独立语音[3]。语音增强和分离在多个领域具有应用，例如自动语音识别、移动语音通信和助听器设计[4]。最初的语音增强和分离研究利用了非负矩阵分解[5][6][7]、概率模型[8]和计算听觉场景分析（CASA）[9]等技术。然而，这些技术专为封闭集说话者设计（即，不适用于具有未知说话者的混合语音），这显著限制了它们在真实环境中的适用性。</p>
+<p>由于深度学习模型在自然语言处理和计算机视觉等不同领域的最近成功，因此引入了这些数据驱动的技术来处理音频数据集。特别是，DNN模型在语音增强和分离中变得流行，并在提升语音可懂度和增强具有未知说话者的语音方面表现出色[10][11]。为了在语音增强和分离中发挥作用，DNN模型必须提取语音的重要特征，保持音频帧的顺序，利用局部和全局上下文信息来实现连贯的语音分离。这需要DNN模型包括专门满足这些要求的技术。这些技术的讨论是本评论的核心内容。</p>
+<p>此外，在计算机视觉和文本领域，通常使用大型预训练模型来提取有益于下游任务的通用表示。本评论还讨论了语音增强和分离工具采用的DNN技术，以减少计算复杂性，使它们能够在低延迟和资源受限的环境中工作。因此，该评论关注了DNN应用于语音增强和分离的整个流程，即从特征提取、模型实现、训练和评估。我们的目标是揭示DNN实现的每个层面上的主要技术。在每个部分中，我们强调了关键的新兴特征和存在的挑战。一篇最近的评论[12]只关注了执行语音分离的监督技术，而在这篇评论中，我们讨论了监督和无监督方法。此外，随着深度学习领域的迅速发展，新的技术不断涌现，这需要重新审视这些技术在语音增强和分离中的应用方式。该评论限于讨论DNN技术如何应用于单声道语音增强，因此不关注多通道语音分离（已在[13]中涵盖）。</p>
+<p>该论文首先在第2节中解释了语音增强和分离的类型，突出它们的关键要素以及专注于每种类型的工具。在第3节中，它讨论了语音增强和分离工具使用的关键语音特征。这一部分探讨了特征是如何派生的以及它们如何在监督学习技术中用于训练DNN模型。第5节讨论了工具用于建模语音中存在的长期依赖性的技术。论文在第6节中讨论了模型大小压缩技术。在第7节中，论文讨论了在语音增强和分离中使用的一些流行的目标函数。第8节讨论了一些工具如何实现无监督技术来实现语音增强和分离。第9节讨论了语音分离和增强工具如何适应目标环境。在第10节中，论文探讨了在语音增强和分离流程中如何利用预训练模型。最后，第11节探讨了未来的发展方向。图1总体上展示了论文的组织结构以及涵盖的主题。</p>
+<p><img src="../../images/6b1c87764a5c9e9cd1fa07d28ab2a6bff67edef6cecde6bf7d4b5279acda1366.png" alt="图 0"></p>
+<h1 id="特征">特征</h1>
+<h2 id="dft-magnitude-features">DFT magnitude features</h2>
+<p>DFT幅度特征：这些特征首先将混合的原始波形y(t)转换为时间-频率（TF）表示（频谱图），使用DFT（具体来说，短时傅立叶变换（STFT））（方程11）[90]。时间-频率表示的幅度（方程13）作为深度神经网络（DNN）模型用于语音分离的输入。然后，DNN模型经过训练，学习如何分离TF-bin，以使每个源语音的成分被分组在一起。利用DFT特征的DNN语音增强和分离模型包括[91][83][92][93][94][95]等系统。使用DFT幅度作为特征的好处是具有高频率分辨率，因此需要使用较大的时间窗口，通常为32毫秒以上[20][21]用于语音，90毫秒以上用于音乐分离[96]。因此，这些模型必须处理增加的计算复杂性[97]。这促使其他语音分离模型使用比DFT幅度更低维度的特征。</p>
+<h2 id="dft-complex-features">DFT complex features</h2>
+<p>DFT复杂特征：与只使用T-F表示的幅度不同，使用DFT复杂特征的工具包括估算增强或分离语音中的噪声（混合）语音信号的幅度和相位。因此，复杂特征的每个T-F单元都是一个具有实部和虚部的复数（参见方程13）。信号的幅度和相位分别根据方程15和16计算。使用DFT复杂特征的工具包括[98][55][99][100]。</p>
+<h2 id="dft-log-features">DFT log features</h2>
+<p>对原始信号进行短时傅立叶分析，计算每个重叠波形的DFT（参见方程11）。然后，从DFT的输出计算对数功率谱。考虑一个在时间-频率域中的噪声语音信号，即已对信号应用DFT（参见方程12）。从方程14，噪声信号的功率谱可以表示如方程23所示。
+但是有个地方需要注意：</p>
+<p><img src="../../images/a34604b10df865bb68abdaecdbecf8afe0ce0c4f52e2c3bd131bd34d2f0597a4.png" alt="图 1"></p>
+<h2 id="mfcc">MFCC</h2>
+<p>使用MFCC的动机在于，与DFT特征相比，它导致了降低的分辨率空间。较少的参数更容易学习，并且可能更好地推广到未见过的说话者和噪声[97]。然而，使用降低分辨率（如MFCC）的挑战在于，DNN估算的特征必须外推到DFT特征空间。由于工作在降低分辨率上，MFCC的自由度将受到降低分辨率特征空间维度的限制，远远小于DFT空间的维度。低秩近似生成次优的Wiener滤波器，不能考虑所有添加的噪声内容，导致降低的SDR[97]。MFCC特征已经在工具中得到了利用，如[101][68][102][83][103][104]。</p>
+<h2 id="补充特征">补充特征</h2>
+<p>互补特征：由于不同的特征强烈捕捉了语音信号的不同声学特征，这些特征表征了语音信号的不同属性，因此一些DNN模型利用多种特征组合来执行语音分离。这基于像[108]和[109]这样的研究，它们表明互补特征显著提高了语音识别的性能。在[109][110][111]中使用的互补特征包括感知线性预测、振幅调制谱图（AMS）、相对谱变换和感知线性乘积（RASTA-PLP）、Gammatone频率倒谱系数、MFCC、基于音高的特征。互补特征通过串联组合在一起。[111]中的研究报告称，与DFT幅度相比，使用互补特征取得了更好的结果。使用互补特征的挑战在于如何有效地组合不同的特征，以便保留互补的特征而消除冗余的特征[110]。</p>
+<h2 id="相位处理">相位处理</h2>
+<p>对于从嘈杂信号中估算出干净信号的相位的使用基于像[136]这样的研究，该研究表明，干净信号的最佳估算器是嘈杂信号的相位。此外，大多数语音分离模型处理的帧大小在20-40毫秒之间，并且认为短时相位包含的信息较少[137][138][139][140]，因此在估算干净语音时并不重要。然而，最近的研究[89]通过实验证明，通过处理短时相位和幅度谱，可以进一步提高估算干净语音质量。此外，在重构过程中考虑嘈杂输入相位已被指出是一个问题，因为输入中的相位误差会与估算的干净信号的幅度相互作用，从而导致估算的干净信号的幅度与实际估算的干净信号的幅度不同[115]，[64]。根据这些研究，处理相位信息可能对提高干净语音估计的质量有所帮助。</p>
+<p>后处理相位更新：使用这种技术的模型只使用幅度谱来训练DNN模型。一旦模型已经训练出估算干净信号的幅度谱，它们会迭代地更新嘈杂信号的相位，使其尽可能接近目标干净信号的相位。执行后处理相位更新的模型所利用的算法基于[147]中提出的Griffin-Lim算法。例如，在[64]中，他们利用目标干净信号的幅度X0来迭代地从嘈杂信号的相位中获取最优相位ϕ（见算法1）。获取的相位然后与DNN估算的幅度Xˆ一起用于重建估算的干净信号。这种技术也在[148]中使用。实施Griffin-Lim算法的技术（如算法1中的算法）独立迭代地对每个源进行相位重建，对于需要将源求和到混合中的多源分离可能不够有效[42]。[42]的工作提出了通过利用估算的幅度和嘈杂相位以及多输入频谱反演（MISI）算法[142]来共同重建给定混合中所有源的相位。他们确保每次迭代后重建的时域信号的总和必须等于混合信号。[149]和[62]中的工作也使用后处理来更新嘈杂信号的相位。</p>
+<h2 id="时域特征">时域特征</h2>
+<p>使用时域特征面临的挑战：</p>
+<ol>
+<li>时域特征缺乏直接的频率表示；这妨碍了特征捕捉频域中存在的语音音韵学特征。因此，在时域中重建的语音中经常引入伪像[172]。</li>
+<li>时域波形具有大的输入空间。因此，使用原始波形工作的模型通常需要深度和复杂性，以有效地建模波形中的依赖关系。这在计算上是昂贵的[72][162][11][173]。</li>
+</ol>
+<h2 id="趋势统计">趋势统计</h2>
+<p>我们对500篇利用DNN进行语音增强（即多人说话者语音分离、降噪或去混响）的论文进行了分析。我们选择了2018年至2022年间发表的论文。我们感兴趣的问题是，这些工具中哪些特征更受欢迎？总结如图13所示。根据分析，时域特征的受欢迎程度从2018年到2022年迅速增长。DFT特征的使用略有下降，但在这五年内仍然受欢迎。MFCC和LPS等计算成本较高的特征的受欢迎程度有所下降。时域和DFT等计算成本较高的特征的受欢迎程度可能归因于计算机的改进计算能力以及高效的序列建模技术，如Transformer和时间卷积网络（见第5节讨论）。MFCC等特征由于其较低的分辨率而变得不那么受欢迎，在重建过程中必须进行外推，因此对增强语音质量存在上限。</p>
+<p><img src="../../images/3e7f08a35d2ecdddb4b8d04e90d6260598e4ef680191c21ed889ca76b22eff34.png" alt="图 2"></p>
+<p>We also investigated whether DFT or time-domain features produced the highest quality enhanced speech. Several works have conducted experiments with the goal to answer this question
+这些工作包括[174]和[175]。例如，[174]研究了Conv-TasNet（[10]）在编码器和解码器中使用不同输入类型时的性能。Conv-TasNet使用4ms的帧长度、2ms的步长和2ms的重叠。[174]中呈现的样本结果在表1中呈现，评估参数包括尺度不变信号失真（si_SDR）、信号失真（SDR）和词错误率（WER）。表1中的结果显示，Conv-TasNet模型在这些评估参数上稍微更好。</p>
+<p><img src="../../images/1b1f6dda07d676cfa4cce646cfe3a934e91d05e055bfc36714bbbe5b7f4fa7a0.png" alt="图 3"></p>
+<h1 id="长期时序建模">长期时序建模</h1>
+<h2 id="使用rnn">使用RNN</h2>
+<p>最初的语音分离模型，如[85][106][176]，依赖前馈DNN来从嘈杂的语音中估计干净的语音。然而，前馈DNN模型对于语音数据来说并不合适，因为它们无法有效地建模存在于语音数据中的跨时间的长期依赖关系。因此，研究人员逐渐引入了循环神经网络（RNN），它具有反馈结构，使得给定时间步t的表示是时间t处的数据、时间t-1处的隐藏状态和记忆的函数。在语音分离中被利用的一种RNN是长短时记忆（LSTM）[177]。LSTM具有内存块，由内存单元组成，用于记住临时状态，并具有多个门控单元，用于控制信息和梯度流动。LSTM结构可以用于模拟顺序预测网络，从而可以利用长期上下文信息[177]。[103][120][178]等工作利用LSTM来执行语音分离，而[115]则使用双向长短时记忆（BLSTM）网络，以利用序列中两侧的上下文信息。由于它们天生是顺序性的，RNN模型无法支持计算的并行化，这限制了它们在处理具有长序列的大型数据集时的使用，导致训练速度较慢[11]。此外，在语音分离中，典型的帧（输入特征）通常为25毫秒，对应于16kHz采样率下的400个样本，为了让LSTM直接在原始波形上工作，需要展开LSTM，以覆盖一个适度长度的音频，这是不现实的[179]。其他使用不同版本RNN的模型包括[180]。像[181]这样的模型使用门控循环单元（GRU）[182]来执行语音降噪。</p>
+<h2 id="时序卷积">时序卷积</h2>
+<p>传统的卷积神经网络（CNN）已被用于设计语音分离模型[94][183]。然而，由于有限的感受野，CNN在建模长距离依赖关系方面存在局限性[184]。因此，它们主要用于学习局部特征。它们利用局部窗口来维持平移等变性，以学习共享的位置基础内核[185]。为了让CNN捕捉长距离依赖性（即扩大感受野），需要堆叠许多层。这增加了计算成本，因为参数的数量很大。CNN和RNN的这些缺点促使在语音分离中使用扩张时间卷积网络（TCN）来使用分层卷积层来编码长距离依赖性[186][187][188][17][189]。TCN具有两个关键的特点：模型中的卷积必须是因果的，即在某一层l的给定时间t的激活仅受到在前一层l-1中小于t的时间步上的激活的影响，2）模型接受任何长度的序列并将其映射到相同长度的输出序列。为了实现第二个特性，TCN模型使用一维卷积网络实现，以使每个隐藏层与输入层具有相同的长度。为了确保相同的长度，添加了长度为f iltersize-1的零填充，以使后续层与前一层具有相同的长度[190]（见图14）。第一个特性是通过使用因果卷积实现的，即在上一层的时间t和更早时间的元素仅与时间t处的输出卷积。为了增加感受野，模型实现了扩张TCN。扩张卷积是指将滤波器应用于大于其大小的区域[191]。这是通过跳过具有特定指定步骤的输入来实现的（见图10）。更正式地说，对于1D序列（如语音信号）的输入x ∈ Rn和内核f：{0，···，k-1} → R，给定序列的元素s，扩张卷积操作F根据等式20定义了一个给定序列的元素s[190]。</p>
+<h2 id="transformer">Transformer</h2>
+<p>Transformer[192]是一种基于注意力的深度学习技术，已成功地用于建模序列，并允许揭示输入中存在的依赖关系，而不考虑输入的任何两个值之间的距离。Transformer仅包含前馈层，这使它们能够利用GPU的并行处理能力，从而实现快速训练[192]。
+在语音分离中，[11]引入了一个完全依赖Transformer的语音分离系统，用于模拟混合音频信号中存在的依赖关系。这用于提取音频混合物中每个扬声器的掩码。Transformer用于揭示短期依赖关系（在帧内）和长期依赖关系（在帧之间）。[184]中的研究也在编码器中利用了Transformer来模拟混合音频中存在的依赖关系，而[67]则使用Transformer来执行语音去混响。尽管Transformer能够建模长距离依赖关系并且能够很好地与并行化配合使用，
+<!-- raw HTML omitted -->但Transformer的注意机制具有O(N^2)的复杂度，这带来了主要的内存瓶颈[193]<!-- raw HTML omitted -->。对于长度为N的序列，Transformer需要比较N^2个元素，这对于长信号（如语音）来说尤其是计算瓶颈。Transformer还使用许多参数，进一步加剧了内存问题。已经提出了多个Transformer的版本，例如Longformer[194]、LinFormer[195]和Reformer[196]，旨在减少Transformer的计算复杂性。[197]中的研究调查了这三个版本的Transformer在语音分离中的性能，并得出结论，它们适用于语音分离应用，因为它们在性能和计算要求之间实现了极好的权衡。[198]中的研究提出了一种参数共享技术，以减少Transformer的计算复杂性，而[193]通过避免帧重叠来降低复杂性。[199]提出了一种基于Transformer的师生语音分离模型。比老师模型小得多的学生模型用于减少计算复杂性。其他基于Transformer的语音增强工具包括[173][200]。Transformer的另一个关键局限性是，虽然它可以模拟长程全局上下文，但它们不能很好地提取精细的本地特征模式。基于此，基于Transformer的语音分离工具在帧内（块内）应用注意力来捕获局部特征，并在帧之间（块之间）应用注意力来捕获全局特征[11][201]。</p>
+<h1 id="模型缩小">模型缩小</h1>
+<p>为了实现高性能，即生成具有高可懂度的语音，语音增强的DNN模型正在通过利用数百万参数变得更大[202]。大量参数会增加内存需求、计算复杂性和延迟。为了显著减少这些参数，而不影响质量，并使语音增强工具在资源受限的平台上工作，正在利用一些技术。这些技术包括：</p>
+<ol>
+<li>
+<p>使用扩张卷积：为了增加1D CNN的感受野，从而增加时间窗口并模拟语音内的长距离依赖关系，语音分离工具，如[132]和[186]，实现了扩张CNN。扩张卷积最初由[167]引入，涉及到对比应用于比其大的区域的卷积核。这是通过跳过一定步骤的输入值来实现的。这就像实现了一个稀疏卷积核（即，用零来扩张卷积核）。当扩张卷积应用在堆叠网络中时，它使网络能够在较少的层中增加其感受野，从而最小化参数并减少计算[188]（见图14）。这确保了模型可以捕获长距离的依赖关系，同时保持参数数量最少。扩张因子按指数级增加每层（见图10）。</p>
+</li>
+<li>
+<p>参数量化：为了减少DNN模型的计算和推理复杂性，以及减少参数数量，模型，如[203][204][205][206][207]，使用参数量化。在量化中，目标是降低模型参数和激活值的精度，使其精度低到对DNN模型的泛化能力几乎没有影响。为了实现这一点，定义了一个量化运算符Q，将浮点值映射到量化值[208]。</p>
+</li>
+<li>
+<p>使用深度可分离卷积：这种类型的卷积将卷积过程分解为两个部分，即深度卷积，其中一个单一滤波器应用于每个输入通道，以及点卷积，应用于深度卷积层的输出，以实现深度层的线性卷积。深度可分离卷积已被证明可以减少参数数量，与传统卷积相比[209][210]。利用深度可分离卷积的语音增强工具包括[10][26][67]。</p>
+</li>
+<li>
+<p>知识蒸馏：知识蒸馏涉及训练一个可以轻松提取数据结构的大型教师模型，然后将教师学到的知识提取到一个较小的称为学生的模型中。在这里，学生在教师的监督下进行训练[211][212][213]。学生模型必须模仿教师，通过这样做，以减少参数而实现更高性能或类似性能，但计算成本更低。知识蒸馏技术已经被用于减少语音增强工具的延迟[199][214]。</p>
+</li>
+<li>
+<p>参数修剪：为了减少参数数量，从而加速计算，一些语音增强工具使用参数修剪[206][215]。修剪涉及将密集的DNN模型转化为稀疏模型，通过显著减少参数数量而不损害模型输出的质量。在[216]中，他们训练了一个语音增强DNN模型以获得初始参数集Θ，然后通过丢弃绝对值低于设定修剪阈值的权重来修剪参数。然后再次训练稀疏网络以获得最终参数。[203]中的工作估计了给定通道Fjk的稀疏性S(k)。如果稀疏性S(k) &gt; θ，其中θ是预定义的阈值，则Fjk内的权重将被设置为零，然后重新训练模型。经过几次迭代，通道Fjk将被丢弃。</p>
+</li>
+<li>
+<p>权重共享：这涉及识别具有共同值的权重簇。通常使用K均值算法来识别这些簇。因此，与其存储每个权重值，只存储共享值的索引。通过这种方式，模型的内存需求减少了[217]。使用权重共享的语音增强工具包括[204][218]。</p>
+</li>
+</ol>
+<h1 id="客观工具">客观工具</h1>
+<p>大多数DNN单声道语音增强和分离模型，特别是那些在频域特征上工作的模型，利用均方误差（MSE）作为训练目标[21] [38] [136] [151]。具有掩码作为目标的DNN模型使用训练目标来最小化估计掩码与理想掩码目标之间的MSE。对于预测干净源语音的估计特征（如T-F频谱）的模型，MSE用于最小化模型估计的特征与目标特征之间的差异。尽管MSE作为语音增强工具中的目标函数占主导地位，但它受到了批评，因为它与人类听觉感知关系不太密切[93]。它的主要弱点在于它独立而平等地处理估计元素。例如，它单独处理每个时频单元，而不是整个频谱[106]。这导致了声音质量的降低和可理解性的损害[106]。MSE还将每个估计元素都视为同等重要，而实际情况并非如此[219]。它还不区分干净和估计的频谱之间的正或负差异。干净和估计的频谱之间的正差异代表衰减失真，而负频谱差异代表放大失真。MSE将这两种失真对语音可理解性的影响视为等效，这是有问题的[220] [221]。此外，MSE通常在线性频率刻度上定义，而人类听觉感知是在梅尔频率刻度上。为了避免处理每个估计元素具有相等重要性的问题[222]，[223]提出了加权MSE。由于MSE的缺点，已经引入了与人类听觉感知密切相关的目标函数来训练DNN[219] [224] [225] [226] [120]。一些与人类听觉感知训练相关的目标函数也被用作感知评估的度量标准。它们包括：</p>
+<ul>
+<li>Signal-to-Noise Ratio (SNR)：信噪比，衡量信号与噪声之间的比率。</li>
+<li>Signal-to-Distortion Ratio (SDR)：信号失真比，衡量干净信号和估计信号之间的失真。</li>
+<li>Perceptual Evaluation of Speech Quality (PESQ)：语音质量的感知评估，用于评估语音质量的客观度量。</li>
+<li>Short-Time Objective Intelligibility (STOI)：短时客观可懂性，用于评估语音可懂性的客观度量。
+这些度量标准可以更好地反映人类听觉感知，因此被认为是更适合作为训练目标和性能评估的指标。</li>
+</ul>
+<h1 id="无监督">无监督</h1>
+<p>尽管监督学习技术在改善语音可懂度方面取得了巨大成功，但与监督学习相关的固有问题仍然限制了它们在所有场景中的应用。首先，收集干净和嘈杂（混合）数据的并行数据仍然昂贵且耗时。这限制了可以用于训练这些模型的数据量。因此，这些模型在训练期间没有足够的机会接触到足够多的录音变化，从而影响了它们对在训练期间未见过的噪声类型和声学条件的泛化能力[235] [236]。收集干净的音频通常很困难，并且需要一个受控制的录音室，加剧了数据标注的高成本问题[236]。无监督学习提供了解决这些问题的替代方法。用于语音增强和分离的现有无监督技术大致可以分为三类：</p>
+<p>基于 MixIT 的技术、生成模型技术和师生技术。还提出了一些不属于这三个主要类别的新技术。</p>
+<p>[237] 中的工作提出了混合不变训练（MixIT）来执行无监督语音分离。给定一个由混合语音组成的 X 集合，即 X = {x1，x2，&hellip;，xn}，其中每个混合 xi 可能包含多达 N 个源，从集合 X 中随机选择混合物而不进行替换，并通过将所选混合物相加创建混合物（MoM），例如，如果从集合 X 中选择了两个混合物 x1 和 x2，则通过将它们相加创建 MoM x¯，即 x¯ = x1 + x2。MoM x¯ 是输入到 DNN 模型的数据，该模型经过训练，用于估计包含在 x1 和 x2 中的源 sˆ。DNN 模型的训练旨在最小化方程中的损失函数（见方程 57）。</p>
+<h1 id="不匹配问题">不匹配问题</h1>
+<p>训练数据与目标数据之间的不匹配会导致工具在其部署环境中性能下降[249]。目标环境数据集的声学特征可能会在噪声类型、发言者和信噪比方面与训练数据不同[247]。解决这个问题的一种潜在方法是收集大量的训练数据，涵盖不同部署环境的各种变化。然而，由于高昂的成本，这在大多数情况下都不可行。因此，一些工具提出了基于深度神经网络（DNN）的领域自适应技术。领域自适应旨在利用标记或未标记的目标领域数据，将给定的工具从训练数据领域转移到目标数据领域。基本上，领域自适应旨在减少源域和目标域数据之间的协方差偏移。文献中用于语音分离和增强工具的领域自适应技术可以分为两类：无监督领域自适应技术，如[250] [251]，它们使用未标记的目标域数据来适应DNN模型，以及监督领域自适应技术，如[252] [247] [253]，它们利用有限的标记目标域数据来执行语音增强或分离的领域自适应。为了使语音增强工具适用于新的语言，[252]提出使用迁移学习。迁移学习涉及将经过训练的DNN模型调整为将在培训期间获得的知识应用于新域，其中在任务类型上存在某种共性。该工具通过使用新语言的标记数据对训练过的DNN模型的顶层进行微调，同时冻结底层，这些底层由原始语言的培训过程中获得的参数组成。[253]的研究也使用迁移学习，表明预先训练的SEGAN可以在短时间内在新语言中以高性能处理未知的发言者和噪声。为了更好地适应不同类型的噪声，[247]中的工具建议使用多个编码器，其中每个编码器以监督方式训练，专注于特定的声学特征。这些特征分为两类，即话语级别特征，如性别、年龄、说话者的口音、信噪比和噪声类型，以及信号级别特征，如语音部分的高低频率。特征专注的编码器被训练用于学习如何提取给定特征表示，如语音中包含的性别表示。通过特征专注的编码器，实验结果表明，与使用单一全局编码器相比，该工具可以更好地适应未知的噪声类型。为了使DNN语音增强模型适应未知的噪声类型，[250]中的工作利用领域对抗训练（DAT）[254]来训练一个编码器来提取噪声不变特征。为了做到这一点，它利用了标记的源数据和未标记的目标数据。通过来自鉴别器的反馈，该鉴别器提供了多个噪声类型的概率分布，编码器被训练以生成噪声不变特征，从而减少不匹配问题。[251]中的工作还利用了无监督的DAT来解决说话者不匹配问题。[247]中的工作利用了分类器的重要性加权（IW）来从网络的源域样本中分类出离群值权重，从而减少了源域和目标域之间的偏移。</p>
+<p><!-- raw HTML omitted --> <!-- raw HTML omitted -->
+<!-- raw HTML omitted --><!-- raw HTML omitted -->
+<!-- raw HTML omitted --> <!-- raw HTML omitted -->
+<!-- raw HTML omitted --> <!-- raw HTML omitted --></p>
+<hr>
+<p><strong>参考资料</strong></p>
+<p>[1] Y. Bando, M. Mimura, K. Itoyama, K. Yoshii, and T. Kawahara, “Statistical Speech Enhancement Based on Probabilistic Integration of Variational Autoencoder and Non-Negative Matrix
+Factorization,” ICASSP, IEEE International Conference on Acoustics, Speech and Signal
+Processing - Proceedings, vol. 2018-April, no. Mcmc, pp. 716–720, 2018.</p>
+<p>[2] X. Xiao, Z. Chen, T. Yoshioka, H. Erdogan, C. Liu, D. Dimitriadis, J. Droppo, and Y. Gong,
+“Single-channel speech extraction using speaker inventory and attention network,” in ICASSP
+2019-2019 IEEE International Conference on Acoustics, Speech and Signal Processing
+(ICASSP). IEEE, 2019, pp. 86–90.</p>
+<p>[3] Y. Wang and D. L. Wang, “Towards scaling up classification-based speech separation,” IEEE
+Transactions on Audio, Speech and Language Processing, vol. 21, no. 7, pp. 1381–1390, 2013.</p>
+<p>[4] Y. Wang, A. Narayanan, and D. L. Wang, “On training targets for supervised speech separation,”
+IEEE/ACM Transactions on Audio Speech and Language Processing, vol. 22, no. 12, pp. 1849–
+1858, 2014.</p>
+<p>[5] M. N. Schmidt and R. K. Olsson, “Single-channel speech separation using sparse non-negative
+matrix factorization,” INTERSPEECH 2006 and 9th International Conference on Spoken
+Language Processing, INTERSPEECH 2006 - ICSLP, vol. 5, pp. 2614–2617, 2006.</p>
+<p>[6] Z. Wang and F. Sha, “Discriminative Non-Negative Matrix Factorization For SingleChannel Speech Separation,” 2014 IEEE International Conference on Acoustic,
+Speech and Signal Processing (ICASSP), pp. 3777–3781, 2014. [Online]. Available:
+<a href="https://pdfs.semanticscholar.org/854a/454106bd42a8bca158426d8b12b48ba0cae8.pdf">https://pdfs.semanticscholar.org/854a/454106bd42a8bca158426d8b12b48ba0cae8.pdf</a></p>
+<p>[7] T. Virtanen and A. T. Cemgil, “Mixtures of gamma priors for non-negative matrix factorization
+based speech separation,” Lecture Notes in Computer Science (including subseries Lecture
+Notes in Artificial Intelligence and Lecture Notes in Bioinformatics), vol. 5441, no. 3, pp.
+646–653, 2009.</p>
+<p>[8] T. Virtanen, “Speech recognition using factorial hidden Markov models for separation in the
+feature space,” Proceedings of the Annual Conference of the International Speech Communication Association, INTERSPEECH, vol. 1, pp. 89–92, 2006.</p>
+<p>[9] Y. Shao and D. Wang, “Model-based sequential organization in cochannel speech,” IEEE
+Transactions on Audio, Speech and Language Processing, vol. 14, no. 1, pp. 289–298, 2006.</p>
+<p>[10] Y. Luo and N. Mesgarani, “Conv-TasNet: Surpassing Ideal Time-Frequency Magnitude
+Masking for Speech Separation,” IEEE/ACM Transactions on Audio Speech and Language
+Processing, vol. 27, no. 8, pp. 1256–1266, 2019.</p>
+<p>[11] C. Subakan, M. Ravanelli, S. Cornell, M. Bronzi, and J. Zhong, “Attention is all you need in
+speech separation,” ICASSP, IEEE International Conference on Acoustics, Speech and Signal
+Processing - Proceedings, vol. 2021-June, pp. 21–25, 2021.</p>
+<p>[12] D. Wang and J. Chen, “Supervised speech separation based on deep learning: An overview,”
+IEEE/ACM Transactions on Audio, Speech, and Language Processing, vol. 26, no. 10, pp.
+1702–1726, 2018.</p>
+<p>[13] S. Gannot, E. Vincent, S. Markovich-Golan, and A. Ozerov, “A Consolidated Perspective on
+Multimicrophone Speech Enhancement and Source Separation,” IEEE/ACM Transactions on
+Audio Speech and Language Processing, vol. 25, no. 4, pp. 692–730, 2017.</p>
+<p>[14] J. R. Hershey, Z. Chen, J. Le Roux, and S. Watanabe, “Deep clustering: Discriminative
+embeddings for segmentation and separation,” in 2016 IEEE international conference on
+acoustics, speech and signal processing (ICASSP). IEEE, 2016, pp. 31–35.</p>
+<p>[15] Y. Wang, J. Du, L. R. Dai, and C. H. Lee, “A gender mixture detection approach to unsupervised
+single-channel speech separation based on deep neural networks,” IEEE/ACM Transactions on
+Audio Speech and Language Processing, vol. 25, no. 7, pp. 1535–1546, 2017.</p>
+<p>[16] Y. Wang, J. Du, L.-R. Dai, and C.-H. Lee, “Unsupervised single-channel speech separation
+via deep neural network for different gender mixtures,” in 2016 Asia-Pacific Signal and
+Information Processing Association Annual Summit and Conference (APSIPA). IEEE, 2016,
+pp. 1–4.</p>
+<p>[17] N. Zeghidour and D. Grangier, “Wavesplit: End-to-End Speech Separation by Speaker Clustering,” IEEE/ACM Transactions on Audio Speech and Language Processing, vol. 29, no. iv, pp.
+2840–2849, 2021.</p>
+<p>[18] P.-S. Huang, M. Kim, M. Hasegawa-Johnson, and P. Smaragdis, “Deep Learning For Monaural
+Speech Separation,” Acta Physica Polonica B, vol. 42, no. 1, pp. 33–44, 2011.</p>
+<p>[19] C. Weng, D. Yu, M. L. Seltzer, and J. Droppo, “Deep neural networks for single-channel
+multi-talker speech recognition,” IEEE/ACM Transactions on Audio Speech and Language
+Processing, vol. 23, no. 10, pp. 1670–1679, 2015.</p>
+<p>[20] Y. Isik, J. Le Roux, Z. Chen, S. Watanabe, and J. R. Hershey, “Single-channel multi-speaker
+separation using deep clustering,” Proceedings of the Annual Conference of the International
+Speech Communication Association, INTERSPEECH, vol. 08-12-Sept, pp. 545–549, 2016.</p>
+<p>[21] M. Kolbæk, D. Yu, Z.-H. Tan, and J. Jensen, “Multitalker speech separation with utterance-level
+permutation invariant training of deep recurrent neural networks,” IEEE/ACM Transactions on
+Audio, Speech, and Language Processing, vol. 25, no. 10, pp. 1901–1913, 2017.</p>
+<p>[22] D. Yu, M. Kolbaek, Z. H. Tan, and J. Jensen, “Permutation invariant training of deep models for
+speaker-independent multi-talker speech separation,” ICASSP, IEEE International Conference
+on Acoustics, Speech and Signal Processing - Proceedings, pp. 241–245, 2017.</p>
+<p>[23] H. Tachibana, “Towards listening to 10 people simultaneously: An efficient permutation
+invariant training of audio source separation using Sinkhorn’s algorithm,” ICASSP, IEEE
+International Conference on Acoustics, Speech and Signal Processing - Proceedings, vol.
+2021-June, pp. 491–495, 2021.</p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

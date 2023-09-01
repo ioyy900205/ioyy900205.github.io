@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>整理和思考——音视觉分离 // 亮的笔记</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.90.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Liu Liang" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://ioyy900205.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="整理和思考——音视觉分离"/>
+<meta name="twitter:description" content="在此处编辑 blog.walterlv.com 的博客摘要
+ @TOC
+1. 问题整理 1.1 多样性和深度相关性 在已有的研究中，利用多模态辅助的语音分离技术过分追求辅助信息的多样性，而忽略了单个辅助信息与语音信号之间的深度相关性
+现象：
+ 利用视觉等辅助信息的语音分离模型过于依赖视觉信息，在面对视觉信息不足等现实情况时鲁棒性偏低 对于视觉信息完全丢失的情景，利用纯语音分离得到的目标语音质量明显低于多模态分离得到的语音  1.2 位置动态变化 现象：
+ 由于人物置身于会场，位置可任意更改，注意力也同样可以调节。这是置身其中的先天优势。然而面对录制好的音频或者视频，目标说话人和说话人的语音都是固定的。  1.3 身份依赖 现象：
+ 语音分离最容易产生的问题是依赖身份信息。对于训练中使用的样本说话人，分离的性能较高，但是换了几个训练中没有出现的目标说话人之后语音分离的性能大幅度降低。这就是过度依赖说话人身份的分离模型。  1.4 辅助信息完好情况下，还有提升空间 在视觉等辅助性信息存在完好的情况下，分离出的语音的信噪比和可读懂度等语音质量仍然存在需要提升的空间。 在杂乱的现实环境中，分离模型的鲁棒性也是需要考虑的问题
+1.5 辅助信息不完好的情况下，质量偏低 当视觉等辅助信息不充足或者严重缺失，甚至是完全没有视觉信息的帮助下，利用纯语音分离的总体质量严重偏低，可读懂度和语音的纯净度总体不尽人意。同时利用辅助信息如视觉信息做辅助的语音分离模型，在面对视觉信息不完整的现实情况时，语音分离的性能也会大打折扣。
+ 参考资料"/>
+
+    <meta property="og:title" content="整理和思考——音视觉分离" />
+<meta property="og:description" content="在此处编辑 blog.walterlv.com 的博客摘要
+ @TOC
+1. 问题整理 1.1 多样性和深度相关性 在已有的研究中，利用多模态辅助的语音分离技术过分追求辅助信息的多样性，而忽略了单个辅助信息与语音信号之间的深度相关性
+现象：
+ 利用视觉等辅助信息的语音分离模型过于依赖视觉信息，在面对视觉信息不足等现实情况时鲁棒性偏低 对于视觉信息完全丢失的情景，利用纯语音分离得到的目标语音质量明显低于多模态分离得到的语音  1.2 位置动态变化 现象：
+ 由于人物置身于会场，位置可任意更改，注意力也同样可以调节。这是置身其中的先天优势。然而面对录制好的音频或者视频，目标说话人和说话人的语音都是固定的。  1.3 身份依赖 现象：
+ 语音分离最容易产生的问题是依赖身份信息。对于训练中使用的样本说话人，分离的性能较高，但是换了几个训练中没有出现的目标说话人之后语音分离的性能大幅度降低。这就是过度依赖说话人身份的分离模型。  1.4 辅助信息完好情况下，还有提升空间 在视觉等辅助性信息存在完好的情况下，分离出的语音的信噪比和可读懂度等语音质量仍然存在需要提升的空间。 在杂乱的现实环境中，分离模型的鲁棒性也是需要考虑的问题
+1.5 辅助信息不完好的情况下，质量偏低 当视觉等辅助信息不充足或者严重缺失，甚至是完全没有视觉信息的帮助下，利用纯语音分离的总体质量严重偏低，可读懂度和语音的纯净度总体不尽人意。同时利用辅助信息如视觉信息做辅助的语音分离模型，在面对视觉信息不完整的现实情况时，语音分离的性能也会大打折扣。
+ 参考资料" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ioyy900205.github.io/post/2023-08-31-%E6%95%B4%E7%90%86%E5%92%8C%E6%80%9D%E8%80%83%E9%9F%B3%E8%A7%86%E8%A7%89%E5%88%86%E7%A6%BB/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-08-31T17:02:56+08:00" />
+<meta property="article:modified_time" content="2023-08-31T17:02:56+08:00" />
+
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://ioyy900205.github.io"><img class="app-header-avatar" src="https://pic4.zhimg.com/v2-dc3acd582fdc15161e6d10f72aa82697_r.jpg" alt="Liu Liang" /></a>
+      <h1>亮的笔记</h1>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>深度学习笔记本</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/ioyy900205" target="_blank" rel="noreferrer noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/ioyy900205" target="_blank" rel="noreferrer noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">整理和思考——音视觉分离</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Aug 31, 2023
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://ioyy900205.github.io/tags/paper_review/">Paper_Review</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>在此处编辑 blog.walterlv.com 的博客摘要</p>
+<hr>
+<p>@<a href="%E6%9C%AC%E6%96%87%E5%86%85%E5%AE%B9">TOC</a></p>
+<h1 id="1-问题整理">1. 问题整理</h1>
+<h2 id="11-多样性和深度相关性">1.1 多样性和深度相关性</h2>
+<p>在已有的研究中，利用多模态辅助的语音分离技术过分追求辅助信息的<strong>多样性</strong>，而忽略了单个辅助信息与语音信号之间的<strong>深度相关性</strong></p>
+<p>现象：</p>
+<ul>
+<li>利用视觉等辅助信息的语音分离模型过于依赖视觉信息，在面对视觉信息不足等现实情况时鲁棒性偏低</li>
+<li>对于视觉信息完全丢失的情景，利用纯语音分离得到的目标语音质量明显低于多模态分离得到的语音</li>
+</ul>
+<h2 id="12-位置动态变化">1.2 位置动态变化</h2>
+<p>现象：</p>
+<ul>
+<li>由于人物置身于会场，位置可任意更改，注意力也同样可以调节。这是置身其中的先天优势。然而面对录制好的音频或者视频，目标说话人和说话人的语音都是固定的。</li>
+</ul>
+<h2 id="13-身份依赖">1.3 身份依赖</h2>
+<p>现象：</p>
+<ul>
+<li>语音分离最容易产生的问题是依赖身份信息。对于训练中使用的样本说话人，分离的性能较高，但是换了几个训练中没有出现的目标说话人之后语音分离的性能大幅度降低。这就是过度依赖说话人身份的分离模型。</li>
+</ul>
+<h2 id="14-辅助信息完好情况下还有提升空间">1.4 辅助信息完好情况下，还有提升空间</h2>
+<p>在视觉等辅助性信息存在完好的情况下，分离出的语音的信噪比和可读懂度等语音质量仍然存在需要提升的空间。
+在杂乱的现实环境中，分离模型的鲁棒性也是需要考虑的问题</p>
+<h2 id="15-辅助信息不完好的情况下质量偏低">1.5 辅助信息不完好的情况下，质量偏低</h2>
+<p>当视觉等辅助信息不充足或者严重缺失，甚至是完全没有视觉信息的帮助下，利用纯语音分离的总体质量严重偏低，可读懂度和语音的纯净度总体不尽人意。同时利用辅助信息如视觉信息做辅助的语音分离模型，在面对视觉信息不完整的现实情况时，语音分离的性能也会大打折扣。</p>
+<hr>
+<p><strong>参考资料</strong></p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

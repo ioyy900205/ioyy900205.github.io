@@ -1,11 +1,39 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>PyTorch on 亮的笔记</title>
+    <title>Pytorch on 亮的笔记</title>
     <link>https://ioyy900205.github.io/tags/pytorch/</link>
-    <description>Recent content in PyTorch on 亮的笔记</description>
+    <description>Recent content in Pytorch on 亮的笔记</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 05 Jan 2022 17:30:24 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/pytorch/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 01 Sep 2023 13:44:41 +0800</lastBuildDate><atom:link href="https://ioyy900205.github.io/tags/pytorch/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>61——Deep Neural Network Techniques for Monaural Speech Enhancement and Separation State of the art Analysis</title>
+      <link>https://ioyy900205.github.io/post/2023-09-01-61deep-neural-network-techniques-for-monaural-speech-enhancement-and-separation-state-of-the-art-analysis/</link>
+      <pubDate>Fri, 01 Sep 2023 13:44:41 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/post/2023-09-01-61deep-neural-network-techniques-for-monaural-speech-enhancement-and-separation-state-of-the-art-analysis/</guid>
+      <description>Deep Neural Network Techniques for Monaural Speech Enhancement and Separation: State of the art Analysis
+  摘要 介绍 特征  DFT magnitude features DFT complex features DFT log features MFCC 补充特征 相位处理 时域特征 趋势统计   长期时序建模  使用RNN 时序卷积 Transformer   模型缩小 客观工具 无监督 不匹配问题  摘要 深度神经网络（DNN）技术已经在自然语言处理和计算机视觉等领域广泛应用。它们在机器翻译和图像生成等任务中取得了巨大成功。由于它们的成功，这些数据驱动的技术已经应用于音频领域。具体而言，DNN模型已经应用于语音增强和分离，以实现单声道语音清晰度改进中的去噪、去混响、说话者提取和说话者分离。在本文中，我们回顾了一些用于实现语音增强和分离的主要DNN技术。该评论涵盖了从特征提取、DNN工具如何建模语音的全局和局部特征以及模型训练（监督和无监督）等语音增强和分离技术的流程。此外，评论还涵盖了使用领域适应技术和预训练模型来增强语音增强过程。
+介绍 单声道语音可懂度改进的技术可以分为语音增强和分离两大类。语音增强涉及从噪声[1]或混合语音[2]中分离目标语音。语音增强包括去混响、去噪和说话者提取等任务。而说话者分离则旨在估计混合语音中组成的独立语音[3]。语音增强和分离在多个领域具有应用，例如自动语音识别、移动语音通信和助听器设计[4]。最初的语音增强和分离研究利用了非负矩阵分解[5][6][7]、概率模型[8]和计算听觉场景分析（CASA）[9]等技术。然而，这些技术专为封闭集说话者设计（即，不适用于具有未知说话者的混合语音），这显著限制了它们在真实环境中的适用性。
+由于深度学习模型在自然语言处理和计算机视觉等不同领域的最近成功，因此引入了这些数据驱动的技术来处理音频数据集。特别是，DNN模型在语音增强和分离中变得流行，并在提升语音可懂度和增强具有未知说话者的语音方面表现出色[10][11]。为了在语音增强和分离中发挥作用，DNN模型必须提取语音的重要特征，保持音频帧的顺序，利用局部和全局上下文信息来实现连贯的语音分离。这需要DNN模型包括专门满足这些要求的技术。这些技术的讨论是本评论的核心内容。
+此外，在计算机视觉和文本领域，通常使用大型预训练模型来提取有益于下游任务的通用表示。本评论还讨论了语音增强和分离工具采用的DNN技术，以减少计算复杂性，使它们能够在低延迟和资源受限的环境中工作。因此，该评论关注了DNN应用于语音增强和分离的整个流程，即从特征提取、模型实现、训练和评估。我们的目标是揭示DNN实现的每个层面上的主要技术。在每个部分中，我们强调了关键的新兴特征和存在的挑战。一篇最近的评论[12]只关注了执行语音分离的监督技术，而在这篇评论中，我们讨论了监督和无监督方法。此外，随着深度学习领域的迅速发展，新的技术不断涌现，这需要重新审视这些技术在语音增强和分离中的应用方式。该评论限于讨论DNN技术如何应用于单声道语音增强，因此不关注多通道语音分离（已在[13]中涵盖）。
+该论文首先在第2节中解释了语音增强和分离的类型，突出它们的关键要素以及专注于每种类型的工具。在第3节中，它讨论了语音增强和分离工具使用的关键语音特征。这一部分探讨了特征是如何派生的以及它们如何在监督学习技术中用于训练DNN模型。第5节讨论了工具用于建模语音中存在的长期依赖性的技术。论文在第6节中讨论了模型大小压缩技术。在第7节中，论文讨论了在语音增强和分离中使用的一些流行的目标函数。第8节讨论了一些工具如何实现无监督技术来实现语音增强和分离。第9节讨论了语音分离和增强工具如何适应目标环境。在第10节中，论文探讨了在语音增强和分离流程中如何利用预训练模型。最后，第11节探讨了未来的发展方向。图1总体上展示了论文的组织结构以及涵盖的主题。
+特征 DFT magnitude features DFT幅度特征：这些特征首先将混合的原始波形y(t)转换为时间-频率（TF）表示（频谱图），使用DFT（具体来说，短时傅立叶变换（STFT））（方程11）[90]。时间-频率表示的幅度（方程13）作为深度神经网络（DNN）模型用于语音分离的输入。然后，DNN模型经过训练，学习如何分离TF-bin，以使每个源语音的成分被分组在一起。利用DFT特征的DNN语音增强和分离模型包括[91][83][92][93][94][95]等系统。使用DFT幅度作为特征的好处是具有高频率分辨率，因此需要使用较大的时间窗口，通常为32毫秒以上[20][21]用于语音，90毫秒以上用于音乐分离[96]。因此，这些模型必须处理增加的计算复杂性[97]。这促使其他语音分离模型使用比DFT幅度更低维度的特征。
+DFT complex features DFT复杂特征：与只使用T-F表示的幅度不同，使用DFT复杂特征的工具包括估算增强或分离语音中的噪声（混合）语音信号的幅度和相位。因此，复杂特征的每个T-F单元都是一个具有实部和虚部的复数（参见方程13）。信号的幅度和相位分别根据方程15和16计算。使用DFT复杂特征的工具包括[98][55][99][100]。
+DFT log features 对原始信号进行短时傅立叶分析，计算每个重叠波形的DFT（参见方程11）。然后，从DFT的输出计算对数功率谱。考虑一个在时间-频率域中的噪声语音信号，即已对信号应用DFT（参见方程12）。从方程14，噪声信号的功率谱可以表示如方程23所示。 但是有个地方需要注意：</description>
+    </item>
+    
+    <item>
+      <title>在此处添加标题</title>
+      <link>https://ioyy900205.github.io/000000/</link>
+      <pubDate>Fri, 01 Sep 2023 13:44:41 +0800</pubDate>
+      
+      <guid>https://ioyy900205.github.io/000000/</guid>
+      <description>在此处编辑 blog.walterlv.com 的博客摘要
+ @TOC
+标题  参考资料</description>
+    </item>
+    
     <item>
       <title>2022-01-05 框架太难受</title>
       <link>https://ioyy900205.github.io/post/2022-01-05-%E6%A1%86%E6%9E%B6%E5%A4%AA%E9%9A%BE%E5%8F%97/</link>
