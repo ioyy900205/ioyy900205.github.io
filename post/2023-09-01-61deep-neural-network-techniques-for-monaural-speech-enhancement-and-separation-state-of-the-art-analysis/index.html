@@ -14,6 +14,7 @@
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="61——Deep Neural Network Techniques for Monaural Speech Enhancement and Separation State of the art Analysis"/>
 <meta name="twitter:description" content="Deep Neural Network Techniques for Monaural Speech Enhancement and Separation: State of the art Analysis
+https://arxiv.org/pdf/2212.00369.pdf
   摘要 介绍 特征  DFT magnitude features DFT complex features DFT log features MFCC 补充特征 相位处理 时域特征 趋势统计   长期时序建模  使用RNN 时序卷积 Transformer   模型缩小 客观工具 无监督 不匹配问题  摘要 深度神经网络（DNN）技术已经在自然语言处理和计算机视觉等领域广泛应用。它们在机器翻译和图像生成等任务中取得了巨大成功。由于它们的成功，这些数据驱动的技术已经应用于音频领域。具体而言，DNN模型已经应用于语音增强和分离，以实现单声道语音清晰度改进中的去噪、去混响、说话者提取和说话者分离。在本文中，我们回顾了一些用于实现语音增强和分离的主要DNN技术。该评论涵盖了从特征提取、DNN工具如何建模语音的全局和局部特征以及模型训练（监督和无监督）等语音增强和分离技术的流程。此外，评论还涵盖了使用领域适应技术和预训练模型来增强语音增强过程。
 介绍 单声道语音可懂度改进的技术可以分为语音增强和分离两大类。语音增强涉及从噪声[1]或混合语音[2]中分离目标语音。语音增强包括去混响、去噪和说话者提取等任务。而说话者分离则旨在估计混合语音中组成的独立语音[3]。语音增强和分离在多个领域具有应用，例如自动语音识别、移动语音通信和助听器设计[4]。最初的语音增强和分离研究利用了非负矩阵分解[5][6][7]、概率模型[8]和计算听觉场景分析（CASA）[9]等技术。然而，这些技术专为封闭集说话者设计（即，不适用于具有未知说话者的混合语音），这显著限制了它们在真实环境中的适用性。
 由于深度学习模型在自然语言处理和计算机视觉等不同领域的最近成功，因此引入了这些数据驱动的技术来处理音频数据集。特别是，DNN模型在语音增强和分离中变得流行，并在提升语音可懂度和增强具有未知说话者的语音方面表现出色[10][11]。为了在语音增强和分离中发挥作用，DNN模型必须提取语音的重要特征，保持音频帧的顺序，利用局部和全局上下文信息来实现连贯的语音分离。这需要DNN模型包括专门满足这些要求的技术。这些技术的讨论是本评论的核心内容。
@@ -25,6 +26,7 @@ DFT log features 对原始信号进行短时傅立叶分析，计算每个重叠
 
     <meta property="og:title" content="61——Deep Neural Network Techniques for Monaural Speech Enhancement and Separation State of the art Analysis" />
 <meta property="og:description" content="Deep Neural Network Techniques for Monaural Speech Enhancement and Separation: State of the art Analysis
+https://arxiv.org/pdf/2212.00369.pdf
   摘要 介绍 特征  DFT magnitude features DFT complex features DFT log features MFCC 补充特征 相位处理 时域特征 趋势统计   长期时序建模  使用RNN 时序卷积 Transformer   模型缩小 客观工具 无监督 不匹配问题  摘要 深度神经网络（DNN）技术已经在自然语言处理和计算机视觉等领域广泛应用。它们在机器翻译和图像生成等任务中取得了巨大成功。由于它们的成功，这些数据驱动的技术已经应用于音频领域。具体而言，DNN模型已经应用于语音增强和分离，以实现单声道语音清晰度改进中的去噪、去混响、说话者提取和说话者分离。在本文中，我们回顾了一些用于实现语音增强和分离的主要DNN技术。该评论涵盖了从特征提取、DNN工具如何建模语音的全局和局部特征以及模型训练（监督和无监督）等语音增强和分离技术的流程。此外，评论还涵盖了使用领域适应技术和预训练模型来增强语音增强过程。
 介绍 单声道语音可懂度改进的技术可以分为语音增强和分离两大类。语音增强涉及从噪声[1]或混合语音[2]中分离目标语音。语音增强包括去混响、去噪和说话者提取等任务。而说话者分离则旨在估计混合语音中组成的独立语音[3]。语音增强和分离在多个领域具有应用，例如自动语音识别、移动语音通信和助听器设计[4]。最初的语音增强和分离研究利用了非负矩阵分解[5][6][7]、概率模型[8]和计算听觉场景分析（CASA）[9]等技术。然而，这些技术专为封闭集说话者设计（即，不适用于具有未知说话者的混合语音），这显著限制了它们在真实环境中的适用性。
 由于深度学习模型在自然语言处理和计算机视觉等不同领域的最近成功，因此引入了这些数据驱动的技术来处理音频数据集。特别是，DNN模型在语音增强和分离中变得流行，并在提升语音可懂度和增强具有未知说话者的语音方面表现出色[10][11]。为了在语音增强和分离中发挥作用，DNN模型必须提取语音的重要特征，保持音频帧的顺序，利用局部和全局上下文信息来实现连贯的语音分离。这需要DNN模型包括专门满足这些要求的技术。这些技术的讨论是本评论的核心内容。
@@ -104,6 +106,7 @@ DFT log features 对原始信号进行短时傅立叶分析，计算每个重叠
     </header>
     <div class="post-content">
       <p>Deep Neural Network Techniques for Monaural Speech Enhancement and Separation: State of the art Analysis</p>
+<p><a href="https://arxiv.org/pdf/2212.00369.pdf">https://arxiv.org/pdf/2212.00369.pdf</a></p>
 <hr>
 <ul>
 <li><a href="#%E6%91%98%E8%A6%81">摘要</a></li>
@@ -288,6 +291,7 @@ on Acoustics, Speech and Signal Processing - Proceedings, pp. 241–245, 2017.</
 invariant training of audio source separation using Sinkhorn’s algorithm,” ICASSP, IEEE
 International Conference on Acoustics, Speech and Signal Processing - Proceedings, vol.
 2021-June, pp. 491–495, 2021.</p>
+<p>&hellip; 参考arxiv</p>
 
     </div>
     <div class="post-footer">
